@@ -39,4 +39,10 @@ All of the above are generally *free operations*, with no copying, when their re
 
 The `^` operator is overloaded for cases in which the wedge or antiwedge product can be applied between vectors, bivectors, points, lines, and planes. (Note that `^` has lower precedence than just about everything else, so parentheses will be necessary.)
 
+The library does not provide operators that directly calculate the geometric product and antiproduct because they would tend to generate inefficient code and produce intermediate results having useless types when something like the sandwich product **Q** ⟇ *p* ⟇ ~**Q** appears in an expression. Instead, there are `Transform()` functions that take some object *p* for the first parameter and the motor **Q** with which to transform it for the second parameter.
+
 See Eric Lengyel's [Projective Geometric Algebra website](http://projectivegeometricalgebra.org) for more information about operations among these types.
+
+## API Documentation
+
+There is API documentation embedded in the header files. The formatted equivalent can be found in the [C4 Engine documentation](http://c4engine.com/docs/Math/index.html).
