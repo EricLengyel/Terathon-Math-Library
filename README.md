@@ -33,7 +33,7 @@ Rows, columns, and submatrices can be extracted from matrix objects using a simi
 * `m.matrix2D` – The upper-left 2×2 submatrix of `m`.
 * `m.transpose` – The transpose of `m`.
 
-All of the above are generally *free operations*, with no copying, when their results are consumed by an expression.
+All of the above are generally *free operations*, with no copying, when their results are consumed by an expression. For more information, see Eric Lengyel's 2018 GDC talk [Linear Algebra Upgraded](http://terathon.com/gdc18_lengyel.pdf).
 
 ## Geometric Algebra
 
