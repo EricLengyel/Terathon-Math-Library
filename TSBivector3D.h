@@ -262,6 +262,42 @@ namespace Terathon
 		return (a.xyz ^ b);
 	}
 
+	inline Bivector3D Wedge(const Vector3D& a, const Vector3D& b)
+	{
+		return (a ^ b);
+	}
+
+	inline Bivector3D Wedge(const Point2D& a, const Point2D& b)
+	{
+		return (a ^ b);
+	}
+
+	inline Bivector3D Wedge(const Point2D& p, const Vector2D& v)
+	{
+		return (p ^ v);
+	}
+
+	inline Vector3D Antiwedge(const Bivector3D& a, const Bivector3D& b)
+	{
+		return (a ^ b);
+	}
+
+	inline float Antiwedge(const Bivector3D& a, const Vector3D& b)
+	{
+		return (a ^ b);
+	}
+
+	inline float Antiwedge(const Vector3D& a, const Bivector3D& b)
+	{
+		return (a ^ b);
+	}
+
+	template <typename type_struct, int count, int index_x, int index_y, int index_z>
+	inline float Antiwedge(const Bivector3D& a, const Subvec3D<type_struct, false, count, index_x, index_y, index_z>& b)
+	{
+		return (a ^ b);
+	}
+
 	inline float Dot(const Bivector3D& a, const Bivector3D& b)
 	{
 		return (a.x * b.x + a.y * b.y + a.z * b.z);
@@ -269,12 +305,12 @@ namespace Terathon
 
 	inline Bivector3D Project(const Bivector3D& a, const Vector3D& b)
 	{
-		return (Complement(b) * (a ^ b));
+		return (!b * (a ^ b));
 	}
 
 	inline Bivector3D Reject(const Bivector3D& a, const Vector3D& b)
 	{
-		return (a - Complement(b) * (a ^ b));
+		return (a - !b * (a ^ b));
 	}
 
 	inline float Magnitude(const Bivector3D& v)

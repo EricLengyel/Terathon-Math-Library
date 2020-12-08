@@ -86,6 +86,12 @@ namespace Terathon
 	//# \action		Bivector4D operator /(const Bivector4D& L, float s);
 	//#				Returns the product of the bivector $L$ and the inverse of the scalar $s$.
 	//
+	//# \action		bool operator ==(const Bivector4D& a, const Bivector4D& b);
+	//#				Returns a boolean value indicating whether the two bivectors $a$ and $b$ are equal.
+	//
+	//# \action		bool operator !=(const Bivector4D& a, const Bivector4D& b);
+	//#				Returns a boolean value indicating whether the two bivectors $a$ and $b$ are not equal.
+	//
 	//# \action		Bivector4D operator ^(const Point3D& p, const Point3D& q);
 	//#				Returns the wedge product of the points $p$ and $q$. The <i>w</i> coordinates of $p$ and $q$ are assumed to be 1.
 	//
@@ -117,12 +123,6 @@ namespace Terathon
 	//# \action		float operator ^(const Bivector4D& K, const Bivector4D& L);
 	//#				Returns the antiwedge product of the bivectors $K$ and $L$.
 	//#				This gives the crossing relationship between the two lines, with positive values representing clockwise crossings and negative values representing counterclockwise crossings.
-	//
-	//# \action		bool operator ==(const Bivector4D& a, const Bivector4D& b);
-	//#				Returns a boolean value indicating the equality of the two bivectors $a$ and $b$.
-	//
-	//# \action		bool operator !=(const Bivector4D& a, const Bivector4D& b);
-	//#				Returns a boolean value indicating the inequality of the two bivectors $a$ and $b$
 	//
 	//# \also	$@Vector4D@$
 	//# \also	$@Trivector4D@$
@@ -341,6 +341,16 @@ namespace Terathon
 		return (Bivector4D(L.direction.x * s, L.direction.y * s, L.direction.z * s, L.moment.x * s, L.moment.y * s, L.moment.z * s));
 	}
 
+	inline bool operator ==(const Bivector4D& a, const Bivector4D& b)
+	{
+		return ((a.direction == b.direction) && (a.moment == b.moment));
+	}
+
+	inline bool operator !=(const Bivector4D& a, const Bivector4D& b)
+	{
+		return ((a.direction != b.direction) || (a.moment != b.moment));
+	}
+
 	inline Bivector4D operator ^(const Point3D& p, const Point3D& q)
 	{
 		return (Bivector4D(q.x - p.x, q.y - p.y, q.z - p.z, p.y * q.z - p.z * q.y, p.z * q.x - p.x * q.z, p.x * q.y - p.y * q.x));
@@ -400,14 +410,54 @@ namespace Terathon
 		return (-(K.direction ^ L.moment) - (K.moment ^ L.direction));
 	}
 
-	inline bool operator ==(const Bivector4D& a, const Bivector4D& b)
+	inline Bivector4D Wedge(const Point3D& p, const Point3D& q)
 	{
-		return ((a.direction == b.direction) && (a.moment == b.moment));
+		return (p ^ q);
 	}
 
-	inline bool operator !=(const Bivector4D& a, const Bivector4D& b)
+	inline Bivector4D Wedge(const Point3D& p, const Vector3D& v)
 	{
-		return ((a.direction != b.direction) || (a.moment != b.moment));
+		return (p ^ v);
+	}
+
+	inline Bivector4D Antiwedge(const Trivector4D& f, const Trivector4D& g)
+	{
+		return (f ^ g);
+	}
+
+	inline Trivector4D Wedge(const Bivector4D& L, const Point3D& p)
+	{
+		return (L ^ p);
+	}
+
+	inline Trivector4D Wedge(const Point3D& p, const Bivector4D& L)
+	{
+		return (L ^ p);
+	}
+
+	inline Trivector4D Wedge(const Bivector4D& L, const Vector3D& v)
+	{
+		return (L ^ v);
+	}
+
+	inline Trivector4D Wedge(const Vector3D& v, const Bivector4D& L)
+	{
+		return (L ^ v);
+	}
+
+	inline Vector4D Antiwedge(const Bivector4D& L, const Trivector4D& f)
+	{
+		return (L ^ f);
+	}
+
+	inline Vector4D Antiwedge(const Trivector4D& f, const Bivector4D& L)
+	{
+		return (L ^ f);
+	}
+
+	inline float Antiwedge(const Bivector4D& K, const Bivector4D& L)
+	{
+		return (K ^ L);
 	}
 
 	inline Bivector4D Translate(const Bivector4D& L, const Vector3D& t)

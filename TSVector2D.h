@@ -81,10 +81,10 @@ namespace Terathon
 	//#				Divides by the scalar $s$.
 	//
 	//# \action		bool operator ==(const Vector2D& v1, const Vector2D& v2) const;
-	//#				Returns a boolean value indicating the equality of the two vectors $v1$ and $v2$.
+	//#				Returns a boolean value indicating whether the two vectors $v1$ and $v2$ are equal.
 	//
 	//# \action		bool operator !=(const Vector2D& v1, const Vector2D& v2) const;
-	//#				Returns a boolean value indicating the inequality of the two vectors $v1$ and $v2$.
+	//#				Returns a boolean value indicating whether the two vectors $v1$ and $v2$ are not equal.
 	//
 	//# \action		Vector2D operator -(const Vector2D& v) const;
 	//#				Returns the negation of the vector $v$.

@@ -104,10 +104,10 @@ namespace Terathon
 	//#				This gives the distance from a unitized plane represented by a $Trivector4D$ object to the point $p$.
 	//
 	//# \action		bool operator ==(const Trivector4D& a, const Trivector4D& b);
-	//#				Returns a boolean value indicating the equality of the two trivectors $a$ and $b$.
+	//#				Returns a boolean value indicating whether the two trivectors $a$ and $b$ are equal.
 	//
 	//# \action		bool operator !=(const Trivector4D& a, const Trivector4D& b);
-	//#				Returns a boolean value indicating the inequality of the two trivectors $a$ and $b$.
+	//#				Returns a boolean value indicating whether the two trivectors $a$ and $b$ are not equal.
 	//
 	//# \privbase	Antivec4D	Antivectors use a generic base class to store their components.
 	//
@@ -357,6 +357,38 @@ namespace Terathon
 	inline float operator ^(const Trivector4D& a, const Subvec3D<type_struct, false, count, index_x, index_y, index_z>& b)
 	{
 		return (a.xyz ^ b);
+	}
+
+	inline float Antiwedge(const Vector4D& v, const Trivector4D& f)
+	{
+		return (v ^ f);
+	}
+
+	inline float Antiwedge(const Vector3D& v, const Trivector4D& f)
+	{
+		return (v ^ f);
+	}
+
+	inline float Antiwedge(const Point3D& p, const Trivector4D& f)
+	{
+		return (p ^ f);
+	}
+
+	inline float Antiwedge(const Point2D& p, const Trivector4D& f)
+	{
+		return (p ^ f);
+	}
+
+	template <typename type_struct, int count, int index_x, int index_y, int index_z, int index_w>
+	inline float Antiwedge(const Trivector4D& a, const Subvec4D<type_struct, false, count, index_x, index_y, index_z, index_w>& b)
+	{
+		return (a ^ b);
+	}
+
+	template <typename type_struct, int count, int index_x, int index_y, int index_z>
+	inline float Antiwedge(const Trivector4D& a, const Subvec3D<type_struct, false, count, index_x, index_y, index_z>& b)
+	{
+		return (a ^ b);
 	}
 }
 
