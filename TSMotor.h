@@ -80,6 +80,12 @@ namespace Terathon
 	//# \operator	Motor& operator /=(float s);
 	//#				Multiplies by the inverse of the scalar $s$.
 	//
+	//# \action		bool operator ==(const Motor& a, const Motor& b);
+	//#				Returns a boolean value indicating whether the two motors $a$ and $b$ are equal.
+	//
+	//# \action		bool operator !=(const Motor& a, const Motor& b);
+	//#				Returns a boolean value indicating whether the two motors $a$ and $b$ are not equal.
+	//
 	//# \action		Motor operator ~(const Motor& Q);
 	//#				Returns the antireverse of the motor $Q$.
 	//
@@ -109,12 +115,6 @@ namespace Terathon
 	//
 	//# \action		Motor operator *(const Quaternion& r, const Motor& Q);
 	//#				Returns the geometric antiproduct of the quaternion $r$ and the motor $Q$.
-	//
-	//# \action		bool operator ==(const Motor& a, const Motor& b);
-	//#				Returns a boolean value indicating whether the two motors $a$ and $b$ are equal.
-	//
-	//# \action		bool operator !=(const Motor& a, const Motor& b);
-	//#				Returns a boolean value indicating whether the two motors $a$ and $b$ are not equal.
 	//
 	//# \action		Vector3D Transform(const Vector3D& v, const Motor& Q);
 	//#				Transforms the vector $v$ with the motor $Q$.

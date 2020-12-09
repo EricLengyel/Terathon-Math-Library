@@ -77,6 +77,12 @@ namespace Terathon
 	//# \operator	Trivector4D& operator /=(float s);
 	//#				Multiplies by the inverse of the scalar $s$.
 	//
+	//# \action		bool operator ==(const Trivector4D& a, const Trivector4D& b);
+	//#				Returns a boolean value indicating whether the two trivectors $a$ and $b$ are equal.
+	//
+	//# \action		bool operator !=(const Trivector4D& a, const Trivector4D& b);
+	//#				Returns a boolean value indicating whether the two trivectors $a$ and $b$ are not equal.
+	//
 	//# \action		Trivector4D operator -(const Trivector4D& v);
 	//#				Returns the negation of the trivector $v$.
 	//
@@ -103,11 +109,11 @@ namespace Terathon
 	//#				Returns the antiwedge product of the 2D point $p$ and the trivector $f$. The <i>z</i> coordinate of $p$ is assumed to be 0, and the <i>w</i> coordinate of $p$ is assumed to be 1.
 	//#				This gives the distance from a unitized plane represented by a $Trivector4D$ object to the point $p$.
 	//
-	//# \action		bool operator ==(const Trivector4D& a, const Trivector4D& b);
-	//#				Returns a boolean value indicating whether the two trivectors $a$ and $b$ are equal.
+	//# \action		Point3D Project(const Point3D& p, const Trivector4D& f);
+	//#				Returns the projection of the point $p$ onto the plane $f$ under the assumption that the plane is unitized.
 	//
-	//# \action		bool operator !=(const Trivector4D& a, const Trivector4D& b);
-	//#				Returns a boolean value indicating whether the two trivectors $a$ and $b$ are not equal.
+	//# \action		Trivector4D Antiproject(const Trivector4D& f, const Point3D& p);
+	//#				Returns the antiprojection of the plane $f$ onto the point $p$ (where $p$ is always unitized because it has an implicit <i>w</i> coordinate of 1).
 	//
 	//# \privbase	Antivec4D	Antivectors use a generic base class to store their components.
 	//
@@ -389,6 +395,16 @@ namespace Terathon
 	inline float Antiwedge(const Trivector4D& a, const Subvec3D<type_struct, false, count, index_x, index_y, index_z>& b)
 	{
 		return (a ^ b);
+	}
+
+	inline Point3D Project(const Point3D& p, const Trivector4D& f)
+	{
+		return (Point3D(p - !f.xyz * (p ^ f)));
+	}
+
+	inline Trivector4D Antiproject(const Trivector4D& f, const Point3D& p)
+	{
+		return (Trivector4D(f.xyz, p));
 	}
 }
 

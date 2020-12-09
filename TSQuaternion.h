@@ -102,6 +102,36 @@ namespace Terathon
 	//# \operator	Quaternion& operator /=(float s);
 	//#				Multiplies by the inverse of the scalar $s$.
 	//
+	//# \action		bool operator ==(const Quaternion& q1, const Quaternion& q2);
+	//#				Returns a boolean value indicating whether the two quaternions $q1$ and $q2$ are equal.
+	//
+	//# \action		bool operator ==(const Quaternion& q, const Vector3D& v);
+	//#				Returns a boolean value indicating whether the quaternion $q$ and the vector $v$ are equal.
+	//
+	//# \action		bool operator ==(const Vector3D& v, const Quaternion& q);
+	//#				Returns a boolean value indicating whether the vector $v$ and the quaternion $q$ are equal.
+	//
+	//# \action		bool operator ==(const Quaternion& q, float s);
+	//#				Returns a boolean value indicating whether the quaternion $q$ and the scalar $s$ are equal.
+	//
+	//# \action		bool operator ==(float s, const Quaternion& q);
+	//#				Returns a boolean value indicating whether the scalar $a$ and the quaternion $q$ are equal.
+	//
+	//# \action		bool operator !=(const Quaternion& q1, const Quaternion& q2);
+	//#				Returns a boolean value indicating whether the two quaternions $q1$ and $q2$ are not equal.
+	//
+	//# \action		bool operator !=(const Quaternion& q, const Vector3D& v);
+	//#				Returns a boolean value indicating whether the quaternion $q$ and the vector $v$ are not equal.
+	//
+	//# \action		bool operator !=(const Vector3D& v, const Quaternion& q);
+	//#				Returns a boolean value indicating whether the vector $v$ and the quaternion $q$ are not equal.
+	//
+	//# \action		bool operator !=(const Quaternion& q, float s);
+	//#				Returns a boolean value indicating whether the quaternion $q$ and the scalar $s$ are not equal.
+	//
+	//# \action		bool operator !=(float s, const Quaternion& q);
+	//#				Returns a boolean value indicating whether the scalar $s$ and the quaternion $q$ are not equal.
+	//
 	//# \action		Quaternion operator -(const Quaternion& q);
 	//#				Returns the negation of the quaternion $q$.
 	//
@@ -164,36 +194,6 @@ namespace Terathon
 	//
 	//# \action		Quaternion operator /(float s, const Quaternion& q);
 	//#				Returns the quotient of the scalar $s$ and the quaternion $q$.
-	//
-	//# \action		bool operator ==(const Quaternion& q1, const Quaternion& q2);
-	//#				Returns a boolean value indicating whether the two quaternions $q1$ and $q2$ are equal.
-	//
-	//# \action		bool operator ==(const Quaternion& q, const Vector3D& v);
-	//#				Returns a boolean value indicating whether the quaternion $q$ and the vector $v$ are equal.
-	//
-	//# \action		bool operator ==(const Vector3D& v, const Quaternion& q);
-	//#				Returns a boolean value indicating whether the vector $v$ and the quaternion $q$ are equal.
-	//
-	//# \action		bool operator ==(const Quaternion& q, float s);
-	//#				Returns a boolean value indicating whether the quaternion $q$ and the scalar $s$ are equal.
-	//
-	//# \action		bool operator ==(float s, const Quaternion& q);
-	//#				Returns a boolean value indicating whether the scalar $a$ and the quaternion $q$ are equal.
-	//
-	//# \action		bool operator !=(const Quaternion& q1, const Quaternion& q2);
-	//#				Returns a boolean value indicating whether the two quaternions $q1$ and $q2$ are not equal.
-	//
-	//# \action		bool operator !=(const Quaternion& q, const Vector3D& v);
-	//#				Returns a boolean value indicating whether the quaternion $q$ and the vector $v$ are not equal.
-	//
-	//# \action		bool operator !=(const Vector3D& v, const Quaternion& q);
-	//#				Returns a boolean value indicating whether the vector $v$ and the quaternion $q$ are not equal.
-	//
-	//# \action		bool operator !=(const Quaternion& q, float s);
-	//#				Returns a boolean value indicating whether the quaternion $q$ and the scalar $s$ are not equal.
-	//
-	//# \action		bool operator !=(float s, const Quaternion& q);
-	//#				Returns a boolean value indicating whether the scalar $s$ and the quaternion $q$ are not equal.
 	//
 	//# \action		float Magnitude(const Quaternion& q);
 	//#				Returns the magnitude of a quaternion.

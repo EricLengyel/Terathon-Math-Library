@@ -74,6 +74,12 @@ namespace Terathon
 	//# \operator	Bivector4D& operator /=(float s);
 	//#				Multiplies by the inverse of the scalar $s$.
 	//
+	//# \action		bool operator ==(const Bivector4D& a, const Bivector4D& b);
+	//#				Returns a boolean value indicating whether the two bivectors $a$ and $b$ are equal.
+	//
+	//# \action		bool operator !=(const Bivector4D& a, const Bivector4D& b);
+	//#				Returns a boolean value indicating whether the two bivectors $a$ and $b$ are not equal.
+	//
 	//# \action		Bivector4D operator -(const Bivector4D& L);
 	//#				Returns the negation of the bivector $L$.
 	//
@@ -85,12 +91,6 @@ namespace Terathon
 	//
 	//# \action		Bivector4D operator /(const Bivector4D& L, float s);
 	//#				Returns the product of the bivector $L$ and the inverse of the scalar $s$.
-	//
-	//# \action		bool operator ==(const Bivector4D& a, const Bivector4D& b);
-	//#				Returns a boolean value indicating whether the two bivectors $a$ and $b$ are equal.
-	//
-	//# \action		bool operator !=(const Bivector4D& a, const Bivector4D& b);
-	//#				Returns a boolean value indicating whether the two bivectors $a$ and $b$ are not equal.
 	//
 	//# \action		Bivector4D operator ^(const Point3D& p, const Point3D& q);
 	//#				Returns the wedge product of the points $p$ and $q$. The <i>w</i> coordinates of $p$ and $q$ are assumed to be 1.
@@ -123,6 +123,18 @@ namespace Terathon
 	//# \action		float operator ^(const Bivector4D& K, const Bivector4D& L);
 	//#				Returns the antiwedge product of the bivectors $K$ and $L$.
 	//#				This gives the crossing relationship between the two lines, with positive values representing clockwise crossings and negative values representing counterclockwise crossings.
+	//
+	//# \action		Point3D Project(const Point3D& p, const Bivector4D& L);
+	//#				Returns the projection of the point $p$ onto the line $L$ under the assumption that the line is unitized.
+	//
+	//# \action		Bivector4D Project(const Bivector4D& L, const Trivector4D& f);
+	//#				Returns the projection of the line $L$ onto the plane $f$ under the assumption that the plane is unitized.
+	//
+	//# \action		Bivector4D Antiproject(const Bivector4D& L, const Point3D& p);
+	//#				Returns the antiprojection of the line $L$ onto the point $p$ (where $p$ is always unitized because it has an implicit <i>w</i> coordinate of 1).
+	//
+	//# \action		Trivector4D Antiproject(const Trivector4D& f, const Bivector4D& L);
+	//#				Returns the antiprojection of the plane $f$ onto the line $L$ under the assumption that the line is unitized.
 	//
 	//# \also	$@Vector4D@$
 	//# \also	$@Trivector4D@$
@@ -458,6 +470,27 @@ namespace Terathon
 	inline float Antiwedge(const Bivector4D& K, const Bivector4D& L)
 	{
 		return (K ^ L);
+	}
+
+	inline Point3D Project(const Point3D& p, const Bivector4D& L)
+	{
+		float d = Dot(L.direction, p);
+		return (Point3D(d * L.direction.x + L.direction.y * L.moment.z - L.direction.z * L.moment.y, d * L.direction.y + L.direction.z * L.moment.x - L.direction.x * L.moment.z, d * L.direction.z + L.direction.x * L.moment.y - L.direction.y * L.moment.x));
+	}
+
+	inline Bivector4D Project(const Bivector4D& L, const Trivector4D& f)
+	{
+		return (Bivector4D(L.direction - !f.xyz * (f.xyz ^ L.direction), f.xyz * (!f.xyz ^ L.moment) - (!f.xyz ^ L.direction) * f.w));
+	}
+
+	inline Bivector4D Antiproject(const Bivector4D& L, const Point3D& p)
+	{
+		return (Bivector4D(p, L.direction));
+	}
+
+	inline Trivector4D Antiproject(const Trivector4D& f, const Bivector4D& L)
+	{
+		return (Trivector4D(f.xyz - !L.direction * (f.xyz ^ L.direction), L.moment ^ !L.direction ^ f.xyz));
 	}
 
 	inline Bivector4D Translate(const Bivector4D& L, const Vector3D& t)

@@ -82,6 +82,12 @@ namespace Terathon
 	//# \operator	Vector3D& operator /=(float s);
 	//#				Divides by the scalar $s$.
 	//
+	//# \action		bool operator ==(const Vector3D& v1, const Vector3D& v2) const;
+	//#				Returns a boolean value indicating whether the two vectors $v1$ and $v2$ are equal.
+	//
+	//# \action		bool operator !=(const Vector3D& v1, const Vector3D& v2) const;
+	//#				Returns a boolean value indicating whether the two vectors $v1$ and $v2$ are not equal.
+	//
 	//# \action		Vector3D operator -(const Vector3D& v);
 	//#				Returns the negation of the vector $v$.
 	//
@@ -102,12 +108,6 @@ namespace Terathon
 	//
 	//# \action		Vector3D operator *(const Vector3D& a, const Vector3D& b);
 	//#				Returns the componentwise product of the vectors $a$ and $b$
-	//
-	//# \action		bool operator ==(const Vector3D& v1, const Vector3D& v2) const;
-	//#				Returns a boolean value indicating whether the two vectors $v1$ and $v2$ are equal.
-	//
-	//# \action		bool operator !=(const Vector3D& v1, const Vector3D& v2) const;
-	//#				Returns a boolean value indicating whether the two vectors $v1$ and $v2$ are not equal.
 	//
 	//# \action		float Magnitude(const Vector3D& v);
 	//#				Returns the magnitude of the vector $v$.

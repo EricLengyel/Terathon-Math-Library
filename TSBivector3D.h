@@ -79,6 +79,12 @@ namespace Terathon
 	//# \operator	Bivector3D& operator /=(float s);
 	//#				Multiplies by the inverse of the scalar $s$.
 	//
+	//# \action		bool operator ==(const Bivector3D& a, const Bivector3D& b);
+	//#				Returns a boolean value indicating whether the two bivectors $a$ and $b$ are equal.
+	//
+	//# \action		bool operator !=(const Bivector3D& a, const Bivector3D& b);
+	//#				Returns a boolean value indicating whether the two bivectors $a$ and $b$ are not equal.
+	//
 	//# \action		Bivector3D operator !(const Vector3D& v);
 	//#				Returns the complement of the vector $v$.
 	//
@@ -126,6 +132,9 @@ namespace Terathon
 	//
 	//# \action		float operator ^(const Vector3D& a, const Bivector3D& b);
 	//#				Returns the antiwedge product of the vector $a$ and the bivector $b$.
+	//
+	//# \action		Vector3D Project(const Vector3D& a, const Bivector3D& b);
+	//#				Returns (<b>b&#x0332;</b>&#x202F;&#x27D1;&#x202F;<b>a</b>&#x202F;&#x27C7;&#x202F;<b>b</b>)<b>b</b>, which is the projection of $a$ onto $b$ under the assumption that the magnitude of $b$ is one.
 	//
 	//# \also	$@Vector3D@$
 	//# \also	$@Vector2D@$
@@ -419,14 +428,9 @@ namespace Terathon
 		return (a.x * b.x + a.y * b.y + a.z * b.z);
 	}
 
-	inline Bivector3D Project(const Bivector3D& a, const Vector3D& b)
+	inline Vector3D Project(const Vector3D& a, const Bivector3D& b)
 	{
-		return (!b * (a ^ b));
-	}
-
-	inline Bivector3D Reject(const Bivector3D& a, const Vector3D& b)
-	{
-		return (a - !b * (a ^ b));
+		return ((!b ^ a) ^ b);
 	}
 
 	inline float Magnitude(const Bivector3D& v)
