@@ -12,7 +12,6 @@
 
 
 #include "TSMatrix3D.h"
-#include "TSBasic.h"
 
 
 using namespace Terathon;
@@ -91,8 +90,8 @@ Matrix3D& Matrix3D::SetIdentity(void)
 Matrix3D& Matrix3D::Orthogonalize(int32 column)
 {
 	Vector3D& x = (*this)[column];
-	Vector3D& y = (*this)[IncMod<3>(column)];
-	Vector3D& z = (*this)[DecMod<3>(column)];
+	Vector3D& y = (*this)[(column < 2) ? column + 1 : 0];
+	Vector3D& z = (*this)[(column > 0) ? column - 1 : 2];
 
 	x.Normalize();
 	y = Normalize(y - x * Dot(x, y));
