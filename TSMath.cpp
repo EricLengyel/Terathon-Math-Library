@@ -415,37 +415,40 @@ float Terathon::Arctan(float x)
 		0x3F38053E, 0x3F3A44BC, 0x3F3C7B5E, 0x3F3EA941, 0x3F40CE86, 0x3F42EB4B, 0x3F44FFB0, 0x3F470BD5, 0x3F490FDB
 	};
 
-	// arctan(x + y) = (1 - xy)(arctan(x) + arctan(y))
+	// arctan(a) = arctan(b) + arctan((a - b) / (ab + 1))
 
-	float f = Fabs(x);
-	if (f <= 1.0F)
+	float a = Fabs(x);
+	if (a <= 1.0F)
 	{
-		float b = f * 64.0F;
+		float b = a * 64.0F;
 		float i = PositiveFloor(b);
-		b = (b - i) * 0.015625F;
+		b = i * 0.015625F;
 
-		float c = b / (b * b + 1.0F);
-		float bc = b * c;
+		float arctan_b = reinterpret_cast<const float *>(table)[int32(i)];
+		float c = (a - b) / (a * b + 1.0F);
+		float c2 = c * c;
 
-		float r = (bc * 0.5333333333F + 0.6666666667F) * (bc * c) + c;
-		f = (1.0F - b * (i * 0.015625F)) * (reinterpret_cast<const float *>(table)[int32(i)] + r);
+		float arctan_c = c * (1.0F - c2 * (0.3333333333F + c2 * (0.2F - c2 * 0.1428571429F)));
+		a = arctan_b + arctan_c;
 	}
 	else
 	{
-		// arctan(x) = tau / 4 - arctan(1 / x)
+		// arctan(a) = tau / 4 - arctan(1 / a)
 
-		float b = 64.0F / f;
+		a = 1.0F / a;
+		float b = a * 64.0F;
 		float i = PositiveFloor(b);
-		b = (b - i) * 0.015625F;
+		b = i * 0.015625F;
 
-		float c = b / (b * b + 1.0F);
-		float bc = b * c;
+		float arctan_b = reinterpret_cast<const float *>(table)[int32(i)];
+		float c = (a - b) / (a * b + 1.0F);
+		float c2 = c * c;
 
-		float r = (bc * 0.5333333333F + 0.6666666667F) * (bc * c) + c;
-		f = Math::tau_over_4 - (1.0F - b * (i * 0.015625F)) * (reinterpret_cast<const float *>(table)[int32(i)] + r);
+		float arctan_c = c * (1.0F - c2 * (0.3333333333F + c2 * (0.2F - c2 * 0.1428571429F)));
+		a = Math::tau_over_4 - (arctan_b + arctan_c);
 	}
 
-	return ((x < 0.0F) ? -f : f);
+	return ((x < 0.0F) ? -a : a);
 }
 
 float Terathon::Arctan(float y, float x)
