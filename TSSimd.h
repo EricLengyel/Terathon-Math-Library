@@ -60,35 +60,10 @@
 			unsigned __int64	m128i_u64[2];
 		} __m128i;
 
-		#define _MM_SHUFFLE(fp3,fp2,fp1,fp0) (((fp3) << 6) | ((fp2) << 4) | ((fp1) << 2) | ((fp0)))
+		#define _MM_SHUFFLE(p3,p2,p1,p0) (((p3) << 6) | ((p2) << 4) | ((p1) << 2) | (p0))
 
-	#endif
-
-	#ifdef TERATHON_AVX
-
-		typedef union __declspec(intrin_type) __declspec(align(32)) __m256
+		extern "C"
 		{
-			float				m256_f32[8];
-		} __m256;
-
-		typedef union __declspec(intrin_type) __declspec(align(32)) __m256i
-		{
-			__int8				m256i_i8[32];
-			__int16				m256i_i16[16];
-			__int32				m256i_i32[8];
-			__int64				m256i_i64[4];
-			unsigned __int8		m256i_u8[32];
-			unsigned __int16	m256i_u16[16];
-			unsigned __int32	m256i_u32[8];
-			unsigned __int64	m256i_u64[4];
-		} __m256i;
-
-	#endif
-
-	extern "C"
-	{
-		#ifdef TERATHON_SSE
-
 			extern __m128 _mm_add_ss(__m128, __m128);
 			extern __m128 _mm_add_ps(__m128, __m128);
 			extern __m128 _mm_sub_ss(__m128, __m128);
@@ -147,11 +122,31 @@
 			extern __m128i _mm_cvtps_epi32(__m128);
 			extern __m128i _mm_add_epi32(__m128i, __m128i);
 			extern __m128i _mm_sub_epi32(__m128i, __m128i);
+		}
 
-		#endif
+	#endif
 
-		#ifdef TERATHON_AVX
+	#ifdef TERATHON_AVX
 
+		typedef union __declspec(intrin_type) __declspec(align(32)) __m256
+		{
+			float				m256_f32[8];
+		} __m256;
+
+		typedef union __declspec(intrin_type) __declspec(align(32)) __m256i
+		{
+			__int8				m256i_i8[32];
+			__int16				m256i_i16[16];
+			__int32				m256i_i32[8];
+			__int64				m256i_i64[4];
+			unsigned __int8		m256i_u8[32];
+			unsigned __int16	m256i_u16[16];
+			unsigned __int32	m256i_u32[8];
+			unsigned __int64	m256i_u64[4];
+		} __m256i;
+
+		extern "C"
+		{
 			extern __m256 __cdecl _mm256_add_ps(__m256, __m256);
 			extern __m256 __cdecl _mm256_sub_ps(__m256, __m256);
 			extern __m256 __cdecl _mm256_mul_ps(__m256, __m256);
@@ -173,9 +168,9 @@
 			extern __m256 __cdecl _mm256_load_ps(const float *);
 			extern __m256 __cdecl _mm256_broadcast_ss(const float *);
 			extern void __cdecl _mm256_store_ps(float *, __m256);
+		}
 
-		#endif
-	}
+	#endif
 
 #else
 
@@ -196,9 +191,58 @@
 
 namespace Terathon
 {
+	struct vec_float
+	{
+		#ifdef TERATHON_SSE
+
+			__m128		v;
+
+			vec_float(__m128 m) {v = m;}
+
+			operator __m128&(void) {return (v);}
+			operator const __m128&(void) const {return (v);}
+			operator volatile __m128&(void) volatile {return (v);}
+			operator const volatile __m128&(void) const volatile {return (v);}
+
+		#else
+
+			float		v[4];
+
+		#endif
+
+		inline vec_float() = default;
+		inline vec_float(const vec_float&) = default;
+		inline vec_float& operator =(const vec_float& m) = default;
+	};
+
+
+	struct exv_float
+	{
+		#ifdef TERATHON_AVX
+
+			__m256		v;
+
+			exv_float(__m256 m) {v = m;}
+
+			operator __m256&(void) {return (v);}
+			operator const __m256&(void) const {return (v);}
+			operator volatile __m256&(void) volatile {return (v);}
+			operator const volatile __m256&(void) const volatile {return (v);}
+
+		#else
+
+			float		v[8];
+
+		#endif
+
+		inline exv_float() = default;
+		inline exv_float(const exv_float&) = default;
+		inline exv_float& operator =(const exv_float&) = default;
+	};
+
+
 	#ifdef TERATHON_SSE
 
-		typedef __m128 vec_float;
 		typedef __m128i vec_int8;
 		typedef __m128i vec_int16;
 		typedef __m128i vec_int32;
@@ -210,7 +254,6 @@ namespace Terathon
 
 	#ifdef TERATHON_AVX
 
-		typedef __m256 exv_float;
 		typedef __m256i exv_int8;
 		typedef __m256i exv_int16;
 		typedef __m256i exv_int32;
@@ -294,6 +337,16 @@ namespace Terathon
 		#ifdef TERATHON_SSE
 
 			return (_mm_shuffle_ps(v, v, _MM_SHUFFLE(3, 3, 3, 3)));
+
+		#endif
+	}
+
+	template <int p3, int p2, int p1, int p0>
+	inline vec_float VecShuffle(const vec_float& v1, const vec_float& v2)
+	{
+		#ifdef TERATHON_SSE
+
+			return (_mm_shuffle_ps(v1, v2, _MM_SHUFFLE(p3, p2, p1, p0)));
 
 		#endif
 	}
@@ -440,6 +493,15 @@ namespace Terathon
 		#endif
 	}
 
+	inline vec_float operator -(const vec_float& v)
+	{
+		#ifdef TERATHON_SSE
+
+			return (_mm_sub_ps(_mm_setzero_ps(), v));
+
+		#endif
+	}
+
 	inline vec_float VecMin(const vec_float& v1, const vec_float& v2)
 	{
 		#ifdef TERATHON_SSE
@@ -485,6 +547,15 @@ namespace Terathon
 		#endif
 	}
 
+	inline vec_float operator +(const vec_float& v1, const vec_float& v2)
+	{
+		#ifdef TERATHON_SSE
+
+			return (_mm_add_ps(v1, v2));
+
+		#endif
+	}
+
 	inline vec_float VecAddScalar(const vec_float& v1, const vec_float& v2)
 	{
 		#ifdef TERATHON_SSE
@@ -503,6 +574,15 @@ namespace Terathon
 		#endif
 	}
 
+	inline vec_float operator -(const vec_float& v1, const vec_float& v2)
+	{
+		#ifdef TERATHON_SSE
+
+			return (_mm_sub_ps(v1, v2));
+
+		#endif
+	}
+
 	inline vec_float VecSubScalar(const vec_float& v1, const vec_float& v2)
 	{
 		#ifdef TERATHON_SSE
@@ -513,6 +593,15 @@ namespace Terathon
 	}
 
 	inline vec_float VecMul(const vec_float& v1, const vec_float& v2)
+	{
+		#ifdef TERATHON_SSE
+
+			return (_mm_mul_ps(v1, v2));
+
+		#endif
+	}
+
+	inline vec_float operator *(const vec_float& v1, const vec_float& v2)
 	{
 		#ifdef TERATHON_SSE
 
@@ -575,6 +664,15 @@ namespace Terathon
 		#endif
 	}
 
+	inline vec_float operator /(const vec_float& v1, const vec_float& v2)
+	{
+		#ifdef TERATHON_SSE
+
+			return (_mm_div_ps(v1, v2));
+
+		#endif
+	}
+
 	inline vec_float VecDivScalar(const vec_float& v1, const vec_float& v2)
 	{
 		#ifdef TERATHON_SSE
@@ -585,6 +683,15 @@ namespace Terathon
 	}
 
 	inline vec_float VecAnd(const vec_float& v1, const vec_float& v2)
+	{
+		#ifdef TERATHON_SSE
+
+			return (_mm_and_ps(v1, v2));
+
+		#endif
+	}
+
+	inline vec_float operator &(const vec_float& v1, const vec_float& v2)
 	{
 		#ifdef TERATHON_SSE
 
@@ -611,7 +718,25 @@ namespace Terathon
 		#endif
 	}
 
+	inline vec_float operator |(const vec_float& v1, const vec_float& v2)
+	{
+		#ifdef TERATHON_SSE
+
+			return (_mm_or_ps(v1, v2));
+
+		#endif
+	}
+
 	inline vec_float VecXor(const vec_float& v1, const vec_float& v2)
+	{
+		#ifdef TERATHON_SSE
+
+			return (_mm_xor_ps(v1, v2));
+
+		#endif
+	}
+
+	inline vec_float operator ^(const vec_float& v1, const vec_float& v2)
 	{
 		#ifdef TERATHON_SSE
 
@@ -1144,27 +1269,27 @@ namespace Terathon
 	inline vec_float VecFsgn(const vec_float& v)
 	{
 		vec_float result = VecLoadVectorConstant<0x3F800000>();
-		result = VecOr(result, VecAnd(VecFloatGetMinusZero(), v));
+		result = result | (VecFloatGetMinusZero() & v);
 		return (VecAndc(result, VecMaskCmpeq(v, VecFloatGetZero())));
 	}
 
 	inline vec_float VecFnsgn(const vec_float& v)
 	{
 		vec_float result = VecLoadVectorConstant<0x3F800000>();
-		result = VecOr(result, VecAndc(VecFloatGetMinusZero(), v));
+		result = result | VecAndc(VecFloatGetMinusZero(), v);
 		return (VecAndc(result, VecMaskCmpeq(v, VecFloatGetZero())));
 	}
 
 	inline vec_float VecNonzeroFsgn(const vec_float& v)
 	{
 		vec_float result = VecLoadVectorConstant<0x3F800000>();
-		return (VecOr(result, VecAnd(VecFloatGetMinusZero(), v)));
+		return (result | (VecFloatGetMinusZero() & v));
 	}
 
 	inline vec_float VecNonzeroFnsgn(const vec_float& v)
 	{
 		vec_float result = VecLoadVectorConstant<0x3F800000>();
-		return (VecOr(result, VecAndc(VecFloatGetMinusZero(), v)));
+		return (result | VecAndc(VecFloatGetMinusZero(), v));
 	}
 
 	inline vec_float VecHorizontalSum3D(const vec_float& v)
@@ -1721,6 +1846,11 @@ namespace Terathon
 		}
 
 		inline exv_float ExvMul(const exv_float& v1, const exv_float& v2)
+		{
+			return (_mm256_mul_ps(v1, v2));
+		}
+
+		inline exv_float operator *(const exv_float& v1, const exv_float& v2)
 		{
 			return (_mm256_mul_ps(v1, v2));
 		}

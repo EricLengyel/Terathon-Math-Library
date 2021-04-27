@@ -212,7 +212,7 @@ namespace Terathon
 	//
 	//# \also	$@Vector3D@$
 	//# \also	$@Matrix3D@$
-	//# \also	$@Motor@$
+	//# \also	$@Motor4D@$
 
 
 	//# \function	Quaternion::Set		Sets all four components of a quaternion.
@@ -330,19 +330,16 @@ namespace Terathon
 
 	//# \function	Quaternion::SetRotationMatrix		Converts a 3&#x202F;&times;&#x202F;3 matrix to a quaternion.
 	//
-	//# \proto	Quaternion& SetRotationMatrix(const Matrix3D& m);
-	//# \proto	Quaternion& SetRotationMatrix(const Transform4D& m);
+	//# \proto	Quaternion& SetRotationMatrix(const Matrix3D& M);
 	//
-	//# \param	m		The matrix to convert to a quaternion.
+	//# \param	M		The matrix to convert to a quaternion.
 	//
 	//# \desc
 	//# The $SetRotationMatrix$ function sets the components of a quaternion to values that
-	//# represent the same rotation as the one represented by the matrix specified by the $m$ parameter.
-	//# If $m$ is a $@Transform4D@$ object, then the upper-left 3&#x202F;&times;&#x202F;3 submatrix is used,
-	//# and the fourth column is ignored.
+	//# represent the same rotation as the one represented by the matrix specified by the $M$ parameter.
 	//#
-	//# For best results, the matrix $m$ should be orthogonal. If the determinant of $m$ is not positive,
-	//# then the results are undefined.
+	//# This function expects the matrix $M$ to be orthogonal and have a determinant of +1.
+	//# If these conditions are not met, then the results are unlikely to be meaningful.
 	//
 	//# \also	$@Quaternion::GetRotationMatrix@$
 	//# \also	$@Quaternion::MakeRotationX@$
@@ -800,6 +797,7 @@ namespace Terathon
 	}
 
 
+	TERATHON_API Quaternion Sqrt(const Quaternion& q);
 	TERATHON_API Vector3D Transform(const Vector3D& v, const Quaternion& q);
 
 

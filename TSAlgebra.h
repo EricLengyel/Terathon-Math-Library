@@ -1381,6 +1381,19 @@ namespace Terathon
 	};
 
 
+	template <typename A_type_struct, int A_count, int A_index_00, int A_index_01, int A_index_10, int A_index_11, typename B_type_struct, int B_count, int B_index_00, int B_index_01, int B_index_10, int B_index_11>
+	inline bool operator ==(const Submat2D<A_type_struct, A_count, A_index_00, A_index_01, A_index_10, A_index_11>& A, const Submat2D<B_type_struct, B_count, B_index_00, B_index_01, B_index_10, B_index_11>& B)
+	{
+		return ((A.data[A_index_00] == B.data[B_index_00]) && (A.data[A_index_01] == B.data[B_index_01]) && (A.data[A_index_10] == B.data[B_index_10]) && (A.data[A_index_11] == B.data[B_index_11]));
+	}
+
+	template <typename A_type_struct, int A_count, int A_index_00, int A_index_01, int A_index_10, int A_index_11, typename B_type_struct, int B_count, int B_index_00, int B_index_01, int B_index_10, int B_index_11>
+	inline bool operator !=(const Submat2D<A_type_struct, A_count, A_index_00, A_index_01, A_index_10, A_index_11>& A, const Submat2D<B_type_struct, B_count, B_index_00, B_index_01, B_index_10, B_index_11>& B)
+	{
+		return ((A.data[A_index_00] != B.data[B_index_00]) || (A.data[A_index_01] != B.data[B_index_01]) || (A.data[A_index_10] != B.data[B_index_10]) || (A.data[A_index_11] != B.data[B_index_11]));
+	}
+
+
 	template <typename type_struct, int index_00, int index_01, int index_02, int index_10, int index_11, int index_12, int index_20, int index_21, int index_22>
 	struct ConverterMatrix3D
 	{
@@ -1607,6 +1620,19 @@ namespace Terathon
 				return (*this);
 			}
 	};
+
+
+	template <typename A_type_struct, int A_count, int A_index_00, int A_index_01, int A_index_02, int A_index_10, int A_index_11, int A_index_12, int A_index_20, int A_index_21, int A_index_22, typename B_type_struct, int B_count, int B_index_00, int B_index_01, int B_index_02, int B_index_10, int B_index_11, int B_index_12, int B_index_20, int B_index_21, int B_index_22>
+	inline bool operator ==(const Submat3D<A_type_struct, A_count, A_index_00, A_index_01, A_index_02, A_index_10, A_index_11, A_index_12, A_index_20, A_index_21, A_index_22>& A, const Submat3D<B_type_struct, B_count, B_index_00, B_index_01, B_index_02, B_index_10, B_index_11, B_index_12, B_index_20, B_index_21, B_index_22>& B)
+	{
+		return ((A.data[A_index_00] == B.data[B_index_00]) && (A.data[A_index_01] == B.data[B_index_01]) && (A.data[A_index_02] == B.data[B_index_02]) && (A.data[A_index_10] == B.data[B_index_10]) && (A.data[A_index_11] == B.data[B_index_11]) && (A.data[A_index_12] == B.data[B_index_12]) && (A.data[A_index_20] == B.data[B_index_20]) && (A.data[A_index_21] == B.data[B_index_21]) && (A.data[A_index_22] == B.data[B_index_22]));
+	}
+
+	template <typename A_type_struct, int A_count, int A_index_00, int A_index_01, int A_index_02, int A_index_10, int A_index_11, int A_index_12, int A_index_20, int A_index_21, int A_index_22, typename B_type_struct, int B_count, int B_index_00, int B_index_01, int B_index_02, int B_index_10, int B_index_11, int B_index_12, int B_index_20, int B_index_21, int B_index_22>
+	inline bool operator !=(const Submat3D<A_type_struct, A_count, A_index_00, A_index_01, A_index_02, A_index_10, A_index_11, A_index_12, A_index_20, A_index_21, A_index_22>& A, const Submat3D<B_type_struct, B_count, B_index_00, B_index_01, B_index_02, B_index_10, B_index_11, B_index_12, B_index_20, B_index_21, B_index_22>& B)
+	{
+		return ((A.data[A_index_00] != B.data[B_index_00]) || (A.data[A_index_01] != B.data[B_index_01]) || (A.data[A_index_02] != B.data[B_index_02]) || (A.data[A_index_10] != B.data[B_index_10]) || (A.data[A_index_11] != B.data[B_index_11]) || (A.data[A_index_12] != B.data[B_index_12]) || (A.data[A_index_20] != B.data[B_index_20]) || (A.data[A_index_21] != B.data[B_index_21]) || (A.data[A_index_22] != B.data[B_index_22]));
+	}
 
 
 	template <typename type_struct, int index_00, int index_01, int index_02, int index_03, int index_10, int index_11, int index_12, int index_13, int index_20, int index_21, int index_22, int index_23, int index_30, int index_31, int index_32, int index_33>
@@ -1921,6 +1947,19 @@ namespace Terathon
 	};
 
 
+	template <typename A_type_struct, int A_count, int A_index_00, int A_index_01, int A_index_02, int A_index_03, int A_index_10, int A_index_11, int A_index_12, int A_index_13, int A_index_20, int A_index_21, int A_index_22, int A_index_23, int A_index_30, int A_index_31, int A_index_32, int A_index_33, typename B_type_struct, int B_count, int B_index_00, int B_index_01, int B_index_02, int B_index_03, int B_index_10, int B_index_11, int B_index_12, int B_index_13, int B_index_20, int B_index_21, int B_index_22, int B_index_23, int B_index_30, int B_index_31, int B_index_32, int B_index_33>
+	inline bool operator ==(const Submat4D<A_type_struct, A_count, A_index_00, A_index_01, A_index_02, A_index_03, A_index_10, A_index_11, A_index_12, A_index_13, A_index_20, A_index_21, A_index_22, A_index_23, A_index_30, A_index_31, A_index_32, A_index_33>& A, const Submat4D<B_type_struct, B_count, B_index_00, B_index_01, B_index_02, B_index_03, B_index_10, B_index_11, B_index_12, B_index_13, B_index_20, B_index_21, B_index_22, B_index_23, B_index_30, B_index_31, B_index_32, B_index_33>& B)
+	{
+		return ((A.data[A_index_00] == B.data[B_index_00]) && (A.data[A_index_01] == B.data[B_index_01]) && (A.data[A_index_02] == B.data[B_index_02]) && (A.data[A_index_03] == B.data[B_index_03]) && (A.data[A_index_10] == B.data[B_index_10]) && (A.data[A_index_11] == B.data[B_index_11]) && (A.data[A_index_12] == B.data[B_index_12]) && (A.data[A_index_13] == B.data[B_index_13]) && (A.data[A_index_20] == B.data[B_index_20]) && (A.data[A_index_21] == B.data[B_index_21]) && (A.data[A_index_22] == B.data[B_index_22]) && (A.data[A_index_23] == B.data[B_index_23]) && (A.data[A_index_30] == B.data[B_index_30]) && (A.data[A_index_31] == B.data[B_index_31]) && (A.data[A_index_32] == B.data[B_index_32]) && (A.data[A_index_33] == B.data[B_index_33]));
+	}
+
+	template <typename A_type_struct, int A_count, int A_index_00, int A_index_01, int A_index_02, int A_index_03, int A_index_10, int A_index_11, int A_index_12, int A_index_13, int A_index_20, int A_index_21, int A_index_22, int A_index_23, int A_index_30, int A_index_31, int A_index_32, int A_index_33, typename B_type_struct, int B_count, int B_index_00, int B_index_01, int B_index_02, int B_index_03, int B_index_10, int B_index_11, int B_index_12, int B_index_13, int B_index_20, int B_index_21, int B_index_22, int B_index_23, int B_index_30, int B_index_31, int B_index_32, int B_index_33>
+	inline bool operator !=(const Submat4D<A_type_struct, A_count, A_index_00, A_index_01, A_index_02, A_index_03, A_index_10, A_index_11, A_index_12, A_index_13, A_index_20, A_index_21, A_index_22, A_index_23, A_index_30, A_index_31, A_index_32, A_index_33>& A, const Submat4D<B_type_struct, B_count, B_index_00, B_index_01, B_index_02, B_index_03, B_index_10, B_index_11, B_index_12, B_index_13, B_index_20, B_index_21, B_index_22, B_index_23, B_index_30, B_index_31, B_index_32, B_index_33>& B)
+	{
+		return ((A.data[A_index_00] != B.data[B_index_00]) || (A.data[A_index_01] != B.data[B_index_01]) || (A.data[A_index_02] != B.data[B_index_02]) || (A.data[A_index_03] != B.data[B_index_03]) || (A.data[A_index_10] != B.data[B_index_10]) || (A.data[A_index_11] != B.data[B_index_11]) || (A.data[A_index_12] != B.data[B_index_12]) || (A.data[A_index_13] != B.data[B_index_13]) || (A.data[A_index_20] != B.data[B_index_20]) || (A.data[A_index_21] != B.data[B_index_21]) || (A.data[A_index_22] != B.data[B_index_22]) || (A.data[A_index_23] != B.data[B_index_23]) || (A.data[A_index_30] != B.data[B_index_30]) || (A.data[A_index_31] != B.data[B_index_31]) || (A.data[A_index_32] != B.data[B_index_32]) || (A.data[A_index_33] != B.data[B_index_33]));
+	}
+
+
 	template <typename type_struct>
 	class Mat2D
 	{
@@ -1999,6 +2038,19 @@ namespace Terathon
 				matrix = m;
 			}
 	};
+
+
+	template <typename type_struct>
+	inline bool operator ==(const Mat2D<type_struct>& m1, const Mat2D<type_struct>& m2)
+	{
+		return (m1.matrix == m2.matrix);
+	}
+
+	template <typename type_struct>
+	inline bool operator !=(const Mat2D<type_struct>& m1, const Mat2D<type_struct>& m2)
+	{
+		return (m1.matrix != m2.matrix);
+	}
 
 
 	template <typename type_struct>
@@ -2088,6 +2140,19 @@ namespace Terathon
 				matrix = m;
 			}
 	};
+
+
+	template <typename type_struct>
+	inline bool operator ==(const Mat3D<type_struct>& m1, const Mat3D<type_struct>& m2)
+	{
+		return (m1.matrix == m2.matrix);
+	}
+
+	template <typename type_struct>
+	inline bool operator !=(const Mat3D<type_struct>& m1, const Mat3D<type_struct>& m2)
+	{
+		return (m1.matrix != m2.matrix);
+	}
 
 
 	template <typename type_struct>
@@ -2200,6 +2265,19 @@ namespace Terathon
 				matrix = m;
 			}
 	};
+
+
+	template <typename type_struct>
+	inline bool operator ==(const Mat4D<type_struct>& m1, const Mat4D<type_struct>& m2)
+	{
+		return (m1.matrix == m2.matrix);
+	}
+
+	template <typename type_struct>
+	inline bool operator !=(const Mat4D<type_struct>& m1, const Mat4D<type_struct>& m2)
+	{
+		return (m1.matrix != m2.matrix);
+	}
 
 
 	template <typename m_type_struct, int m_count, int m_index_00, int m_index_01, int m_index_10, int m_index_11,

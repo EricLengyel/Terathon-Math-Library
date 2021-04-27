@@ -261,33 +261,33 @@ Matrix4D Terathon::Inverse(const Matrix4D& m)
 
 		vec_float s = VecCross3D(a, b);
 		vec_float t = VecCross3D(c, d);
-		vec_float u = VecSub(VecMul(a, y), VecMul(b, x));
-		vec_float v = VecSub(VecMul(c, w), VecMul(d, z));
+		vec_float u = a * y - b * x;
+		vec_float v = c * w - d * z;
 
-		vec_float invDet = VecSmearX(VecDivScalar(VecLoadScalarConstant<0x3F800000>(), VecAdd(VecDot3D(s, v), VecDot3D(t, u))));
+		vec_float invDet = VecSmearX(VecDivScalar(VecLoadScalarConstant<0x3F800000>(), VecDot3D(s, v) + VecDot3D(t, u)));
 
-		s = VecMul(s, invDet);
-		t = VecMul(t, invDet);
-		u = VecMul(u, invDet);
-		v = VecMul(v, invDet);
+		s = s * invDet;
+		t = t * invDet;
+		u = u * invDet;
+		v = v * invDet;
 
-		vec_float r0 = VecAdd(VecCross3D(b, v), VecMul(t, y));
-		vec_float r1 = VecSub(VecCross3D(v, a), VecMul(t, x));
-		vec_float r2 = VecAdd(VecCross3D(d, u), VecMul(s, w));
-		vec_float r3 = VecSub(VecCross3D(u, c), VecMul(s, z));
+		vec_float r0 = VecCross3D(b, v) + t * y;
+		vec_float r1 = VecCross3D(v, a) - t * x;
+		vec_float r2 = VecCross3D(d, u) + s * w;
+		vec_float r3 = VecCross3D(u, c) - s * z;
 
-		vec_float h0 = _mm_shuffle_ps(r0, r1, _MM_SHUFFLE(1, 0, 1, 0));
-		vec_float h1 = _mm_shuffle_ps(r2, r3, _MM_SHUFFLE(1, 0, 1, 0));
-		vec_float h2 = _mm_shuffle_ps(r0, r1, _MM_SHUFFLE(3, 2, 3, 2));
-		vec_float h3 = _mm_shuffle_ps(r2, r3, _MM_SHUFFLE(3, 2, 3, 2));
+		vec_float h0 = VecShuffle<1,0,1,0>(r0, r1);
+		vec_float h1 = VecShuffle<1,0,1,0>(r2, r3);
+		vec_float h2 = VecShuffle<3,2,3,2>(r0, r1);
+		vec_float h3 = VecShuffle<3,2,3,2>(r2, r3);
 
-		VecStore(_mm_shuffle_ps(h0, h1, _MM_SHUFFLE(2, 0, 2, 0)), &result(0,0));
-		VecStore(_mm_shuffle_ps(h0, h1, _MM_SHUFFLE(3, 1, 3, 1)), &result(0,1));
-		VecStore(_mm_shuffle_ps(h2, h3, _MM_SHUFFLE(2, 0, 2, 0)), &result(0,2));
+		VecStore(VecShuffle<2,0,2,0>(h0, h1), &result(0,0));
+		VecStore(VecShuffle<3,1,3,1>(h0, h1), &result(0,1));
+		VecStore(VecShuffle<2,0,2,0>(h2, h3), &result(0,2));
 
-		VecStoreX(VecNegate(VecDot3D(b, t)), &result(0,3));
+		VecStoreX(-VecDot3D(b, t), &result(0,3));
 		VecStoreX(VecDot3D(a, t), &result(1,3));
-		VecStoreX(VecNegate(VecDot3D(d, s)), &result(2,3));
+		VecStoreX(-VecDot3D(d, s), &result(2,3));
 		VecStoreX(VecDot3D(c, s), &result(3,3));
 
 		return (result);
@@ -952,32 +952,32 @@ Transform4D Terathon::Inverse(const Transform4D& m)
 		vec_float c = VecLoad(&m(0,2));
 		vec_float d = VecLoad(&m(0,3));
 
-		vec_float t0 = _mm_shuffle_ps(a, b, _MM_SHUFFLE(1, 0, 1, 0));
-		vec_float t1 = _mm_shuffle_ps(c, d, _MM_SHUFFLE(1, 0, 1, 0));
-		vec_float t2 = _mm_shuffle_ps(a, b, _MM_SHUFFLE(3, 2, 3, 2));
-		vec_float t3 = _mm_shuffle_ps(c, d, _MM_SHUFFLE(3, 2, 3, 2));
+		vec_float t0 = VecShuffle<1,0,1,0>(a, b);
+		vec_float t1 = VecShuffle<1,0,1,0>(c, d);
+		vec_float t2 = VecShuffle<3,2,3,2>(a, b);
+		vec_float t3 = VecShuffle<3,2,3,2>(c, d);
 
-		a = _mm_shuffle_ps(t0, t1, _MM_SHUFFLE(2, 0, 2, 0));
-		b = _mm_shuffle_ps(t0, t1, _MM_SHUFFLE(3, 1, 3, 1));
-		c = _mm_shuffle_ps(t2, t3, _MM_SHUFFLE(2, 0, 2, 0));
+		a = VecShuffle<2,0,2,0>(t0, t1);
+		b = VecShuffle<3,1,3,1>(t0, t1);
+		c = VecShuffle<2,0,2,0>(t2, t3);
 
 		vec_float x = VecSmearW(a);
 		vec_float y = VecSmearW(b);
 		vec_float z = VecSmearW(c);
 
 		vec_float s = VecCross3D(a, b);
-		vec_float u = VecSub(VecMul(a, y), VecMul(b, x));
+		vec_float u = a * y - b * x;
 
 		vec_float invDet = VecSmearX(VecDivScalar(VecLoadScalarConstant<0x3F800000>(), VecDot3D(s, c)));
 
-		s = VecMul(s, invDet);
-		u = VecMul(u, invDet);
-		vec_float v = VecMul(c, invDet);
+		s = s * invDet;
+		u = u * invDet;
+		vec_float v = c * invDet;
 
 		VecStore(VecCross3D(b, v), &result(0,0));
 		VecStore(VecCross3D(v, a), &result(0,1));
 		VecStore(s, &result(0,2));
-		VecStore(VecSub(VecCross3D(u, c), VecMul(s, z)), &result(0,3));
+		VecStore(VecCross3D(u, c) - s * z, &result(0,3));
 
 		result(3,0) = result(3,1) = result(3,2) = 0.0F;
 		result(3,3) = 1.0F;
@@ -1015,22 +1015,22 @@ Transform4D Terathon::Adjugate(const Transform4D& m)
 		vec_float c = VecLoad(&m(0,2));
 		vec_float d = VecLoad(&m(0,3));
 
-		vec_float t0 = _mm_shuffle_ps(a, b, _MM_SHUFFLE(1, 0, 1, 0));
-		vec_float t1 = _mm_shuffle_ps(c, d, _MM_SHUFFLE(1, 0, 1, 0));
-		vec_float t2 = _mm_shuffle_ps(a, b, _MM_SHUFFLE(3, 2, 3, 2));
-		vec_float t3 = _mm_shuffle_ps(c, d, _MM_SHUFFLE(3, 2, 3, 2));
+		vec_float t0 = VecShuffle<1,0,1,0>(a, b);
+		vec_float t1 = VecShuffle<1,0,1,0>(c, d);
+		vec_float t2 = VecShuffle<3,2,3,2>(a, b);
+		vec_float t3 = VecShuffle<3,2,3,2>(c, d);
 
-		vec_float r0 = _mm_shuffle_ps(t0, t1, _MM_SHUFFLE(2, 0, 2, 0));
-		vec_float r1 = _mm_shuffle_ps(t0, t1, _MM_SHUFFLE(3, 1, 3, 1));
-		vec_float r2 = _mm_shuffle_ps(t2, t3, _MM_SHUFFLE(2, 0, 2, 0));
+		vec_float r0 = VecShuffle<2,0,2,0>(t0, t1);
+		vec_float r1 = VecShuffle<3,1,3,1>(t0, t1);
+		vec_float r2 = VecShuffle<2,0,2,0>(t2, t3);
 
 		vec_float s = VecCross3D(r0, r1);
-		vec_float h = VecSub(VecMul(r0, VecSmearW(r1)), VecMul(r1, VecSmearW(r0)));
+		vec_float h = r0 * VecSmearW(r1) - r1 * VecSmearW(r0);
 
 		VecStore(VecCross3D(r1, r2), &result(0,0));
 		VecStore(VecCross3D(r2, r0), &result(0,1));
 		VecStore(s, &result(0,2));
-		VecStore(VecSub(VecCross3D(h, r2), VecMul(s, VecSmearW(r2))), &result(0,3));
+		VecStore(VecCross3D(h, r2) - s * VecSmearW(r2), &result(0,3));
 
 		result(3,0) = result(3,1) = result(3,2) = 0.0F;
 		result(3,3) = 1.0F;

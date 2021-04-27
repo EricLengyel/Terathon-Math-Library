@@ -134,7 +134,7 @@ namespace Terathon
 	//#				Returns the antiwedge product of the vector $a$ and the bivector $b$.
 	//
 	//# \action		Vector3D Project(const Vector3D& a, const Bivector3D& b);
-	//#				Returns (<b>b&#x0332;</b>&#x202F;&#x27D1;&#x202F;<b>a</b>&#x202F;&#x27C7;&#x202F;<b>b</b>)<b>b</b>, which is the projection of $a$ onto $b$ under the assumption that the magnitude of $b$ is one.
+	//#				Returns (<b>b&#x0332;</b>&#x202F;&#x2227;&#x202F;<b>a</b>)&#x202F;&#x2228;&#x202F;<b>b</b>, which is the projection of $a$ onto $b$ under the assumption that the magnitude of $b$ is one.
 	//
 	//# \also	$@Vector3D@$
 	//# \also	$@Vector2D@$

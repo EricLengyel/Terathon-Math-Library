@@ -243,7 +243,7 @@ float Terathon::Sin(float x)
 
 		vec_float sine = VecMaddScalar(sine_alpha, cosine_beta, VecMulScalar(cosine_alpha, sine_beta));
 
-		VecStoreX((x < 0.0F) ? VecNegate(sine) : sine, &result);
+		VecStoreX((x < 0.0F) ? -sine : sine, &result);
 		return (result);
 
 	#else
@@ -367,7 +367,7 @@ void Terathon::CosSin(float x, float *c, float *s)
 		vec_float cosine = VecSubScalar(VecMulScalar(cosine_alpha, cosine_beta), VecMulScalar(sine_alpha, sine_beta));
 
 		VecStoreX(cosine, c);
-		VecStoreX((x < 0.0F) ? VecNegate(sine) : sine, s);
+		VecStoreX((x < 0.0F) ? -sine : sine, s);
 
 	#else
 

@@ -57,7 +57,7 @@ namespace Terathon
 
 			float	result;
 
-			VecStoreX(VecOr(VecLoadScalar(&x), VecFloatGetMinusZero()), &result);
+			VecStoreX(VecLoadScalar(&x) | VecFloatGetMinusZero(), &result);
 			return (result);
 
 		#else

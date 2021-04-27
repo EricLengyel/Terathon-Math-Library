@@ -138,7 +138,7 @@ namespace Terathon
 	//
 	//# \also	$@Vector4D@$
 	//# \also	$@Trivector4D@$
-	//# \also	$@Motor@$
+	//# \also	$@Motor4D@$
 
 
 	//# \function	Bivector4D::Set		Sets all six components of a bivector.
