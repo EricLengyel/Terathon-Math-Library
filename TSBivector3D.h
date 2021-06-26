@@ -47,8 +47,8 @@ namespace Terathon
 	//
 	//# \ctor	Bivector3D();
 	//# \ctor	Bivector3D(float a, float b, float c);
-	//# \ctor	Bivector4D(const Point2D& p, const Point2D& q);
-	//# \ctor	Bivector4D(const Point2D& p, const Vector2D& v);
+	//# \ctor	Bivector3D(const Point2D& p, const Point2D& q);
+	//# \ctor	Bivector3D(const Point2D& p, const Vector2D& v);
 	//
 	//# \param	a		The value of the <b>e</b><sub>23</sub> coordinate.
 	//# \param	b		The value of the <b>e</b><sub>31</sub> coordinate.
