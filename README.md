@@ -20,11 +20,13 @@ This is a C++ math library containing classes for vectors, matrices, quaternions
 
 ## Component Swizzling
 
-Vector components can be swizzled using shading-language syntax as long as there are no repeated components. As an example, the following expressions are all valid for a `Vector3D` object `v`:
+Vector components can be swizzled using shading-language syntax. As an example, the following expressions are all valid for a `Vector3D` object `v`:
 
 * `v.x` – The *x* component of `v`.
 * `v.xy` – A 2D vector having the *x* and *y* components of `v`.
 * `v.yzx` – A 3D vector having the components of `v` in the order (*y*, *z*, *x*).
+
+Support for repeated components in a swizzle can be enabled by defining `TERATHON_SWIZZLE_REPEAT`. This is disabled by default because the large number of additional swizzling possibilities increases compile times substantially. Swizzles with repeated components are always `const` so that it's not possible to assign to them.
 
 Rows, columns, and submatrices can be extracted from matrix objects using a similar syntax. As an example, the following expressions are all valid for a `Matrix3D` object `m`:
 
