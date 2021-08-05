@@ -7,7 +7,7 @@
 //
 // THIS SOFTWARE IS PROVIDED "AS IS" WITHOUT WARRANTY OF ANY KIND, EITHER
 // EXPRESSED OR IMPLIED, INCLUDING, BUT NOT LIMITED TO, THE IMPLIED WARRANTIES
-// OF MERCHANTABILITY AND FITNESS FOR A PARTICULAR PURPOSE. 
+// OF MERCHANTABILITY AND FITNESS FOR A PARTICULAR PURPOSE.
 //
 
 
@@ -282,12 +282,12 @@ Flector4D Terathon::operator *(const Motor4D& a, const Flector4D& b)
 					  hw * rw - hx * ux - hy * uy - hz * uz + sw * uw - sx * rx - sy * ry - sz * rz));
 }
 
-Vector3D Terathon::Transform(const Vector3D& v, const Flector4D& F)
+Vector3D Terathon::Transform(const Vector3D& v, const Flector4D& G)
 {
-	float sw = F.point.w;
-	float hx = F.plane.x;
-	float hy = F.plane.y;
-	float hz = F.plane.z;
+	float sw = G.point.w;
+	float hx = G.plane.x;
+	float hy = G.plane.y;
+	float hz = G.plane.z;
 
 	float sw2 = sw * sw;
 	float hx2 = hx * hx;
@@ -305,12 +305,12 @@ Vector3D Terathon::Transform(const Vector3D& v, const Flector4D& F)
 	                 v.z + ((hysw - hzhx) * v.x - (hyhz + hxsw) * v.y - (hz2 + sw2) * v.z) * 2.0F));
 }
 
-Bivector3D Terathon::Transform(const Bivector3D& v, const Flector4D& F)
+Bivector3D Terathon::Transform(const Bivector3D& v, const Flector4D& G)
 {
-	float sw = F.point.w;
-	float hx = F.plane.x;
-	float hy = F.plane.y;
-	float hz = F.plane.z;
+	float sw = G.point.w;
+	float hx = G.plane.x;
+	float hy = G.plane.y;
+	float hz = G.plane.z;
 
 	float sw2 = sw * sw;
 	float hx2 = hx * hx;
@@ -328,16 +328,16 @@ Bivector3D Terathon::Transform(const Bivector3D& v, const Flector4D& F)
 	                   v.z + ((hysw - hzhx) * v.x - (hyhz + hxsw) * v.y - (hz2 + sw2) * v.z) * 2.0F));
 }
 
-Point3D Terathon::Transform(const Point3D& p, const Flector4D& F)
+Point3D Terathon::Transform(const Point3D& p, const Flector4D& G)
 {
-	float sx = F.point.x;
-	float sy = F.point.y;
-	float sz = F.point.z;
-	float sw = F.point.w;
-	float hx = F.plane.x;
-	float hy = F.plane.y;
-	float hz = F.plane.z;
-	float hw = F.plane.w;
+	float sx = G.point.x;
+	float sy = G.point.y;
+	float sz = G.point.z;
+	float sw = G.point.w;
+	float hx = G.plane.x;
+	float hy = G.plane.y;
+	float hz = G.plane.z;
+	float hw = G.plane.w;
 
 	float sw2 = sw * sw;
 	float hx2 = hx * hx;
@@ -350,12 +350,12 @@ Point3D Terathon::Transform(const Point3D& p, const Flector4D& F)
 	float hysw = hy * sw;
 	float hzsw = hz * sw;
 
-	return (Vector3D(p.x + ((hzsw - hxhy) * p.y - (hzhx + hysw) * p.z - (hx2 + sw2) * p.x + sx * sw - hx * hw + hy * sz - hz * sy) * 2.0F,
-	                 p.y + ((hxsw - hyhz) * p.z - (hxhy + hzsw) * p.x - (hy2 + sw2) * p.y + sy * sw - hy * hw + hz * sx - hx * sz) * 2.0F,
-	                 p.z + ((hysw - hzhx) * p.x - (hyhz + hxsw) * p.y - (hz2 + sw2) * p.z + sz * sw - hz * hw + hx * sy - hy * sx) * 2.0F));
+	return (Point3D(p.x + ((hzsw - hxhy) * p.y - (hzhx + hysw) * p.z - (hx2 + sw2) * p.x + sx * sw - hx * hw + hy * sz - hz * sy) * 2.0F,
+	                p.y + ((hxsw - hyhz) * p.z - (hxhy + hzsw) * p.x - (hy2 + sw2) * p.y + sy * sw - hy * hw + hz * sx - hx * sz) * 2.0F,
+	                p.z + ((hysw - hzhx) * p.x - (hyhz + hxsw) * p.y - (hz2 + sw2) * p.z + sz * sw - hz * hw + hx * sy - hy * sx) * 2.0F));
 }
 
-Bivector4D Terathon::Transform(const Bivector4D& L, const Flector4D& F)
+Bivector4D Terathon::Transform(const Bivector4D& L, const Flector4D& G)
 {
 	float vx = L.direction.x;
 	float vy = L.direction.y;
@@ -364,14 +364,14 @@ Bivector4D Terathon::Transform(const Bivector4D& L, const Flector4D& F)
 	float my = L.moment.y;
 	float mz = L.moment.z;
 
-	float sx = F.point.x;
-	float sy = F.point.y;
-	float sz = F.point.z;
-	float sw = F.point.w;
-	float hx = F.plane.x;
-	float hy = F.plane.y;
-	float hz = F.plane.z;
-	float hw = F.plane.w;
+	float sx = G.point.x;
+	float sy = G.point.y;
+	float sz = G.point.z;
+	float sw = G.point.w;
+	float hx = G.plane.x;
+	float hy = G.plane.y;
+	float hz = G.plane.z;
+	float hw = G.plane.w;
 
 	float sw2 = sw * sw;
 	float hx2 = hx * hx;
@@ -392,16 +392,16 @@ Bivector4D Terathon::Transform(const Bivector4D& L, const Flector4D& F)
 	                   mz + ((hz * sx + hx * sz - sy * sw - hy * hw) * vx + (hz * sy + hy * sz + sx * sw + hx * hw) * vy - (hx * sx + hy * sy) * vz * 2.0F + (hysw - hzhx) * mx - (hyhz + hxsw) * my - (hz2 + sw2) * mz) * 2.0F));
 }
 
-Trivector4D Terathon::Transform(const Trivector4D& f, const Flector4D& F)
+Trivector4D Terathon::Transform(const Trivector4D& f, const Flector4D& G)
 {
-	float sx = F.point.x;
-	float sy = F.point.y;
-	float sz = F.point.z;
-	float sw = F.point.w;
-	float hx = F.plane.x;
-	float hy = F.plane.y;
-	float hz = F.plane.z;
-	float hw = F.plane.w;
+	float sx = G.point.x;
+	float sy = G.point.y;
+	float sz = G.point.z;
+	float sw = G.point.w;
+	float hx = G.plane.x;
+	float hy = G.plane.y;
+	float hz = G.plane.z;
+	float hw = G.plane.w;
 
 	float sw2 = sw * sw;
 	float hx2 = hx * hx;

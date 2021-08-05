@@ -7,7 +7,7 @@
 //
 // THIS SOFTWARE IS PROVIDED "AS IS" WITHOUT WARRANTY OF ANY KIND, EITHER
 // EXPRESSED OR IMPLIED, INCLUDING, BUT NOT LIMITED TO, THE IMPLIED WARRANTIES
-// OF MERCHANTABILITY AND FITNESS FOR A PARTICULAR PURPOSE. 
+// OF MERCHANTABILITY AND FITNESS FOR A PARTICULAR PURPOSE.
 //
 
 
@@ -17,6 +17,10 @@
 using namespace Terathon;
 
 
+const ConstVector3D Vector3D::zero = {0.0F, 0.0F, 0.0F};
+const ConstPoint3D Origin3D::origin = {0.0F, 0.0F, 0.0F};
+const Origin3D Point3D::origin = {};
+
 const ConstVector3D Vector3D::x_unit = {1.0F, 0.0F, 0.0F};
 const ConstVector3D Vector3D::y_unit = {0.0F, 1.0F, 0.0F};
 const ConstVector3D Vector3D::z_unit = {0.0F, 0.0F, 1.0F};
@@ -24,11 +28,6 @@ const ConstVector3D Vector3D::z_unit = {0.0F, 0.0F, 1.0F};
 const ConstVector3D Vector3D::minus_x_unit = {-1.0F, 0.0F, 0.0F};
 const ConstVector3D Vector3D::minus_y_unit = {0.0F, -1.0F, 0.0F};
 const ConstVector3D Vector3D::minus_z_unit = {0.0F, 0.0F, -1.0F};
-
-
-ConstPoint3D Zero3DType::zero = {0.0F, 0.0F, 0.0F};
-
-const Zero3DType Terathon::Zero3D = {};
 
 
 Vector3D& Vector3D::RotateAboutX(float angle)

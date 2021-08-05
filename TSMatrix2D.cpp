@@ -7,7 +7,7 @@
 //
 // THIS SOFTWARE IS PROVIDED "AS IS" WITHOUT WARRANTY OF ANY KIND, EITHER
 // EXPRESSED OR IMPLIED, INCLUDING, BUT NOT LIMITED TO, THE IMPLIED WARRANTIES
-// OF MERCHANTABILITY AND FITNESS FOR A PARTICULAR PURPOSE. 
+// OF MERCHANTABILITY AND FITNESS FOR A PARTICULAR PURPOSE.
 //
 
 
@@ -17,7 +17,7 @@
 using namespace Terathon;
 
 
-const ConstMatrix2D Terathon::Identity2D = {{{1.0F, 0.0F}, {0.0F, 1.0F}}};
+const ConstMatrix2D Matrix2D::identity = {{{1.0F, 0.0F}, {0.0F, 1.0F}}};
 
 
 Matrix2D::Matrix2D(float n00, float n01, float n10, float n11) : Mat2D<TypeMatrix2D>(n00, n01, n10, n11)

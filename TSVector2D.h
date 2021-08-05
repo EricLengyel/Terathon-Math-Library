@@ -7,7 +7,7 @@
 //
 // THIS SOFTWARE IS PROVIDED "AS IS" WITHOUT WARRANTY OF ANY KIND, EITHER
 // EXPRESSED OR IMPLIED, INCLUDING, BUT NOT LIMITED TO, THE IMPLIED WARRANTIES
-// OF MERCHANTABILITY AND FITNESS FOR A PARTICULAR PURPOSE. 
+// OF MERCHANTABILITY AND FITNESS FOR A PARTICULAR PURPOSE.
 //
 
 
@@ -29,6 +29,8 @@
 namespace Terathon
 {
 	class Vector2D;
+	class Origin2D;
+	struct ConstVector2D;
 
 
 	//# \class	Vector2D	Encapsulates a 2D vector.
@@ -107,15 +109,6 @@ namespace Terathon
 	//# \action		Vector2D operator *(const Vector2D& a, const Vector2D& b) const;
 	//#				Returns the componentwise product of the vectors $a$ and $b$.
 	//
-	//# \action		float Dot(const Vector2D& a, const Vector2D& b);
-	//#				Returns the dot product between $a$ and $b$.
-	//
-	//# \action		Vector2D Project(const Vector2D& a, const Vector2D& b);
-	//#				Returns (<b>a</b>&#x202F;&sdot;&#x202F;<b>b</b>)<b>b</b>, which is the projection of $a$ onto $b$ under the assumption that the magnitude of $b$ is one.
-	//
-	//# \action		Vector2D Reject(const Vector2D& a, const Vector2D& b);
-	//#				Returns (<b>a</b>&#x202F;&minus;&#x202F;<b>a</b>&#x202F;&sdot;&#x202F;<b>b</b>)<b>b</b>, which is the rejection of $a$ from $b$ under the assumption that the magnitude of $b$ is one.
-	//
 	//# \action		float Magnitude(const Vector2D& v);
 	//#				Returns the magnitude of the vector $v$.
 	//
@@ -124,6 +117,15 @@ namespace Terathon
 	//
 	//# \action		float SquaredMag(const Vector2D& v);
 	//#				Returns the squared magnitude of the vector $v$.
+	//
+	//# \action		float Dot(const Vector2D& a, const Vector2D& b);
+	//#				Returns the dot product between $a$ and $b$.
+	//
+	//# \action		Vector2D Project(const Vector2D& a, const Vector2D& b);
+	//#				Returns (<b>a</b>&#x202F;&sdot;&#x202F;<b>b</b>)<b>b</b>, which is the projection of $a$ onto $b$ under the assumption that the magnitude of $b$ is one.
+	//
+	//# \action		Vector2D Reject(const Vector2D& a, const Vector2D& b);
+	//#				Returns (<b>a</b>&#x202F;&minus;&#x202F;<b>a</b>&#x202F;&sdot;&#x202F;<b>b</b>)<b>b</b>, which is the rejection of $a$ from $b$ under the assumption that the magnitude of $b$ is one.
 	//
 	//# \privbase	Vec2D	Vectors use a generic base class to store their components.
 	//
@@ -179,6 +181,14 @@ namespace Terathon
 	class Vector2D : public Vec2D<TypeVector2D>
 	{
 		public:
+
+			TERATHON_API static const ConstVector2D zero;
+
+			TERATHON_API static const ConstVector2D x_unit;
+			TERATHON_API static const ConstVector2D y_unit;
+
+			TERATHON_API static const ConstVector2D minus_x_unit;
+			TERATHON_API static const ConstVector2D minus_y_unit;
 
 			inline Vector2D() = default;
 
@@ -290,7 +300,7 @@ namespace Terathon
 	};
 
 
-	inline Vector2D Complement(const Vector2D& v)
+	inline Vector2D operator !(const Vector2D& v)
 	{
 		return (Vector2D(-v.y, v.x));
 	}
@@ -348,19 +358,9 @@ namespace Terathon
 		return (a.x * b.y - a.y * b.x);
 	}
 
-	inline float Dot(const Vector2D& a, const Vector2D& b)
+	inline Vector2D Complement(const Vector2D& v)
 	{
-		return (a.x * b.x + a.y * b.y);
-	}
-
-	inline Vector2D Project(const Vector2D& a, const Vector2D& b)
-	{
-		return (b * Dot(a, b));
-	}
-
-	inline Vector2D Reject(const Vector2D& a, const Vector2D& b)
-	{
-		return (a - b * Dot(a, b));
+		return (!v);
 	}
 
 	inline float Magnitude(const Vector2D& v)
@@ -380,7 +380,27 @@ namespace Terathon
 
 	inline Vector2D Normalize(const Vector2D& v)
 	{
-		return (v * InverseSqrt(v.x * v.x + v.y * v.y));
+		return (v * InverseMag(v));
+	}
+
+	inline float Antiwedge(const Vector2D& a, const Vector2D& b)
+	{
+		return (a.x * b.y - a.y * b.x);
+	}
+
+	inline float Dot(const Vector2D& a, const Vector2D& b)
+	{
+		return (a.x * b.x + a.y * b.y);
+	}
+
+	inline Vector2D Project(const Vector2D& a, const Vector2D& b)
+	{
+		return (b * Dot(a, b));
+	}
+
+	inline Vector2D Reject(const Vector2D& a, const Vector2D& b)
+	{
+		return (a - b * Dot(a, b));
 	}
 
 	inline Vector2D Floor(const Vector2D& v)
@@ -471,10 +491,12 @@ namespace Terathon
 	{
 		public:
 
+			TERATHON_API static const Origin2D origin;
+
 			inline Point2D() = default;
 
 			Point2D(float a, float b) : Vector2D(a, b) {}
-			Point2D(const Vector2D& p) : Vector2D(p) {}
+			explicit Point2D(const Vector2D& p) : Vector2D(p) {}
 
 			Point2D& operator =(const Vector2D& v)
 			{
@@ -660,73 +682,65 @@ namespace Terathon
 	};
 
 
-	class Zero2DType
+	class Origin2D
 	{
 		private:
 
-			TERATHON_API static ConstPoint2D zero;
+			TERATHON_API static const ConstPoint2D origin;
 
 		public:
 
-			operator const Vector2D&(void) const
-			{
-				return (zero);
-			}
-
 			operator const Point2D&(void) const
 			{
-				return (zero);
+				return (origin);
 			}
 
 			const Point2D *operator &(void) const
 			{
-				return (&zero);
+				return (&origin);
 			}
 	};
 
 
-	inline const Point2D& operator +(const Zero2DType&, const Vector2D& v)
+	inline const Point2D& operator +(const Origin2D&, const Vector2D& v)
 	{
 		return (static_cast<const Point2D&>(v));
 	}
 
 	template <typename type_struct, int count, int index_x, int index_y>
-	inline Point2D operator +(const Zero2DType&, const Subvec2D<type_struct, count, index_x, index_y>& v)
+	inline Point2D operator +(const Origin2D&, const Subvec2D<type_struct, count, index_x, index_y>& v)
 	{
 		return (Point2D(v.data[index_x], v.data[index_y]));
 	}
 
 	template <typename type_struct, int count>
-	inline const Point2D& operator +(const Zero2DType&, const Subvec2D<type_struct, count, 0, 1>& v)
+	inline const Point2D& operator +(const Origin2D&, const Subvec2D<type_struct, count, 0, 1>& v)
 	{
 		return (reinterpret_cast<const Point2D&>(v.data[0]));
 	}
 
 	template <typename type_struct, int count>
-	inline const Point2D& operator +(const Zero2DType&, const Subvec2D<type_struct, count, 1, 2>& v)
+	inline const Point2D& operator +(const Origin2D&, const Subvec2D<type_struct, count, 1, 2>& v)
 	{
 		return (reinterpret_cast<const Point2D&>(v.data[1]));
 	}
 
 	template <typename type_struct, int count>
-	inline const Point2D& operator +(const Zero2DType&, const Subvec2D<type_struct, count, 2, 3>& v)
+	inline const Point2D& operator +(const Origin2D&, const Subvec2D<type_struct, count, 2, 3>& v)
 	{
 		return (reinterpret_cast<const Point2D&>(v.data[2]));
 	}
 
-	inline Point2D operator -(const Zero2DType&, const Vector2D& v)
+	inline Point2D operator -(const Origin2D&, const Vector2D& v)
 	{
 		return (Point2D(-v.x, -v.y));
 	}
 
 	template <typename type_struct, int count, int index_x, int index_y>
-	inline Point2D operator -(const Zero2DType&, const Subvec2D<type_struct, count, index_x, index_y>& v)
+	inline Point2D operator -(const Origin2D&, const Subvec2D<type_struct, count, index_x, index_y>& v)
 	{
 		return (Point2D(-v.data[index_x], -v.data[index_y]));
 	}
-
-
-	TERATHON_API extern const Zero2DType Zero2D;
 
 
 	namespace Math

@@ -7,7 +7,7 @@
 //
 // THIS SOFTWARE IS PROVIDED "AS IS" WITHOUT WARRANTY OF ANY KIND, EITHER
 // EXPRESSED OR IMPLIED, INCLUDING, BUT NOT LIMITED TO, THE IMPLIED WARRANTIES
-// OF MERCHANTABILITY AND FITNESS FOR A PARTICULAR PURPOSE. 
+// OF MERCHANTABILITY AND FITNESS FOR A PARTICULAR PURPOSE.
 //
 
 
@@ -73,20 +73,20 @@ namespace Terathon
 	//# \action		bool operator !=(const Flector4D& a, const Flector4D& b);
 	//#				Returns a boolean value indicating whether the two flectors $a$ and $b$ are not equal.
 	//
-	//# \action		Flector4D operator ~(const Flector4D& F);
-	//#				Returns the antireverse of the flector $F$.
+	//# \action		Flector4D operator ~(const Flector4D& G);
+	//#				Returns the antireverse of the flector $G$.
 	//
-	//# \action		Flector4D operator -(const Flector4D& F);
-	//#				Returns the negation of the flector $F$.
+	//# \action		Flector4D operator -(const Flector4D& G);
+	//#				Returns the negation of the flector $G$.
 	//
-	//# \action		Flector4D operator *(const Flector4D& F, float s);
-	//#				Returns the product of the flector $F$ and the scalar $s$.
+	//# \action		Flector4D operator *(const Flector4D& G, float s);
+	//#				Returns the product of the flector $G$ and the scalar $s$.
 	//
-	//# \action		Flector4D operator *(float s, const Flector4D& F);
-	//#				Returns the product of the flector $F$ and the scalar $s$.
+	//# \action		Flector4D operator *(float s, const Flector4D& G);
+	//#				Returns the product of the flector $G$ and the scalar $s$.
 	//
-	//# \action		Flector4D operator /(const Flector4D& F, float s);
-	//#				Returns the product of the flector $F$ and the inverse of the scalar $s$.
+	//# \action		Flector4D operator /(const Flector4D& G, float s);
+	//#				Returns the product of the flector $G$ and the inverse of the scalar $s$.
 	//
 	//# \action		Motor4D operator *(const Flector4D& a, const Flector4D& b);
 	//#				Returns the geometric antiproduct of the flectors $a$ and $b$, producing a motor.
@@ -97,20 +97,26 @@ namespace Terathon
 	//# \action		Flector4D operator *(const Motor4D& a, const Flector4D& b);
 	//#				Returns the geometric antiproduct of the motor $a$ and the flector $b$, producing a flector.
 	//
-	//# \action		Vector3D Transform(const Vector3D& v, const Flector4D& F);
-	//#				Transforms the vector $v$ with the flector $F$.
+	//# \action		float BulkNorm(const Flector4D& G);
+	//#				Returns the bulk norm of the flector $G$.
 	//
-	//# \action		Bivector3D Transform(const Bivector3D& v, const Flector4D& F);
-	//#				Transforms the bivector $v$ with the flector $F$.
+	//# \action		float WeightNorm(const Flector4D& G);
+	//#				Returns the weight norm of the flector $G$.
 	//
-	//# \action		Point3D Transform(const Point3D& p, const Flector4D& F);
-	//#				Transforms the point $p$ with the flector $F$.
+	//# \action		Vector3D Transform(const Vector3D& v, const Flector4D& G);
+	//#				Transforms the vector $v$ with the flector $G$.
 	//
-	//# \action		Bivector4D Transform(const Bivector4D& L, const Flector4D& F);
-	//#				Transforms the line $L$ with the flector $F$.
+	//# \action		Bivector3D Transform(const Bivector3D& v, const Flector4D& G);
+	//#				Transforms the bivector $v$ with the flector $G$.
 	//
-	//# \action		Trivector4D Transform(const Trivector4D& f, const Flector4D& F);
-	//#				Transforms the plane $f$ with the flector $F$.
+	//# \action		Point3D Transform(const Point3D& p, const Flector4D& G);
+	//#				Transforms the point $p$ with the flector $G$.
+	//
+	//# \action		Bivector4D Transform(const Bivector4D& L, const Flector4D& G);
+	//#				Transforms the line $L$ with the flector $G$.
+	//
+	//# \action		Trivector4D Transform(const Trivector4D& f, const Flector4D& G);
+	//#				Transforms the plane $f$ with the flector $G$.
 	//
 	//# \also	$@Motor4D@$
 	//# \also	$@Trivector4D@$
@@ -341,17 +347,17 @@ namespace Terathon
 				plane = f;
 			}
 
-			Flector4D& operator =(const Flector4D& F)
+			Flector4D& operator =(const Flector4D& G)
 			{
-				point = F.point;
-				plane = F.plane;
+				point = G.point;
+				plane = G.plane;
 				return (*this);
 			}
 
-			void operator =(const Flector4D& F) volatile
+			void operator =(const Flector4D& G) volatile
 			{
-				point = F.point;
-				plane = F.plane;
+				point = G.point;
+				plane = G.plane;
 			}
 
 			Flector4D& operator =(const Vector4D& v)
@@ -446,30 +452,30 @@ namespace Terathon
 	};
 
 
-	inline Flector4D operator ~(const Flector4D& F)
+	inline Flector4D operator ~(const Flector4D& G)
 	{
-		return (Flector4D(-F.point.x, -F.point.y, -F.point.z, -F.point.w, F.plane.x, F.plane.y, F.plane.z, F.plane.w));
+		return (Flector4D(-G.point.x, -G.point.y, -G.point.z, -G.point.w, G.plane.x, G.plane.y, G.plane.z, G.plane.w));
 	}
 
-	inline Flector4D operator -(const Flector4D& F)
+	inline Flector4D operator -(const Flector4D& G)
 	{
-		return (Flector4D(-F.point.x, -F.point.y, -F.point.z, -F.point.w, -F.plane.x, -F.plane.y, -F.plane.z, -F.plane.w));
+		return (Flector4D(-G.point.x, -G.point.y, -G.point.z, -G.point.w, -G.plane.x, -G.plane.y, -G.plane.z, -G.plane.w));
 	}
 
-	inline Flector4D operator *(const Flector4D& F, float s)
+	inline Flector4D operator *(const Flector4D& G, float s)
 	{
-		return (Flector4D(F.point.x * s, F.point.y * s, F.point.z * s, F.point.w * s, F.plane.x * s, F.plane.y * s, F.plane.z * s, F.plane.w * s));
+		return (Flector4D(G.point.x * s, G.point.y * s, G.point.z * s, G.point.w * s, G.plane.x * s, G.plane.y * s, G.plane.z * s, G.plane.w * s));
 	}
 
-	inline Flector4D operator *(float s, const Flector4D& F)
+	inline Flector4D operator *(float s, const Flector4D& G)
 	{
-		return (Flector4D(s * F.point.x, s * F.point.y, s * F.point.z, s * F.point.w, s * F.plane.x, s * F.plane.y, s * F.plane.z, s * F.plane.w));
+		return (Flector4D(s * G.point.x, s * G.point.y, s * G.point.z, s * G.point.w, s * G.plane.x, s * G.plane.y, s * G.plane.z, s * G.plane.w));
 	}
 
-	inline Flector4D operator /(const Flector4D& F, float s)
+	inline Flector4D operator /(const Flector4D& G, float s)
 	{
 		s = 1.0F / s;
-		return (Flector4D(F.point.x * s, F.point.y * s, F.point.z * s, F.point.w * s, F.plane.x * s, F.plane.y * s, F.plane.z * s, F.plane.w * s));
+		return (Flector4D(G.point.x * s, G.point.y * s, G.point.z * s, G.point.w * s, G.plane.x * s, G.plane.y * s, G.plane.z * s, G.plane.w * s));
 	}
 
 	inline bool operator ==(const Flector4D& a, const Flector4D& b)
@@ -488,11 +494,37 @@ namespace Terathon
 	TERATHON_API Flector4D operator *(const Motor4D& a, const Flector4D& b);
 
 
-	TERATHON_API Vector3D Transform(const Vector3D& v, const Flector4D& F);
-	TERATHON_API Bivector3D Transform(const Bivector3D& v, const Flector4D& F);
-	TERATHON_API Point3D Transform(const Point3D& p, const Flector4D& F);
-	TERATHON_API Bivector4D Transform(const Bivector4D& L, const Flector4D& F);
-	TERATHON_API Trivector4D Transform(const Trivector4D& f, const Flector4D& F);
+	TERATHON_API Vector3D Transform(const Vector3D& v, const Flector4D& G);
+	TERATHON_API Bivector3D Transform(const Bivector3D& v, const Flector4D& G);
+	TERATHON_API Point3D Transform(const Point3D& p, const Flector4D& G);
+	TERATHON_API Bivector4D Transform(const Bivector4D& L, const Flector4D& G);
+	TERATHON_API Trivector4D Transform(const Trivector4D& f, const Flector4D& G);
+
+
+	inline Flector4D Reverse(const Flector4D& G)
+	{
+		return (Flector4D(G.point.x, G.point.y, G.point.z, G.point.w, -G.plane.x, -G.plane.y, -G.plane.z, -G.plane.w));
+	}
+
+	inline Flector4D Antireverse(const Flector4D& G)
+	{
+		return (~G);
+	}
+
+	inline float BulkNorm(const Flector4D& G)
+	{
+		return (Sqrt(G.point.x * G.point.x + G.point.y * G.point.y + G.point.z * G.point.z + G.plane.w * G.plane.w));
+	}
+
+	inline float WeightNorm(const Flector4D& G)
+	{
+		return (Sqrt(G.point.w * G.point.w + G.plane.x * G.plane.x + G.plane.y * G.plane.y + G.plane.z * G.plane.z));
+	}
+
+	inline Flector4D Unitize(const Flector4D& G)
+	{
+		return (G * InverseSqrt(G.point.w * G.point.w + G.plane.x * G.plane.x + G.plane.y * G.plane.y + G.plane.z * G.plane.z));
+	}
 }
 
 

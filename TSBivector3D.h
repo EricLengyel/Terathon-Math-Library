@@ -7,7 +7,7 @@
 //
 // THIS SOFTWARE IS PROVIDED "AS IS" WITHOUT WARRANTY OF ANY KIND, EITHER
 // EXPRESSED OR IMPLIED, INCLUDING, BUT NOT LIMITED TO, THE IMPLIED WARRANTIES
-// OF MERCHANTABILITY AND FITNESS FOR A PARTICULAR PURPOSE. 
+// OF MERCHANTABILITY AND FITNESS FOR A PARTICULAR PURPOSE.
 //
 
 
@@ -168,6 +168,16 @@ namespace Terathon
 	{
 		public:
 
+			TERATHON_API static const ConstBivector3D zero;
+
+			TERATHON_API static const ConstBivector3D yz_unit;
+			TERATHON_API static const ConstBivector3D zx_unit;
+			TERATHON_API static const ConstBivector3D xy_unit;
+
+			TERATHON_API static const ConstBivector3D minus_yz_unit;
+			TERATHON_API static const ConstBivector3D minus_zx_unit;
+			TERATHON_API static const ConstBivector3D minus_xy_unit;
+
 			inline Bivector3D() = default;
 
 			Bivector3D(float a, float b, float c) : Antivec3D<TypeBivector3D>(a, b, c) {}
@@ -284,14 +294,6 @@ namespace Terathon
 			{
 				return (static_cast<Bivector3D&>(xyz.Normalize()));
 			}
-
-			TERATHON_API static const ConstBivector3D yz_unit;
-			TERATHON_API static const ConstBivector3D zx_unit;
-			TERATHON_API static const ConstBivector3D xy_unit;
-
-			TERATHON_API static const ConstBivector3D minus_yz_unit;
-			TERATHON_API static const ConstBivector3D minus_zx_unit;
-			TERATHON_API static const ConstBivector3D minus_xy_unit;
 	};
 
 
@@ -470,24 +472,6 @@ namespace Terathon
 			return (reinterpret_cast<const Bivector3D *>(this));
 		}
 	};
-
-
-	class Bizero3DType
-	{
-		private:
-
-			TERATHON_API static ConstBivector3D zero;
-
-		public:
-
-			operator const Bivector3D&(void) const
-			{
-				return (zero);
-			}
-	};
-
-
-	TERATHON_API extern const Bizero3DType Bizero3D;
 }
 
 

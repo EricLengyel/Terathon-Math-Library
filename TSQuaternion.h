@@ -7,7 +7,7 @@
 //
 // THIS SOFTWARE IS PROVIDED "AS IS" WITHOUT WARRANTY OF ANY KIND, EITHER
 // EXPRESSED OR IMPLIED, INCLUDING, BUT NOT LIMITED TO, THE IMPLIED WARRANTIES
-// OF MERCHANTABILITY AND FITNESS FOR A PARTICULAR PURPOSE. 
+// OF MERCHANTABILITY AND FITNESS FOR A PARTICULAR PURPOSE.
 //
 
 
@@ -27,6 +27,9 @@
 
 namespace Terathon
 {
+	struct ConstQuaternion;
+
+
 	//# \class	Quaternion		Encapsulates a quaternion.
 	//
 	//# The $Quaternion$ class encapsulates a quaternion.
@@ -201,8 +204,8 @@ namespace Terathon
 	//# \action		float SquaredMag(const Quaternion& q);
 	//#				Returns the squared magnitude of a quaternion.
 	//
-	//# \action		Quaternion Conjugate(const Quaternion& q);
-	//#				Returns the conjugate of a quaternion.
+	//# \action		Quaternion Reverse(const Quaternion& q);
+	//#				Returns the reverse of a quaternion.
 	//
 	//# \action		Quaternion Inverse(const Quaternion& q);
 	//#				Returns the inverse of a quaternion.
@@ -358,6 +361,8 @@ namespace Terathon
 			float	y;		//## The <i>y</i> coordinate of the bivector part.
 			float	z;		//## The <i>z</i> coordinate of the bivector part.
 			float	w;		//## The <i>w</i> coordinate, which is the scalar part.
+
+			TERATHON_API static const ConstQuaternion identity;
 
 			inline Quaternion() = default;
 
@@ -725,12 +730,6 @@ namespace Terathon
 		return ((q.w != s) || (q.x != 0.0F) || (q.y != 0.0F) || (q.z != 0.0F));
 	}
 
-
-	inline float Dot(const Quaternion& q1, const Quaternion& q2)
-	{
-		return (q1.x * q2.x + q1.y * q2.y + q1.z * q2.z + q1.w * q2.w);
-	}
-
 	inline float Magnitude(const Quaternion& q)
 	{
 		return (Sqrt(q.x * q.x + q.y * q.y + q.z * q.z + q.w * q.w));
@@ -746,14 +745,14 @@ namespace Terathon
 		return (q.x * q.x + q.y * q.y + q.z * q.z + q.w * q.w);
 	}
 
-	inline Quaternion Conjugate(const Quaternion& q)
+	inline Quaternion Reverse(const Quaternion& q)
 	{
 		return (Quaternion(-q.x, -q.y, -q.z, q.w));
 	}
 
 	inline Quaternion Inverse(const Quaternion& q)
 	{
-		return (Conjugate(q) / SquaredMag(q));
+		return (Reverse(q) / SquaredMag(q));
 	}
 
 	inline Quaternion& Quaternion::operator /=(const Quaternion& q)
@@ -769,6 +768,11 @@ namespace Terathon
 	inline Quaternion operator /(float s, const Quaternion& q)
 	{
 		return (s * Inverse(q));
+	}
+
+	inline float Dot(const Quaternion& q1, const Quaternion& q2)
+	{
+		return (q1.x * q2.x + q1.y * q2.y + q1.z * q2.z + q1.w * q2.w);
 	}
 
 

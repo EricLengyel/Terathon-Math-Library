@@ -11,18 +11,11 @@
 //
 
 
-#include "TSBivector3D.h"
+#include "TSTrivector4D.h"
 
 
 using namespace Terathon;
 
 
-const ConstBivector3D Bivector3D::zero = {0.0F, 0.0F, 0.0F};
-
-const ConstBivector3D Bivector3D::yz_unit = {1.0F, 0.0F, 0.0F};
-const ConstBivector3D Bivector3D::zx_unit = {0.0F, 1.0F, 0.0F};
-const ConstBivector3D Bivector3D::xy_unit = {0.0F, 0.0F, 1.0F};
-
-const ConstBivector3D Bivector3D::minus_yz_unit = {-1.0F, 0.0F, 0.0F};
-const ConstBivector3D Bivector3D::minus_zx_unit = {0.0F, -1.0F, 0.0F};
-const ConstBivector3D Bivector3D::minus_xy_unit = {0.0F, 0.0F, -1.0F};
+const ConstTrivector4D Trivector4D::zero = {0.0F, 0.0F, 0.0F, 0.0F};
+const ConstTrivector4D Trivector4D::infinity = {0.0F, 0.0F, 0.0F, 1.0F};

@@ -7,7 +7,7 @@
 //
 // THIS SOFTWARE IS PROVIDED "AS IS" WITHOUT WARRANTY OF ANY KIND, EITHER
 // EXPRESSED OR IMPLIED, INCLUDING, BUT NOT LIMITED TO, THE IMPLIED WARRANTIES
-// OF MERCHANTABILITY AND FITNESS FOR A PARTICULAR PURPOSE. 
+// OF MERCHANTABILITY AND FITNESS FOR A PARTICULAR PURPOSE.
 //
 
 
@@ -28,6 +28,9 @@
 
 namespace Terathon
 {
+	struct ConstMotor4D;
+
+
 	//# \class	Motor4D		Encapsulates a 4D motion operator (motor).
 	//
 	//# The $Motor4D$ class encapsulates a 4D motion operator (motor), also known as a dual quaternion.
@@ -115,6 +118,12 @@ namespace Terathon
 	//
 	//# \action		Motor4D operator *(const Quaternion& r, const Motor4D& Q);
 	//#				Returns the geometric antiproduct of the quaternion $r$ and the motor $Q$.
+	//
+	//# \action		float BulkNorm(const Motor4D& Q);
+	//#				Returns the bulk norm of the motor $Q$.
+	//
+	//# \action		float WeightNorm(const Motor4D& Q);
+	//#				Returns the weight norm of the motor $Q$.
 	//
 	//# \action		Motor4D Sqrt(const Motor4D& Q);
 	//#				Returns the square root of the motor $Q$ with respect to the geometric antiproduct.
@@ -304,6 +313,8 @@ namespace Terathon
 
 			Quaternion		rotor;			//## The coordinates of the rotor part consisting of the weight components using basis elements <b>e</b><sub>41</sub>, <b>e</b><sub>42</sub>, <b>e</b><sub>43</sub>, and <b>e</b><sub>1234</sub>.
 			Quaternion		screw;			//## The coordinates of the screw part consisting of the bulk components using basis elements <b>e</b><sub>23</sub>, <b>e</b><sub>31</sub>, <b>e</b><sub>12</sub>, and 1.
+
+			TERATHON_API static const ConstMotor4D identity;
 
 			inline Motor4D() = default;
 
@@ -522,6 +533,55 @@ namespace Terathon
 	TERATHON_API Point3D Transform(const Point3D& p, const Motor4D& Q);
 	TERATHON_API Bivector4D Transform(const Bivector4D& L, const Motor4D& Q);
 	TERATHON_API Trivector4D Transform(const Trivector4D& f, const Motor4D& Q);
+
+
+	inline Motor4D Reverse(const Motor4D& Q)
+	{
+		return (~Q);
+	}
+
+	inline Motor4D Antireverse(const Motor4D& Q)
+	{
+		return (~Q);
+	}
+
+	inline float BulkNorm(const Motor4D& Q)
+	{
+		return (Magnitude(Q.screw));
+	}
+
+	inline float WeightNorm(const Motor4D& Q)
+	{
+		return (Magnitude(Q.rotor));
+	}
+
+	inline Motor4D Unitize(const Motor4D& Q)
+	{
+		return (Q * InverseMag(Q.rotor));
+	}
+
+
+	struct ConstMotor4D
+	{
+		float	rx;
+		float	ry;
+		float	rz;
+		float	rw;
+		float	ux;
+		float	uy;
+		float	uz;
+		float	uw;
+
+		operator const ConstMotor4D&(void) const
+		{
+			return (reinterpret_cast<const ConstMotor4D&>(*this));
+		}
+
+		const ConstMotor4D *operator &(void) const
+		{
+			return (reinterpret_cast<const ConstMotor4D *>(this));
+		}
+	};
 }
 
 

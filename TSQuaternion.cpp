@@ -7,7 +7,7 @@
 //
 // THIS SOFTWARE IS PROVIDED "AS IS" WITHOUT WARRANTY OF ANY KIND, EITHER
 // EXPRESSED OR IMPLIED, INCLUDING, BUT NOT LIMITED TO, THE IMPLIED WARRANTIES
-// OF MERCHANTABILITY AND FITNESS FOR A PARTICULAR PURPOSE. 
+// OF MERCHANTABILITY AND FITNESS FOR A PARTICULAR PURPOSE.
 //
 
 
@@ -15,6 +15,9 @@
 
 
 using namespace Terathon;
+
+
+const ConstQuaternion Quaternion::identity = {0.0F, 0.0F, 0.0F, 1.0F};
 
 
 Quaternion& Quaternion::operator *=(const Quaternion& q)

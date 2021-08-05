@@ -7,7 +7,7 @@
 //
 // THIS SOFTWARE IS PROVIDED "AS IS" WITHOUT WARRANTY OF ANY KIND, EITHER
 // EXPRESSED OR IMPLIED, INCLUDING, BUT NOT LIMITED TO, THE IMPLIED WARRANTIES
-// OF MERCHANTABILITY AND FITNESS FOR A PARTICULAR PURPOSE. 
+// OF MERCHANTABILITY AND FITNESS FOR A PARTICULAR PURPOSE.
 //
 
 
@@ -30,6 +30,7 @@
 namespace Terathon
 {
 	class Transform4D;
+	struct ConstTransform4D;
 
 
 	//# \class	Matrix4D	Encapsulates a 4&#x202F;&times;&#x202F;4 matrix.
@@ -535,6 +536,8 @@ namespace Terathon
 	{
 		public:
 
+			TERATHON_API static const ConstTransform4D identity;
+
 			inline Transform4D() = default;
 
 			TERATHON_API Transform4D(float n00, float n01, float n02, float n03, float n10, float n11, float n12, float n13, float n20, float n21, float n22, float n23);
@@ -559,7 +562,7 @@ namespace Terathon
 
 			const Point3D& GetTranslation(void) const
 			{
-				return (Zero3D + Matrix4D::operator [](3).xyz);
+				return (Point3D::origin + Matrix4D::operator [](3).xyz);
 			}
 
 			Transform4D& SetTranslation(float x, float y, float z)
@@ -774,9 +777,6 @@ namespace Terathon
 			return (reinterpret_cast<const Transform4D&>(*this)[j]);
 		}
 	};
-
-
-	TERATHON_API extern const ConstTransform4D Identity4D;
 }
 
 

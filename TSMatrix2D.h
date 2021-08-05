@@ -7,7 +7,7 @@
 //
 // THIS SOFTWARE IS PROVIDED "AS IS" WITHOUT WARRANTY OF ANY KIND, EITHER
 // EXPRESSED OR IMPLIED, INCLUDING, BUT NOT LIMITED TO, THE IMPLIED WARRANTIES
-// OF MERCHANTABILITY AND FITNESS FOR A PARTICULAR PURPOSE. 
+// OF MERCHANTABILITY AND FITNESS FOR A PARTICULAR PURPOSE.
 //
 
 
@@ -28,6 +28,7 @@
 namespace Terathon
 {
 	class Matrix2D;
+	struct ConstMatrix2D;
 
 
 	//# \class	Matrix2D	Encapsulates a 2&#x202F;&times;&#x202F;2 matrix.
@@ -199,6 +200,8 @@ namespace Terathon
 	{
 		public:
 
+			TERATHON_API static const ConstMatrix2D identity;
+
 			inline Matrix2D() = default;
 
 			TERATHON_API Matrix2D(float n00, float n01, float n10, float n11);
@@ -278,7 +281,7 @@ namespace Terathon
 
 	inline Point2D operator *(const Matrix2D& m, const Point2D& p)
 	{
-		return (Zero2D + m.matrix * p.xy);
+		return (Point2D::origin + m.matrix * p.xy);
 	}
 
 	inline Vector2D operator *(const Vector2D& v, const Matrix2D& m)
@@ -342,9 +345,6 @@ namespace Terathon
 			return (reinterpret_cast<const Matrix2D&>(*this)[j]);
 		}
 	};
-
-
-	TERATHON_API extern const ConstMatrix2D Identity2D;
 
 
 	TERATHON_API float Determinant(const Matrix2D& m);

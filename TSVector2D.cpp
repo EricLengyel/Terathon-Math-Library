@@ -7,7 +7,7 @@
 //
 // THIS SOFTWARE IS PROVIDED "AS IS" WITHOUT WARRANTY OF ANY KIND, EITHER
 // EXPRESSED OR IMPLIED, INCLUDING, BUT NOT LIMITED TO, THE IMPLIED WARRANTIES
-// OF MERCHANTABILITY AND FITNESS FOR A PARTICULAR PURPOSE. 
+// OF MERCHANTABILITY AND FITNESS FOR A PARTICULAR PURPOSE.
 //
 
 
@@ -17,9 +17,15 @@
 using namespace Terathon;
 
 
-ConstPoint2D Zero2DType::zero = {0.0F, 0.0F};
+const ConstVector2D Vector2D::zero = {0.0F, 0.0F};
+const ConstPoint2D Origin2D::origin = {0.0F, 0.0F};
+const Origin2D Point2D::origin = {};
 
-const Zero2DType Terathon::Zero2D = {};
+const ConstVector2D Vector2D::x_unit = {1.0F, 0.0F};
+const ConstVector2D Vector2D::y_unit = {0.0F, 1.0F};
+
+const ConstVector2D Vector2D::minus_x_unit = {-1.0F, 0.0F};
+const ConstVector2D Vector2D::minus_y_unit = {0.0F, -1.0F};
 
 
 Vector2D& Vector2D::Rotate(float angle)

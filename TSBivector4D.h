@@ -7,7 +7,7 @@
 //
 // THIS SOFTWARE IS PROVIDED "AS IS" WITHOUT WARRANTY OF ANY KIND, EITHER
 // EXPRESSED OR IMPLIED, INCLUDING, BUT NOT LIMITED TO, THE IMPLIED WARRANTIES
-// OF MERCHANTABILITY AND FITNESS FOR A PARTICULAR PURPOSE. 
+// OF MERCHANTABILITY AND FITNESS FOR A PARTICULAR PURPOSE.
 //
 
 
@@ -27,6 +27,9 @@
 
 namespace Terathon
 {
+	struct ConstBivector4D;
+
+
 	//# \class	Bivector4D		Encapsulates a 4D bivector.
 	//
 	//# The $Bivector4D$ class encapsulates a 4D bivector.
@@ -80,6 +83,9 @@ namespace Terathon
 	//# \action		bool operator !=(const Bivector4D& a, const Bivector4D& b);
 	//#				Returns a boolean value indicating whether the two bivectors $a$ and $b$ are not equal.
 	//
+	//# \action		Bivector4D operator ~(const Bivector4D& L);
+	//#				Returns the antireverse of the bivector $L$.
+	//
 	//# \action		Bivector4D operator -(const Bivector4D& L);
 	//#				Returns the negation of the bivector $L$.
 	//
@@ -123,6 +129,12 @@ namespace Terathon
 	//# \action		float operator ^(const Bivector4D& K, const Bivector4D& L);
 	//#				Returns the antiwedge product of the bivectors $K$ and $L$.
 	//#				This gives the crossing relationship between the two lines, with positive values representing clockwise crossings and negative values representing counterclockwise crossings.
+	//
+	//# \action		float BulkNorm(const Bivector4D& L);
+	//#				Returns the bulk norm of the bivector $L$.
+	//
+	//# \action		float WeightNorm(const Bivector4D& L);
+	//#				Returns the weight norm of the bivector $L$.
 	//
 	//# \action		Point3D Project(const Point3D& p, const Bivector4D& L);
 	//#				Returns the projection of the point $p$ onto the line $L$ under the assumption that the line is unitized.
@@ -194,6 +206,8 @@ namespace Terathon
 
 			Vector3D		direction;
 			Bivector3D		moment;
+
+			TERATHON_API static const ConstBivector4D zero;
 
 			inline Bivector4D() = default;
 
@@ -332,6 +346,11 @@ namespace Terathon
 	};
 
 
+	inline Bivector4D operator ~(const Bivector4D& L)
+	{
+		return (Bivector4D(-L.direction.x, -L.direction.y, -L.direction.z, -L.moment.x, -L.moment.y, -L.moment.z));
+	}
+
 	inline Bivector4D operator -(const Bivector4D& L)
 	{
 		return (Bivector4D(-L.direction.x, -L.direction.y, -L.direction.z, -L.moment.x, -L.moment.y, -L.moment.z));
@@ -422,6 +441,31 @@ namespace Terathon
 		return (-(K.direction ^ L.moment) - (K.moment ^ L.direction));
 	}
 
+	inline Bivector4D Reverse(const Bivector4D& L)
+	{
+		return (~L);
+	}
+
+	inline Bivector4D Antireverse(const Bivector4D& L)
+	{
+		return (~L);
+	}
+
+	inline float BulkNorm(const Bivector4D& L)
+	{
+		return (Magnitude(L.moment));
+	}
+
+	inline float WeightNorm(const Bivector4D& L)
+	{
+		return (Magnitude(L.direction));
+	}
+
+	inline Bivector4D Unitize(const Bivector4D& L)
+	{
+		return (L * InverseMag(L.direction));
+	}
+
 	inline Bivector4D Wedge(const Point3D& p, const Point3D& q)
 	{
 		return (p ^ q);
@@ -497,6 +541,27 @@ namespace Terathon
 	{
 		return (Bivector4D(L.direction, L.moment + (t ^ L.direction)));
 	}
+
+
+	struct ConstBivector4D
+	{
+		float	vx;
+		float	vy;
+		float	vz;
+		float	mx;
+		float	my;
+		float	mz;
+
+		operator const ConstBivector4D&(void) const
+		{
+			return (reinterpret_cast<const ConstBivector4D&>(*this));
+		}
+
+		const ConstBivector4D *operator &(void) const
+		{
+			return (reinterpret_cast<const ConstBivector4D *>(this));
+		}
+	};
 }
 
 

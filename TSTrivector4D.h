@@ -7,7 +7,7 @@
 //
 // THIS SOFTWARE IS PROVIDED "AS IS" WITHOUT WARRANTY OF ANY KIND, EITHER
 // EXPRESSED OR IMPLIED, INCLUDING, BUT NOT LIMITED TO, THE IMPLIED WARRANTIES
-// OF MERCHANTABILITY AND FITNESS FOR A PARTICULAR PURPOSE. 
+// OF MERCHANTABILITY AND FITNESS FOR A PARTICULAR PURPOSE.
 //
 
 
@@ -29,6 +29,7 @@
 namespace Terathon
 {
 	class Trivector4D;
+	struct ConstTrivector4D;
 
 
 	//# \class	Trivector4D		Encapsulates a 4D trivector.
@@ -83,6 +84,9 @@ namespace Terathon
 	//# \action		bool operator !=(const Trivector4D& a, const Trivector4D& b);
 	//#				Returns a boolean value indicating whether the two trivectors $a$ and $b$ are not equal.
 	//
+	//# \action		const Trivector4D& operator ~(const Trivector4D& v);
+	//#				Returns the antireverse of the trivector $v$ (which is just the trivector $v$ itself).
+	//
 	//# \action		Trivector4D operator -(const Trivector4D& v);
 	//#				Returns the negation of the trivector $v$.
 	//
@@ -108,6 +112,21 @@ namespace Terathon
 	//# \action		float operator ^(const Point2D& p, const Trivector4D& f);
 	//#				Returns the antiwedge product of the 2D point $p$ and the trivector $f$. The <i>z</i> coordinate of $p$ is assumed to be 0, and the <i>w</i> coordinate of $p$ is assumed to be 1.
 	//#				This gives the distance from a unitized plane represented by a $Trivector4D$ object to the point $p$.
+	//
+	//# \action		float BulkNorm(const Trivector4D& v);
+	//#				Returns the bulk norm of the trivector $v$.
+	//
+	//# \action		float WeightNorm(const Trivector4D& v);
+	//#				Returns the weight norm of the trivector $v$.
+	//
+	//# \action		float Magnitude(const Trivector4D& v);
+	//#				Returns the magnitude of the trivector $v$.
+	//
+	//# \action		float InverseMag(const Trivector4D& v);
+	//#				Returns the inverse magnitude of the trivector $v$.
+	//
+	//# \action		float SquaredMag(const Trivector4D& v);
+	//#				Returns the squared magnitude of the trivector $v$.
 	//
 	//# \action		Point3D Project(const Point3D& p, const Trivector4D& f);
 	//#				Returns the projection of the point $p$ onto the plane $f$ under the assumption that the plane is unitized.
@@ -187,6 +206,9 @@ namespace Terathon
 	class Trivector4D : public Antivec4D<TypeTrivector4D>
 	{
 		public:
+
+			TERATHON_API static const ConstTrivector4D zero;
+			TERATHON_API static const ConstTrivector4D infinity;
 
 			inline Trivector4D() = default;
 
@@ -312,6 +334,11 @@ namespace Terathon
 	};
 
 
+	inline const Trivector4D& operator ~(const Trivector4D& v)
+	{
+		return (v);
+	}
+
 	inline Trivector4D operator -(const Trivector4D& v)
 	{
 		return (Trivector4D(-v.x, -v.y, -v.z, -v.w));
@@ -365,6 +392,51 @@ namespace Terathon
 		return (a.xyz ^ b);
 	}
 
+	inline Trivector4D Reverse(const Trivector4D& v)
+	{
+		return (-v);
+	}
+
+	inline const Trivector4D& Antireverse(const Trivector4D& v)
+	{
+		return (~v);
+	}
+
+	inline float BulkNorm(const Trivector4D& v)
+	{
+		return (Fabs(v.w));
+	}
+
+	inline float WeightNorm(const Trivector4D& v)
+	{
+		return (Sqrt(v.x * v.x + v.y * v.y + v.z * v.z));
+	}
+
+	inline Trivector4D Unitize(const Trivector4D& v)
+	{
+		return (v * InverseSqrt(v.x * v.x + v.y * v.y + v.z * v.z));
+	}
+
+	inline float Magnitude(const Trivector4D& v)
+	{
+		return (Sqrt(v.x * v.x + v.y * v.y + v.z * v.z + v.w * v.w));
+	}
+
+	inline float InverseMag(const Trivector4D& v)
+	{
+		return (InverseSqrt(v.x * v.x + v.y * v.y + v.z * v.z + v.w * v.w));
+	}
+
+	inline float SquaredMag(const Trivector4D& v)
+	{
+		return (v.x * v.x + v.y * v.y + v.z * v.z + v.w * v.w);
+	}
+
+	inline Trivector4D Normalize(const Trivector4D& v)
+	{
+		return (v * InverseMag(v));
+	}
+
 	inline float Antiwedge(const Vector4D& v, const Trivector4D& f)
 	{
 		return (v ^ f);
@@ -406,6 +478,25 @@ namespace Terathon
 	{
 		return (Trivector4D(f.xyz, p));
 	}
+
+
+	struct ConstTrivector4D
+	{
+		float	x;
+		float	y;
+		float	z;
+		float	w;
+
+		operator const Trivector4D&(void) const
+		{
+			return (reinterpret_cast<const Trivector4D&>(*this));
+		}
+
+		const Trivector4D *operator &(void) const
+		{
+			return (reinterpret_cast<const Trivector4D *>(this));
+		}
+	};
 }
 
 
