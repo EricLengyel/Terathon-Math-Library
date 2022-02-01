@@ -11,7 +11,7 @@ This is a C++ math library containing classes for vectors, matrices, quaternions
 * **Matrix3D** – A 3×3 matrix.
 * **Matrix4D** – A 4×4 matrix.
 * **Transform4D** – A 4×4 matrix with fourth row always (0, 0, 0, 1).
-* **Quaternion** – A convention quaternion x**i** + y**j** + z**k** + w.
+* **Quaternion** – A conventional quaternion x**i** + y**j** + z**k** + w.
 * **Bivector3D** – A 3D bivector *x* **e**<sub>23</sub> + *y* **e**<sub>31</sub> + *z* **e**<sub>12</sub>.
 * **Bivector4D** – A 4D bivector (line) *v<sub>x</sub>* **e**<sub>41</sub> + *v<sub>y</sub>* **e**<sub>42</sub> + *v<sub>z</sub>* **e**<sub>43</sub> + *m<sub>x</sub>* **e**<sub>23</sub> + *m<sub>y</sub>* **e**<sub>31</sub> + *m<sub>z</sub>* **e**<sub>12</sub>.
 * **Trivector4D** – A 4D trivector (plane) *x* **e**<sub>234</sub> + *y* **e**<sub>314</sub> + *z* **e**<sub>124</sub> + *w* **e**<sub>321</sub>.
