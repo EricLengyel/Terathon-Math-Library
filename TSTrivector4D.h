@@ -1,6 +1,6 @@
 //
 // This file is part of the Terathon Math Library, by Eric Lengyel.
-// Copyright 1999-2021, Terathon Software LLC
+// Copyright 1999-2022, Terathon Software LLC
 //
 // This software is licensed under the GNU General Public License version 3.
 // Separate proprietary licenses are available from Terathon Software.
@@ -333,6 +333,26 @@ namespace Terathon
 			}
 	};
 
+
+	inline const Trivector4D& operator !(const Vector4D& v)
+	{
+		return (reinterpret_cast<const Trivector4D&>(v));
+	}
+
+	inline const Vector4D& operator !(const Trivector4D& v)
+	{
+		return (reinterpret_cast<const Vector4D&>(v));
+	}
+
+	inline const Trivector4D& Complement(const Vector4D& v)
+	{
+		return (reinterpret_cast<const Trivector4D&>(v));
+	}
+
+	inline const Vector4D& Complement(const Trivector4D& v)
+	{
+		return (reinterpret_cast<const Vector4D&>(v));
+	}
 
 	inline const Trivector4D& operator ~(const Trivector4D& v)
 	{

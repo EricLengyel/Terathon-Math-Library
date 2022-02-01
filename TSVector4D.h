@@ -1,6 +1,6 @@
 //
 // This file is part of the Terathon Math Library, by Eric Lengyel.
-// Copyright 1999-2021, Terathon Software LLC
+// Copyright 1999-2022, Terathon Software LLC
 //
 // This software is licensed under the GNU General Public License version 3.
 // Separate proprietary licenses are available from Terathon Software.
@@ -719,10 +719,10 @@ namespace Terathon
 		return (Fabs(v.w));
 	}
 
-	inline Vector4D Unitize(const Vector4D& v)
+	inline Point3D Unitize(const Vector4D& v)
 	{
 		float s = 1.0F / v.w;
-		return (Vector4D(v.x * s, v.y * s, v.z * s, 1.0F));
+		return (Point3D(v.x * s, v.y * s, v.z * s));
 	}
 
 	inline float Magnitude(const Vector4D& v)

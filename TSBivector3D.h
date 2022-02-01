@@ -1,6 +1,6 @@
 //
 // This file is part of the Terathon Math Library, by Eric Lengyel.
-// Copyright 1999-2021, Terathon Software LLC
+// Copyright 1999-2022, Terathon Software LLC
 //
 // This software is licensed under the GNU General Public License version 3.
 // Separate proprietary licenses are available from Terathon Software.
@@ -43,7 +43,7 @@ namespace Terathon
 	//
 	//# The $Bivector3D$ class encapsulates a 3D bivector.
 	//
-	//# \def	class Bivector3D
+	//# \def	class Bivector3D : public Antivec3D<TypeBivector3D>
 	//
 	//# \ctor	Bivector3D();
 	//# \ctor	Bivector3D(float a, float b, float c);
@@ -135,6 +135,8 @@ namespace Terathon
 	//
 	//# \action		Vector3D Project(const Vector3D& a, const Bivector3D& b);
 	//#				Returns (<b>b&#x0332;</b>&#x202F;&#x2227;&#x202F;<b>a</b>)&#x202F;&#x2228;&#x202F;<b>b</b>, which is the projection of $a$ onto $b$ under the assumption that the magnitude of $b$ is one.
+	//
+	//# \privbase	Antivec3D	Antivectors use a generic base class to store their components.
 	//
 	//# \also	$@Vector3D@$
 	//# \also	$@Vector2D@$

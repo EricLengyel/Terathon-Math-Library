@@ -1,6 +1,6 @@
 //
 // This file is part of the Terathon Common Library, by Eric Lengyel.
-// Copyright 1999-2021, Terathon Software LLC
+// Copyright 1999-2022, Terathon Software LLC
 //
 // This software is licensed under the GNU General Public License version 3.
 // Separate proprietary licenses are available from Terathon Software.
@@ -27,6 +27,12 @@
 #if defined(__AVX__)
 
 	#define TERATHON_AVX 1
+
+#endif
+
+#if defined(__ARM_NEON)
+
+	#define TERATHON_NEON 1
 
 #endif
 
@@ -183,6 +189,12 @@
 	#if defined(TERATHON_AVX)
 
 		#include <immintrin.h>
+
+	#endif
+
+	#if defined(TERATHON_NEON)
+
+		#include <arm_neon.h>
 
 	#endif
 

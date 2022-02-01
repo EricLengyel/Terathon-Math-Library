@@ -1,6 +1,6 @@
 //
 // This file is part of the Terathon Math Library, by Eric Lengyel.
-// Copyright 1999-2021, Terathon Software LLC
+// Copyright 1999-2022, Terathon Software LLC
 //
 // This software is licensed under the GNU General Public License version 3.
 // Separate proprietary licenses are available from Terathon Software.
