@@ -227,6 +227,74 @@ namespace Terathon
 	//# \also	$@Motor4D::MakeTranslation@$
 
 
+	//# \function	Motor4D::GetDirectionX		Returns the direction to which the <i>x</i> axis is transformed by a motor.
+	//
+	//# \proto	Vector3D GetDirectionX(void) const;
+	//
+	//# \desc
+	//# The $GetDirectionX$ function calculates the 3D vector that results from transforming the direction vector (1,&nbsp;0,&nbsp;0)
+	//# with the motor for which it is called.
+	//
+	//# \also	$@Motor4D::GetDirectionY@$
+	//# \also	$@Motor4D::GetDirectionZ@$
+	//# \also	$@Motor4D::GetPosition@$
+	//# \also	$@Motor4D::GetTransformMatrix@$
+	//# \also	$@Motor4D::GetInverseTransformMatrix@$
+	//# \also	$@Motor4D::GetTransformMatrices@$
+	//# \also	$@Motor4D::SetTransformMatrix@$
+
+
+	//# \function	Motor4D::GetDirectionY		Returns the direction to which the <i>y</i> axis is transformed by a motor.
+	//
+	//# \proto	Vector3D GetDirectionY(void) const;
+	//
+	//# \desc
+	//# The $GetDirectionY$ function calculates the 3D vector that results from transforming the direction vector (0,&nbsp;1,&nbsp;0)
+	//# with the motor for which it is called.
+	//
+	//# \also	$@Motor4D::GetDirectionX@$
+	//# \also	$@Motor4D::GetDirectionZ@$
+	//# \also	$@Motor4D::GetPosition@$
+	//# \also	$@Motor4D::GetTransformMatrix@$
+	//# \also	$@Motor4D::GetInverseTransformMatrix@$
+	//# \also	$@Motor4D::GetTransformMatrices@$
+	//# \also	$@Motor4D::SetTransformMatrix@$
+
+
+	//# \function	Motor4D::GetDirectionZ		Returns the direction to which the <i>z</i> axis is transformed by a motor.
+	//
+	//# \proto	Vector3D GetDirectionZ(void) const;
+	//
+	//# \desc
+	//# The $GetDirectionZ$ function calculates the 3D vector that results from transforming the direction vector (0,&nbsp;0,&nbsp;1)
+	//# with the motor for which it is called.
+	//
+	//# \also	$@Motor4D::GetDirectionX@$
+	//# \also	$@Motor4D::GetDirectionY@$
+	//# \also	$@Motor4D::GetPosition@$
+	//# \also	$@Motor4D::GetTransformMatrix@$
+	//# \also	$@Motor4D::GetInverseTransformMatrix@$
+	//# \also	$@Motor4D::GetTransformMatrices@$
+	//# \also	$@Motor4D::SetTransformMatrix@$
+
+
+	//# \function	Motor4D::GetPosition		Returns the position to which the origin is transformed by a motor.
+	//
+	//# \proto	Point3D GetPosition(void) const;
+	//
+	//# \desc
+	//# The $GetPosition$ function calculates the 3D point that results from transforming the origin
+	//# with the motor for which it is called.
+	//
+	//# \also	$@Motor4D::GetDirectionX@$
+	//# \also	$@Motor4D::GetDirectionY@$
+	//# \also	$@Motor4D::GetDirectionZ@$
+	//# \also	$@Motor4D::GetTransformMatrix@$
+	//# \also	$@Motor4D::GetInverseTransformMatrix@$
+	//# \also	$@Motor4D::GetTransformMatrices@$
+	//# \also	$@Motor4D::SetTransformMatrix@$
+
+
 	//# \function	Motor4D::GetTransformMatrix		Converts a motor to its corresponding 4&#x202F;&times;&#x202F;4 matrix.
 	//
 	//# \proto	Transform4D GetTransformMatrix(void) const;
@@ -238,6 +306,10 @@ namespace Terathon
 	//# \also	$@Motor4D::GetInverseTransformMatrix@$
 	//# \also	$@Motor4D::GetTransformMatrices@$
 	//# \also	$@Motor4D::SetTransformMatrix@$
+	//# \also	$@Motor4D::GetDirectionX@$
+	//# \also	$@Motor4D::GetDirectionY@$
+	//# \also	$@Motor4D::GetDirectionZ@$
+	//# \also	$@Motor4D::GetPosition@$
 	//# \also	$@Motor4D::MakeRotation@$
 	//# \also	$@Motor4D::MakeTranslation@$
 	//# \also	$@Motor4D::MakeScrew@$
@@ -258,6 +330,10 @@ namespace Terathon
 	//# \also	$@Motor4D::GetTransformMatrix@$
 	//# \also	$@Motor4D::GetTransformMatrices@$
 	//# \also	$@Motor4D::SetTransformMatrix@$
+	//# \also	$@Motor4D::GetDirectionX@$
+	//# \also	$@Motor4D::GetDirectionY@$
+	//# \also	$@Motor4D::GetDirectionZ@$
+	//# \also	$@Motor4D::GetPosition@$
 	//# \also	$@Motor4D::MakeRotation@$
 	//# \also	$@Motor4D::MakeTranslation@$
 	//# \also	$@Motor4D::MakeScrew@$
@@ -281,6 +357,10 @@ namespace Terathon
 	//# \also	$@Motor4D::GetTransformMatrix@$
 	//# \also	$@Motor4D::GetInverseTransformMatrix@$
 	//# \also	$@Motor4D::SetTransformMatrix@$
+	//# \also	$@Motor4D::GetDirectionX@$
+	//# \also	$@Motor4D::GetDirectionY@$
+	//# \also	$@Motor4D::GetDirectionZ@$
+	//# \also	$@Motor4D::GetPosition@$
 	//# \also	$@Motor4D::MakeRotation@$
 	//# \also	$@Motor4D::MakeTranslation@$
 	//# \also	$@Motor4D::MakeScrew@$
@@ -312,7 +392,7 @@ namespace Terathon
 		public:
 
 			Quaternion		rotor;			//## The coordinates of the rotor part consisting of the weight components using basis elements <b>e</b><sub>41</sub>, <b>e</b><sub>42</sub>, <b>e</b><sub>43</sub>, and <b>e</b><sub>1234</sub>.
-			Quaternion		screw;			//## The coordinates of the screw part consisting of the bulk components using basis elements <b>e</b><sub>23</sub>, <b>e</b><sub>31</sub>, <b>e</b><sub>12</sub>, and 1.
+			Quaternion		screw;			//## The coordinates of the screw part consisting of the bulk components using basis elements <b>e</b><sub>23</sub>, <b>e</b><sub>31</sub>, <b>e</b><sub>12</sub>, and <b>1</b>.
 
 			TERATHON_API static const ConstMotor4D identity;
 
@@ -457,6 +537,11 @@ namespace Terathon
 				Vector2D v = CosSin(angle * 0.5F);
 				return (Motor4D(axis.direction.x * v.y, axis.direction.y * v.y, axis.direction.z * v.y, v.x, disp * axis.direction.x * v.x + axis.moment.x * v.y, disp * axis.direction.y * v.x + axis.moment.y * v.y, disp * axis.direction.z * v.x + axis.moment.z * v.y, -disp * v.y));
 			}
+
+			TERATHON_API Vector3D GetDirectionX(void) const;
+			TERATHON_API Vector3D GetDirectionY(void) const;
+			TERATHON_API Vector3D GetDirectionZ(void) const;
+			TERATHON_API Point3D GetPosition(void) const;
 
 			TERATHON_API Transform4D GetTransformMatrix(void) const;
 			TERATHON_API Transform4D GetInverseTransformMatrix(void) const;

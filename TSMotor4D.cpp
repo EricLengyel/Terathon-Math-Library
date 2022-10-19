@@ -20,6 +20,75 @@ using namespace Terathon;
 const ConstMotor4D Motor4D::identity = {0.0F, 0.0F, 0.0F, 1.0F, 0.0F, 0.0F, 0.0F, 0.0F};
 
 
+Vector3D Motor4D::GetDirectionX(void) const
+{
+	float rx = rotor.x;
+	float ry = rotor.y;
+	float rz = rotor.z;
+	float rw = rotor.w;
+
+	float A00 = 1.0F - (ry * ry + rz * rz) * 2.0F;
+	float A01 = rx * ry;
+	float A02 = rz * rx;
+	float B01 = rz * rw;
+	float B20 = ry * rw;
+
+	return (Vector3D(A00, (A01 + B01) * 2.0F, (A02 - B20) * 2.0F));
+}
+
+Vector3D Motor4D::GetDirectionY(void) const
+{
+	float rx = rotor.x;
+	float ry = rotor.y;
+	float rz = rotor.z;
+	float rw = rotor.w;
+
+	float A11 = 1.0F - (rz * rz + rx * rx) * 2.0F;
+	float A01 = rx * ry;
+	float A12 = ry * rz;
+	float B01 = rz * rw;
+	float B12 = rx * rw;
+
+	return (Vector3D((A01 - B01) * 2.0F, A11, (A12 + B12) * 2.0F));
+}
+
+Vector3D Motor4D::GetDirectionZ(void) const
+{
+	float rx = rotor.x;
+	float ry = rotor.y;
+	float rz = rotor.z;
+	float rw = rotor.w;
+
+	float A22 = 1.0F - (rx * rx + ry * ry) * 2.0F;
+	float A02 = rz * rx;
+	float A12 = ry * rz;
+	float B20 = ry * rw;
+	float B12 = rx * rw;
+
+	return (Vector3D((A02 + B20) * 2.0F, (A12 - B12) * 2.0F, A22));
+}
+
+Point3D Motor4D::GetPosition(void) const
+{
+	float rx = rotor.x;
+	float ry = rotor.y;
+	float rz = rotor.z;
+	float rw = rotor.w;
+	float ux = screw.x;
+	float uy = screw.y;
+	float uz = screw.z;
+	float uw = screw.w;
+
+	float A03 = ry * uz - rz * uy;
+	float A13 = rz * ux - rx * uz;
+	float A23 = rx * uy - ry * ux;
+	float B03 = ux * rw - rx * uw;
+	float B13 = uy * rw - ry * uw;
+	float B23 = uz * rw - rz * uw;
+
+	return (Point3D((A03 + B03) * 2.0F, (A13 + B13) * 2.0F, (A23 + B23) * 2.0F));
+}
+
 Transform4D Motor4D::GetTransformMatrix(void) const
 {
 	float rx = rotor.x;
@@ -37,23 +106,23 @@ Transform4D Motor4D::GetTransformMatrix(void) const
 	float A00 = 1.0F - (ry2 + rz2) * 2.0F;
 	float A11 = 1.0F - (rz2 + rx2) * 2.0F;
 	float A22 = 1.0F - (rx2 + ry2) * 2.0F;
-	float A01 = rx * ry * 2.0F;
-	float A02 = rz * rx * 2.0F;
-	float A12 = ry * rz * 2.0F;
-	float A03 = (ry * uz - rz * uy) * 2.0F;
-	float A13 = (rz * ux - rx * uz) * 2.0F;
-	float A23 = (rx * uy - ry * ux) * 2.0F;
+	float A01 = rx * ry;
+	float A02 = rz * rx;
+	float A12 = ry * rz;
+	float A03 = ry * uz - rz * uy;
+	float A13 = rz * ux - rx * uz;
+	float A23 = rx * uy - ry * ux;
 
-	float B01 = rz * rw * -2.0F;
-	float B20 = ry * rw * -2.0F;
-	float B12 = rx * rw * -2.0F;
-	float B03 = (ux * rw - rx * uw) * 2.0F;
-	float B13 = (uy * rw - ry * uw) * 2.0F;
-	float B23 = (uz * rw - rz * uw) * 2.0F;
+	float B01 = rz * rw;
+	float B20 = ry * rw;
+	float B12 = rx * rw;
+	float B03 = ux * rw - rx * uw;
+	float B13 = uy * rw - ry * uw;
+	float B23 = uz * rw - rz * uw;
 
-	return (Transform4D(   A00,    A01 + B01, A02 - B20, A03 + B03,
-	                    A01 - B01,    A11,    A12 + B12, A13 + B13,
-	                    A02 + B20, A12 - B12,    A22,    A23 + B23));
+	return (Transform4D(       A00,         (A01 - B01) * 2.0F, (A02 + B20) * 2.0F, (A03 + B03) * 2.0F,
+	                    (A01 + B01) * 2.0F,        A11,         (A12 - B12) * 2.0F, (A13 + B13) * 2.0F,
+	                    (A02 - B20) * 2.0F, (A12 + B12) * 2.0F,        A22,         (A23 + B23) * 2.0F));
 }
 
 Transform4D Motor4D::GetInverseTransformMatrix(void) const
@@ -73,23 +142,23 @@ Transform4D Motor4D::GetInverseTransformMatrix(void) const
 	float A00 = 1.0F - (ry2 + rz2) * 2.0F;
 	float A11 = 1.0F - (rz2 + rx2) * 2.0F;
 	float A22 = 1.0F - (rx2 + ry2) * 2.0F;
-	float A01 = rx * ry * 2.0F;
-	float A02 = rz * rx * 2.0F;
-	float A12 = ry * rz * 2.0F;
-	float A03 = (ry * uz - rz * uy) * 2.0F;
-	float A13 = (rz * ux - rx * uz) * 2.0F;
-	float A23 = (rx * uy - ry * ux) * 2.0F;
+	float A01 = rx * ry;
+	float A02 = rz * rx;
+	float A12 = ry * rz;
+	float A03 = ry * uz - rz * uy;
+	float A13 = rz * ux - rx * uz;
+	float A23 = rx * uy - ry * ux;
 
-	float B01 = rz * rw * -2.0F;
-	float B20 = ry * rw * -2.0F;
-	float B12 = rx * rw * -2.0F;
-	float B03 = (ux * rw - rx * uw) * 2.0F;
-	float B13 = (uy * rw - ry * uw) * 2.0F;
-	float B23 = (uz * rw - rz * uw) * 2.0F;
+	float B01 = rz * rw;
+	float B20 = ry * rw;
+	float B12 = rx * rw;
+	float B03 = ux * rw - rx * uw;
+	float B13 = uy * rw - ry * uw;
+	float B23 = uz * rw - rz * uw;
 
-	return (Transform4D(   A00,    A01 - B01, A02 + B20, A03 - B03,
-	                    A01 + B01,    A11,    A12 - B12, A13 - B13,
-	                    A02 - B20, A12 + B12,    A22,    A23 - B23));
+	return (Transform4D(       A00,         (A01 + B01) * 2.0F, (A02 - B20) * 2.0F, (A03 - B03) * 2.0F,
+	                    (A01 - B01) * 2.0F,        A11,         (A12 + B12) * 2.0F, (A13 - B13) * 2.0F,
+	                    (A02 + B20) * 2.0F, (A12 - B12) * 2.0F,        A22,         (A23 - B23) * 2.0F));
 }
 
 void Motor4D::GetTransformMatrices(Transform4D *M, Transform4D *Minv) const
@@ -109,27 +178,27 @@ void Motor4D::GetTransformMatrices(Transform4D *M, Transform4D *Minv) const
 	float A00 = 1.0F - (ry2 + rz2) * 2.0F;
 	float A11 = 1.0F - (rz2 + rx2) * 2.0F;
 	float A22 = 1.0F - (rx2 + ry2) * 2.0F;
-	float A01 = rx * ry * 2.0F;
-	float A02 = rz * rx * 2.0F;
-	float A12 = ry * rz * 2.0F;
-	float A03 = (ry * uz - rz * uy) * 2.0F;
-	float A13 = (rz * ux - rx * uz) * 2.0F;
-	float A23 = (rx * uy - ry * ux) * 2.0F;
+	float A01 = rx * ry;
+	float A02 = rz * rx;
+	float A12 = ry * rz;
+	float A03 = ry * uz - rz * uy;
+	float A13 = rz * ux - rx * uz;
+	float A23 = rx * uy - ry * ux;
 
-	float B01 = rz * rw * -2.0F;
-	float B20 = ry * rw * -2.0F;
-	float B12 = rx * rw * -2.0F;
-	float B03 = (ux * rw - rx * uw) * 2.0F;
-	float B13 = (uy * rw - ry * uw) * 2.0F;
-	float B23 = (uz * rw - rz * uw) * 2.0F;
+	float B01 = rz * rw;
+	float B20 = ry * rw;
+	float B12 = rx * rw;
+	float B03 = ux * rw - rx * uw;
+	float B13 = uy * rw - ry * uw;
+	float B23 = uz * rw - rz * uw;
 
-	   M->Set(   A00,    A01 + B01, A02 - B20, A03 + B03,
-	          A01 - B01,    A11,    A12 + B12, A13 + B13,
-	          A02 + B20, A12 - B12,    A22,    A23 + B23);
+	   M->Set(       A00,         (A01 - B01) * 2.0F, (A02 + B20) * 2.0F, (A03 + B03) * 2.0F,
+	          (A01 + B01) * 2.0F,        A11,         (A12 - B12) * 2.0F, (A13 + B13) * 2.0F,
+	          (A02 - B20) * 2.0F, (A12 + B12) * 2.0F,        A22,         (A23 + B23) * 2.0F);
 
-	Minv->Set(   A00,    A01 - B01, A02 + B20, A03 - B03,
-	          A01 + B01,    A11,    A12 - B12, A13 - B13,
-	          A02 - B20, A12 + B12,    A22,    A23 - B23);
+	Minv->Set(       A00,         (A01 + B01) * 2.0F, (A02 - B20) * 2.0F, (A03 - B03) * 2.0F,
+	          (A01 - B01) * 2.0F,        A11,         (A12 + B12) * 2.0F, (A13 - B13) * 2.0F,
+	          (A02 + B20) * 2.0F, (A12 - B12) * 2.0F,        A22,         (A23 - B23) * 2.0F);
 }
 
 Motor4D& Motor4D::SetTransformMatrix(const Transform4D& M)

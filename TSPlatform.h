@@ -119,15 +119,17 @@ namespace Terathon
 		typedef unsigned int			uint32;
 		typedef unsigned __int64		uint64;
 
-		#ifdef _M_X64
+		#if defined(_M_X64) || defined(_M_ARM64)
 
 			typedef __int64				machine;
 			typedef unsigned __int64	umachine;
+			typedef unsigned __int64	machine_address;
 
 		#else
 
 			typedef int					machine;
 			typedef unsigned int		umachine;
+			typedef unsigned int		machine_address;
 
 		#endif
 
@@ -145,12 +147,13 @@ namespace Terathon
 		typedef short					int16;
 		typedef int						int32;
 		typedef long					int64;
-		typedef long					machine;
 		typedef unsigned char			uint8;
 		typedef unsigned short			uint16;
 		typedef unsigned int			uint32;
 		typedef unsigned long			uint64;
+		typedef long					machine;
 		typedef unsigned long			umachine;
+		typedef unsigned long			machine_address;
 
 	#elif defined(__GNUC__)
 
@@ -158,12 +161,24 @@ namespace Terathon
 		typedef short					int16;
 		typedef int						int32;
 		typedef long long				int64;
-		typedef long long				machine;
 		typedef unsigned char			uint8;
 		typedef unsigned short			uint16;
 		typedef unsigned int			uint32;
 		typedef unsigned long long		uint64;
-		typedef unsigned long long		umachine;
+
+		#if defined(__LP64__) || defined(_WIN64)
+
+			typedef long long			machine;
+			typedef unsigned long long	umachine;
+			typedef unsigned long long	machine_address;
+
+		#else
+
+			typedef int					machine;
+			typedef unsigned int		umachine;
+			typedef unsigned int		machine_address;
+
+		#endif
 
 		#if !defined(restrict)
 
@@ -172,9 +187,6 @@ namespace Terathon
 		#endif
 
 	#endif
-
-
-	typedef uint64 machine_address;
 
 
 	inline machine_address GetPointerAddress(const volatile void *ptr)

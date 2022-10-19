@@ -110,6 +110,15 @@ namespace Terathon
 	//# \action		Vector3D operator *(const Vector3D& a, const Vector3D& b);
 	//#				Returns the componentwise product of the vectors $a$ and $b$
 	//
+	//# \action		float BulkNorm(const Vector3D& v);
+	//#				Returns the bulk norm of the vector $v$.
+	//
+	//# \action		float WeightNorm(const Vector3D& v);
+	//#				Returns the weight norm of the vector $v$.
+	//
+	//# \action		Point2D Unitize(const Vector3D& v);
+	//#				Returns the 2D point represented by the vector $v$ after unitization.
+	//
 	//# \action		float Magnitude(const Vector3D& v);
 	//#				Returns the magnitude of the vector $v$.
 	//
@@ -163,14 +172,17 @@ namespace Terathon
 	//# The return value is a reference to the vector object.
 
 
-	//# \function	Vector3D::GetPoint2D		Returns a reference to a $@Point2D@$ object.
+	//# \function	Vector3D::Unitize		Unitizes the weight of a 3D vector.
 	//
-	//# \proto	Point2D& GetPoint2D(void);
-	//# \proto	const Point2D& GetPoint2D(void) const;
+	//# \proto	Vector3D& Unitize(void);
 	//
 	//# \desc
-	//# The $GetPoint2D$ function returns a reference to a $@Point2D@$ object that refers to
-	//# the same data contained in the <i>x</i> and <i>y</i> coordinates of a $Vector3D$ object.
+	//# The $Unitize$ function multiplies a 3D vector by the inverse of its <i>z</i> coordinate,
+	//# transforming it into a homogeneous point having a unit weight. If the <i>z</i> coordinate is
+	//# zero, then the resulting <i>x</i> and <i>y</i> coordinates are undefined.
+	//# In all cases, the <i>z</i> coordinate is 1.0 when this function returns.
+	//#
+	//# The return value is a reference to the vector object.
 
 
 	//# \function	Vector3D::RotateAboutX		Rotates a vector about the <i>x</i> axis.
@@ -419,12 +431,24 @@ namespace Terathon
 				return (static_cast<Vector3D&>(xyz.Normalize()));
 			}
 
+			Vector3D& Unitize(void)
+			{
+				xy /= z;
+				z = 1.0F;
+				return (*this);
+			}
+
 			TERATHON_API Vector3D& RotateAboutX(float angle);
 			TERATHON_API Vector3D& RotateAboutY(float angle);
 			TERATHON_API Vector3D& RotateAboutZ(float angle);
 			TERATHON_API Vector3D& RotateAboutAxis(float angle, const Bivector3D& axis);
 	};
 
+
+	inline Vector3D operator ~(const Vector3D& v)
+	{
+		return (Vector3D(-v.x, -v.y, -v.z));
+	}
 
 	inline Vector3D operator -(const Vector3D& v)
 	{
@@ -494,6 +518,32 @@ namespace Terathon
 	inline float operator ^(const Subvec4D<type_struct, true, count, index_x, index_y, index_z, index_w>& a, const Vector3D& b)
 	{
 		return (a.data[index_x] * b.x + a.data[index_y] * b.y + a.data[index_z] * b.z);
+	}
+
+	inline const Vector3D& Reverse(const Vector3D& v)
+	{
+		return (v);
+	}
+
+	inline Vector3D Antireverse(const Vector3D& v)
+	{
+		return (~v);
+	}
+
+	inline float BulkNorm(const Vector3D& v)
+	{
+		return (Sqrt(v.x * v.x + v.y * v.y));
+	}
+
+	inline float WeightNorm(const Vector3D& v)
+	{
+		return (Fabs(v.z));
+	}
+
+	inline Point2D Unitize(const Vector3D& v)
+	{
+		float s = 1.0F / v.z;
+		return (Point2D(v.x * s, v.y * s));
 	}
 
 	inline float Magnitude(const Vector3D& v)

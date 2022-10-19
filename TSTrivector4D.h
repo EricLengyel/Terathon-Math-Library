@@ -119,15 +119,6 @@ namespace Terathon
 	//# \action		float WeightNorm(const Trivector4D& v);
 	//#				Returns the weight norm of the trivector $v$.
 	//
-	//# \action		float Magnitude(const Trivector4D& v);
-	//#				Returns the magnitude of the trivector $v$.
-	//
-	//# \action		float InverseMag(const Trivector4D& v);
-	//#				Returns the inverse magnitude of the trivector $v$.
-	//
-	//# \action		float SquaredMag(const Trivector4D& v);
-	//#				Returns the squared magnitude of the trivector $v$.
-	//
 	//# \action		Point3D Project(const Point3D& p, const Trivector4D& f);
 	//#				Returns the projection of the point $p$ onto the plane $f$ under the assumption that the plane is unitized.
 	//
@@ -167,19 +158,6 @@ namespace Terathon
 	//# The return value is a reference to the trivector object.
 
 
-	//# \function	Trivector4D::Normalize		Normalizes a 4D trivector.
-	//
-	//# \proto	Trivector4D& Normalize(void);
-	//
-	//# \desc
-	//# The $Normalize$ function multiplies a 4D trivector by the inverse of its magnitude,
-	//# normalizing it to unit magnitude. Normalizing the zero vector produces undefined results.
-	//#
-	//# The return value is a reference to the trivector object.
-	//
-	//# \also	$@Trivector4D::Unitize@$
-
-
 	//# \function	Trivector4D::Unitize		Unitizes the weight of a 4D trivector.
 	//
 	//# \proto	Trivector4D& Unitize(void);
@@ -190,8 +168,6 @@ namespace Terathon
 	//# has a unit-length normal. If the <i>x</i>, <i>y</i>, and <i>z</i> coordinates are all zero, then the result is undefined.
 	//#
 	//# The return value is a reference to the trivector object.
-	//
-	//# \also	$@Trivector4D::Normalize@$
 
 
 	struct TypeTrivector4D
@@ -322,11 +298,6 @@ namespace Terathon
 				return (*this);
 			}
 
-			Trivector4D& Normalize(void)
-			{
-				return (static_cast<Trivector4D&>(xyzw.Normalize()));
-			}
-
 			Trivector4D& Unitize(void)
 			{
 				return (*this *= InverseSqrt(x * x + y * y + z * z));
@@ -435,26 +406,6 @@ namespace Terathon
 	inline Trivector4D Unitize(const Trivector4D& v)
 	{
 		return (v * InverseSqrt(v.x * v.x + v.y * v.y + v.z * v.z));
-	}
-
-	inline float Magnitude(const Trivector4D& v)
-	{
-		return (Sqrt(v.x * v.x + v.y * v.y + v.z * v.z + v.w * v.w));
-	}
-
-	inline float InverseMag(const Trivector4D& v)
-	{
-		return (InverseSqrt(v.x * v.x + v.y * v.y + v.z * v.z + v.w * v.w));
-	}
-
-	inline float SquaredMag(const Trivector4D& v)
-	{
-		return (v.x * v.x + v.y * v.y + v.z * v.z + v.w * v.w);
-	}
-
-	inline Trivector4D Normalize(const Trivector4D& v)
-	{
-		return (v * InverseMag(v));
 	}
 
 	inline float Antiwedge(const Vector4D& v, const Trivector4D& f)

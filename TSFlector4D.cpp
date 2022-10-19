@@ -38,20 +38,20 @@ Transform4D Flector4D::GetTransformMatrix(void) const
 	float A01 = hx * hy * -2.0F;
 	float A02 = hz * hx * -2.0F;
 	float A12 = hy * hz * -2.0F;
-	float A03 = (sx * sw - hx * hw) * 2.0F;
-	float A13 = (sy * sw - hy * hw) * 2.0F;
-	float A23 = (sz * sw - hz * hw) * 2.0F;
+	float A03 = sx * sw - hx * hw;
+	float A13 = sy * sw - hy * hw;
+	float A23 = sz * sw - hz * hw;
 
 	float B01 = hz * sw * 2.0F;
 	float B20 = hy * sw * 2.0F;
 	float B12 = hx * sw * 2.0F;
-	float B03 = (hy * sz - hz * sy) * 2.0F;
-	float B13 = (hz * sx - hx * sz) * 2.0F;
-	float B23 = (hx * sy - hy * sx) * 2.0F;
+	float B03 = hy * sz - hz * sy;
+	float B13 = hz * sx - hx * sz;
+	float B23 = hx * sy - hy * sx;
 
-	return (Transform4D(   A00,    A01 + B01, A02 - B20, A03 + B03,
-	                    A01 - B01,    A11,    A12 + B12, A13 + B13,
-	                    A02 + B20, A12 - B12,    A22,    A23 + B23));
+	return (Transform4D(   A00,    A01 + B01, A02 - B20, (A03 + B03) * 2.0F,
+	                    A01 - B01,    A11,    A12 + B12, (A13 + B13) * 2.0F,
+	                    A02 + B20, A12 - B12,    A22,    (A23 + B23) * 2.0F));
 }
 
 Transform4D Flector4D::GetInverseTransformMatrix(void) const
@@ -74,20 +74,20 @@ Transform4D Flector4D::GetInverseTransformMatrix(void) const
 	float A01 = hx * hy * -2.0F;
 	float A02 = hz * hx * -2.0F;
 	float A12 = hy * hz * -2.0F;
-	float A03 = (sx * sw - hx * hw) * 2.0F;
-	float A13 = (sy * sw - hy * hw) * 2.0F;
-	float A23 = (sz * sw - hz * hw) * 2.0F;
+	float A03 = sx * sw - hx * hw;
+	float A13 = sy * sw - hy * hw;
+	float A23 = sz * sw - hz * hw;
 
 	float B01 = hz * sw * 2.0F;
 	float B20 = hy * sw * 2.0F;
 	float B12 = hx * sw * 2.0F;
-	float B03 = (hy * sz - hz * sy) * 2.0F;
-	float B13 = (hz * sx - hx * sz) * 2.0F;
-	float B23 = (hx * sy - hy * sx) * 2.0F;
+	float B03 = hy * sz - hz * sy;
+	float B13 = hz * sx - hx * sz;
+	float B23 = hx * sy - hy * sx;
 
-	return (Transform4D(   A00,    A01 - B01, A02 + B20, A03 - B03,
-	                    A01 + B01,    A11,    A12 - B12, A13 - B13,
-	                    A02 - B20, A12 + B12,    A22,    A23 - B23));
+	return (Transform4D(   A00,    A01 - B01, A02 + B20, (A03 - B03) * 2.0F,
+	                    A01 + B01,    A11,    A12 - B12, (A13 - B13) * 2.0F,
+	                    A02 - B20, A12 + B12,    A22,    (A23 - B23) * 2.0F));
 }
 
 void Flector4D::GetTransformMatrices(Transform4D *M, Transform4D *Minv) const
@@ -110,24 +110,24 @@ void Flector4D::GetTransformMatrices(Transform4D *M, Transform4D *Minv) const
 	float A01 = hx * hy * -2.0F;
 	float A02 = hz * hx * -2.0F;
 	float A12 = hy * hz * -2.0F;
-	float A03 = (sx * sw - hx * hw) * 2.0F;
-	float A13 = (sy * sw - hy * hw) * 2.0F;
-	float A23 = (sz * sw - hz * hw) * 2.0F;
+	float A03 = sx * sw - hx * hw;
+	float A13 = sy * sw - hy * hw;
+	float A23 = sz * sw - hz * hw;
 
 	float B01 = hz * sw * 2.0F;
 	float B20 = hy * sw * 2.0F;
 	float B12 = hx * sw * 2.0F;
-	float B03 = (hy * sz - hz * sy) * 2.0F;
-	float B13 = (hz * sx - hx * sz) * 2.0F;
-	float B23 = (hx * sy - hy * sx) * 2.0F;
+	float B03 = hy * sz - hz * sy;
+	float B13 = hz * sx - hx * sz;
+	float B23 = hx * sy - hy * sx;
 
-	   M->Set(   A00,    A01 + B01, A02 - B20, A03 + B03,
-	          A01 - B01,    A11,    A12 + B12, A13 + B13,
-	          A02 + B20, A12 - B12,    A22,    A23 + B23);
+	   M->Set(   A00,    A01 + B01, A02 - B20, (A03 + B03) * 2.0F,
+	          A01 - B01,    A11,    A12 + B12, (A13 + B13) * 2.0F,
+	          A02 + B20, A12 - B12,    A22,    (A23 + B23) * 2.0F);
 
-	Minv->Set(   A00,    A01 - B01, A02 + B20, A03 - B03,
-	          A01 + B01,    A11,    A12 - B12, A13 - B13,
-	          A02 - B20, A12 + B12,    A22,    A23 - B23);
+	Minv->Set(   A00,    A01 - B01, A02 + B20, (A03 - B03) * 2.0F,
+	          A01 + B01,    A11,    A12 - B12, (A13 - B13) * 2.0F,
+	          A02 - B20, A12 + B12,    A22,    (A23 - B23) * 2.0F);
 }
 
 Flector4D& Flector4D::SetTransformMatrix(const Transform4D& M)

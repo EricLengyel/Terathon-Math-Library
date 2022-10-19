@@ -165,6 +165,9 @@ namespace Terathon
 	//# \action		float WeightNorm(const Vector4D& v);
 	//#				Returns the weight norm of the vector $v$.
 	//
+	//# \action		Point3D Unitize(const Vector4D& v);
+	//#				Returns the 3D point represented by the vector $v$ after unitization.
+	//
 	//# \action		float Magnitude(const Vector4D& v);
 	//#				Returns the magnitude of the vector $v$.
 	//
@@ -256,16 +259,6 @@ namespace Terathon
 	//# In all cases, the <i>w</i> coordinate is 1.0 when this function returns.
 	//#
 	//# The return value is a reference to the vector object.
-
-
-	//# \function	Vector4D::GetPoint3D		Returns a reference to a $@Point3D@$ object.
-	//
-	//# \proto	Point3D& GetPoint3D(void);
-	//# \proto	const Point3D& GetPoint3D(void) const;
-	//
-	//# \desc
-	//# The $GetPoint3D$ function returns a reference to a $@Point3D@$ object that refers to
-	//# the same data contained in the <i>x</i>, <i>y</i>, and <i>z</i> coordinates of a $Vector4D$ object.
 
 
 	//# \function	Vector4D::RotateAboutX		Rotates a vector about the <i>x</i> axis.
@@ -450,12 +443,6 @@ namespace Terathon
 			void Set(const Vector2D& v, float c, float d) volatile
 			{
 				xyzw.Set(v.x, v.y, c, d);
-			}
-
-			Point3D GetPoint3D(void) const
-			{
-				float s = 1.0F / w;
-				return (Point3D(x * s, y * s, z * s));
 			}
 
 			Vector4D& operator =(const Vector4D& v)
