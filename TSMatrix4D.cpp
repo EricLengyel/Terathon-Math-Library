@@ -1,6 +1,6 @@
 //
 // This file is part of the Terathon Math Library, by Eric Lengyel.
-// Copyright 1999-2022, Terathon Software LLC
+// Copyright 1999-2023, Terathon Software LLC
 //
 // This software is distributed under the MIT License.
 // Separate proprietary licenses are available from Terathon Software.
@@ -683,7 +683,7 @@ Transform4D Transform4D::MakeInvolution(const Vector3D& a)
 						axaz, ayaz, z * a.z - 1.0F, 0.0F));
 }
 
-Transform4D Transform4D::MakeReflection(const Trivector4D& plane)
+Transform4D Transform4D::MakeReflection(const Plane3D& plane)
 {
 	float x = plane.x * -2.0F;
 	float y = plane.y * -2.0F;

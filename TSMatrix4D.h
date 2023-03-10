@@ -1,6 +1,6 @@
 //
 // This file is part of the Terathon Math Library, by Eric Lengyel.
-// Copyright 1999-2022, Terathon Software LLC
+// Copyright 1999-2023, Terathon Software LLC
 //
 // This software is distributed under the MIT License.
 // Separate proprietary licenses are available from Terathon Software.
@@ -15,8 +15,8 @@
 //# \prefix		Math/
 
 
-#include "TSTrivector4D.h"
 #include "TSMatrix3D.h"
+#include "TSPlane3D.h"
 
 
 #define TERATHON_MATRIX4D 1
@@ -90,8 +90,8 @@ namespace Terathon
 	//# \action		Vector4D operator *(const Matrix4D& m, const Vector4D& v);
 	//#				Returns the product of the matrix $m$ and the column vector $v$.
 	//
-	//# \action		Trivector4D operator *(const Trivector4D& v, const Matrix4D& m);
-	//#				Returns the product of the trivector $v$ and the matrix $m$.
+	//# \action		Antivector4D operator *(const Antivector4D& v, const Matrix4D& m);
+	//#				Returns the product of the row antivector $v$ and the matrix $m$.
 	//
 	//# \action		Vector4D operator *(const Matrix4D& m, const Vector3D& v);
 	//#				Returns the product of the matrix $m$ and the column vector $v$. The <i>w</i> coordinate of $v$ is assumed to be 0.
@@ -177,7 +177,7 @@ namespace Terathon
 		typedef Matrix3D matrix3D_type;
 		typedef Matrix4D matrix4D_type;
 		typedef TypeVector4D column_type_struct;
-		typedef TypeTrivector4D row_type_struct;
+		typedef TypePlane3D row_type_struct;
 	};
 
 
@@ -244,7 +244,7 @@ namespace Terathon
 	}
 
 	template <typename type_struct, int count, int index_00, int index_01, int index_02, int index_03, int index_10, int index_11, int index_12, int index_13, int index_20, int index_21, int index_22, int index_23, int index_30, int index_31, int index_32, int index_33>
-	inline Bivector3D operator *(const Trivector4D& v, const Submat4D<type_struct, count, index_00, index_01, index_02, index_03, index_10, index_11, index_12, index_13, index_20, index_21, index_22, index_23, index_30, index_31, index_32, index_33>& m)
+	inline Bivector3D operator *(const Antivector4D& v, const Submat4D<type_struct, count, index_00, index_01, index_02, index_03, index_10, index_11, index_12, index_13, index_20, index_21, index_22, index_23, index_30, index_31, index_32, index_33>& m)
 	{
 		return (v.xyzw * m);
 	}
@@ -254,7 +254,7 @@ namespace Terathon
 		return (m.matrix * v.xyzw);
 	}
 
-	inline Trivector4D operator *(const Trivector4D& v, const Matrix4D& m)
+	inline Antivector4D operator *(const Antivector4D& v, const Matrix4D& m)
 	{
 		return (v.xyzw * m.matrix);
 	}
@@ -350,8 +350,8 @@ namespace Terathon
 	//# \action		Vector4D operator *(const Transform4D& m, const Vector4D& v);
 	//#				Returns the product of the matrix $m$ and the column vector $v$.
 	//
-	//# \action		Vector4D operator *(const Trivector4D& v, const Transform4D& m);
-	//#				Returns the product of the trivector $v$ and the matrix $m$.
+	//# \action		Vector4D operator *(const Antivector4D& v, const Transform4D& m);
+	//#				Returns the product of the row antivector $v$ and the matrix $m$.
 	//
 	//# \action		Vector3D operator *(const Transform4D& m, const Vector3D& v);
 	//#				Returns the product of the matrix $m$ and the column vector $v$. The <i>w</i> coordinate of $v$ is assumed to be 0.
@@ -593,7 +593,7 @@ namespace Terathon
 
 			TERATHON_API static Transform4D MakeReflection(const Vector3D& a);
 			TERATHON_API static Transform4D MakeInvolution(const Vector3D& a);
-			TERATHON_API static Transform4D MakeReflection(const Trivector4D& plane);
+			TERATHON_API static Transform4D MakeReflection(const Plane3D& plane);
 
 			TERATHON_API static Transform4D MakeScaleX(float sx);
 			TERATHON_API static Transform4D MakeScaleY(float sy);
@@ -624,18 +624,18 @@ namespace Terathon
 	Vector4D operator *(const Transform4D& m, const Subvec4D<type_struct, false, count, index_x, index_y, index_z, index_w>& v)
 	{
 		return (Vector4D(m(0,0) * v.data[index_x] + m(0,1) * v.data[index_y] + m(0,2) * v.data[index_z] + m(0,3) * v.data[index_w],
-						 m(1,0) * v.data[index_x] + m(1,1) * v.data[index_y] + m(1,2) * v.data[index_z] + m(1,3) * v.data[index_w],
-						 m(2,0) * v.data[index_x] + m(2,1) * v.data[index_y] + m(2,2) * v.data[index_z] + m(2,3) * v.data[index_w],
-						 v.data[index_w]));
+		                 m(1,0) * v.data[index_x] + m(1,1) * v.data[index_y] + m(1,2) * v.data[index_z] + m(1,3) * v.data[index_w],
+		                 m(2,0) * v.data[index_x] + m(2,1) * v.data[index_y] + m(2,2) * v.data[index_z] + m(2,3) * v.data[index_w],
+		                 v.data[index_w]));
 	}
 
 	template <typename type_struct, int count, int index_x, int index_y, int index_z, int index_w>
-	Trivector4D operator *(const Subvec4D<type_struct, true, count, index_x, index_y, index_z, index_w>& v, const Transform4D& m)
+	Antivector4D operator *(const Subvec4D<type_struct, true, count, index_x, index_y, index_z, index_w>& v, const Transform4D& m)
 	{
-		return (Trivector4D(m(0,0) * v.data[index_x] + m(1,0) * v.data[index_y] + m(2,0) * v.data[index_z],
-							m(0,1) * v.data[index_x] + m(1,1) * v.data[index_y] + m(2,1) * v.data[index_z],
-							m(0,2) * v.data[index_x] + m(1,2) * v.data[index_y] + m(2,2) * v.data[index_z],
-							m(0,3) * v.data[index_x] + m(1,3) * v.data[index_y] + m(2,3) * v.data[index_z] + v.data[index_w]));
+		return (Antivector4D(m(0,0) * v.data[index_x] + m(1,0) * v.data[index_y] + m(2,0) * v.data[index_z],
+		                     m(0,1) * v.data[index_x] + m(1,1) * v.data[index_y] + m(2,1) * v.data[index_z],
+		                     m(0,2) * v.data[index_x] + m(1,2) * v.data[index_y] + m(2,2) * v.data[index_z],
+		                     m(0,3) * v.data[index_x] + m(1,3) * v.data[index_y] + m(2,3) * v.data[index_z] + v.data[index_w]));
 	}
 
 	inline Vector4D operator *(const Transform4D& m, const Vector4D& v)
@@ -643,7 +643,7 @@ namespace Terathon
 		return (m * v.xyzw);
 	}
 
-	inline Trivector4D operator *(const Trivector4D& v, const Transform4D& m)
+	inline Antivector4D operator *(const Antivector4D& v, const Transform4D& m)
 	{
 		return (v.xyzw * m);
 	}

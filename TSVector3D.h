@@ -1,6 +1,6 @@
 //
 // This file is part of the Terathon Math Library, by Eric Lengyel.
-// Copyright 1999-2022, Terathon Software LLC
+// Copyright 1999-2023, Terathon Software LLC
 //
 // This software is distributed under the MIT License.
 // Separate proprietary licenses are available from Terathon Software.
@@ -73,11 +73,11 @@ namespace Terathon
 	//# \operator	Vector3D& operator *=(const Vector3D& v);
 	//#				Calculates the componentwise product with the vector $v$.
 	//
-	//# \operator	Vector3D& operator *=(float s);
-	//#				Multiplies by the scalar $s$.
+	//# \operator	Vector3D& operator *=(float n);
+	//#				Multiplies by the scalar $n$.
 	//
-	//# \operator	Vector3D& operator /=(float s);
-	//#				Divides by the scalar $s$.
+	//# \operator	Vector3D& operator /=(float n);
+	//#				Divides by the scalar $n$.
 	//
 	//# \action		bool operator ==(const Vector3D& v1, const Vector3D& v2) const;
 	//#				Returns a boolean value indicating whether the two vectors $v1$ and $v2$ are equal.
@@ -94,14 +94,14 @@ namespace Terathon
 	//# \action		Vector3D operator -(const Vector3D& a, const Vector3D& b);
 	//#				Returns the difference of the vectors $a$ and $b$.
 	//
-	//# \action		Vector3D operator *(const Vector3D& v, float s);
-	//#				Returns the product of the vector $v$ and the scalar $s$.
+	//# \action		Vector3D operator *(const Vector3D& v, float n);
+	//#				Returns the product of the vector $v$ and the scalar $n$.
 	//
-	//# \action		Vector3D operator *(float s, const Vector3D& v);
-	//#				Returns the product of the vector $v$ and the scalar $s$.
+	//# \action		Vector3D operator *(float n, const Vector3D& v);
+	//#				Returns the product of the vector $v$ and the scalar $n$.
 	//
-	//# \action		Vector3D operator /(const Vector3D& v, float s);
-	//#				Returns the product of the vector $v$ and the inverse of the scalar $s$.
+	//# \action		Vector3D operator /(const Vector3D& v, float n);
+	//#				Returns the product of the vector $v$ and the inverse of the scalar $n$.
 	//
 	//# \action		Vector3D operator *(const Vector3D& a, const Vector3D& b);
 	//#				Returns the componentwise product of the vectors $a$ and $b$
@@ -134,7 +134,7 @@ namespace Terathon
 	//#				Returns (<b>a</b>&#x202F;&sdot;&#x202F;<b>b</b>)<b>b</b>, which is the projection of $a$ onto $b$ under the assumption that the magnitude of $b$ is one.
 	//
 	//# \action		Vector3D Reject(const Vector3D& a, const Vector3D& b);
-	//#				Returns (<b>a</b>&#x202F;&minus;&#x202F;<b>a</b>&#x202F;&sdot;&#x202F;<b>b</b>)<b>b</b>, which is the rejection of $a$ from $b$ under the assumption that the magnitude of $b$ is one.
+	//#				Returns <b>a</b>&#x202F;&minus;&#x202F;(<b>a</b>&#x202F;&sdot;&#x202F;<b>b</b>)<b>b</b>, which is the rejection of $a$ from $b$ under the assumption that the magnitude of $b$ is one.
 	//
 	//# \privbase	Vec3D	Vectors use a generic base class to store their components.
 	//
@@ -410,15 +410,15 @@ namespace Terathon
 				return (*this);
 			}
 
-			Vector3D& operator *=(float s)
+			Vector3D& operator *=(float n)
 			{
-				xyz *= s;
+				xyz *= n;
 				return (*this);
 			}
 
-			Vector3D& operator /=(float s)
+			Vector3D& operator /=(float n)
 			{
-				xyz /= s;
+				xyz /= n;
 				return (*this);
 			}
 
@@ -441,9 +441,19 @@ namespace Terathon
 	};
 
 
-	inline Vector3D operator ~(const Vector3D& v)
+	inline const Vector3D& Reverse(const Vector3D& v)
+	{
+		return (v);
+	}
+
+	inline Vector3D Antireverse(const Vector3D& v)
 	{
 		return (Vector3D(-v.x, -v.y, -v.z));
+	}
+
+	inline Vector3D operator ~(const Vector3D& v)
+	{
+		return (Antireverse(v));
 	}
 
 	inline Vector3D operator -(const Vector3D& v)
@@ -483,20 +493,20 @@ namespace Terathon
 		return (Vector3D(a.x - b.data[index_x], a.y - b.data[index_y], a.z - b.data[index_z]));
 	}
 
-	inline Vector3D operator *(const Vector3D& v, float s)
+	inline Vector3D operator *(const Vector3D& v, float n)
 	{
-		return (Vector3D(v.x * s, v.y * s, v.z * s));
+		return (Vector3D(v.x * n, v.y * n, v.z * n));
 	}
 
-	inline Vector3D operator *(float s, const Vector3D& v)
+	inline Vector3D operator *(float n, const Vector3D& v)
 	{
-		return (Vector3D(s * v.x, s * v.y, s * v.z));
+		return (Vector3D(n * v.x, n * v.y, n * v.z));
 	}
 
-	inline Vector3D operator /(const Vector3D& v, float s)
+	inline Vector3D operator /(const Vector3D& v, float n)
 	{
-		s = 1.0F / s;
-		return (Vector3D(v.x * s, v.y * s, v.z * s));
+		n = 1.0F / n;
+		return (Vector3D(v.x * n, v.y * n, v.z * n));
 	}
 
 	inline Vector3D operator *(const Vector3D& a, const Vector3D& b)
@@ -516,16 +526,6 @@ namespace Terathon
 		return (a.data[index_x] * b.x + a.data[index_y] * b.y + a.data[index_z] * b.z);
 	}
 
-	inline const Vector3D& Reverse(const Vector3D& v)
-	{
-		return (v);
-	}
-
-	inline Vector3D Antireverse(const Vector3D& v)
-	{
-		return (~v);
-	}
-
 	inline float BulkNorm(const Vector3D& v)
 	{
 		return (Sqrt(v.x * v.x + v.y * v.y));
@@ -538,8 +538,8 @@ namespace Terathon
 
 	inline Point2D Unitize(const Vector3D& v)
 	{
-		float s = 1.0F / v.z;
-		return (Point2D(v.x * s, v.y * s));
+		float n = 1.0F / v.z;
+		return (Point2D(v.x * n, v.y * n));
 	}
 
 	inline float Magnitude(const Vector3D& v)
@@ -621,11 +621,11 @@ namespace Terathon
 	//# The difference between two points produces a direction vector. A three-dimensional
 	//# direction vector is converted to a point by adding it to the identifier $Zero3D$.
 	//
-	//# \operator	Point3D& operator *=(float s);
-	//#				Multiplies by the scalar $s$.
+	//# \operator	Point3D& operator *=(float n);
+	//#				Multiplies by the scalar $n$.
 	//
-	//# \operator	Point3D& operator /=(float s);
-	//#				Divides by the scalar $s$.
+	//# \operator	Point3D& operator /=(float n);
+	//#				Divides by the scalar $n$.
 	//
 	//# \action		Point3D operator -(const Point3D& p);
 	//#				Returns the negation of the point $p$.
@@ -734,15 +734,15 @@ namespace Terathon
 				return (*this);
 			}
 
-			Point3D& operator *=(float s)
+			Point3D& operator *=(float n)
 			{
-				xyz *= s;
+				xyz *= n;
 				return (*this);
 			}
 
-			Point3D& operator /=(float s)
+			Point3D& operator /=(float n)
 			{
-				xyz /= s;
+				xyz /= n;
 				return (*this);
 			}
 	};
@@ -795,20 +795,20 @@ namespace Terathon
 		return (Point3D(v.x - p.x, v.y - p.y, v.z - p.z));
 	}
 
-	inline Point3D operator *(const Point3D& p, float s)
+	inline Point3D operator *(const Point3D& p, float n)
 	{
-		return (Point3D(p.x * s, p.y * s, p.z * s));
+		return (Point3D(p.x * n, p.y * n, p.z * n));
 	}
 
-	inline Point3D operator *(float s, const Point3D& p)
+	inline Point3D operator *(float n, const Point3D& p)
 	{
-		return (Point3D(s * p.x, s * p.y, s * p.z));
+		return (Point3D(n * p.x, n * p.y, n * p.z));
 	}
 
-	inline Point3D operator /(const Point3D& p, float s)
+	inline Point3D operator /(const Point3D& p, float n)
 	{
-		s = 1.0F / s;
-		return (Point3D(p.x * s, p.y * s, p.z * s));
+		n = 1.0F / n;
+		return (Point3D(p.x * n, p.y * n, p.z * n));
 	}
 
 	inline Point3D operator *(const Point3D& a, const Point3D& b)
@@ -906,9 +906,7 @@ namespace Terathon
 
 	struct ConstVector3D
 	{
-		float	x;
-		float	y;
-		float	z;
+		float	x, y, z;
 
 		operator const Vector3D&(void) const
 		{
@@ -929,9 +927,7 @@ namespace Terathon
 
 	struct ConstPoint3D
 	{
-		float	x;
-		float	y;
-		float	z;
+		float	x, y, z;
 
 		operator const Point3D&(void) const
 		{

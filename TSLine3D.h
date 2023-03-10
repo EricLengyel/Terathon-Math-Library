@@ -1,563 +1,353 @@
 //
 // This file is part of the Terathon Math Library, by Eric Lengyel.
-// Copyright 1999-2022, Terathon Software LLC
+// Copyright 1999-2023, Terathon Software LLC
 //
 // This software is distributed under the MIT License.
 // Separate proprietary licenses are available from Terathon Software.
 //
 
 
-#ifndef TSBivector4D_h
-#define TSBivector4D_h
+#ifndef TSLine3D_h
+#define TSLine3D_h
 
 
 //# \component	Math Library
 //# \prefix		Math/
 
 
-#include "TSTrivector4D.h"
+#include "TSBivector3D.h"
+#include "TSVector4D.h"
 
 
-#define TERATHON_BIVECTOR4D 1
+#define TERATHON_LINE3D 1
 
 
 namespace Terathon
 {
-	struct ConstBivector4D;
+	struct ConstLine3D;
 
 
-	//# \class	Bivector4D		Encapsulates a 4D bivector.
+	//# \class	Line3D		Encapsulates a 3D line.
 	//
-	//# The $Bivector4D$ class encapsulates a 4D bivector.
+	//# The $Line3D$ class encapsulates a 3D line.
 	//
-	//# \def	class Bivector4D
+	//# \def	class Line3D
 	//
-	//# \ctor	Bivector4D();
-	//# \ctor	Bivector4D(float vx, float vy, float vz, float mx, float my, float mz);
-	//# \ctor	Bivector4D(const Vector3D& v, const Bivector3D& m);
-	//# \ctor	Bivector4D(const Point3D& p, const Point3D& q);
-	//# \ctor	Bivector4D(const Point3D& p, const Vector3D& v);
-	//# \ctor	Bivector4D(const Trivector4D& f, const Trivector4D& g);
+	//# \ctor	Line3D();
+	//# \ctor	Line3D(float vx, float vy, float vz, float mx, float my, float mz);
+	//# \ctor	Line3D(const Vector3D& direction, const Bivector3D& moment);
 	//
 	//# \param	vx,vy,vz	The three components of the direction of the line.
 	//# \param	mx,my,mz	The three components of the moment of the line.
-	//# \param	v			A 3D vector corresponding to the direction of the line.
-	//# \param	m			A 3D bivector corresponding to the moment of the line.
-	//# \param	p,q			Two 3D points that lie on the line.
-	//# \param	f,g			Two planes that intersect at the line.
+	//# \param	direction	A 3D vector corresponding to the direction of the line.
+	//# \param	moment		A 3D bivector corresponding to the moment of the line.
 	//
 	//# \desc
-	//# The $Bivector4D$ class is used to store a four-dimensional bivector having six floating-point components.
-	//# The components of a 4D bivector are stored as a $@Vector3D@$ member named $direction$ and a $@Bivector3D@$
-	//# member named $moment$.
+	//# The $Line3D$ class is used to store a three dimensional line represented as a four-dimensional bivector having
+	//# six floating-point components. The components of the line are stored as a $@Vector3D@$ member named $direction$
+	//# and a $@Bivector3D@$ member named $moment$.
 	//#
-	//# The default constructor leaves the components of the bivector undefined.
-	//#
-	//# If points $p$ and $q$ are specified, then the bivector is initialized to the wedge product between homogeneous
-	//# extensions of $p$ and $q$ with <i>w</i> coordinates set to 1, giving a representation of the 3D line containing
-	//# both points. The direction component of the bivector is assigned the value $q$&#x202F;&minus;&#x202F;$p$, and the
-	//# moment component is assigned the value $p$&#x202F;&and;&#x202F;$q$.
-	//#
-	//# If the point $p$ and the direction $v$ are specified, then the line contains the point $p$ and runs parallel
-	//# to the direction $v$. The bivector is initialized to the wedge product between the homogeneous extension of $p$
-	//# with <i>w</i> coordinate set to 1 and the homogeneous extension of $v$ with <i>w</i> coordinate set to 0.
-	//# The direction component of the bivector is set equal to $v$, and the moment component is assigned the value
-	//# $p$&#x202F;&and;&#x202F;$v$.
-	//#
-	//# If planes $f$ and $g$ are specified, then the bivector is initialized to the antiwedge product between the 4D
-	//# trivectors $f$ and $g$, giving a representation of the line where the planes intersect.
+	//# The default constructor leaves the components of the line undefined.
 	//
-	//# \operator	Bivector4D& operator *=(float s);
-	//#				Multiplies by the scalar $s$.
+	//# \operator	Line3D& operator *=(float n);
+	//#				Multiplies by the scalar $n$.
 	//
-	//# \operator	Bivector4D& operator /=(float s);
-	//#				Multiplies by the inverse of the scalar $s$.
+	//# \operator	Line3D& operator /=(float n);
+	//#				Multiplies by the inverse of the scalar $n$.
 	//
-	//# \action		bool operator ==(const Bivector4D& a, const Bivector4D& b);
-	//#				Returns a boolean value indicating whether the two bivectors $a$ and $b$ are equal.
+	//# \action		bool operator ==(const Line3D& k, const Line3D& l);
+	//#				Returns a boolean value indicating whether the two lines $k$ and $l$ are equal.
 	//
-	//# \action		bool operator !=(const Bivector4D& a, const Bivector4D& b);
-	//#				Returns a boolean value indicating whether the two bivectors $a$ and $b$ are not equal.
+	//# \action		bool operator !=(const Line3D& k, const Line3D& l);
+	//#				Returns a boolean value indicating whether the two lines $k$ and $l$ are not equal.
 	//
-	//# \action		Bivector4D operator ~(const Bivector4D& L);
-	//#				Returns the antireverse of the bivector $L$.
+	//# \action		Line3D operator ~(const Line3D& l);
+	//#				Returns the antireverse of the line $l$.
 	//
-	//# \action		Bivector4D operator -(const Bivector4D& L);
-	//#				Returns the negation of the bivector $L$.
+	//# \action		Line3D operator -(const Line3D& l);
+	//#				Returns the negation of the line $l$.
 	//
-	//# \action		Bivector4D operator *(const Bivector4D& L, float s);
-	//#				Returns the product of the bivector $L$ and the scalar $s$.
+	//# \action		Line3D operator *(const Line3D& l, float n);
+	//#				Returns the product of the line $l$ and the scalar $n$.
 	//
-	//# \action		Bivector4D operator *(float s, const Bivector4D& L);
-	//#				Returns the product of the bivector $L$ and the scalar $s$.
+	//# \action		Line3D operator *(float n, const Line3D& l);
+	//#				Returns the product of the line $l$ and the scalar $n$.
 	//
-	//# \action		Bivector4D operator /(const Bivector4D& L, float s);
-	//#				Returns the product of the bivector $L$ and the inverse of the scalar $s$.
+	//# \action		Line3D operator /(const Line3D& l, float n);
+	//#				Returns the product of the line $l$ and the inverse of the scalar $n$.
 	//
-	//# \action		Bivector4D operator ^(const Point3D& p, const Point3D& q);
+	//# \action		Line3D operator ^(const Point3D& p, const Point3D& q);
 	//#				Returns the wedge product of the points $p$ and $q$. The <i>w</i> coordinates of $p$ and $q$ are assumed to be 1.
 	//
-	//# \action		Bivector4D operator ^(const Trivector4D& f, const Trivector4D& g);
-	//#				Returns the antiwedge product of the trivectors $f$ and $g$.
-	//#				The result represents the line where the two planes $f$ and $g$ intersect. The direction of the line is equal to the cross product between the normal component of $f$ and the normal component of $g$.
-	//
-	//# \action		Trivector4D operator ^(const Bivector4D& L, const Point3D& p);
-	//#				Returns the wedge product of the bivector $L$ and the point $p$. The <i>w</i> coordinate of $p$ is assumed to be 1.
-	//#				The result represents the plane containing the line $L$ and the point $p$, wound from the direction component of $L$ toward the direction to $p$ perpendicular to the line $L$.
-	//
-	//# \action		Trivector4D operator ^(const Point3D& p, const Bivector4D& L);
-	//#				Returns the wedge product of the point $p$ and the bivector $L$, which is the same as $L$&#x202F;&#x2227;&#x202F;$p$. The <i>w</i> coordinate of $p$ is assumed to be 1.
-	//
-	//# \action		Trivector4D operator ^(const Bivector4D& L, const Vector3D& v);
-	//#				Returns the wedge product of the bivector $L$ and the direction $v$. The <i>w</i> coordinate of $v$ is assumed to be 0.
-	//#				The result represents the plane containing the line $L$ and the direction $v$, wound from the direction component of $L$ toward the direction $v$.
-	//
-	//# \action		Trivector4D operator ^(const Vector3D& v, const Bivector4D& L);
-	//#				Returns the wedge product of the direction $v$ and the bivector $L$, which is the same as $L$&#x202F;&#x2227;&#x202F;$v$. The <i>w</i> coordinate of $v$ is assumed to be 0.
-	//
-	//# \action		Vector4D operator ^(const Bivector4D& L, const Trivector4D& f);
-	//#				Returns the antiwedge product of the bivector $L$ and the plane $f$.
-	//#				The result represents the homogeneous point where the line and plane intersect. The <i>x</i>, <i>y</i>, and <i>z</i> must be divided by the <i>w</i> coordinate to produce a 3D point.
-	//
-	//# \action		Vector4D operator ^(const Trivector4D& f, const Bivector4D& L);
-	//#				Returns the antiwedge product of the plane $f$ and the bivector $L$, which is the same as $L$&#x202F;&#x2228;&#x202F;$f$.
-	//
-	//# \action		float operator ^(const Bivector4D& K, const Bivector4D& L);
-	//#				Returns the antiwedge product of the bivectors $K$ and $L$.
+	//# \action		float operator ^(const Line3D& k, const Line3D& l);
+	//#				Returns the antiwedge product of the lines $k$ and $l$.
 	//#				This gives the crossing relationship between the two lines, with positive values representing clockwise crossings and negative values representing counterclockwise crossings.
 	//
-	//# \action		float BulkNorm(const Bivector4D& L);
-	//#				Returns the bulk norm of the bivector $L$.
+	//# \action		float BulkNorm(const Line3D& l);
+	//#				Returns the bulk norm of the line $l$.
 	//
-	//# \action		float WeightNorm(const Bivector4D& L);
-	//#				Returns the weight norm of the bivector $L$.
+	//# \action		float WeightNorm(const Line3D& l);
+	//#				Returns the weight norm of the line $l$.
 	//
-	//# \action		Point3D Project(const Point3D& p, const Bivector4D& L);
-	//#				Returns the projection of the point $p$ onto the line $L$ under the assumption that the line is unitized.
+	//# \action		Point3D Project(const Point3D& p, const Line3D& l);
+	//#				Returns the projection of the point $p$ onto the line $l$ under the assumption that the line is unitized.
 	//
-	//# \action		Bivector4D Project(const Bivector4D& L, const Trivector4D& f);
-	//#				Returns the projection of the line $L$ onto the plane $f$ under the assumption that the plane is unitized.
-	//
-	//# \action		Bivector4D Antiproject(const Bivector4D& L, const Point3D& p);
-	//#				Returns the antiprojection of the line $L$ onto the point $p$ (where $p$ is always unitized because it has an implicit <i>w</i> coordinate of 1).
-	//
-	//# \action		Trivector4D Antiproject(const Trivector4D& f, const Bivector4D& L);
-	//#				Returns the antiprojection of the plane $f$ onto the line $L$ under the assumption that the line is unitized.
+	//# \action		Line3D Antiproject(const Line3D& l, const Point3D& p);
+	//#				Returns the antiprojection of the line $l$ onto the point $p$ (where $p$ is always unitized because it has an implicit <i>w</i> coordinate of 1).
 	//
 	//# \also	$@Vector4D@$
 	//# \also	$@Trivector4D@$
 	//# \also	$@Motor4D@$
 
 
-	//# \function	Bivector4D::Set		Sets all six components of a bivector.
+	//# \function	Line3D::Set		Sets all six components of a line.
 	//
-	//# \proto	Bivector4D& Set(float vx, float vy, float vz, float mx, float my, float mz);
-	//# \proto	Bivector4D& Set(const Vector3D& v, const Bivector3D& m);
-	//# \proto	Bivector4D& Set(const Point3D& p, const Point3D& q);
-	//# \proto	Bivector4D& Set(const Point3D& p, const Vector3D& v);
-	//# \proto	Bivector4D& Set(const Trivector4D& f, const Trivector4D& g);
+	//# \proto	Line3D& Set(float vx, float vy, float vz, float mx, float my, float mz);
+	//# \proto	Line3D& Set(const Vector3D& direction, const Bivector3D& moment);
 	//
 	//# \param	vx,vy,vz	The three components of the direction of the line.
 	//# \param	mx,my,mz	The three components of the moment of the line.
-	//# \param	v			A 3D vector corresponding to the direction of the line.
-	//# \param	m			A 3D bivector corresponding to the moment of the line.
-	//# \param	p,q			Two 3D points that lie on the line.
-	//# \param	f,g			Two planes that intersect at the line.
+	//# \param	direction	A 3D vector corresponding to the direction of the line.
+	//# \param	moment		A 3D bivector corresponding to the moment of the line.
 	//
 	//# \desc
-	//# The $Set$ function replaces all six components of a bivector with new values.
+	//# The $Set$ function replaces all six components of a line with new values.
 	//#
-	//# If points $p$ and $q$ are specified, then the bivector is initialized to the wedge product between homogeneous
-	//# extensions of $p$ and $q$ with <i>w</i> coordinates set to 1, giving a representation of the 3D line containing
-	//# both points. The direction component of the bivector is assigned the value $q$&#x202F;&minus;&#x202F;$p$, and the
-	//# moment component is assigned the value $p$&#x202F;&and;&#x202F;$q$.
-	//#
-	//# If the point $p$ and the direction $v$ are specified, then the line contains the point $p$ and runs parallel
-	//# to the direction $v$. The bivector is initialized to the wedge product between the homogeneous extension of $p$
-	//# with <i>w</i> coordinate set to 1 and the homogeneous extension of $v$ with <i>w</i> coordinate set to 0.
-	//# The direction component of the bivector is set equal to $v$, and the moment component is assigned the value
-	//# $p$&#x202F;&and;&#x202F;$v$.
-	//#
-	//# If planes $f$ and $g$ are specified, then the bivector is initialized to the antiwedge product between the 4D
-	//# trivectors $f$ and $g$, giving a representation of the line where the planes intersect.
-	//#
-	//# The return value is a reference to the bivector object.
+	//# The return value is a reference to the line object.
 
 
-	//# \function	Bivector4D::Unitize		Unitizes the weight of a 4D bivector.
+	//# \function	Line3D::Unitize		Unitizes the weight of a line.
 	//
-	//# \proto	Bivector4D& Unitize(void);
+	//# \proto	Line3D& Unitize(void);
 	//
 	//# \desc
-	//# The $Unitize$ function multiplies a 4D bivector by the inverse magnitude of its weight, which is the
+	//# The $Unitize$ function multiplies a line by the inverse magnitude of its weight, which is the
 	//# 3D direction component. After calling this function, the direction component has unit length, and the
 	//# magnitude of the moment component is the perpendicular distance between the origin and the line.
 	//#
-	//# The return value is a reference to the bivector object.
+	//# The return value is a reference to the line object.
 
 
-	class Bivector4D
+	class Line3D
 	{
 		public:
 
-			Vector3D		direction;
-			Bivector3D		moment;
+			Vector3D		v;
+			Bivector3D		m;
 
-			TERATHON_API static const ConstBivector4D zero;
+			TERATHON_API static const ConstLine3D zero;
 
-			inline Bivector4D() = default;
+			inline Line3D() = default;
 
-			Bivector4D(float vx, float vy, float vz, float mx, float my, float mz)
+			Line3D(float vx, float vy, float vz, float mx, float my, float mz)
 			{
-				direction.Set(vx, vy, vz);
-				moment.Set(mx, my, mz);
+				v.Set(vx, vy, vz);
+				m.Set(mx, my, mz);
 			}
 
-			Bivector4D(const Vector3D& v, const Bivector3D& m)
+			Line3D(const Vector3D& direction, const Bivector3D& moment)
 			{
-				direction = v;
-				moment = m;
+				v = direction;
+				m = moment;
 			}
 
-			Bivector4D(const Point3D& p, const Point3D& q)
+			Line3D& Set(float vx, float vy, float vz, float mx, float my, float mz)
 			{
-				direction.Set(q.x - p.x, q.y - p.y, q.z - p.z);
-				moment.Set(p.y * q.z - p.z * q.y, p.z * q.x - p.x * q.z, p.x * q.y - p.y * q.x);
-			}
-
-			Bivector4D(const Point3D& p, const Vector3D& v)
-			{
-				direction = v;
-				moment.Set(p.y * v.z - p.z * v.y, p.z * v.x - p.x * v.z, p.x * v.y - p.y * v.x);
-			}
-
-			Bivector4D(const Trivector4D& f, const Trivector4D& g)
-			{
-				direction.Set(f.y * g.z - f.z * g.y, f.z * g.x - f.x * g.z, f.x * g.y - f.y * g.x);
-				moment.Set(f.w * g.x - f.x * g.w, f.w * g.y - f.y * g.w, f.w * g.z - f.z * g.w);
-			}
-
-			Bivector4D& Set(float vx, float vy, float vz, float mx, float my, float mz)
-			{
-				direction.Set(vx, vy, vz);
-				moment.Set(mx, my, mz);
+				v.Set(vx, vy, vz);
+				m.Set(mx, my, mz);
 				return (*this);
 			}
 
 			void Set(float vx, float vy, float vz, float mx, float my, float mz) volatile
 			{
-				direction.Set(vx, vy, vz);
-				moment.Set(mx, my, mz);
+				v.Set(vx, vy, vz);
+				m.Set(mx, my, mz);
 			}
 
-			Bivector4D& Set(const Vector3D& v, const Bivector3D& m)
+			Line3D& Set(const Vector3D& direction, const Bivector3D& moment)
 			{
-				direction = v;
-				moment = m;
+				v = direction;
+				m = moment;
 				return (*this);
 			}
 
-			void Set(const Vector3D& v, const Bivector3D& m) volatile
+			void Set(const Vector3D& direction, const Bivector3D& moment) volatile
 			{
-				direction = v;
-				moment = m;
+				v = direction;
+				m = moment;
 			}
 
-			Bivector4D& Set(const Point3D& p, const Point3D& q)
+			Vector3D GetSupport(void) const
 			{
-				direction.Set(q.x - p.x, q.y - p.y, q.z - p.z);
-				moment.Set(p.y * q.z - q.y * p.z, p.z * q.x - q.z * p.x, p.x * q.y - q.x * p.y);
+				return (!v ^ m);
+			}
+
+			Line3D& operator =(const Line3D& l)
+			{
+				v = l.v;
+				m = l.m;
 				return (*this);
 			}
 
-			void Set(const Point3D& p, const Point3D& q) volatile
+			void operator =(const Line3D& l) volatile
 			{
-				direction.Set(q.x - p.x, q.y - p.y, q.z - p.z);
-				moment.Set(p.y * q.z - q.y * p.z, p.z * q.x - q.z * p.x, p.x * q.y - q.x * p.y);
+				v = l.v;
+				m = l.m;
 			}
 
-			Bivector4D& Set(const Point3D& p, const Vector3D& v)
+			Line3D& operator *=(float n)
 			{
-				direction = v;
-				moment.Set(p.y * v.z - v.y * p.z, p.z * v.x - v.z * p.x, p.x * v.y - v.x * p.y);
+				v *= n;
+				m *= n;
 				return (*this);
 			}
 
-			void Set(const Point3D& p, const Vector3D& v) volatile
+			Line3D& operator /=(float n)
 			{
-				direction = v;
-				moment.Set(p.y * v.z - v.y * p.z, p.z * v.x - v.z * p.x, p.x * v.y - v.x * p.y);
-			}
-
-			Bivector4D& Set(const Trivector4D& f, const Trivector4D& g)
-			{
-				direction.Set(f.y * g.z - f.z * g.y, f.z * g.x - f.x * g.z, f.x * g.y - f.y * g.x);
-				moment.Set(f.w * g.x - f.x * g.w, f.w * g.y - f.y * g.w, f.w * g.z - f.z * g.w);
+				n = 1.0F / n;
+				v *= n;
+				m *= n;
 				return (*this);
 			}
 
-			void Set(const Trivector4D& f, const Trivector4D& g) volatile
+			Line3D& Unitize(void)
 			{
-				direction.Set(f.y * g.z - f.z * g.y, f.z * g.x - f.x * g.z, f.x * g.y - f.y * g.x);
-				moment.Set(f.w * g.x - f.x * g.w, f.w * g.y - f.y * g.w, f.w * g.z - f.z * g.w);
-			}
-
-			const Vector3D GetSupport(void) const
-			{
-				return (!direction ^ moment);
-			}
-
-			Bivector4D& operator =(const Bivector4D& L)
-			{
-				direction = L.direction;
-				moment = L.moment;
-				return (*this);
-			}
-
-			void operator =(const Bivector4D& L) volatile
-			{
-				direction = L.direction;
-				moment = L.moment;
-			}
-
-			Bivector4D& operator *=(float s)
-			{
-				direction *= s;
-				moment *= s;
-				return (*this);
-			}
-
-			Bivector4D& operator /=(float s)
-			{
-				s = 1.0F / s;
-				direction *= s;
-				moment *= s;
-				return (*this);
-			}
-
-			Bivector4D& Unitize(void)
-			{
-				return (*this *= InverseMag(direction));
+				return (*this *= InverseMag(v));
 			}
 	};
 
 
-	inline Bivector4D operator ~(const Bivector4D& L)
+	inline Line3D Reverse(const Line3D& l)
 	{
-		return (Bivector4D(-L.direction.x, -L.direction.y, -L.direction.z, -L.moment.x, -L.moment.y, -L.moment.z));
+		return (Line3D(-l.v.x, -l.v.y, -l.v.z, -l.m.x, -l.m.y, -l.m.z));
 	}
 
-	inline Bivector4D operator -(const Bivector4D& L)
+	inline Line3D Antireverse(const Line3D& l)
 	{
-		return (Bivector4D(-L.direction.x, -L.direction.y, -L.direction.z, -L.moment.x, -L.moment.y, -L.moment.z));
+		return (Line3D(-l.v.x, -l.v.y, -l.v.z, -l.m.x, -l.m.y, -l.m.z));
 	}
 
-	inline Bivector4D operator *(const Bivector4D& L, float s)
+	inline Line3D operator ~(const Line3D& l)
 	{
-		return (Bivector4D(L.direction.x * s, L.direction.y * s, L.direction.z * s, L.moment.x * s, L.moment.y * s, L.moment.z * s));
+		return (Antireverse(l));
 	}
 
-	inline Bivector4D operator *(float s, const Bivector4D& L)
+	inline Line3D operator -(const Line3D& l)
 	{
-		return (Bivector4D(s * L.direction.x, s * L.direction.y, s * L.direction.z, s * L.moment.x, s * L.moment.y, s * L.moment.z));
+		return (Line3D(-l.v.x, -l.v.y, -l.v.z, -l.m.x, -l.m.y, -l.m.z));
 	}
 
-	inline Bivector4D operator /(const Bivector4D& L, float s)
+	inline Line3D operator *(const Line3D& l, float n)
 	{
-		s = 1.0F / s;
-		return (Bivector4D(L.direction.x * s, L.direction.y * s, L.direction.z * s, L.moment.x * s, L.moment.y * s, L.moment.z * s));
+		return (Line3D(l.v.x * n, l.v.y * n, l.v.z * n, l.m.x * n, l.m.y * n, l.m.z * n));
 	}
 
-	inline bool operator ==(const Bivector4D& a, const Bivector4D& b)
+	inline Line3D operator *(float n, const Line3D& l)
 	{
-		return ((a.direction == b.direction) && (a.moment == b.moment));
+		return (Line3D(n * l.v.x, n * l.v.y, n * l.v.z, n * l.m.x, n * l.m.y, n * l.m.z));
 	}
 
-	inline bool operator !=(const Bivector4D& a, const Bivector4D& b)
+	inline Line3D operator /(const Line3D& l, float n)
 	{
-		return ((a.direction != b.direction) || (a.moment != b.moment));
+		n = 1.0F / n;
+		return (Line3D(l.v.x * n, l.v.y * n, l.v.z * n, l.m.x * n, l.m.y * n, l.m.z * n));
 	}
 
-	inline Bivector4D operator ^(const Point3D& p, const Point3D& q)
+	inline bool operator ==(const Line3D& k, const Line3D& l)
 	{
-		return (Bivector4D(q.x - p.x, q.y - p.y, q.z - p.z, p.y * q.z - p.z * q.y, p.z * q.x - p.x * q.z, p.x * q.y - p.y * q.x));
+		return ((k.v == l.v) && (k.m == l.m));
 	}
 
-	inline Bivector4D operator ^(const Point3D& p, const Vector3D& v)
+	inline bool operator !=(const Line3D& k, const Line3D& l)
 	{
-		return (Bivector4D(v.x, v.y, v.z, p.y * v.z - p.z * v.y, p.z * v.x - p.x * v.z, p.x * v.y - p.y * v.x));
+		return ((k.v != l.v) || (k.m != l.m));
 	}
 
-	inline Bivector4D operator ^(const Trivector4D& f, const Trivector4D& g)
+	inline Line3D operator ^(const Point3D& p, const Point3D& q)
 	{
-		return (Bivector4D(f.z * g.y - f.y * g.z, f.x * g.z - f.z * g.x, f.y * g.x - f.x * g.y, f.x * g.w - f.w * g.x, f.y * g.w - f.w * g.y, f.z * g.w - f.w * g.z));
+		return (Line3D(q.x - p.x, q.y - p.y, q.z - p.z, p.y * q.z - p.z * q.y, p.z * q.x - p.x * q.z, p.x * q.y - p.y * q.x));
 	}
 
-	inline Trivector4D operator ^(const Bivector4D& L, const Point3D& p)
+	inline Line3D operator ^(const Point3D& p, const Vector3D& v)
 	{
-		return (Trivector4D(L.direction.y * p.z - L.direction.z * p.y + L.moment.x,
-							L.direction.z * p.x - L.direction.x * p.z + L.moment.y,
-							L.direction.x * p.y - L.direction.y * p.x + L.moment.z,
-						   -L.moment.x * p.x - L.moment.y * p.y - L.moment.z * p.z));
+		return (Line3D(v.x, v.y, v.z, p.y * v.z - p.z * v.y, p.z * v.x - p.x * v.z, p.x * v.y - p.y * v.x));
 	}
 
-	inline Trivector4D operator ^(const Point3D& p, const Bivector4D& L)
+	inline float operator ^(const Line3D& k, const Line3D& l)
 	{
-		return (L ^ p);
+		return (-(k.v ^ l.m) - (k.m ^ l.v));
 	}
 
-	inline Trivector4D operator ^(const Bivector4D& L, const Vector3D& v)
+	inline float BulkNorm(const Line3D& l)
 	{
-		return (Trivector4D(L.direction.y * v.z - L.direction.z * v.y,
-							L.direction.z * v.x - L.direction.x * v.z,
-							L.direction.x * v.y - L.direction.y * v.x,
-						   -L.moment.x * v.x - L.moment.y * v.y - L.moment.z * v.z));
+		return (Magnitude(l.m));
 	}
 
-	inline Trivector4D operator ^(const Vector3D& v, const Bivector4D& L)
+	inline float WeightNorm(const Line3D& l)
 	{
-		return (L ^ v);
+		return (Magnitude(l.v));
 	}
 
-	inline Vector4D operator ^(const Bivector4D& L, const Trivector4D& f)
+	inline Line3D Unitize(const Line3D& l)
 	{
-		return (Vector4D(L.moment.y * f.z - L.moment.z * f.y + L.direction.x * f.w,
-						 L.moment.z * f.x - L.moment.x * f.z + L.direction.y * f.w,
-						 L.moment.x * f.y - L.moment.y * f.x + L.direction.z * f.w,
-						-L.direction.x * f.x - L.direction.y * f.y - L.direction.z * f.z));
+		return (l * InverseMag(l.v));
 	}
 
-	inline Vector4D operator ^(const Trivector4D& f, const Bivector4D& L)
-	{
-		return (L ^ f);
-	}
-
-	inline float operator ^(const Bivector4D& K, const Bivector4D& L)
-	{
-		return (-(K.direction ^ L.moment) - (K.moment ^ L.direction));
-	}
-
-	inline Bivector4D Reverse(const Bivector4D& L)
-	{
-		return (~L);
-	}
-
-	inline Bivector4D Antireverse(const Bivector4D& L)
-	{
-		return (~L);
-	}
-
-	inline float BulkNorm(const Bivector4D& L)
-	{
-		return (Magnitude(L.moment));
-	}
-
-	inline float WeightNorm(const Bivector4D& L)
-	{
-		return (Magnitude(L.direction));
-	}
-
-	inline Bivector4D Unitize(const Bivector4D& L)
-	{
-		return (L * InverseMag(L.direction));
-	}
-
-	inline Bivector4D Wedge(const Point3D& p, const Point3D& q)
+	inline Line3D Wedge(const Point3D& p, const Point3D& q)
 	{
 		return (p ^ q);
 	}
 
-	inline Bivector4D Wedge(const Point3D& p, const Vector3D& v)
+	inline Line3D Wedge(const Point3D& p, const Vector3D& v)
 	{
 		return (p ^ v);
 	}
 
-	inline Bivector4D Antiwedge(const Trivector4D& f, const Trivector4D& g)
+	inline float Antiwedge(const Line3D& k, const Line3D& l)
 	{
-		return (f ^ g);
+		return (k ^ l);
 	}
 
-	inline Trivector4D Wedge(const Bivector4D& L, const Point3D& p)
+	inline Point3D Project(const Point3D& p, const Line3D& l)
 	{
-		return (L ^ p);
+		float d = Dot(l.v, p);
+		return (Point3D(d * l.v.x + l.v.y * l.m.z - l.v.z * l.m.y, d * l.v.y + l.v.z * l.m.x - l.v.x * l.m.z, d * l.v.z + l.v.x * l.m.y - l.v.y * l.m.x));
 	}
 
-	inline Trivector4D Wedge(const Point3D& p, const Bivector4D& L)
+	inline Line3D Antiproject(const Line3D& l, const Point3D& p)
 	{
-		return (L ^ p);
+		return (p ^ l.v);
 	}
 
-	inline Trivector4D Wedge(const Bivector4D& L, const Vector3D& v)
+	inline Line3D Translate(const Line3D& l, const Vector3D& t)
 	{
-		return (L ^ v);
-	}
-
-	inline Trivector4D Wedge(const Vector3D& v, const Bivector4D& L)
-	{
-		return (L ^ v);
-	}
-
-	inline Vector4D Antiwedge(const Bivector4D& L, const Trivector4D& f)
-	{
-		return (L ^ f);
-	}
-
-	inline Vector4D Antiwedge(const Trivector4D& f, const Bivector4D& L)
-	{
-		return (L ^ f);
-	}
-
-	inline float Antiwedge(const Bivector4D& K, const Bivector4D& L)
-	{
-		return (K ^ L);
-	}
-
-	inline Point3D Project(const Point3D& p, const Bivector4D& L)
-	{
-		float d = Dot(L.direction, p);
-		return (Point3D(d * L.direction.x + L.direction.y * L.moment.z - L.direction.z * L.moment.y, d * L.direction.y + L.direction.z * L.moment.x - L.direction.x * L.moment.z, d * L.direction.z + L.direction.x * L.moment.y - L.direction.y * L.moment.x));
-	}
-
-	inline Bivector4D Project(const Bivector4D& L, const Trivector4D& f)
-	{
-		return (Bivector4D(L.direction - !f.xyz * (f.xyz ^ L.direction), f.xyz * (!f.xyz ^ L.moment) - (!f.xyz ^ L.direction) * f.w));
-	}
-
-	inline Bivector4D Antiproject(const Bivector4D& L, const Point3D& p)
-	{
-		return (Bivector4D(p, L.direction));
-	}
-
-	inline Trivector4D Antiproject(const Trivector4D& f, const Bivector4D& L)
-	{
-		return (Trivector4D(f.xyz - !L.direction * (f.xyz ^ L.direction), L.moment ^ !L.direction ^ f.xyz));
-	}
-
-	inline Bivector4D Translate(const Bivector4D& L, const Vector3D& t)
-	{
-		return (Bivector4D(L.direction, L.moment + (t ^ L.direction)));
+		return (Line3D(l.v, l.m + (t ^ l.v)));
 	}
 
 
-	struct ConstBivector4D
+	struct ConstLine3D
 	{
-		float	vx;
-		float	vy;
-		float	vz;
-		float	mx;
-		float	my;
-		float	mz;
+		float	vx, vy, vz;
+		float	mx, my, mz;
 
-		operator const ConstBivector4D&(void) const
+		operator const Line3D&(void) const
 		{
-			return (reinterpret_cast<const ConstBivector4D&>(*this));
+			return (reinterpret_cast<const Line3D&>(*this));
 		}
 
-		const ConstBivector4D *operator &(void) const
+		const Line3D *operator &(void) const
 		{
-			return (reinterpret_cast<const ConstBivector4D *>(this));
+			return (reinterpret_cast<const Line3D *>(this));
+		}
+
+		const Line3D *operator ->(void) const
+		{
+			return (reinterpret_cast<const Line3D *>(this));
 		}
 	};
+
+
+	typedef Line3D Bivector4D;
 }
 
 

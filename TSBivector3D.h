@@ -1,6 +1,6 @@
 //
 // This file is part of the Terathon Math Library, by Eric Lengyel.
-// Copyright 1999-2022, Terathon Software LLC
+// Copyright 1999-2023, Terathon Software LLC
 //
 // This software is distributed under the MIT License.
 // Separate proprietary licenses are available from Terathon Software.
@@ -69,11 +69,11 @@ namespace Terathon
 	//# \operator	Bivector3D& operator -=(const Bivector3D& v);
 	//#				Subtracts the bivector $v$.
 	//
-	//# \operator	Bivector3D& operator *=(float s);
-	//#				Multiplies by the scalar $s$.
+	//# \operator	Bivector3D& operator *=(float n);
+	//#				Multiplies by the scalar $n$.
 	//
-	//# \operator	Bivector3D& operator /=(float s);
-	//#				Multiplies by the inverse of the scalar $s$.
+	//# \operator	Bivector3D& operator /=(float n);
+	//#				Multiplies by the inverse of the scalar $n$.
 	//
 	//# \action		bool operator ==(const Bivector3D& a, const Bivector3D& b);
 	//#				Returns a boolean value indicating whether the two bivectors $a$ and $b$ are equal.
@@ -96,14 +96,14 @@ namespace Terathon
 	//# \action		Bivector3D operator -(const Bivector3D& a, const Bivector3D& b);
 	//#				Returns the difference of the bivectors $a$ and $b$.
 	//
-	//# \action		Bivector3D operator *(const Bivector3D& v, float s);
-	//#				Returns the product of the bivector $v$ and the scalar $s$.
+	//# \action		Bivector3D operator *(const Bivector3D& v, float n);
+	//#				Returns the product of the bivector $v$ and the scalar $n$.
 	//
-	//# \action		Bivector3D operator *(float s, const Bivector3D& L);
-	//#				Returns the product of the bivector $v$ and the scalar $s$.
+	//# \action		Bivector3D operator *(float n, const Bivector3D& v);
+	//#				Returns the product of the bivector $v$ and the scalar $n$.
 	//
-	//# \action		Bivector3D operator /(const Bivector3D& v, float s);
-	//#				Returns the product of the bivector $v$ and the inverse of the scalar $s$.
+	//# \action		Bivector3D operator /(const Bivector3D& v, float n);
+	//#				Returns the product of the bivector $v$ and the inverse of the scalar $n$.
 	//
 	//# \action		bool operator ==(const Bivector3D& a, const Bivector3D& b);
 	//#				Returns a boolean value indicating whether the two bivectors $a$ and $b$ are equal.
@@ -276,15 +276,15 @@ namespace Terathon
 				return (*this);
 			}
 
-			Bivector3D& operator *=(float s)
+			Bivector3D& operator *=(float n)
 			{
-				xyz *= s;
+				xyz *= n;
 				return (*this);
 			}
 
-			Bivector3D& operator /=(float s)
+			Bivector3D& operator /=(float n)
 			{
-				xyz /= s;
+				xyz /= n;
 				return (*this);
 			}
 
@@ -330,20 +330,20 @@ namespace Terathon
 		return (Bivector3D(a.x - b.x, a.y - b.y, a.z - b.z));
 	}
 
-	inline Bivector3D operator *(const Bivector3D& v, float s)
+	inline Bivector3D operator *(const Bivector3D& v, float n)
 	{
-		return (Bivector3D(v.x * s, v.y * s, v.z * s));
+		return (Bivector3D(v.x * n, v.y * n, v.z * n));
 	}
 
-	inline Bivector3D operator *(float s, const Bivector3D& v)
+	inline Bivector3D operator *(float n, const Bivector3D& v)
 	{
-		return (Bivector3D(s * v.x, s * v.y, s * v.z));
+		return (Bivector3D(n * v.x, n * v.y, n * v.z));
 	}
 
-	inline Bivector3D operator /(const Bivector3D& v, float s)
+	inline Bivector3D operator /(const Bivector3D& v, float n)
 	{
-		s = 1.0F / s;
-		return (Bivector3D(v.x * s, v.y * s, v.z * s));
+		n = 1.0F / n;
+		return (Bivector3D(v.x * n, v.y * n, v.z * n));
 	}
 
 	inline Bivector3D operator *(const Bivector3D& a, const Bivector3D& b)
@@ -456,9 +456,7 @@ namespace Terathon
 
 	struct ConstBivector3D
 	{
-		float	x;
-		float	y;
-		float	z;
+		float	x, y, z;
 
 		operator const Bivector3D&(void) const
 		{
@@ -469,7 +467,15 @@ namespace Terathon
 		{
 			return (reinterpret_cast<const Bivector3D *>(this));
 		}
+
+		const Bivector3D *operator ->(void) const
+		{
+			return (reinterpret_cast<const Bivector3D *>(this));
+		}
 	};
+
+
+	typedef Bivector3D Antivector3D;
 }
 
 

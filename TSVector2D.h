@@ -1,6 +1,6 @@
 //
 // This file is part of the Terathon Math Library, by Eric Lengyel.
-// Copyright 1999-2022, Terathon Software LLC
+// Copyright 1999-2023, Terathon Software LLC
 //
 // This software is distributed under the MIT License.
 // Separate proprietary licenses are available from Terathon Software.
@@ -72,11 +72,11 @@ namespace Terathon
 	//# \operator	Vector2D& operator *=(const Vector2D& v);
 	//#				Calculates the componentwise product with the vector $v$.
 	//
-	//# \operator	Vector2D& operator *=(float s);
-	//#				Multiplies by the scalar $s$.
+	//# \operator	Vector2D& operator *=(float n);
+	//#				Multiplies by the scalar $n$.
 	//
-	//# \operator	Vector2D& operator /=(float s);
-	//#				Divides by the scalar $s$.
+	//# \operator	Vector2D& operator /=(float n);
+	//#				Divides by the scalar $n$.
 	//
 	//# \action		bool operator ==(const Vector2D& v1, const Vector2D& v2) const;
 	//#				Returns a boolean value indicating whether the two vectors $v1$ and $v2$ are equal.
@@ -93,14 +93,14 @@ namespace Terathon
 	//# \action		Vector2D operator -(const Vector2D& a, const Vector2D& b) const;
 	//#				Returns the difference of the vectors $a$ and $b$.
 	//
-	//# \action		Vector2D operator *(const Vector2D& v, float s) const;
-	//#				Returns the product of the vector $v$ and the scalar $s$.
+	//# \action		Vector2D operator *(const Vector2D& v, float n) const;
+	//#				Returns the product of the vector $v$ and the scalar $n$.
 	//
-	//# \action		Vector2D operator *(float s, const Vector2D& v);
-	//#				Returns the product of the vector $v$ and the scalar $s$.
+	//# \action		Vector2D operator *(float n, const Vector2D& v);
+	//#				Returns the product of the vector $v$ and the scalar $n$.
 	//
-	//# \action		Vector2D operator /(const Vector2D& v, float s) const;
-	//#				Returns the product of the vector $v$ and the inverse of the scalar $s$.
+	//# \action		Vector2D operator /(const Vector2D& v, float n) const;
+	//#				Returns the product of the vector $v$ and the inverse of the scalar $n$.
 	//
 	//# \action		Vector2D operator *(const Vector2D& a, const Vector2D& b) const;
 	//#				Returns the componentwise product of the vectors $a$ and $b$.
@@ -121,7 +121,7 @@ namespace Terathon
 	//#				Returns (<b>a</b>&#x202F;&sdot;&#x202F;<b>b</b>)<b>b</b>, which is the projection of $a$ onto $b$ under the assumption that the magnitude of $b$ is one.
 	//
 	//# \action		Vector2D Reject(const Vector2D& a, const Vector2D& b);
-	//#				Returns (<b>a</b>&#x202F;&minus;&#x202F;<b>a</b>&#x202F;&sdot;&#x202F;<b>b</b>)<b>b</b>, which is the rejection of $a$ from $b$ under the assumption that the magnitude of $b$ is one.
+	//#				Returns <b>a</b>&#x202F;&minus;&#x202F;(<b>a</b>&#x202F;&sdot;&#x202F;<b>b</b>)<b>b</b>, which is the rejection of $a$ from $b$ under the assumption that the magnitude of $b$ is one.
 	//
 	//# \privbase	Vec2D	Vectors use a generic base class to store their components.
 	//
@@ -275,15 +275,15 @@ namespace Terathon
 				return (*this);
 			}
 
-			Vector2D& operator *=(float s)
+			Vector2D& operator *=(float n)
 			{
-				xy *= s;
+				xy *= n;
 				return (*this);
 			}
 
-			Vector2D& operator /=(float s)
+			Vector2D& operator /=(float n)
 			{
-				xy /= s;
+				xy /= n;
 				return (*this);
 			}
 
@@ -296,9 +296,14 @@ namespace Terathon
 	};
 
 
-	inline Vector2D operator !(const Vector2D& v)
+	inline Vector2D Complement(const Vector2D& v)
 	{
 		return (Vector2D(-v.y, v.x));
+	}
+
+	inline Vector2D operator !(const Vector2D& v)
+	{
+		return (Complement(v));
 	}
 
 	inline Vector2D operator -(const Vector2D& v)
@@ -328,20 +333,20 @@ namespace Terathon
 		return (Vector2D(a.x - b.data[index_x], a.y - b.data[index_y]));
 	}
 
-	inline Vector2D operator *(const Vector2D& v, float s)
+	inline Vector2D operator *(const Vector2D& v, float n)
 	{
-		return (Vector2D(v.x * s, v.y * s));
+		return (Vector2D(v.x * n, v.y * n));
 	}
 
-	inline Vector2D operator *(float s, const Vector2D& v)
+	inline Vector2D operator *(float n, const Vector2D& v)
 	{
-		return (Vector2D(s * v.x, s * v.y));
+		return (Vector2D(n * v.x, n * v.y));
 	}
 
-	inline Vector2D operator /(const Vector2D& v, float s)
+	inline Vector2D operator /(const Vector2D& v, float n)
 	{
-		s = 1.0F / s;
-		return (Vector2D(v.x * s, v.y * s));
+		n = 1.0F / n;
+		return (Vector2D(v.x * n, v.y * n));
 	}
 
 	inline Vector2D operator *(const Vector2D& a, const Vector2D& b)
@@ -352,11 +357,6 @@ namespace Terathon
 	inline float operator ^(const Vector2D& a, const Vector2D& b)
 	{
 		return (a.x * b.y - a.y * b.x);
-	}
-
-	inline Vector2D Complement(const Vector2D& v)
-	{
-		return (!v);
 	}
 
 	inline float Magnitude(const Vector2D& v)
@@ -437,11 +437,11 @@ namespace Terathon
 	//# The difference between two points produces a direction vector. A two-dimensional
 	//# direction vector is converted to a point by adding it to the identifier $Zero2D$.
 	//
-	//# \operator	Point2D& operator *=(float s);
-	//#				Multiplies by the scalar $s$.
+	//# \operator	Point2D& operator *=(float n);
+	//#				Multiplies by the scalar $n$.
 	//
-	//# \operator	Point2D& operator /=(float s);
-	//#				Divides by the scalar $s$.
+	//# \operator	Point2D& operator /=(float n);
+	//#				Divides by the scalar $n$.
 	//
 	//# \action		Point2D operator -(const Point2D& p);
 	//#				Returns the negation of the point $p$.
@@ -458,14 +458,14 @@ namespace Terathon
 	//# \action		Vector2D operator -(const Point2D& a, const Point2D& b);
 	//#				Returns the difference of the points $a$ and $b$.
 	//
-	//# \action		Point2D operator *(const Point2D& p, float s);
-	//#				Returns the product of the point $p$ and the scalar $s$.
+	//# \action		Point2D operator *(const Point2D& p, float n);
+	//#				Returns the product of the point $p$ and the scalar $n$.
 	//
-	//# \action		Point2D operator *(float s, const Point2D& p);
-	//#				Returns the product of the point $p$ and the scalar $s$.
+	//# \action		Point2D operator *(float n, const Point2D& p);
+	//#				Returns the product of the point $p$ and the scalar $n$.
 	//
-	//# \action		Point2D operator /(const Point2D& p, float s) const;
-	//#				Returns the product of the point $p$ and the inverse of the scalar $s$.
+	//# \action		Point2D operator /(const Point2D& p, float n) const;
+	//#				Returns the product of the point $p$ and the inverse of the scalar $n$.
 	//
 	//# \action		Point2D operator *(const Point2D& a, const Point2D& b);
 	//#				Returns the componentwise product of the points $a$ and $b$.
@@ -531,15 +531,15 @@ namespace Terathon
 				return (*this);
 			}
 
-			Point2D& operator *=(float s)
+			Point2D& operator *=(float n)
 			{
-				xy *= s;
+				xy *= n;
 				return (*this);
 			}
 
-			Point2D& operator /=(float s)
+			Point2D& operator /=(float n)
 			{
-				xy /= s;
+				xy /= n;
 				return (*this);
 			}
 	};
@@ -587,20 +587,20 @@ namespace Terathon
 		return (Point2D(p.x - v.data[index_x], p.y - v.data[index_y]));
 	}
 
-	inline Point2D operator *(const Point2D& p, float s)
+	inline Point2D operator *(const Point2D& p, float n)
 	{
-		return (Point2D(p.x * s, p.y * s));
+		return (Point2D(p.x * n, p.y * n));
 	}
 
-	inline Point2D operator *(float s, const Point2D& p)
+	inline Point2D operator *(float n, const Point2D& p)
 	{
-		return (Point2D(s * p.x, s * p.y));
+		return (Point2D(n * p.x, n * p.y));
 	}
 
-	inline Point2D operator /(const Point2D& p, float s)
+	inline Point2D operator /(const Point2D& p, float n)
 	{
-		s = 1.0F / s;
-		return (Point2D(p.x * s, p.y * s));
+		n = 1.0F / n;
+		return (Point2D(p.x * n, p.y * n));
 	}
 
 	inline Point2D operator *(const Point2D& a, const Point2D& b)
@@ -636,8 +636,7 @@ namespace Terathon
 
 	struct ConstVector2D
 	{
-		float	x;
-		float	y;
+		float	x, y;
 
 		operator const Vector2D&(void) const
 		{
@@ -658,8 +657,7 @@ namespace Terathon
 
 	struct ConstPoint2D
 	{
-		float	x;
-		float	y;
+		float	x, y;
 
 		operator const Point2D&(void) const
 		{

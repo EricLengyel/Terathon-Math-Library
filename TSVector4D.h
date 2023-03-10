@@ -1,6 +1,6 @@
 //
 // This file is part of the Terathon Math Library, by Eric Lengyel.
-// Copyright 1999-2022, Terathon Software LLC
+// Copyright 1999-2023, Terathon Software LLC
 //
 // This software is distributed under the MIT License.
 // Separate proprietary licenses are available from Terathon Software.
@@ -95,11 +95,11 @@ namespace Terathon
 	//# \operator	Vector4D& operator *=(const Vector4D& v);
 	//#				Calculates the componentwise product with the vector $v$.
 	//
-	//# \operator	Vector4D& operator *=(float s);
-	//#				Multiplies by the scalar $s$.
+	//# \operator	Vector4D& operator *=(float n);
+	//#				Multiplies by the scalar $n$.
 	//
-	//# \operator	Vector4D& operator /=(float s);
-	//#				Multiplies by the inverse of the scalar $s$.
+	//# \operator	Vector4D& operator /=(float n);
+	//#				Multiplies by the inverse of the scalar $n$.
 	//
 	//# \action		bool operator ==(const Vector4D& v1, const Vector4D& v2) const;
 	//#				Returns a boolean value indicating whether the two vectors $v1$ and $v2$ are equal.
@@ -143,14 +143,14 @@ namespace Terathon
 	//# \action		Vector4D operator -(const Vector2D& a, const Vector4D& b);
 	//#				Returns the difference of the vectors $a$ and $b$. The <i>z</i> and <i>w</i> coordinates of $a$ are assumed to be 0.
 	//
-	//# \action		Vector4D operator *(const Vector4D& v, float f);
-	//#				Returns the product of the vector $v$ and the scalar $f$.
+	//# \action		Vector4D operator *(const Vector4D& v, float n);
+	//#				Returns the product of the vector $v$ and the scalar $n$.
 	//
-	//# \action		Vector4D operator *(float f, const Vector4D& v);
-	//#				Returns the product of the vector $v$ and the scalar $f$.
+	//# \action		Vector4D operator *(float n, const Vector4D& v);
+	//#				Returns the product of the vector $v$ and the scalar $n$.
 	//
-	//# \action		Vector4D operator /(const Vector4D& v, float f);
-	//#				Returns the product of the vector $v$ and the inverse of the scalar $f$.
+	//# \action		Vector4D operator /(const Vector4D& v, float n);
+	//#				Returns the product of the vector $v$ and the inverse of the scalar $n$.
 	//
 	//# \action		Vector4D operator *(const Vector4D& a, const Vector4D& b);
 	//#				Returns the componentwise product of the vectors $a$ and $b$.
@@ -201,16 +201,16 @@ namespace Terathon
 	//#				Returns the dot product of the point $p$ and the vector $v$. The <i>z</i> coordinate of $p$ is assumed to be 0, and the <i>w</i> coordinate of $p$ is assumed to be 1.
 	//
 	//# \action		Vector4D Project(const Vector4D& a, const Vector4D& b);
-	//#				Returns (<b>a</b>&nbsp;&sdot;&nbsp;<b>b</b>)<b>b</b>, which is the projection of $a$ onto $b$ under the assumption that the magnitude of $b$ is one.
+	//#				Returns (<b>a</b>&#x202F;&sdot;&#x202F;<b>b</b>)<b>b</b>, which is the projection of $a$ onto $b$ under the assumption that the magnitude of $b$ is one.
 	//
 	//# \action		Vector3D Reject(const Vector3D& a, const Vector3D& b);
-	//#				Returns (<b>a</b>&#x202F;&minus;&#x202F;<b>a</b>&nbsp;&sdot;&nbsp;<b>b</b>)<b>b</b>, which is the rejection of $a$ from $b$ under the assumption that the magnitude of $b$ is one.
+	//#				Returns <b>a</b>&#x202F;&minus;&#x202F;(<b>a</b>&#x202F;&sdot;&#x202F;<b>b</b>)<b>b</b>, which is the rejection of $a$ from $b$ under the assumption that the magnitude of $b$ is one.
 	//
 	//# \privbase	Vec4D	Vectors use a generic base class to store their components.
 	//
-	//# \also	$@Trivector4D@$
 	//# \also	$@Vector3D@$
 	//# \also	$@Point3D@$
+	//# \also	$@Plane3D@$
 	//# \also	$@Vector2D@$
 	//# \also	$@Point2D@$
 
@@ -570,15 +570,15 @@ namespace Terathon
 				return (*this);
 			}
 
-			Vector4D& operator *=(float s)
+			Vector4D& operator *=(float n)
 			{
-				xyzw *= s;
+				xyzw *= n;
 				return (*this);
 			}
 
-			Vector4D& operator /=(float s)
+			Vector4D& operator /=(float n)
 			{
-				xyzw /= s;
+				xyzw /= n;
 				return (*this);
 			}
 
@@ -601,9 +601,19 @@ namespace Terathon
 	};
 
 
-	inline Vector4D operator ~(const Vector4D& v)
+	inline const Vector4D& Reverse(const Vector4D& v)
+	{
+		return (v);
+	}
+
+	inline Vector4D Antireverse(const Vector4D& v)
 	{
 		return (Vector4D(-v.x, -v.y, -v.z, -v.w));
+	}
+
+	inline Vector4D operator ~(const Vector4D& v)
+	{
+		return (Antireverse(v));
 	}
 
 	inline Vector4D operator -(const Vector4D& v)
@@ -661,35 +671,25 @@ namespace Terathon
 		return (Vector4D(a.x - b.x, a.y - b.y, -b.z, -b.w));
 	}
 
-	inline Vector4D operator *(const Vector4D& v, float s)
+	inline Vector4D operator *(const Vector4D& v, float n)
 	{
-		return (Vector4D(v.x * s, v.y * s, v.z * s, v.w * s));
+		return (Vector4D(v.x * n, v.y * n, v.z * n, v.w * n));
 	}
 
-	inline Vector4D operator *(float s, const Vector4D& v)
+	inline Vector4D operator *(float n, const Vector4D& v)
 	{
-		return (Vector4D(s * v.x, s * v.y, s * v.z, s * v.w));
+		return (Vector4D(n * v.x, n * v.y, n * v.z, n * v.w));
 	}
 
-	inline Vector4D operator /(const Vector4D& v, float s)
+	inline Vector4D operator /(const Vector4D& v, float n)
 	{
-		s = 1.0F / s;
-		return (Vector4D(v.x * s, v.y * s, v.z * s, v.w * s));
+		n = 1.0F / n;
+		return (Vector4D(v.x * n, v.y * n, v.z * n, v.w * n));
 	}
 
 	inline Vector4D operator *(const Vector4D& a, const Vector4D& b)
 	{
 		return (Vector4D(a.x * b.x, a.y * b.y, a.z * b.z, a.w * b.w));
-	}
-
-	inline const Vector4D& Reverse(const Vector4D& v)
-	{
-		return (v);
-	}
-
-	inline Vector4D Antireverse(const Vector4D& v)
-	{
-		return (~v);
 	}
 
 	inline float BulkNorm(const Vector4D& v)
@@ -704,8 +704,8 @@ namespace Terathon
 
 	inline Point3D Unitize(const Vector4D& v)
 	{
-		float s = 1.0F / v.w;
-		return (Point3D(v.x * s, v.y * s, v.z * s));
+		float n = 1.0F / v.w;
+		return (Point3D(v.x * n, v.y * n, v.z * n));
 	}
 
 	inline float Magnitude(const Vector4D& v)
@@ -796,10 +796,7 @@ namespace Terathon
 
 	struct ConstVector4D
 	{
-		float	x;
-		float	y;
-		float	z;
-		float	w;
+		float	x, y, z, w;
 
 		operator const Vector4D&(void) const
 		{
