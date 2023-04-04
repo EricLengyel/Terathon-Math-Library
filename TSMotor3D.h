@@ -35,28 +35,28 @@ namespace Terathon
 	//# \def	class Motor4D
 	//
 	//# \ctor	Motor4D();
-	//# \ctor	Motor4D(float rx, float ry, float rz, float rw, float ux, float uy, float uz, float uw);
-	//# \ctor	Motor4D(const Quaternion& r);
-	//# \ctor	Motor4D(const Quaternion& r, const Quaternion& u);
+	//# \ctor	Motor4D(float vx, float vy, float vz, float vw, float mx, float my, float mz, float mw);
+	//# \ctor	Motor4D(const Quaternion& rotor);
+	//# \ctor	Motor4D(const Quaternion& rotor, const Quaternion& screw);
 	//# \ctor	Motor4D(const Plane3D& g, const Plane3D& h);
 	//# \ctor	Motor4D(const Line3D& k, const Line3D& l);
 	//# \ctor	Motor4D(const Point3D& p, const Point3D& q);
 	//
-	//# \param	rx,ry,rz,rw		The values of the <b>e</b><sub>41</sub>, <b>e</b><sub>42</sub>, <b>e</b><sub>43</sub>, and antiscalar coordinates.
-	//# \param	ux,uy,uz,uw		The values of the <b>e</b><sub>23</sub>, <b>e</b><sub>31</sub>, <b>e</b><sub>12</sub>, and scalar coordinates.
-	//# \param	r				A quaternion whose entries are copied to the <b>e</b><sub>41</sub>, <b>e</b><sub>42</sub>, <b>e</b><sub>43</sub>, and antiscalar coordinates.
-	//# \param	u				A quaternion whose entries are copied to the <b>e</b><sub>23</sub>, <b>e</b><sub>31</sub>, <b>e</b><sub>12</sub>, and scalar coordinates.
+	//# \param	vx,vy,vz,vw		The values of the <b>e</b><sub>41</sub>, <b>e</b><sub>42</sub>, <b>e</b><sub>43</sub>, and antiscalar coordinates.
+	//# \param	mx,my,mz,mw		The values of the <b>e</b><sub>23</sub>, <b>e</b><sub>31</sub>, <b>e</b><sub>12</sub>, and scalar coordinates.
+	//# \param	rotor			A quaternion whose entries are copied to the <b>e</b><sub>41</sub>, <b>e</b><sub>42</sub>, <b>e</b><sub>43</sub>, and antiscalar coordinates.
+	//# \param	screw			A quaternion whose entries are copied to the <b>e</b><sub>23</sub>, <b>e</b><sub>31</sub>, <b>e</b><sub>12</sub>, and scalar coordinates.
 	//# \param	g,h				Two 4D trivectors representing planes.
 	//# \param	k,l				Two 4D bivectors representing lines.
 	//# \param	p,q				Two 3D points.
 	//
 	//# \desc
 	//# The $Motor4D$ class encapsulates a motion operator (motor) in the 4D projective geometric algebra.
-	//# It has the general form <i>r<sub>x</sub></i><b>e</b><sub>41</sub> + <i>r<sub>y</sub></i><b>e</b><sub>42</sub> + <i>r<sub>z</sub></i><b>e</b><sub>43</sub> + <i>r<sub>w</sub></i>&#x1D7D9; + <i>u<sub>x</sub></i><b>e</b><sub>23</sub> + <i>u<sub>y</sub></i><b>e</b><sub>31</sub> + <i>u<sub>z</sub></i><b>e</b><sub>12</sub> + <i>u<sub>w</sub></i>.
+	//# It has the general form <i>Q<sub>vx</sub></i><b>e</b><sub>41</sub> + <i>Q<sub>vy</sub></i><b>e</b><sub>42</sub> + <i>Q<sub>vz</sub></i><b>e</b><sub>43</sub> + <i>Q<sub>vw</sub></i>&#x1D7D9; + <i>Q<sub>mx</sub></i><b>e</b><sub>23</sub> + <i>Q<sub>my</sub></i><b>e</b><sub>31</sub> + <i>Q<sub>mz</sub></i><b>e</b><sub>12</sub> + <i>Q<sub>mw</sub></i>.
 	//#
 	//# The default constructor leaves the components of the motor undefined.
-	//# If the quaternions $r$ and $u$ are specified, then their coordinates are assigned to the weight and bulk of the motor, respectively.
-	//# If only the quaternion $r$ is specified, then the bulk of the motor is set to zero.
+	//# If the quaternions $rotor$ and $screw$ are specified, then their coordinates are assigned to the weight and bulk of the motor, respectively.
+	//# If only the quaternion $rotor$ is specified, then the bulk of the motor is set to zero.
 	//#
 	//# If the $g$ and $h$ parameters are specified, then the motor is set to the geometric antiproduct $h$&#x202F;&#x27C7;&#x202F;$g$,
 	//# corresponding to the rotation about the line where the planes $g$ and $h$ intersect by twice the angle between them in the direction from $g$ to $h$.
@@ -148,17 +148,17 @@ namespace Terathon
 
 	//# \function	Motor4D::Set	Sets all eight components of a motor.
 	//
-	//# \ctor	Motor4D& Set(float rx, float ry, float rz, float rw, float ux, float uy, float uz, float uw);
-	//# \ctor	Motor4D& Set(const Quaternion& r, const Quaternion& u);
+	//# \ctor	Motor4D& Set(float vx, float vy, float vz, float vw, float mx, float my, float mz, float mw);
+	//# \ctor	Motor4D& Set(const Quaternion& rotor, const Quaternion& screw);
 	//
-	//# \param	rx,ry,rz,rw		The values of the <b>e</b><sub>41</sub>, <b>e</b><sub>42</sub>, <b>e</b><sub>43</sub>, and antiscalar coordinates.
-	//# \param	ux,uy,uz,uw		The values of the <b>e</b><sub>23</sub>, <b>e</b><sub>31</sub>, <b>e</b><sub>12</sub>, and scalar coordinates.
-	//# \param	r				A quaternion whose entries are copied to the <b>e</b><sub>41</sub>, <b>e</b><sub>42</sub>, <b>e</b><sub>43</sub>, and antiscalar coordinates.
-	//# \param	u				A quaternion whose entries are copied to the <b>e</b><sub>23</sub>, <b>e</b><sub>31</sub>, <b>e</b><sub>12</sub>, and scalar coordinates.
+	//# \param	vx,vy,vz,vw		The values of the <b>e</b><sub>41</sub>, <b>e</b><sub>42</sub>, <b>e</b><sub>43</sub>, and antiscalar coordinates.
+	//# \param	mx,my,mz,mw		The values of the <b>e</b><sub>23</sub>, <b>e</b><sub>31</sub>, <b>e</b><sub>12</sub>, and scalar coordinates.
+	//# \param	rotor			A quaternion whose entries are copied to the <b>e</b><sub>41</sub>, <b>e</b><sub>42</sub>, <b>e</b><sub>43</sub>, and antiscalar coordinates.
+	//# \param	screw			A quaternion whose entries are copied to the <b>e</b><sub>23</sub>, <b>e</b><sub>31</sub>, <b>e</b><sub>12</sub>, and scalar coordinates.
 	//
 	//# \desc
 	//# The $Set$ function sets the eight coordinates of a motor.
-	//# If the quaternions $r$ and $u$ are specified, then their coordinates are assigned to the weight and bulk of the motor, respectively.
+	//# If the quaternions $rotor$ and $screw$ are specified, then their coordinates are assigned to the weight and bulk of the motor, respectively.
 	//#
 	//# The return value is a reference to the motor object.
 
@@ -387,139 +387,139 @@ namespace Terathon
 	{
 		public:
 
-			Quaternion		rotor;			//## The coordinates of the rotor part consisting of the weight components using basis elements <b>e</b><sub>41</sub>, <b>e</b><sub>42</sub>, <b>e</b><sub>43</sub>, and <b>e</b><sub>1234</sub>.
-			Quaternion		screw;			//## The coordinates of the screw part consisting of the bulk components using basis elements <b>e</b><sub>23</sub>, <b>e</b><sub>31</sub>, <b>e</b><sub>12</sub>, and <b>1</b>.
+			Quaternion		v;			//## The coordinates of the weight components using basis elements <b>e</b><sub>41</sub>, <b>e</b><sub>42</sub>, <b>e</b><sub>43</sub>, and <b>e</b><sub>1234</sub>.
+			Quaternion		m;			//## The coordinates of the bulk components using basis elements <b>e</b><sub>23</sub>, <b>e</b><sub>31</sub>, <b>e</b><sub>12</sub>, and <b>1</b>.
 
 			TERATHON_API static const ConstMotor4D identity;
 
 			inline Motor4D() = default;
 
-			Motor4D(float rx, float ry, float rz, float rw, float ux, float uy, float uz, float uw)
+			Motor4D(float vx, float vy, float vz, float vw, float mx, float my, float mz, float mw)
 			{
-				rotor.Set(rx, ry, rz, rw);
-				screw.Set(ux, uy, uz, uw);
+				v.Set(vx, vy, vz, vw);
+				m.Set(mx, my, mz, mw);
 			}
 
-			explicit Motor4D(const Quaternion& r)
+			explicit Motor4D(const Quaternion& rotor)
 			{
-				rotor = r;
-				screw.Set(0.0F, 0.0F, 0.0F, 0.0F);
+				v = rotor;
+				m.Set(0.0F, 0.0F, 0.0F, 0.0F);
 			}
 
-			Motor4D(const Quaternion& r, const Quaternion& u)
+			Motor4D(const Quaternion& rotor, const Quaternion& screw)
 			{
-				rotor = r;
-				screw = u;
+				v = rotor;
+				m = screw;
 			}
 
 			Motor4D(const Plane3D& g, const Plane3D& h)
 			{
-				rotor.Set(g.y * h.z - g.z * h.y, g.z * h.x - g.x * h.z, g.x * h.y - g.y * h.x, g.x * h.x + g.y * h.y + g.z * h.z);
-				screw.Set(g.w * h.x - g.x * h.w, g.w * h.y - g.y * h.w, g.w * h.z - g.z * h.w, 0.0F);
+				v.Set(g.y * h.z - g.z * h.y, g.z * h.x - g.x * h.z, g.x * h.y - g.y * h.x, g.x * h.x + g.y * h.y + g.z * h.z);
+				m.Set(g.w * h.x - g.x * h.w, g.w * h.y - g.y * h.w, g.w * h.z - g.z * h.w, 0.0F);
 			}
 
 			Motor4D(const Line3D& k, const Line3D& l)
 			{
-				rotor.Set(k.v ^ l.v, -Dot(k.v, l.v));
-				screw.Set((l.v ^ !k.m) - (k.v ^ !l.m), -(l.v ^ k.m) - (k.v ^ l.m));
+				v.Set(k.v ^ l.v, -Dot(k.v, l.v));
+				m.Set((l.v ^ !k.m) - (k.v ^ !l.m), -(l.v ^ k.m) - (k.v ^ l.m));
 			}
 
 			Motor4D(const Point3D& p, const Point3D& q)
 			{
-				rotor.Set(0.0F, 0.0F, 0.0F, -1.0F);
-				screw.Set(p.x - q.x, p.y - q.y, p.z - q.z, 0.0F);
+				v.Set(0.0F, 0.0F, 0.0F, -1.0F);
+				m.Set(p.x - q.x, p.y - q.y, p.z - q.z, 0.0F);
 			}
 
-			Motor4D& Set(float rx, float ry, float rz, float rw, float ux, float uy, float uz, float uw)
+			Motor4D& Set(float vx, float vy, float vz, float vw, float mx, float my, float mz, float mw)
 			{
-				rotor.Set(rx, ry, rz, rw);
-				screw.Set(ux, uy, uz, uw);
+				v.Set(vx, vy, vz, vw);
+				m.Set(mx, my, mz, mw);
 				return (*this);
 			}
 
-			void Set(float rx, float ry, float rz, float rw, float ux, float uy, float uz, float uw) volatile
+			void Set(float vx, float vy, float vz, float vw, float mx, float my, float mz, float mw) volatile
 			{
-				rotor.Set(rx, ry, rz, rw);
-				screw.Set(ux, uy, uz, uw);
+				v.Set(vx, vy, vz, vw);
+				m.Set(mx, my, mz, mw);
 			}
 
-			Motor4D& Set(const Quaternion& r, const Quaternion& u)
+			Motor4D& Set(const Quaternion& rotor, const Quaternion& screw)
 			{
-				rotor = r;
-				screw = u;
+				v = rotor;
+				m = screw;
 				return (*this);
 			}
 
-			void Set(const Quaternion& r, const Quaternion& u) volatile
+			void Set(const Quaternion& rotor, const Quaternion& screw) volatile
 			{
-				rotor = r;
-				screw = u;
+				v = rotor;
+				m = screw;
 			}
 
 			Motor4D& operator =(const Motor4D& Q)
 			{
-				rotor = Q.rotor;
-				screw = Q.screw;
+				v = Q.v;
+				m = Q.m;
 				return (*this);
 			}
 
 			void operator =(const Motor4D& Q) volatile
 			{
-				rotor = Q.rotor;
-				screw = Q.screw;
+				v = Q.v;
+				m = Q.m;
 			}
 
-			Motor4D& operator =(const Quaternion& r)
+			Motor4D& operator =(const Quaternion& rotor)
 			{
-				rotor = r;
-				screw.Set(0.0F, 0.0F, 0.0F, 0.0F);
+				v = rotor;
+				m.Set(0.0F, 0.0F, 0.0F, 0.0F);
 				return (*this);
 			}
 
-			void operator =(const Quaternion& r) volatile
+			void operator =(const Quaternion& rotor) volatile
 			{
-				rotor = r;
-				screw.Set(0.0F, 0.0F, 0.0F, 0.0F);
+				v = rotor;
+				m.Set(0.0F, 0.0F, 0.0F, 0.0F);
 			}
 
 			Motor4D& operator +=(const Motor4D& Q)
 			{
-				rotor += Q.rotor;
-				screw += Q.screw;
+				v += Q.v;
+				m += Q.m;
 				return (*this);
 			}
 
 			Motor4D& operator -=(const Motor4D& Q)
 			{
-				rotor -= Q.rotor;
-				screw -= Q.screw;
+				v -= Q.v;
+				m -= Q.m;
 				return (*this);
 			}
 
 			Motor4D& operator *=(float n)
 			{
-				rotor *= n;
-				screw *= n;
+				v *= n;
+				m *= n;
 				return (*this);
 			}
 
 			Motor4D& operator /=(float n)
 			{
 				n = 1.0F / n;
-				rotor *= n;
-				screw *= n;
+				v *= n;
+				m *= n;
 				return (*this);
 			}
 
 			Motor4D& Unitize(void)
 			{
-				return (*this *= InverseMag(rotor));
+				return (*this *= InverseMag(v));
 			}
 
 			static Motor4D MakeRotation(float angle, const Bivector3D& axis)
 			{
-				Vector2D v = CosSin(angle * 0.5F);
-				return (Motor4D(axis.x * v.y, axis.y * v.y, axis.z * v.y, v.x, 0.0F, 0.0F, 0.0F, 0.0F));
+				Vector2D t = CosSin(angle * 0.5F);
+				return (Motor4D(axis.x * t.y, axis.y * t.y, axis.z * t.y, t.x, 0.0F, 0.0F, 0.0F, 0.0F));
 			}
 
 			static Motor4D MakeTranslation(const Vector3D& offset)
@@ -530,8 +530,8 @@ namespace Terathon
 			static Motor4D MakeScrew(float angle, const Line3D& axis, float disp)
 			{
 				disp *= 0.5F;
-				Vector2D v = CosSin(angle * 0.5F);
-				return (Motor4D(axis.v.x * v.y, axis.v.y * v.y, axis.v.z * v.y, v.x, disp * axis.v.x * v.x + axis.m.x * v.y, disp * axis.v.y * v.x + axis.m.y * v.y, disp * axis.v.z * v.x + axis.m.z * v.y, -disp * v.y));
+				Vector2D t = CosSin(angle * 0.5F);
+				return (Motor4D(axis.v.x * t.y, axis.v.y * t.y, axis.v.z * t.y, t.x, disp * axis.v.x * t.x + axis.m.x * t.y, disp * axis.v.y * t.x + axis.m.y * t.y, disp * axis.v.z * t.x + axis.m.z * t.y, -disp * t.y));
 			}
 
 			TERATHON_API Vector3D GetDirectionX(void) const;
@@ -546,50 +546,60 @@ namespace Terathon
 	};
 
 
+	inline Motor4D Reverse(const Motor4D& Q)
+	{
+		return (Motor4D(-Q.v.x, -Q.v.y, -Q.v.z, Q.v.w, -Q.m.x, -Q.m.y, -Q.m.z, Q.m.w));
+	}
+
+	inline Motor4D Antireverse(const Motor4D& Q)
+	{
+		return (Motor4D(-Q.v.x, -Q.v.y, -Q.v.z, Q.v.w, -Q.m.x, -Q.m.y, -Q.m.z, Q.m.w));
+	}
+
 	inline Motor4D operator ~(const Motor4D& Q)
 	{
-		return (Motor4D(-Q.rotor.x, -Q.rotor.y, -Q.rotor.z, Q.rotor.w, -Q.screw.x, -Q.screw.y, -Q.screw.z, Q.screw.w));
+		return (Antireverse(Q));
 	}
 
 	inline Motor4D operator -(const Motor4D& Q)
 	{
-		return (Motor4D(-Q.rotor.x, -Q.rotor.y, -Q.rotor.z, -Q.rotor.w, -Q.screw.x, -Q.screw.y, -Q.screw.z, -Q.screw.w));
+		return (Motor4D(-Q.v.x, -Q.v.y, -Q.v.z, -Q.v.w, -Q.m.x, -Q.m.y, -Q.m.z, -Q.m.w));
 	}
 
 	inline Motor4D operator +(const Motor4D& a, const Motor4D& b)
 	{
-		return (Motor4D(a.rotor + b.rotor, a.screw + b.screw));
+		return (Motor4D(a.v + b.v, a.m + b.m));
 	}
 
 	inline Motor4D operator -(const Motor4D& a, const Motor4D& b)
 	{
-		return (Motor4D(a.rotor - b.rotor, a.screw - b.screw));
+		return (Motor4D(a.v - b.v, a.m - b.m));
 	}
 
 	inline Motor4D operator *(const Motor4D& Q, float n)
 	{
-		return (Motor4D(Q.rotor.x * n, Q.rotor.y * n, Q.rotor.z * n, Q.rotor.w * n, Q.screw.x * n, Q.screw.y * n, Q.screw.z * n, Q.screw.w * n));
+		return (Motor4D(Q.v.x * n, Q.v.y * n, Q.v.z * n, Q.v.w * n, Q.m.x * n, Q.m.y * n, Q.m.z * n, Q.m.w * n));
 	}
 
 	inline Motor4D operator *(float n, const Motor4D& Q)
 	{
-		return (Motor4D(n * Q.rotor.x, n * Q.rotor.y, n * Q.rotor.z, n * Q.rotor.w, n * Q.screw.x, n * Q.screw.y, n * Q.screw.z, n * Q.screw.w));
+		return (Motor4D(n * Q.v.x, n * Q.v.y, n * Q.v.z, n * Q.v.w, n * Q.m.x, n * Q.m.y, n * Q.m.z, n * Q.m.w));
 	}
 
 	inline Motor4D operator /(const Motor4D& Q, float n)
 	{
 		n = 1.0F / n;
-		return (Motor4D(Q.rotor.x * n, Q.rotor.y * n, Q.rotor.z * n, Q.rotor.w * n, Q.screw.x * n, Q.screw.y * n, Q.screw.z * n, Q.screw.w * n));
+		return (Motor4D(Q.v.x * n, Q.v.y * n, Q.v.z * n, Q.v.w * n, Q.m.x * n, Q.m.y * n, Q.m.z * n, Q.m.w * n));
 	}
 
 	inline bool operator ==(const Motor4D& a, const Motor4D& b)
 	{
-		return ((a.rotor == b.rotor) && (a.screw == b.screw));
+		return ((a.v == b.v) && (a.m == b.m));
 	}
 
 	inline bool operator !=(const Motor4D& a, const Motor4D& b)
 	{
-		return ((a.rotor != b.rotor) || (a.screw != b.screw));
+		return ((a.v != b.v) || (a.m != b.m));
 	}
 
 
@@ -603,42 +613,33 @@ namespace Terathon
 
 	inline Vector3D Transform(const Vector3D& v, const Motor4D& Q)
 	{
-		return (Transform(v, Q.rotor));
+		return (Transform(v, Q.v));
 	}
 
 	inline Bivector3D Transform(const Bivector3D& v, const Motor4D& Q)
 	{
-		return (!Transform(!v, Q.rotor));
+		return (!Transform(!v, Q.v));
 	}
 
+	TERATHON_API Vector4D Transform(const Vector4D& p, const Motor4D& Q);
 	TERATHON_API Point3D Transform(const Point3D& p, const Motor4D& Q);
 	TERATHON_API Line3D Transform(const Line3D& l, const Motor4D& Q);
 	TERATHON_API Plane3D Transform(const Plane3D& g, const Motor4D& Q);
 
 
-	inline Motor4D Reverse(const Motor4D& Q)
-	{
-		return (~Q);
-	}
-
-	inline Motor4D Antireverse(const Motor4D& Q)
-	{
-		return (~Q);
-	}
-
 	inline float BulkNorm(const Motor4D& Q)
 	{
-		return (Magnitude(Q.screw));
+		return (Magnitude(Q.m));
 	}
 
 	inline float WeightNorm(const Motor4D& Q)
 	{
-		return (Magnitude(Q.rotor));
+		return (Magnitude(Q.v));
 	}
 
 	inline Motor4D Unitize(const Motor4D& Q)
 	{
-		return (Q * InverseMag(Q.rotor));
+		return (Q * InverseMag(Q.v));
 	}
 
 
