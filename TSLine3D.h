@@ -97,7 +97,7 @@ namespace Terathon
 	//
 	//# \also	$@Vector4D@$
 	//# \also	$@Trivector4D@$
-	//# \also	$@Motor4D@$
+	//# \also	$@Motor3D@$
 
 
 	//# \function	Line3D::Set		Sets all six components of a line.

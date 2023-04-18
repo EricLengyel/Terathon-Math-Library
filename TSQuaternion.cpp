@@ -23,9 +23,7 @@ Quaternion& Quaternion::operator *=(const Quaternion& q)
 	float c = w * q.z + x * q.y - y * q.x + z * q.w;
 
 	w = w * q.w - x * q.x - y * q.y - z * q.z;
-	x = a;
-	y = b;
-	z = c;
+	xyz.Set(a, b, c);
 
 	return (*this);
 }
@@ -37,9 +35,7 @@ Quaternion& Quaternion::operator *=(const Bivector3D& v)
 	float c = w * v.z + x * v.y - y * v.x;
 
 	w = -x * v.x - y * v.y - z * v.z;
-	x = a;
-	y = b;
-	z = c;
+	xyz.Set(a, b, c);
 
 	return (*this);
 }
@@ -141,6 +137,6 @@ Quaternion Terathon::Sqrt(const Quaternion& q)
 
 Vector3D Terathon::Transform(const Vector3D& v, const Quaternion& q)
 {
-	const Bivector3D& b = q.GetBivectorPart();
-	return (v * (q.w * q.w - SquaredMag(b)) + Complement(b * ((v ^ b) * 2.0F) + (!b ^ v) * (q.w * 2.0F)));
+	Bivector3D c = (!q.xyz ^ v) * 2.0F;
+	return (v + ((q.xyz ^ c) + !c * q.w));
 }

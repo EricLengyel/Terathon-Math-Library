@@ -27,14 +27,6 @@ namespace Terathon
 	struct ConstBivector3D;
 
 
-	struct TypeBivector3D
-	{
-		typedef float component_type;
-		typedef Vector2D vector2D_type;
-		typedef Bivector3D vector3D_type;
-	};
-
-
 	//# \class	Bivector3D		Encapsulates a 3D bivector.
 	//
 	//# The $Bivector3D$ class encapsulates a 3D bivector.
@@ -160,6 +152,14 @@ namespace Terathon
 	//# parallel to the direction $v$.
 	//#
 	//# The return value is a reference to the bivector object.
+
+
+	struct TypeBivector3D
+	{
+		typedef float component_type;
+		typedef Vector2D vector2D_type;
+		typedef Bivector3D vector3D_type;
+	};
 
 
 	class Bivector3D : public Antivec3D<TypeBivector3D>

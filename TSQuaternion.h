@@ -211,7 +211,7 @@ namespace Terathon
 	//
 	//# \also	$@Vector3D@$
 	//# \also	$@Matrix3D@$
-	//# \also	$@Motor4D@$
+	//# \also	$@Motor3D@$
 
 
 	//# \function	Quaternion::Set		Sets all four components of a quaternion.
@@ -349,14 +349,25 @@ namespace Terathon
 
 	//# \member		Quaternion
 
+	struct TypeQuaternion
+	{
+		typedef float component_type;
+		typedef Bivector3D vector3D_type;
+	};
+
+
 	class Quaternion
 	{
 		public:
 
-			float	x;		//## The <i>x</i> coordinate of the bivector part.
-			float	y;		//## The <i>y</i> coordinate of the bivector part.
-			float	z;		//## The <i>z</i> coordinate of the bivector part.
-			float	w;		//## The <i>w</i> coordinate, which is the scalar part.
+			union
+			{
+				Component<TypeQuaternion, 4, 0>					x;			//## The <i>x</i> coordinate of the bivector part.
+				Component<TypeQuaternion, 4, 1>					y;			//## The <i>y</i> coordinate of the bivector part.
+				Component<TypeQuaternion, 4, 2>					z;			//## The <i>z</i> coordinate of the bivector part.
+				Component<TypeQuaternion, 4, 3>					w;			//## The <i>w</i> coordinate, which is the scalar part.
+				Subvec3D<TypeQuaternion, true, 4, 0, 1, 2>		xyz;		//## The <i>x</i>, <i>y</i>, and <i>z</i> coordinates together as a single bivector.
+			};
 
 			TERATHON_API static const ConstQuaternion identity;
 
@@ -364,139 +375,103 @@ namespace Terathon
 
 			Quaternion(float a, float b, float c, float s)
 			{
-				x = a;
-				y = b;
-				z = c;
+				xyz.Set(a, b, c);
 				w = s;
 			}
 
 			Quaternion(const Bivector3D& v, float s)
 			{
-				x = v.x;
-				y = v.y;
-				z = v.z;
+				xyz = v;
 				w = s;
 			}
 
 			explicit Quaternion(const Bivector3D& v)
 			{
-				x = v.x;
-				y = v.y;
-				z = v.z;
+				xyz = v;
 				w = 0.0F;
 			}
 
 			explicit Quaternion(float s)
 			{
 				w = s;
-				x = y = z = 0.0F;
+				xyz.Set(0.0F, 0.0F, 0.0F);
 			}
 
 			Quaternion& Set(float a, float b, float c, float s)
 			{
-				x = a;
-				y = b;
-				z = c;
+				xyz.Set(a, b, c);
 				w = s;
 				return (*this);
 			}
 
 			void Set(float a, float b, float c, float s) volatile
 			{
-				x = a;
-				y = b;
-				z = c;
+				xyz.Set(a, b, c);
 				w = s;
 			}
 
 			Quaternion& Set(const Bivector3D& v, float s)
 			{
-				x = v.x;
-				y = v.y;
-				z = v.z;
+				xyz = v;
 				w = s;
 				return (*this);
 			}
 
 			void Set(const Bivector3D& v, float s) volatile
 			{
-				x = v.x;
-				y = v.y;
-				z = v.z;
+				xyz = v;
 				w = s;
-			}
-
-			Bivector3D& GetBivectorPart(void)
-			{
-				return (reinterpret_cast<Bivector3D&>(x));
-			}
-
-			const Bivector3D& GetBivectorPart(void) const
-			{
-				return (reinterpret_cast<const Bivector3D&>(x));
 			}
 
 			Quaternion& operator =(const Quaternion& q)
 			{
-				x = q.x;
-				y = q.y;
-				z = q.z;
+				xyz = q.xyz;
 				w = q.w;
 				return (*this);
 			}
 
 			void operator =(const Quaternion& q) volatile
 			{
-				x = q.x;
-				y = q.y;
-				z = q.z;
+				xyz = q.xyz;
 				w = q.w;
 			}
 
 			Quaternion& operator =(const Bivector3D& v)
 			{
-				x = v.x;
-				y = v.y;
-				z = v.z;
+				xyz = v;
 				w = 0.0F;
 				return (*this);
 			}
 
 			void operator =(const Bivector3D& v) volatile
 			{
-				x = v.x;
-				y = v.y;
-				z = v.z;
+				xyz = v;
 				w = 0.0F;
 			}
 
 			Quaternion& operator =(float s)
 			{
 				w = s;
-				x = y = z = 0.0F;
+				xyz.Set(0.0F, 0.0F, 0.0F);
 				return (*this);
 			}
 
 			void operator =(float s) volatile
 			{
 				w = s;
-				x = y = z = 0.0F;
+				xyz.Set(0.0F, 0.0F, 0.0F);
 			}
 
 			Quaternion& operator +=(const Quaternion& q)
 			{
-				x += q.x;
-				y += q.y;
-				z += q.z;
+				xyz += q.xyz;
 				w += q.w;
 				return (*this);
 			}
 
 			Quaternion& operator +=(const Bivector3D& v)
 			{
-				x += v.x;
-				y += v.y;
-				z += v.z;
+				xyz += v;
 				return (*this);
 			}
 
@@ -508,18 +483,14 @@ namespace Terathon
 
 			Quaternion& operator -=(const Quaternion& q)
 			{
-				x -= q.x;
-				y -= q.y;
-				z -= q.z;
+				xyz -= q.xyz;
 				w -= q.w;
 				return (*this);
 			}
 
 			Quaternion& operator -=(const Bivector3D& v)
 			{
-				x -= v.x;
-				y -= v.y;
-				z -= v.z;
+				xyz -= v;
 				return (*this);
 			}
 
@@ -534,9 +505,7 @@ namespace Terathon
 
 			Quaternion& operator *=(float s)
 			{
-				x *= s;
-				y *= s;
-				z *= s;
+				xyz *= s;
 				w *= s;
 				return (*this);
 			}
@@ -547,16 +516,14 @@ namespace Terathon
 			Quaternion& operator /=(float s)
 			{
 				s = 1.0F / s;
-				x *= s;
-				y *= s;
-				z *= s;
+				xyz *= s;
 				w *= s;
 				return (*this);
 			}
 
 			Quaternion& Normalize(void)
 			{
-				return (*this *= InverseSqrt(x * x + y * y + z * z + w * w));
+				return (*this *= InverseSqrt(SquaredMag(xyz) + w * w));
 			}
 
 			Vector3D GetDirectionX(void) const
@@ -607,88 +574,88 @@ namespace Terathon
 
 	inline Quaternion operator -(const Quaternion& q)
 	{
-		return (Quaternion(-q.x, -q.y, -q.z, -q.w));
+		return (Quaternion(-q.xyz, -q.w));
 	}
 
 	inline Quaternion operator +(const Quaternion& q1, const Quaternion& q2)
 	{
-		return (Quaternion(q1.x + q2.x, q1.y + q2.y, q1.z + q2.z, q1.w + q2.w));
+		return (Quaternion(q1.xyz + q2.xyz, q1.w + q2.w));
 	}
 
 	inline Quaternion operator +(const Quaternion& q, const Bivector3D& v)
 	{
-		return (Quaternion(q.x + v.x, q.y + v.y, q.z + v.z, q.w));
+		return (Quaternion(q.xyz + v, q.w));
 	}
 
 	inline Quaternion operator +(const Bivector3D& v, const Quaternion& q)
 	{
-		return (Quaternion(v.x + q.x, v.y + q.y, v.z + q.z, q.w));
+		return (Quaternion(v + q.xyz, q.w));
 	}
 
 	inline Quaternion operator +(const Quaternion& q, float s)
 	{
-		return (Quaternion(q.x, q.y, q.z, q.w + s));
+		return (Quaternion(q.xyz, q.w + s));
 	}
 
 	inline Quaternion operator +(float s, const Quaternion& q)
 	{
-		return (Quaternion(q.x, q.y, q.z, s + q.w));
+		return (Quaternion(q.xyz, s + q.w));
 	}
 
 	inline Quaternion operator -(const Quaternion& q1, const Quaternion& q2)
 	{
-		return (Quaternion(q1.x - q2.x, q1.y - q2.y, q1.z - q2.z, q1.w - q2.w));
+		return (Quaternion(q1.xyz - q2.xyz, q1.w - q2.w));
 	}
 
 	inline Quaternion operator -(const Quaternion& q, const Bivector3D& v)
 	{
-		return (Quaternion(q.x - v.x, q.y - v.y, q.z - v.z, q.w));
+		return (Quaternion(q.xyz - v, q.w));
 	}
 
 	inline Quaternion operator -(const Bivector3D& v, const Quaternion& q)
 	{
-		return (Quaternion(v.x - q.x, v.y - q.y, v.z - q.z, -q.w));
+		return (Quaternion(v - q.xyz, -q.w));
 	}
 
 	inline Quaternion operator -(const Quaternion& q, float s)
 	{
-		return (Quaternion(q.x, q.y, q.z, q.w - s));
+		return (Quaternion(q.xyz, q.w - s));
 	}
 
 	inline Quaternion operator -(float s, const Quaternion& q)
 	{
-		return (Quaternion(-q.x, -q.y, -q.z, s - q.w));
+		return (Quaternion(-q.xyz, s - q.w));
 	}
 
 	inline Quaternion operator *(const Quaternion& q, float s)
 	{
-		return (Quaternion(q.x * s, q.y * s, q.z * s, q.w * s));
+		return (Quaternion(q.xyz * s, q.w * s));
 	}
 
 	inline Quaternion operator *(float s, const Quaternion& q)
 	{
-		return (Quaternion(s * q.x, s * q.y, s * q.z, s * q.w));
+		return (Quaternion(s * q.xyz, s * q.w));
 	}
 
 	inline Quaternion operator /(const Quaternion& q, float s)
 	{
 		s = 1.0F / s;
-		return (Quaternion(q.x * s, q.y * s, q.z * s, q.w * s));
+		return (Quaternion(q.xyz * s, q.w * s));
 	}
 
 	inline bool operator ==(const Quaternion& q1, const Quaternion& q2)
 	{
-		return ((q1.x == q2.x) && (q1.y == q2.y) && (q1.z == q2.z) && (q1.w == q2.w));
+		return ((q1.xyz == q2.xyz) && (q1.w == q2.w));
 	}
 
 	inline bool operator ==(const Quaternion& q, const Bivector3D& v)
 	{
-		return ((q.x == v.x) && (q.y == v.y) && (q.z == v.z) && (q.w == 0.0F));
+		return ((q.xyz == v.xyz) && (q.w == 0.0F));
 	}
 
 	inline bool operator ==(const Bivector3D& v, const Quaternion& q)
 	{
-		return ((q.x == v.x) && (q.y == v.y) && (q.z == v.z) && (q.w == 0.0F));
+		return ((q.xyz == v.xyz) && (q.w == 0.0F));
 	}
 
 	inline bool operator ==(const Quaternion& q, float s)
@@ -703,17 +670,17 @@ namespace Terathon
 
 	inline bool operator !=(const Quaternion& q1, const Quaternion& q2)
 	{
-		return ((q1.x != q2.x) || (q1.y != q2.y) || (q1.z != q2.z) || (q1.w != q2.w));
+		return ((q1.xyz != q2.xyz) || (q1.w != q2.w));
 	}
 
 	inline bool operator !=(const Quaternion& q, const Bivector3D& v)
 	{
-		return ((q.x != v.x) || (q.y != v.y) || (q.z != v.z) || (q.w != 0.0F));
+		return ((q.xyz != v.xyz) || (q.w != 0.0F));
 	}
 
 	inline bool operator !=(const Bivector3D& v, const Quaternion& q)
 	{
-		return ((q.x != v.x) || (q.y != v.y) || (q.z != v.z) || (q.w != 0.0F));
+		return ((q.xyz != v.xyz) || (q.w != 0.0F));
 	}
 
 	inline bool operator !=(const Quaternion& q, float s)
@@ -728,22 +695,22 @@ namespace Terathon
 
 	inline float Magnitude(const Quaternion& q)
 	{
-		return (Sqrt(q.x * q.x + q.y * q.y + q.z * q.z + q.w * q.w));
+		return (Sqrt(SquaredMag(q.xyz) + q.w * q.w));
 	}
 
 	inline float InverseMag(const Quaternion& q)
 	{
-		return (InverseSqrt(q.x * q.x + q.y * q.y + q.z * q.z + q.w * q.w));
+		return (InverseSqrt(SquaredMag(q.xyz) + q.w * q.w));
 	}
 
 	inline float SquaredMag(const Quaternion& q)
 	{
-		return (q.x * q.x + q.y * q.y + q.z * q.z + q.w * q.w);
+		return (SquaredMag(q.xyz) + q.w * q.w);
 	}
 
 	inline Quaternion Reverse(const Quaternion& q)
 	{
-		return (Quaternion(-q.x, -q.y, -q.z, q.w));
+		return (Quaternion(-q.xyz, q.w));
 	}
 
 	inline Quaternion Inverse(const Quaternion& q)
@@ -768,7 +735,7 @@ namespace Terathon
 
 	inline float Dot(const Quaternion& q1, const Quaternion& q2)
 	{
-		return (q1.x * q2.x + q1.y * q2.y + q1.z * q2.z + q1.w * q2.w);
+		return (Dot(q1.xyz, q2.xyz) + q1.w * q2.w);
 	}
 
 

@@ -14,7 +14,7 @@
 using namespace Terathon;
 
 
-Transform4D Flector4D::GetTransformMatrix(void) const
+Transform4D Flector3D::GetTransformMatrix(void) const
 {
 	float gx2 = g.x * g.x;
 	float gy2 = g.y * g.y;
@@ -42,7 +42,7 @@ Transform4D Flector4D::GetTransformMatrix(void) const
 	                    A02 + B20, A12 - B12,    A22,    (A23 + B23) * 2.0F));
 }
 
-Transform4D Flector4D::GetInverseTransformMatrix(void) const
+Transform4D Flector3D::GetInverseTransformMatrix(void) const
 {
 	float gx2 = g.x * g.x;
 	float gy2 = g.y * g.y;
@@ -70,7 +70,7 @@ Transform4D Flector4D::GetInverseTransformMatrix(void) const
 	                    A02 - B20, A12 + B12,    A22,    (A23 - B23) * 2.0F));
 }
 
-void Flector4D::GetTransformMatrices(Transform4D *M, Transform4D *Minv) const
+void Flector3D::GetTransformMatrices(Transform4D *M, Transform4D *Minv) const
 {
 	float gx2 = g.x * g.x;
 	float gy2 = g.y * g.y;
@@ -102,7 +102,7 @@ void Flector4D::GetTransformMatrices(Transform4D *M, Transform4D *Minv) const
 	          A02 - B20, A12 + B12,    A22,    (A23 - B23) * 2.0F);
 }
 
-Flector4D& Flector4D::SetTransformMatrix(const Transform4D& M)
+Flector3D& Flector3D::SetTransformMatrix(const Transform4D& M)
 {
 	float m00 = M(0,0);
 	float m11 = M(1,1);
@@ -159,9 +159,9 @@ Flector4D& Flector4D::SetTransformMatrix(const Transform4D& M)
 }
 
 
-Motor4D Terathon::operator *(const Flector4D& a, const Flector4D& b)
+Motor3D Terathon::operator *(const Flector3D& a, const Flector3D& b)
 {
-	return (Motor4D(a.g.z * b.g.y - a.g.y * b.g.z - a.g.x * b.p.w - a.p.w * b.g.x,
+	return (Motor3D(a.g.z * b.g.y - a.g.y * b.g.z - a.g.x * b.p.w - a.p.w * b.g.x,
 	                a.g.x * b.g.z - a.g.z * b.g.x - a.g.y * b.p.w - a.p.w * b.g.y,
 					a.g.y * b.g.x - a.g.x * b.g.y - a.g.z * b.p.w - a.p.w * b.g.z,
 					a.g.x * b.g.x + a.g.y * b.g.y + a.g.z * b.g.z - a.p.w * b.p.w,
@@ -171,9 +171,9 @@ Motor4D Terathon::operator *(const Flector4D& a, const Flector4D& b)
 					a.p.x * b.g.x + a.p.y * b.g.y + a.p.z * b.g.z + a.p.w * b.g.w - a.g.x * b.p.x - a.g.y * b.p.y - a.g.z * b.p.z - a.g.w * b.p.w));
 }
 
-Flector4D Terathon::operator *(const Flector4D& a, const Motor4D& b)
+Flector3D Terathon::operator *(const Flector3D& a, const Motor3D& b)
 {
-	return (Flector4D(a.g.z * b.m.y - a.g.y * b.m.z + a.g.w * b.v.x - a.g.x * b.m.w + a.p.y * b.v.z - a.p.z * b.v.y + a.p.x * b.v.w - a.p.w * b.m.x,
+	return (Flector3D(a.g.z * b.m.y - a.g.y * b.m.z + a.g.w * b.v.x - a.g.x * b.m.w + a.p.y * b.v.z - a.p.z * b.v.y + a.p.x * b.v.w - a.p.w * b.m.x,
 	                  a.g.x * b.m.z - a.g.z * b.m.x + a.g.w * b.v.y - a.g.y * b.m.w + a.p.z * b.v.x - a.p.x * b.v.z + a.p.y * b.v.w - a.p.w * b.m.y,
 					  a.g.y * b.m.x - a.g.x * b.m.y + a.g.w * b.v.z - a.g.z * b.m.w + a.p.x * b.v.y - a.p.y * b.v.x + a.p.z * b.v.w - a.p.w * b.m.z,
 					  a.p.w * b.v.w - a.g.x * b.v.x - a.g.y * b.v.y - a.g.z * b.v.z,
@@ -183,9 +183,9 @@ Flector4D Terathon::operator *(const Flector4D& a, const Motor4D& b)
 					  a.g.w * b.v.w + a.g.x * b.m.x + a.g.y * b.m.y + a.g.z * b.m.z - a.p.w * b.m.w - a.p.x * b.v.x - a.p.y * b.v.y - a.p.z * b.v.z));
 }
 
-Flector4D Terathon::operator *(const Motor4D& a, const Flector4D& b)
+Flector3D Terathon::operator *(const Motor3D& a, const Flector3D& b)
 {
-	return (Flector4D(b.g.z * a.m.y - b.g.y * a.m.z + b.g.w * a.v.x + b.g.x * a.m.w + b.p.z * a.v.y - b.p.y * a.v.z + b.p.x * a.v.w + b.p.w * a.m.x,
+	return (Flector3D(b.g.z * a.m.y - b.g.y * a.m.z + b.g.w * a.v.x + b.g.x * a.m.w + b.p.z * a.v.y - b.p.y * a.v.z + b.p.x * a.v.w + b.p.w * a.m.x,
 	                  b.g.x * a.m.z - b.g.z * a.m.x + b.g.w * a.v.y + b.g.y * a.m.w + b.p.x * a.v.z - b.p.z * a.v.x + b.p.y * a.v.w + b.p.w * a.m.y,
 					  b.g.y * a.m.x - b.g.x * a.m.y + b.g.w * a.v.z + b.g.z * a.m.w + b.p.y * a.v.x - b.p.x * a.v.y + b.p.z * a.v.w + b.p.w * a.m.z,
 					  b.p.w * a.v.w - b.g.x * a.v.x - b.g.y * a.v.y - b.g.z * a.v.z,
@@ -195,7 +195,7 @@ Flector4D Terathon::operator *(const Motor4D& a, const Flector4D& b)
 					  b.g.w * a.v.w - b.g.x * a.m.x - b.g.y * a.m.y - b.g.z * a.m.z + b.p.w * a.m.w - b.p.x * a.v.x - b.p.y * a.v.y - b.p.z * a.v.z));
 }
 
-Vector3D Terathon::Transform(const Vector3D& v, const Flector4D& F)
+Vector3D Terathon::Transform(const Vector3D& v, const Flector3D& F)
 {
 	float pw2 = F.p.w * F.p.w;
 	float gx2 = F.g.x * F.g.x;
@@ -213,7 +213,7 @@ Vector3D Terathon::Transform(const Vector3D& v, const Flector4D& F)
 	                 v.z + ((gypw - gzgx) * v.x - (gygz + gxpw) * v.y - (gz2 + pw2) * v.z) * 2.0F));
 }
 
-Bivector3D Terathon::Transform(const Bivector3D& v, const Flector4D& F)
+Bivector3D Terathon::Transform(const Bivector3D& v, const Flector3D& F)
 {
 	float pw2 = F.p.w * F.p.w;
 	float gx2 = F.g.x * F.g.x;
@@ -231,7 +231,7 @@ Bivector3D Terathon::Transform(const Bivector3D& v, const Flector4D& F)
 	                   v.z + ((gypw - gzgx) * v.x - (gygz + gxpw) * v.y - (gz2 + pw2) * v.z) * 2.0F));
 }
 
-Vector4D Terathon::Transform(const Vector4D& p, const Flector4D& F)
+Vector4D Terathon::Transform(const Vector4D& p, const Flector3D& F)
 {
 	float pw2 = F.p.w * F.p.w;
 	float gx2 = F.g.x * F.g.x;
@@ -250,7 +250,7 @@ Vector4D Terathon::Transform(const Vector4D& p, const Flector4D& F)
 	                 p.w));
 }
 
-Point3D Terathon::Transform(const Point3D& p, const Flector4D& F)
+Point3D Terathon::Transform(const Point3D& p, const Flector3D& F)
 {
 	float pw2 = F.p.w * F.p.w;
 	float gx2 = F.g.x * F.g.x;
@@ -268,7 +268,7 @@ Point3D Terathon::Transform(const Point3D& p, const Flector4D& F)
 	                p.z + ((gypw - gzgx) * p.x - (gygz + gxpw) * p.y - (gz2 + pw2) * p.z + (F.p.z * F.p.w - F.g.z * F.g.w + F.g.x * F.p.y - F.g.y * F.p.x)) * 2.0F));
 }
 
-Line3D Terathon::Transform(const Line3D& l, const Flector4D& F)
+Line3D Terathon::Transform(const Line3D& l, const Flector3D& F)
 {
 	float pw2 = F.p.w * F.p.w;
 	float gx2 = F.g.x * F.g.x;
@@ -289,7 +289,7 @@ Line3D Terathon::Transform(const Line3D& l, const Flector4D& F)
 	               l.m.z + ((F.g.z * F.p.x + F.g.x * F.p.z - F.p.y * F.p.w - F.g.y * F.g.w) * l.v.x + (F.g.z * F.p.y + F.g.y * F.p.z + F.p.x * F.p.w + F.g.x * F.g.w) * l.v.y - (F.g.x * F.p.x + F.g.y * F.p.y) * l.v.z * 2.0F + (gypw - gzgx) * l.m.x - (gygz + gxpw) * l.m.y - (gz2 + pw2) * l.m.z) * 2.0F));
 }
 
-Plane3D Terathon::Transform(const Plane3D& g, const Flector4D& F)
+Plane3D Terathon::Transform(const Plane3D& g, const Flector3D& F)
 {
 	float pw2 = F.p.w * F.p.w;
 	float gx2 = F.g.x * F.g.x;
