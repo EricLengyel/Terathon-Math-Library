@@ -510,11 +510,15 @@ namespace Terathon
 
 
 	TERATHON_API Vector3D Transform(const Vector3D& v, const Flector3D& F);
-	TERATHON_API Bivector3D Transform(const Bivector3D& v, const Flector3D& F);
-	TERATHON_API Vector4D Transform(const Vector4D& p, const Flector3D& F);
-	TERATHON_API Point3D Transform(const Point3D& p, const Flector3D& F);
+	TERATHON_API Vector4D Transform(const Vector4D& q, const Flector3D& F);
+	TERATHON_API Point3D Transform(const Point3D& q, const Flector3D& F);
 	TERATHON_API Line3D Transform(const Line3D& l, const Flector3D& F);
-	TERATHON_API Plane3D Transform(const Plane3D& g, const Flector3D& F);
+	TERATHON_API Plane3D Transform(const Plane3D& h, const Flector3D& F);
+
+	inline Bivector3D Transform(const Bivector3D& v, const Flector3D& F)
+	{
+		return (!Transform(!v, F));
+	}
 
 
 	inline float BulkNorm(const Flector3D& F)

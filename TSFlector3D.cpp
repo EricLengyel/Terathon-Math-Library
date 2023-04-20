@@ -197,115 +197,41 @@ Flector3D Terathon::operator *(const Motor3D& a, const Flector3D& b)
 
 Vector3D Terathon::Transform(const Vector3D& v, const Flector3D& F)
 {
-	float pw2 = F.p.w * F.p.w;
-	float gx2 = F.g.x * F.g.x;
-	float gy2 = F.g.y * F.g.y;
-	float gz2 = F.g.z * F.g.z;
-	float gygz = F.g.y * F.g.z;
-	float gzgx = F.g.z * F.g.x;
-	float gxgy = F.g.x * F.g.y;
-	float gxpw = F.g.x * F.p.w;
-	float gypw = F.g.y * F.p.w;
-	float gzpw = F.g.z * F.p.w;
-
-	return (Vector3D(v.x + ((gzpw - gxgy) * v.y - (gzgx + gypw) * v.z - (gx2 + pw2) * v.x) * 2.0F,
-	                 v.y + ((gxpw - gygz) * v.z - (gxgy + gzpw) * v.x - (gy2 + pw2) * v.y) * 2.0F,
-	                 v.z + ((gypw - gzgx) * v.x - (gygz + gxpw) * v.y - (gz2 + pw2) * v.z) * 2.0F));
+	Bivector3D Fgv = (!F.g.xyz ^ v) * 2.0F;
+	return ((Fgv ^ F.g.xyz) - !Fgv * F.p.w - v);
 }
 
-Bivector3D Terathon::Transform(const Bivector3D& v, const Flector3D& F)
+Vector4D Terathon::Transform(const Vector4D& q, const Flector3D& F)
 {
-	float pw2 = F.p.w * F.p.w;
-	float gx2 = F.g.x * F.g.x;
-	float gy2 = F.g.y * F.g.y;
-	float gz2 = F.g.z * F.g.z;
-	float gygz = F.g.y * F.g.z;
-	float gzgx = F.g.z * F.g.x;
-	float gxgy = F.g.x * F.g.y;
-	float gxpw = F.g.x * F.p.w;
-	float gypw = F.g.y * F.p.w;
-	float gzpw = F.g.z * F.p.w;
-
-	return (Bivector3D(v.x + ((gzpw - gxgy) * v.y - (gzgx + gypw) * v.z - (gx2 + pw2) * v.x) * 2.0F,
-	                   v.y + ((gxpw - gygz) * v.z - (gxgy + gzpw) * v.x - (gy2 + pw2) * v.y) * 2.0F,
-	                   v.z + ((gypw - gzgx) * v.x - (gygz + gxpw) * v.y - (gz2 + pw2) * v.z) * 2.0F));
+	Bivector3D Fgq = !F.g.xyz ^ q.xyz;
+	return (Vector4D(((Fgq ^ F.g.xyz) - !Fgq * F.p.w + (F.p.xyz * F.p.w - !F.g.xyz * F.g.w + (F.g.xyz ^ !F.p.xyz)) * q.w) * 2.0F - q.xyz, q.w));
 }
 
-Vector4D Terathon::Transform(const Vector4D& p, const Flector3D& F)
+Point3D Terathon::Transform(const Point3D& q, const Flector3D& F)
 {
-	float pw2 = F.p.w * F.p.w;
-	float gx2 = F.g.x * F.g.x;
-	float gy2 = F.g.y * F.g.y;
-	float gz2 = F.g.z * F.g.z;
-	float gygz = F.g.y * F.g.z;
-	float gzgx = F.g.z * F.g.x;
-	float gxgy = F.g.x * F.g.y;
-	float gxpw = F.g.x * F.p.w;
-	float gypw = F.g.y * F.p.w;
-	float gzpw = F.g.z * F.p.w;
-
-	return (Vector4D(p.x + ((gzpw - gxgy) * p.y - (gzgx + gypw) * p.z - (gx2 + pw2) * p.x + (F.p.x * F.p.w - F.g.x * F.g.w + F.g.y * F.p.z - F.g.z * F.p.y) * p.w) * 2.0F,
-	                 p.y + ((gxpw - gygz) * p.z - (gxgy + gzpw) * p.x - (gy2 + pw2) * p.y + (F.p.y * F.p.w - F.g.y * F.g.w + F.g.z * F.p.x - F.g.x * F.p.z) * p.w) * 2.0F,
-	                 p.z + ((gypw - gzgx) * p.x - (gygz + gxpw) * p.y - (gz2 + pw2) * p.z + (F.p.z * F.p.w - F.g.z * F.g.w + F.g.x * F.p.y - F.g.y * F.p.x) * p.w) * 2.0F,
-	                 p.w));
-}
-
-Point3D Terathon::Transform(const Point3D& p, const Flector3D& F)
-{
-	float pw2 = F.p.w * F.p.w;
-	float gx2 = F.g.x * F.g.x;
-	float gy2 = F.g.y * F.g.y;
-	float gz2 = F.g.z * F.g.z;
-	float gygz = F.g.y * F.g.z;
-	float gzgx = F.g.z * F.g.x;
-	float gxgy = F.g.x * F.g.y;
-	float gxpw = F.g.x * F.p.w;
-	float gypw = F.g.y * F.p.w;
-	float gzpw = F.g.z * F.p.w;
-
-	return (Point3D(p.x + ((gzpw - gxgy) * p.y - (gzgx + gypw) * p.z - (gx2 + pw2) * p.x + (F.p.x * F.p.w - F.g.x * F.g.w + F.g.y * F.p.z - F.g.z * F.p.y)) * 2.0F,
-	                p.y + ((gxpw - gygz) * p.z - (gxgy + gzpw) * p.x - (gy2 + pw2) * p.y + (F.p.y * F.p.w - F.g.y * F.g.w + F.g.z * F.p.x - F.g.x * F.p.z)) * 2.0F,
-	                p.z + ((gypw - gzgx) * p.x - (gygz + gxpw) * p.y - (gz2 + pw2) * p.z + (F.p.z * F.p.w - F.g.z * F.g.w + F.g.x * F.p.y - F.g.y * F.p.x)) * 2.0F));
+	Bivector3D Fgq = !F.g.xyz ^ q.xyz;
+	return (((Fgq ^ F.g.xyz) + (F.p.xyz - !Fgq) * F.p.w - !F.g.xyz * F.g.w + (F.g.xyz ^ !F.p.xyz)) * 2.0F - q);
 }
 
 Line3D Terathon::Transform(const Line3D& l, const Flector3D& F)
 {
-	float pw2 = F.p.w * F.p.w;
-	float gx2 = F.g.x * F.g.x;
-	float gy2 = F.g.y * F.g.y;
-	float gz2 = F.g.z * F.g.z;
-	float gygz = F.g.y * F.g.z;
-	float gzgx = F.g.z * F.g.x;
-	float gxgy = F.g.x * F.g.y;
-	float gxpw = F.g.x * F.p.w;
-	float gypw = F.g.y * F.p.w;
-	float gzpw = F.g.z * F.p.w;
+	Line3D		result;
 
-	return (Line3D(l.v.x + ((gxgy - gzpw) * l.v.y + (gzgx + gypw) * l.v.z - (gy2 + gz2) * l.v.x) * 2.0F,
-	               l.v.y + ((gygz - gxpw) * l.v.z + (gxgy + gzpw) * l.v.x - (gz2 + gx2) * l.v.y) * 2.0F,
-	               l.v.z + ((gzgx - gypw) * l.v.x + (gygz + gxpw) * l.v.y - (gx2 + gy2) * l.v.z) * 2.0F,
-	               l.m.x + ((F.g.x * F.p.y + F.g.y * F.p.x - F.p.z * F.p.w - F.g.z * F.g.w) * l.v.y + (F.g.x * F.p.z + F.g.z * F.p.x + F.p.y * F.p.w + F.g.y * F.g.w) * l.v.z - (F.g.y * F.p.y + F.g.z * F.p.z) * l.v.x * 2.0F + (gzpw - gxgy) * l.m.y - (gzgx + gypw) * l.m.z - (gx2 + pw2) * l.m.x) * 2.0F,
-	               l.m.y + ((F.g.y * F.p.z + F.g.z * F.p.y - F.p.x * F.p.w - F.g.x * F.g.w) * l.v.z + (F.g.y * F.p.x + F.g.x * F.p.y + F.p.z * F.p.w + F.g.z * F.g.w) * l.v.x - (F.g.z * F.p.z + F.g.x * F.p.x) * l.v.y * 2.0F + (gxpw - gygz) * l.m.z - (gxgy + gzpw) * l.m.x - (gy2 + pw2) * l.m.y) * 2.0F,
-	               l.m.z + ((F.g.z * F.p.x + F.g.x * F.p.z - F.p.y * F.p.w - F.g.y * F.g.w) * l.v.x + (F.g.z * F.p.y + F.g.y * F.p.z + F.p.x * F.p.w + F.g.x * F.g.w) * l.v.y - (F.g.x * F.p.x + F.g.y * F.p.y) * l.v.z * 2.0F + (gypw - gzgx) * l.m.x - (gygz + gxpw) * l.m.y - (gz2 + pw2) * l.m.z) * 2.0F));
+	Bivector3D Fglv = (!F.g.xyz ^ l.v) * 2.0F;
+	result.v = (F.g.xyz ^ Fglv) + !Fglv * F.p.w + l.v;
+
+	Vector3D Fplv = (!F.p.xyz ^ !l.v) * 2.0F;
+	Vector3D Fglm = (F.g.xyz ^ l.m) * 2.0F;
+	result.m = !(Fplv - Fglm) * F.p.w + Fglv * F.g.w + (F.p.xyz ^ !Fglv) + (!F.g.xyz ^ (Fplv - Fglm)) - l.m;
+
+	return (result);
 }
 
-Plane3D Terathon::Transform(const Plane3D& g, const Flector3D& F)
+Plane3D Terathon::Transform(const Plane3D& h, const Flector3D& F)
 {
-	float pw2 = F.p.w * F.p.w;
-	float gx2 = F.g.x * F.g.x;
-	float gy2 = F.g.y * F.g.y;
-	float gz2 = F.g.z * F.g.z;
-	float gygz = F.g.y * F.g.z;
-	float gzgx = F.g.z * F.g.x;
-	float gxgy = F.g.x * F.g.y;
-	float gxpw = F.g.x * F.p.w;
-	float gypw = F.g.y * F.p.w;
-	float gzpw = F.g.z * F.p.w;
+	float hp = h.x * F.p.x + h.y * F.p.y + h.z * F.p.z;
+	float hg = h.x * F.g.x + h.y * F.g.y + h.z * F.g.z;
 
-	return (Plane3D(g.x + ((gzpw - gxgy) * g.y - (gzgx + gypw) * g.z - (gx2 + pw2) * g.x) * 2.0F,
-	                g.y + ((gxpw - gygz) * g.z - (gxgy + gzpw) * g.x - (gy2 + pw2) * g.y) * 2.0F,
-	                g.z + ((gypw - gzgx) * g.x - (gygz + gxpw) * g.y - (gz2 + pw2) * g.z) * 2.0F,
-	                g.w + ((F.p.x * F.p.w - F.g.x * F.g.w - F.g.y * F.p.z + F.g.z * F.p.y) * g.x +
-	                       (F.p.y * F.p.w - F.g.y * F.g.w - F.g.z * F.p.x + F.g.x * F.p.z) * g.y +
-	                       (F.p.z * F.p.w - F.g.z * F.g.w - F.g.x * F.p.y + F.g.y * F.p.x) * g.z) * 2.0F));
+	Vector3D Fgh = (F.g.xyz ^ h.xyz) * 2.0F;
+	return (Plane3D((!F.g.xyz ^ Fgh) + !Fgh * F.p.w + h.xyz, (hg * F.g.w - hp * F.p.w - (h.xyz ^ !F.p.xyz ^ F.g.xyz)) * 2.0F - h.w));
 }

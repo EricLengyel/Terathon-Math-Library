@@ -222,8 +222,8 @@ Vector4D Terathon::Transform(const Vector4D& p, const Motor3D& Q)
 		vec_float vw = VecSmearW(v);
 		vec_float mw = VecSmearW(m);
 
-		vec_float c = VecCross3D(v, q);
-		vec_float a = VecCross3D(v, c) + c * vw + (m * vw - v * mw + VecCross3D(v, m)) * VecSmearW(q);
+		vec_float Qvp = VecCross3D(v, q);
+		vec_float a = VecCross3D(v, Qvp) + Qvp * vw + (m * vw - v * mw + VecCross3D(v, m)) * VecSmearW(q);
 
 		VecStore3D(q + (a + a), &result.x);
 		result.w = p.w;
@@ -249,8 +249,8 @@ Point3D Terathon::Transform(const Point3D& p, const Motor3D& Q)
 		vec_float vw = VecSmearW(v);
 		vec_float mw = VecSmearW(m);
 
-		vec_float c = VecCross3D(v, q);
-		vec_float a = VecCross3D(v, c) + (c + m) * vw - v * mw + VecCross3D(v, m);
+		vec_float Qvp = VecCross3D(v, q);
+		vec_float a = VecCross3D(v, Qvp) + (Qvp + m) * vw - v * mw + VecCross3D(v, m);
 
 		VecStore3D(q + (a + a), &result.x);
 		return (result);
@@ -281,8 +281,7 @@ Plane3D Terathon::Transform(const Plane3D& g, const Motor3D& Q)
 {
 	float gv = g.x * Q.v.x + g.y * Q.v.y + g.z * Q.v.z;
 	float gm = g.x * Q.m.x + g.y * Q.m.y + g.z * Q.m.z;
-	Vector3D Qvg = (Q.v.xyz ^ g.xyz) * 2.0F;
 
-	return (Plane3D(g.xyz + (!Qvg * Q.v.w + (!Q.v.xyz ^ Qvg)),
-	                g.w + (gv * Q.m.w - gm * Q.v.w + g.x * (Q.v.y * Q.m.z - Q.v.z * Q.m.y) + g.y * (Q.v.z * Q.m.x - Q.v.x * Q.m.z) + g.z * (Q.v.x * Q.m.y - Q.v.y * Q.m.x)) * 2.0F));
+	Vector3D Qvg = (Q.v.xyz ^ g.xyz) * 2.0F;
+	return (Plane3D(g.xyz + ((!Q.v.xyz ^ Qvg) + !Qvg * Q.v.w), g.w + (gv * Q.m.w - gm * Q.v.w + (g.xyz ^ Q.v.xyz ^ Q.m.xyz)) * 2.0F));
 }

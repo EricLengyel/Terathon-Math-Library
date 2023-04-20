@@ -138,5 +138,5 @@ Quaternion Terathon::Sqrt(const Quaternion& q)
 Vector3D Terathon::Transform(const Vector3D& v, const Quaternion& q)
 {
 	Bivector3D c = (!q.xyz ^ v) * 2.0F;
-	return (v + ((q.xyz ^ c) + !c * q.w));
+	return ((q.xyz ^ c) + !c * q.w + v);
 }
