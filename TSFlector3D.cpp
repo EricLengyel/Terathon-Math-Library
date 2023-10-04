@@ -14,7 +14,7 @@
 using namespace Terathon;
 
 
-Transform4D Flector3D::GetTransformMatrix(void) const
+Transform3D Flector3D::GetTransformMatrix(void) const
 {
 	float gx2 = g.x * g.x;
 	float gy2 = g.y * g.y;
@@ -37,12 +37,12 @@ Transform4D Flector3D::GetTransformMatrix(void) const
 	float B13 = g.z * p.x - g.x * p.z;
 	float B23 = g.x * p.y - g.y * p.x;
 
-	return (Transform4D(   A00,    A01 + B01, A02 - B20, (A03 + B03) * 2.0F,
+	return (Transform3D(   A00,    A01 + B01, A02 - B20, (A03 + B03) * 2.0F,
 	                    A01 - B01,    A11,    A12 + B12, (A13 + B13) * 2.0F,
 	                    A02 + B20, A12 - B12,    A22,    (A23 + B23) * 2.0F));
 }
 
-Transform4D Flector3D::GetInverseTransformMatrix(void) const
+Transform3D Flector3D::GetInverseTransformMatrix(void) const
 {
 	float gx2 = g.x * g.x;
 	float gy2 = g.y * g.y;
@@ -65,12 +65,12 @@ Transform4D Flector3D::GetInverseTransformMatrix(void) const
 	float B13 = g.z * p.x - g.x * p.z;
 	float B23 = g.x * p.y - g.y * p.x;
 
-	return (Transform4D(   A00,    A01 - B01, A02 + B20, (A03 - B03) * 2.0F,
+	return (Transform3D(   A00,    A01 - B01, A02 + B20, (A03 - B03) * 2.0F,
 	                    A01 + B01,    A11,    A12 - B12, (A13 - B13) * 2.0F,
 	                    A02 - B20, A12 + B12,    A22,    (A23 - B23) * 2.0F));
 }
 
-void Flector3D::GetTransformMatrices(Transform4D *M, Transform4D *Minv) const
+void Flector3D::GetTransformMatrices(Transform3D *M, Transform3D *Minv) const
 {
 	float gx2 = g.x * g.x;
 	float gy2 = g.y * g.y;
@@ -102,7 +102,7 @@ void Flector3D::GetTransformMatrices(Transform4D *M, Transform4D *Minv) const
 	          A02 - B20, A12 + B12,    A22,    (A23 - B23) * 2.0F);
 }
 
-Flector3D& Flector3D::SetTransformMatrix(const Transform4D& M)
+Flector3D& Flector3D::SetTransformMatrix(const Transform3D& M)
 {
 	float m00 = M(0,0);
 	float m11 = M(1,1);
@@ -163,36 +163,36 @@ Motor3D Terathon::operator *(const Flector3D& a, const Flector3D& b)
 {
 	return (Motor3D(a.g.z * b.g.y - a.g.y * b.g.z - a.g.x * b.p.w - a.p.w * b.g.x,
 	                a.g.x * b.g.z - a.g.z * b.g.x - a.g.y * b.p.w - a.p.w * b.g.y,
-					a.g.y * b.g.x - a.g.x * b.g.y - a.g.z * b.p.w - a.p.w * b.g.z,
-					a.g.x * b.g.x + a.g.y * b.g.y + a.g.z * b.g.z - a.p.w * b.p.w,
+	                a.g.y * b.g.x - a.g.x * b.g.y - a.g.z * b.p.w - a.p.w * b.g.z,
+	                a.g.x * b.g.x + a.g.y * b.g.y + a.g.z * b.g.z - a.p.w * b.p.w,
 	                a.p.z * b.g.y - a.p.y * b.g.z + a.g.y * b.p.z - a.g.z * b.p.y + a.g.x * b.g.w - a.g.w * b.g.x + a.p.w * b.p.x - a.p.x * b.p.w,
-					a.p.x * b.g.z - a.p.z * b.g.x + a.g.z * b.p.x - a.g.x * b.p.z + a.g.y * b.g.w - a.g.w * b.g.y + a.p.w * b.p.y - a.p.y * b.p.w,
-					a.p.y * b.g.x - a.p.x * b.g.y + a.g.x * b.p.y - a.g.y * b.p.x + a.g.z * b.g.w - a.g.w * b.g.z + a.p.w * b.p.z - a.p.z * b.p.w,
-					a.p.x * b.g.x + a.p.y * b.g.y + a.p.z * b.g.z + a.p.w * b.g.w - a.g.x * b.p.x - a.g.y * b.p.y - a.g.z * b.p.z - a.g.w * b.p.w));
+	                a.p.x * b.g.z - a.p.z * b.g.x + a.g.z * b.p.x - a.g.x * b.p.z + a.g.y * b.g.w - a.g.w * b.g.y + a.p.w * b.p.y - a.p.y * b.p.w,
+	                a.p.y * b.g.x - a.p.x * b.g.y + a.g.x * b.p.y - a.g.y * b.p.x + a.g.z * b.g.w - a.g.w * b.g.z + a.p.w * b.p.z - a.p.z * b.p.w,
+	                a.p.x * b.g.x + a.p.y * b.g.y + a.p.z * b.g.z + a.p.w * b.g.w - a.g.x * b.p.x - a.g.y * b.p.y - a.g.z * b.p.z - a.g.w * b.p.w));
 }
 
 Flector3D Terathon::operator *(const Flector3D& a, const Motor3D& b)
 {
 	return (Flector3D(a.g.z * b.m.y - a.g.y * b.m.z + a.g.w * b.v.x - a.g.x * b.m.w + a.p.y * b.v.z - a.p.z * b.v.y + a.p.x * b.v.w - a.p.w * b.m.x,
 	                  a.g.x * b.m.z - a.g.z * b.m.x + a.g.w * b.v.y - a.g.y * b.m.w + a.p.z * b.v.x - a.p.x * b.v.z + a.p.y * b.v.w - a.p.w * b.m.y,
-					  a.g.y * b.m.x - a.g.x * b.m.y + a.g.w * b.v.z - a.g.z * b.m.w + a.p.x * b.v.y - a.p.y * b.v.x + a.p.z * b.v.w - a.p.w * b.m.z,
-					  a.p.w * b.v.w - a.g.x * b.v.x - a.g.y * b.v.y - a.g.z * b.v.z,
-					  a.g.y * b.v.z - a.g.z * b.v.y + a.p.w * b.v.x + a.g.x * b.v.w,
-					  a.g.z * b.v.x - a.g.x * b.v.z + a.p.w * b.v.y + a.g.y * b.v.w,
-					  a.g.x * b.v.y - a.g.y * b.v.x + a.p.w * b.v.z + a.g.z * b.v.w,
-					  a.g.w * b.v.w + a.g.x * b.m.x + a.g.y * b.m.y + a.g.z * b.m.z - a.p.w * b.m.w - a.p.x * b.v.x - a.p.y * b.v.y - a.p.z * b.v.z));
+	                  a.g.y * b.m.x - a.g.x * b.m.y + a.g.w * b.v.z - a.g.z * b.m.w + a.p.x * b.v.y - a.p.y * b.v.x + a.p.z * b.v.w - a.p.w * b.m.z,
+	                  a.p.w * b.v.w - a.g.x * b.v.x - a.g.y * b.v.y - a.g.z * b.v.z,
+	                  a.g.y * b.v.z - a.g.z * b.v.y + a.p.w * b.v.x + a.g.x * b.v.w,
+	                  a.g.z * b.v.x - a.g.x * b.v.z + a.p.w * b.v.y + a.g.y * b.v.w,
+	                  a.g.x * b.v.y - a.g.y * b.v.x + a.p.w * b.v.z + a.g.z * b.v.w,
+	                  a.g.w * b.v.w + a.g.x * b.m.x + a.g.y * b.m.y + a.g.z * b.m.z - a.p.w * b.m.w - a.p.x * b.v.x - a.p.y * b.v.y - a.p.z * b.v.z));
 }
 
 Flector3D Terathon::operator *(const Motor3D& a, const Flector3D& b)
 {
 	return (Flector3D(b.g.z * a.m.y - b.g.y * a.m.z + b.g.w * a.v.x + b.g.x * a.m.w + b.p.z * a.v.y - b.p.y * a.v.z + b.p.x * a.v.w + b.p.w * a.m.x,
 	                  b.g.x * a.m.z - b.g.z * a.m.x + b.g.w * a.v.y + b.g.y * a.m.w + b.p.x * a.v.z - b.p.z * a.v.x + b.p.y * a.v.w + b.p.w * a.m.y,
-					  b.g.y * a.m.x - b.g.x * a.m.y + b.g.w * a.v.z + b.g.z * a.m.w + b.p.y * a.v.x - b.p.x * a.v.y + b.p.z * a.v.w + b.p.w * a.m.z,
-					  b.p.w * a.v.w - b.g.x * a.v.x - b.g.y * a.v.y - b.g.z * a.v.z,
-					  b.g.z * a.v.y - b.g.y * a.v.z + b.p.w * a.v.x + b.g.x * a.v.w,
-					  b.g.x * a.v.z - b.g.z * a.v.x + b.p.w * a.v.y + b.g.y * a.v.w,
-					  b.g.y * a.v.x - b.g.x * a.v.y + b.p.w * a.v.z + b.g.z * a.v.w,
-					  b.g.w * a.v.w - b.g.x * a.m.x - b.g.y * a.m.y - b.g.z * a.m.z + b.p.w * a.m.w - b.p.x * a.v.x - b.p.y * a.v.y - b.p.z * a.v.z));
+	                  b.g.y * a.m.x - b.g.x * a.m.y + b.g.w * a.v.z + b.g.z * a.m.w + b.p.y * a.v.x - b.p.x * a.v.y + b.p.z * a.v.w + b.p.w * a.m.z,
+	                  b.p.w * a.v.w - b.g.x * a.v.x - b.g.y * a.v.y - b.g.z * a.v.z,
+	                  b.g.z * a.v.y - b.g.y * a.v.z + b.p.w * a.v.x + b.g.x * a.v.w,
+	                  b.g.x * a.v.z - b.g.z * a.v.x + b.p.w * a.v.y + b.g.y * a.v.w,
+	                  b.g.y * a.v.x - b.g.x * a.v.y + b.p.w * a.v.z + b.g.z * a.v.w,
+	                  b.g.w * a.v.w - b.g.x * a.m.x - b.g.y * a.m.y - b.g.z * a.m.z + b.p.w * a.m.w - b.p.x * a.v.x - b.p.y * a.v.y - b.p.z * a.v.z));
 }
 
 Vector3D Terathon::Transform(const Vector3D& v, const Flector3D& F)
@@ -201,10 +201,10 @@ Vector3D Terathon::Transform(const Vector3D& v, const Flector3D& F)
 	return ((Fgv ^ F.g.xyz) - !Fgv * F.p.w - v);
 }
 
-Vector4D Terathon::Transform(const Vector4D& q, const Flector3D& F)
+FlatPoint3D Terathon::Transform(const FlatPoint3D& q, const Flector3D& F)
 {
 	Bivector3D Fgq = !F.g.xyz ^ q.xyz;
-	return (Vector4D(((Fgq ^ F.g.xyz) - !Fgq * F.p.w + (F.p.xyz * F.p.w - !F.g.xyz * F.g.w + (F.g.xyz ^ !F.p.xyz)) * q.w) * 2.0F - q.xyz, q.w));
+	return (FlatPoint3D(((Fgq ^ F.g.xyz) - !Fgq * F.p.w + (F.p.xyz * F.p.w - !F.g.xyz * F.g.w + (F.g.xyz ^ !F.p.xyz)) * q.w) * 2.0F - q.xyz, q.w));
 }
 
 Point3D Terathon::Transform(const Point3D& q, const Flector3D& F)

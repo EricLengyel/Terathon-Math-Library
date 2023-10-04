@@ -11,10 +11,6 @@
 #define TSMath_h
 
 
-//# \component	Math Library
-//# \prefix		Math/
-
-
 #ifndef TERATHON_NO_SIMD
 
 	#include "TSSimd.h"
@@ -28,6 +24,8 @@
 
 #define TERATHON_MATH 1
 
+
+/// @brief Terathon math and container namespace.
 
 namespace Terathon
 {

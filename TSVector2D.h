@@ -29,143 +29,9 @@ namespace Terathon
 	struct ConstVector2D;
 
 
-	//# \class	Vector2D	Encapsulates a 2D vector.
-	//
-	//# The $Vector2D$ class encapsulates a 2D vector.
-	//
-	//# \def	class Vector2D : public Vec2D<TypeVector2D>
-	//
-	//# \ctor	Vector2D();
-	//# \ctor	Vector2D(float a, float b);
-	//# \ctor	template <typename type> explicit Vector2D(const Vec2D<type>& v);
-	//
-	//# \param	a	The value of the <i>x</i> coordinate.
-	//# \param	b	The value of the <i>y</i> coordinate.
-	//# \param	v	Another 2D vector, possibly with a different component type, that is converted to a $Vector2D$.
-	//
-	//# \desc
-	//# The $Vector2D$ class is used to store a two-dimensional direction vector
-	//# having floating-point components <i>x</i> and <i>y</i>. A direction vector
-	//# stored in this class is assumed to have a <i>w</i> coordinate of 0 whenever it needs
-	//# to be converted to a four-dimensional representation. Two-dimensional points
-	//# (for which the <i>w</i> coordinate is 1) should be stored using the $@Point2D@$ class.
-	//# The <i>z</i> coordinate of a 2D vector is always assumed to be 0.
-	//#
-	//# The default constructor leaves the components of the vector undefined.
-	//# If the values $a$ and $b$ are supplied, then they are assigned to the
-	//# <i>x</i> and <i>y</i> coordinates of the vector, respectively.
-	//
-	//# \operator	float& operator [](machine k);
-	//#				Returns a reference to the $k$-th scalar component of a vector.
-	//#				The value of $k$ must be 0 or 1.
-	//
-	//# \operator	const float& operator [](machine k) const;
-	//#				Returns a constant reference to the $k$-th scalar component of a vector.
-	//#				The value of $k$ must be 0 or 1.
-	//
-	//# \operator	Vector2D& operator +=(const Vector2D& v);
-	//#				Adds the vector $v$.
-	//
-	//# \operator	Vector2D& operator -=(const Vector2D& v);
-	//#				Subtracts the vector $v$.
-	//
-	//# \operator	Vector2D& operator *=(const Vector2D& v);
-	//#				Calculates the componentwise product with the vector $v$.
-	//
-	//# \operator	Vector2D& operator *=(float n);
-	//#				Multiplies by the scalar $n$.
-	//
-	//# \operator	Vector2D& operator /=(float n);
-	//#				Divides by the scalar $n$.
-	//
-	//# \action		bool operator ==(const Vector2D& v1, const Vector2D& v2) const;
-	//#				Returns a boolean value indicating whether the two vectors $v1$ and $v2$ are equal.
-	//
-	//# \action		bool operator !=(const Vector2D& v1, const Vector2D& v2) const;
-	//#				Returns a boolean value indicating whether the two vectors $v1$ and $v2$ are not equal.
-	//
-	//# \action		Vector2D operator -(const Vector2D& v) const;
-	//#				Returns the negation of the vector $v$.
-	//
-	//# \action		Vector2D operator +(const Vector2D& a, const Vector2D& b) const;
-	//#				Returns the sum of the vectors $a$ and $b$.
-	//
-	//# \action		Vector2D operator -(const Vector2D& a, const Vector2D& b) const;
-	//#				Returns the difference of the vectors $a$ and $b$.
-	//
-	//# \action		Vector2D operator *(const Vector2D& v, float n) const;
-	//#				Returns the product of the vector $v$ and the scalar $n$.
-	//
-	//# \action		Vector2D operator *(float n, const Vector2D& v);
-	//#				Returns the product of the vector $v$ and the scalar $n$.
-	//
-	//# \action		Vector2D operator /(const Vector2D& v, float n) const;
-	//#				Returns the product of the vector $v$ and the inverse of the scalar $n$.
-	//
-	//# \action		Vector2D operator *(const Vector2D& a, const Vector2D& b) const;
-	//#				Returns the componentwise product of the vectors $a$ and $b$.
-	//
-	//# \action		float Magnitude(const Vector2D& v);
-	//#				Returns the magnitude of the vector $v$.
-	//
-	//# \action		float InverseMag(const Vector2D& v);
-	//#				Returns the inverse magnitude of the vector $v$.
-	//
-	//# \action		float SquaredMag(const Vector2D& v);
-	//#				Returns the squared magnitude of the vector $v$.
-	//
-	//# \action		float Dot(const Vector2D& a, const Vector2D& b);
-	//#				Returns the dot product between $a$ and $b$.
-	//
-	//# \action		Vector2D Project(const Vector2D& a, const Vector2D& b);
-	//#				Returns (<b>a</b>&#x202F;&sdot;&#x202F;<b>b</b>)<b>b</b>, which is the projection of $a$ onto $b$ under the assumption that the magnitude of $b$ is one.
-	//
-	//# \action		Vector2D Reject(const Vector2D& a, const Vector2D& b);
-	//#				Returns <b>a</b>&#x202F;&minus;&#x202F;(<b>a</b>&#x202F;&sdot;&#x202F;<b>b</b>)<b>b</b>, which is the rejection of $a$ from $b$ under the assumption that the magnitude of $b$ is one.
-	//
-	//# \privbase	Vec2D	Vectors use a generic base class to store their components.
-	//
-	//# \also	$@Point2D@$
-	//# \also	$@Vector4D@$
-
-
-	//# \function	Vector2D::Set		Sets both components of a vector.
-	//
-	//# \proto	Vector2D& Set(float a, float b);
-	//
-	//# \param	a	The new <i>x</i> coordinate.
-	//# \param	b	The new <i>y</i> coordinate.
-	//
-	//# \desc
-	//# The $Set$ function sets the <i>x</i> and <i>y</i> coordinates of a vector to
-	//# the values given by the $a$ and $b$ parameters, respectively.
-	//#
-	//# The return value is a reference to the vector object.
-
-
-	//# \function	Vector2D::Normalize		Normalizes a 2D vector.
-	//
-	//# \proto	Vector2D& Normalize(void);
-	//
-	//# \desc
-	//# The $Normalize$ function multiplies a 2D vector by the inverse of its magnitude,
-	//# normalizing it to unit length. Normalizing the zero vector produces undefined results.
-	//#
-	//# The return value is a reference to the vector object.
-
-
-	//# \function	Vector2D::Rotate		Rotates a vector in the <i>x</i>-<i>y</i> plane.
-	//
-	//# \proto	Vector2D& Rotate(float angle);
-	//
-	//# \param	angle	The angle through which the vector is rotated, in radians.
-	//
-	//# \desc
-	//# The $Rotate$ function rotates a vector in the <i>x</i>-<i>y</i> plane through the
-	//# angle given by the $angle$ parameter.
-	//#
-	//# The return value is a reference to the vector object.
-
+	// ==============================================
+	//	Vector2D
+	// ==============================================
 
 	struct TypeVector2D
 	{
@@ -173,6 +39,18 @@ namespace Terathon
 		typedef Vector2D vector2D_type;
 	};
 
+
+	/// @brief Encapsulates a 2D vector.
+	///
+	/// The \c Vector2D class is used to store a two-dimensional direction vector having floating-point
+	/// components <i>x</i> and <i>y</i>. A direction vector stored in this class is assumed to have a
+	/// <i>w</i> coordinate of 0 whenever it needs to be converted to a four-dimensional representation.
+	/// Two-dimensional points (for which the <i>w</i> coordinate is 1) should be stored using the
+	/// \c Point2D class. The <i>z</i> coordinate of a 2D vector is always assumed to be 0.
+	///
+	/// @sa Point2D
+	/// @sa Vector3D
+	/// @sa Vector4D
 
 	class Vector2D : public Vec2D<TypeVector2D>
 	{
@@ -186,12 +64,20 @@ namespace Terathon
 			TERATHON_API static const ConstVector2D minus_x_unit;
 			TERATHON_API static const ConstVector2D minus_y_unit;
 
+			/// @brief Default constructor that leaves the components uninitialized.
+
 			inline Vector2D() = default;
+
+			/// @brief Constructor that sets components explicitly.
+			/// @param a,b		The components of the vector.
 
 			Vector2D(float a, float b) : Vec2D<TypeVector2D>(a, b) {}
 
 			template <typename type>
 			explicit Vector2D(const Vec2D<type>& v) : Vec2D<TypeVector2D>(float(v.x), float(v.y)) {}
+
+			/// @brief Sets both components of a 2D vector.
+			/// @param a,b		The new components of the vector.
 
 			Vector2D& Set(float a, float b)
 			{
@@ -292,19 +178,15 @@ namespace Terathon
 				return (static_cast<Vector2D&>(xy.Normalize()));
 			}
 
+			/// @brief Rotates the vector in the <i>x</i>-<i>y</i> plane through the
+			/// angle, in radians, given by the \c angle parameter.
+
 			TERATHON_API Vector2D& Rotate(float angle);
 	};
 
 
-	inline Vector2D Complement(const Vector2D& v)
-	{
-		return (Vector2D(-v.y, v.x));
-	}
-
-	inline Vector2D operator !(const Vector2D& v)
-	{
-		return (Complement(v));
-	}
+	/// @brief Returns the negation of the 2D vector \c v.
+	/// @related Vector2D
 
 	inline Vector2D operator -(const Vector2D& v)
 	{
@@ -333,15 +215,24 @@ namespace Terathon
 		return (Vector2D(a.x - b.data[index_x], a.y - b.data[index_y]));
 	}
 
+	/// @brief Returns the product of the 2D vector \c v and the scalar \c n.
+	/// @related Vector2D
+
 	inline Vector2D operator *(const Vector2D& v, float n)
 	{
 		return (Vector2D(v.x * n, v.y * n));
 	}
 
+	/// @brief Returns the product of the 2D vector \c v and the scalar \c n.
+	/// @related Vector2D
+
 	inline Vector2D operator *(float n, const Vector2D& v)
 	{
 		return (Vector2D(n * v.x, n * v.y));
 	}
+
+	/// @brief Returns the product of the 2D vector \c v and the inverse of the scalar \c n.
+	/// @related Vector2D
 
 	inline Vector2D operator /(const Vector2D& v, float n)
 	{
@@ -349,139 +240,31 @@ namespace Terathon
 		return (Vector2D(v.x * n, v.y * n));
 	}
 
+	/// @brief Returns the componentwise product of the 2D vectors \c a and \c b.
+	/// @related Vector2D
+
 	inline Vector2D operator *(const Vector2D& a, const Vector2D& b)
 	{
 		return (Vector2D(a.x * b.x, a.y * b.y));
 	}
 
-	inline float operator ^(const Vector2D& a, const Vector2D& b)
-	{
-		return (a.x * b.y - a.y * b.x);
-	}
 
-	inline float Magnitude(const Vector2D& v)
-	{
-		return (Sqrt(v.x * v.x + v.y * v.y));
-	}
+	// ==============================================
+	//	Point2D
+	// ==============================================
 
-	inline float InverseMag(const Vector2D& v)
-	{
-		return (InverseSqrt(v.x * v.x + v.y * v.y));
-	}
-
-	inline float SquaredMag(const Vector2D& v)
-	{
-		return (v.x * v.x + v.y * v.y);
-	}
-
-	inline Vector2D Normalize(const Vector2D& v)
-	{
-		return (v * InverseMag(v));
-	}
-
-	inline float Antiwedge(const Vector2D& a, const Vector2D& b)
-	{
-		return (a.x * b.y - a.y * b.x);
-	}
-
-	inline float Dot(const Vector2D& a, const Vector2D& b)
-	{
-		return (a.x * b.x + a.y * b.y);
-	}
-
-	inline Vector2D Project(const Vector2D& a, const Vector2D& b)
-	{
-		return (b * Dot(a, b));
-	}
-
-	inline Vector2D Reject(const Vector2D& a, const Vector2D& b)
-	{
-		return (a - b * Dot(a, b));
-	}
-
-	inline Vector2D Floor(const Vector2D& v)
-	{
-		return (Vector2D(Floor(v.x), Floor(v.y)));
-	}
-
-	inline Vector2D Ceil(const Vector2D& v)
-	{
-		return (Vector2D(Ceil(v.x), Ceil(v.y)));
-	}
-
-
-	//# \class	Point2D		Encapsulates a 2D point.
-	//
-	//# The $Point2D$ class encapsulates a 2D point.
-	//
-	//# \def	class Point2D : public Vector2D
-	//
-	//# \ctor	Point2D();
-	//# \ctor	Point2D(float a, float b);
-	//
-	//# \param	a	The value of the <i>x</i> coordinate.
-	//# \param	b	The value of the <i>y</i> coordinate.
-	//
-	//# \desc
-	//# The $Point2D$ class is used to store a two-dimensional point having floating-point
-	//# coordinates <i>x</i> and <i>y</i>. The difference between a point and a
-	//# vector is that a point is assumed to have a <i>w</i> coordinate of 1 whenever it
-	//# needs to be converted to a four-dimensional representation, whereas a vector is
-	//# assumed to have a <i>w</i> coordinate of 0. Such a conversion occurs when a vector or
-	//# point is assigned to a $@Vector4D@$ object or is multiplied by a $@Transform4D@$ object.
-	//#
-	//# The default constructor leaves the components of the vector undefined.
-	//# If the values $a$ and $b$ are supplied, then they are assigned to the
-	//# <i>x</i> and <i>y</i> coordinates of the base vector object, respectively.
-	//#
-	//# The difference between two points produces a direction vector. A two-dimensional
-	//# direction vector is converted to a point by adding it to the identifier $Zero2D$.
-	//
-	//# \operator	Point2D& operator *=(float n);
-	//#				Multiplies by the scalar $n$.
-	//
-	//# \operator	Point2D& operator /=(float n);
-	//#				Divides by the scalar $n$.
-	//
-	//# \action		Point2D operator -(const Point2D& p);
-	//#				Returns the negation of the point $p$.
-	//
-	//# \action		Point2D operator +(const Point2D& a, const Point2D& b);
-	//#				Returns the sum of the points $a$ and $b$.
-	//
-	//# \action		Point2D operator +(const Point2D& p, const Vector2D& v);
-	//#				Returns the sum of the point $p$ and the vector $v$.
-	//
-	//# \action		Point2D operator -(const Point2D& p, const Vector2D& v);
-	//#				Returns the difference of the point $p$ and the vector $v$.
-	//
-	//# \action		Vector2D operator -(const Point2D& a, const Point2D& b);
-	//#				Returns the difference of the points $a$ and $b$.
-	//
-	//# \action		Point2D operator *(const Point2D& p, float n);
-	//#				Returns the product of the point $p$ and the scalar $n$.
-	//
-	//# \action		Point2D operator *(float n, const Point2D& p);
-	//#				Returns the product of the point $p$ and the scalar $n$.
-	//
-	//# \action		Point2D operator /(const Point2D& p, float n) const;
-	//#				Returns the product of the point $p$ and the inverse of the scalar $n$.
-	//
-	//# \action		Point2D operator *(const Point2D& a, const Point2D& b);
-	//#				Returns the componentwise product of the points $a$ and $b$.
-	//
-	//# \action		Point2D operator *(const Point2D& p, const Vector2D& v);
-	//#				Returns the componentwise product of the point $p$ and the vector $v$.
-	//
-	//# \action		Point2D operator *(const Vector2D& v, const Point2D& p);
-	//#				Returns the componentwise product of the vector $v$ and the point $p$.
-	//
-	//# \base	Vector2D	A $Point2D$ object behaves much like a $@Vector2D@$ object, but some
-	//#						properties are altered.
-	//
-	//# \also	$@Vector2D@$
-	//# \also	$@Vector4D@$
-
+	/// @brief Encapsulates a 2D point.
+	///
+	/// The \c Point2D class is used to store a two-dimensional point having floating-point
+	/// coordinates <i>x</i> and <i>y</i>. The difference between a point and a vector is that
+	/// a point is assumed to have a <i>w</i> coordinate of 1 whenever it needs to be converted
+	/// to a four-dimensional representation, whereas a vector is assumed to have a <i>w</i>
+	/// coordinate of 0. Such a conversion occurs when a vector or point is assigned to a
+	/// \c Vector4D object or is multiplied by a \c Transform3D object.
+	///
+	/// @sa Vector2D
+	/// @sa Vector3D
+	/// @sa Vector4D
 
 	class Point2D : public Vector2D
 	{
@@ -489,9 +272,15 @@ namespace Terathon
 
 			TERATHON_API static const Origin2D origin;
 
+			/// @brief Default constructor that leaves the components uninitialized.
+
 			inline Point2D() = default;
 
+			/// @brief Constructor that sets components explicitly.
+			/// @param a,b		The components of the point.
+
 			Point2D(float a, float b) : Vector2D(a, b) {}
+
 			explicit Point2D(const Vector2D& p) : Vector2D(p) {}
 
 			Point2D& operator =(const Vector2D& v)
@@ -545,6 +334,9 @@ namespace Terathon
 	};
 
 
+	/// @brief Returns the negation of the 2D point \c p.
+	/// @related Point2D
+
 	inline Point2D operator -(const Point2D& p)
 	{
 		return (Point2D(-p.x, -p.y));
@@ -587,21 +379,33 @@ namespace Terathon
 		return (Point2D(p.x - v.data[index_x], p.y - v.data[index_y]));
 	}
 
+	/// @brief Returns the product of the 2D point \c p and the scalar \c n.
+	/// @related Point2D
+
 	inline Point2D operator *(const Point2D& p, float n)
 	{
 		return (Point2D(p.x * n, p.y * n));
 	}
+
+	/// @brief Returns the product of the 2D point \c p and the scalar \c n.
+	/// @related Point2D
 
 	inline Point2D operator *(float n, const Point2D& p)
 	{
 		return (Point2D(n * p.x, n * p.y));
 	}
 
+	/// @brief Returns the product of the 2D point \c p and the inverse of the scalar \c n.
+	/// @related Point2D
+
 	inline Point2D operator /(const Point2D& p, float n)
 	{
 		n = 1.0F / n;
 		return (Point2D(p.x * n, p.y * n));
 	}
+
+	/// @brief Returns the componentwise product of the 2D points \c a and \c b.
+	/// @related Point2D
 
 	inline Point2D operator *(const Point2D& a, const Point2D& b)
 	{
@@ -616,6 +420,60 @@ namespace Terathon
 	inline Point2D operator *(const Vector2D& v, const Point2D& p)
 	{
 		return (Point2D(v.x * p.x, v.y * p.y));
+	}
+
+
+	// ==============================================
+	//	Magnitude
+	// ==============================================
+
+	/// @brief Returns the magnitude of the 2D vector \c v.
+	/// @relatedalso Vector2D
+
+	inline float Magnitude(const Vector2D& v)
+	{
+		return (Sqrt(v.x * v.x + v.y * v.y));
+	}
+
+	/// @brief Returns the inverse magnitude of the 2D vector \c v.
+	/// @relatedalso Vector2D
+
+	inline float InverseMag(const Vector2D& v)
+	{
+		return (InverseSqrt(v.x * v.x + v.y * v.y));
+	}
+
+	/// @brief Returns the squared magnitude of the 2D vector \c v.
+	/// @relatedalso Vector2D
+
+	inline float SquaredMag(const Vector2D& v)
+	{
+		return (v.x * v.x + v.y * v.y);
+	}
+
+	/// @brief Calculates the normalized version of the 2D vector \c v.
+	///
+	/// Multiplies the 2D vector \c v by the inverse of its magnitude. The return value is a vector
+	/// having unit length that points in the same direction as \c v. If the magnitude of \c v is zero,
+	/// then the result is undefined.
+	///
+	/// @relatedalso Vector2D
+
+	inline Vector2D Normalize(const Vector2D& v)
+	{
+		return (v * InverseMag(v));
+	}
+
+	// ==============================================
+	//	Dot
+	// ==============================================
+
+	/// @brief Calculates the dot product of the 2D vectors \c a and \c b.
+	/// @relatedalso Vector2D
+
+	inline float Dot(const Vector2D& a, const Vector2D& b)
+	{
+		return (a.x * b.x + a.y * b.y);
 	}
 
 	inline float Dot(const Point2D& a, const Point2D& b)
@@ -633,6 +491,78 @@ namespace Terathon
 		return (v.x * p.x + v.y * p.y);
 	}
 
+	// ==============================================
+	//	Projection
+	// ==============================================
+
+	/// @brief Returns (<b>a</b>&#x202F;&sdot;&#x202F;<b>b</b>)<b>b</b>, which is the projection of \c a onto \c b under the assumption that the magnitude of \c b is one.
+	/// @relatedalso Vector2D
+
+	inline Vector2D Project(const Vector2D& a, const Vector2D& b)
+	{
+		return (b * Dot(a, b));
+	}
+
+	/// @brief Returns <b>a</b>&#x202F;&minus;&#x202F;(<b>a</b>&#x202F;&sdot;&#x202F;<b>b</b>)<b>b</b>, which is the rejection of \c a from \c b under the assumption that the magnitude of \c b is one.
+	/// @relatedalso Vector2D
+
+	inline Vector2D Reject(const Vector2D& a, const Vector2D& b)
+	{
+		return (a - b * Dot(a, b));
+	}
+
+	// ==============================================
+	//	Floor / ceiling
+	// ==============================================
+
+	/// @brief Returns the componentwise floor of the 2D vector \c v.
+	/// @related Vector2D
+
+	inline Vector2D Floor(const Vector2D& v)
+	{
+		return (Vector2D(Floor(v.x), Floor(v.y)));
+	}
+
+	/// @brief Returns the componentwise ceiling of the 2D vector \c v.
+	/// @related Vector2D
+
+	inline Vector2D Ceil(const Vector2D& v)
+	{
+		return (Vector2D(Ceil(v.x), Ceil(v.y)));
+	}
+
+	// ==============================================
+	//	Complement
+	// ==============================================
+
+	/// @brief Calculates the complement of the 2D vector \c v with respect to the volume element <b>e</b><sub>12</sub>.
+	/// @relatedalso Vector2D
+
+	inline Vector2D Complement(const Vector2D& v)
+	{
+		return (Vector2D(-v.y, v.x));
+	}
+
+	inline auto operator !(const Vector2D& v) {return (Complement(v));}
+
+	// ==============================================
+	//	Wedge
+	// ==============================================
+
+	/// @brief Calculates the antiwedge product of the 2D vectors \c a and \c b.
+	/// @relatedalso Vector2D
+
+	inline float Antiwedge(const Vector2D& a, const Vector2D& b)
+	{
+		return (a.x * b.y - a.y * b.x);
+	}
+
+	inline auto operator ^(const Vector2D& a, const Vector2D& b) {return (Antiwedge(a, b));}
+
+
+	// ==============================================
+	//	POD Structures
+	// ==============================================
 
 	struct ConstVector2D
 	{

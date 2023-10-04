@@ -11,10 +11,6 @@
 #define TSQuaternion_h
 
 
-//# \component	Math Library
-//# \prefix		Math/
-
-
 #include "TSMatrix4D.h"
 
 
@@ -26,328 +22,9 @@ namespace Terathon
 	struct ConstQuaternion;
 
 
-	//# \class	Quaternion		Encapsulates a quaternion.
-	//
-	//# The $Quaternion$ class encapsulates a quaternion.
-	//
-	//# \def	class Quaternion
-	//
-	//# \data	Quaternion
-	//
-	//# \ctor	Quaternion();
-	//# \ctor	Quaternion(float a, float b, float c, float s);
-	//# \ctor	Quaternion(const Vector3D& v, float s);
-	//# \ctor	explicit Quaternion(const Vector3D& v);
-	//# \ctor	explicit Quaternion(float s);
-	//
-	//# \desc
-	//# The $Quaternion$ class encapsulates a Hamiltonian quaternion having the form
-	//# <i>xi</i>&#x202F;+&#x202F;<i>yj</i>&#x202F;+&#x202F;<i>zk</i>&#x202F;+&#x202F;<i>w</i>.
-	//#
-	//# The default constructor leaves the components of the quaternion undefined.
-	//# If the values $a$, $b$, $c$, and $s$ are supplied, then they are assigned to the
-	//# <i>x</i>, <i>y</i>, <i>z</i>, and <i>w</i> coordinates of the quaternion, respectively.
-	//# The components of $v$ are assigned to the imaginary components <i>x</i>, <i>y</i>, and
-	//# <i>z</i> of the quaternion, and the scalar $s$ is assigned to the real component <i>w</i>.
-	//# If a quaternion is constructed with only the $@Vector3D@$ object $v$, then the real
-	//# coordinate <i>w</i> is set to 0. If a quaternion is constructed with only the scalar $s$,
-	//# then the imaginary components <i>x</i>, <i>y</i>, and <i>z</i> are set to 0.
-	//#
-	//# When performing arithmetic with quaternions, 3D vectors are always treated as quaternions
-	//# with <i>w</i>&#x202F;=&#x202F;0, and scalars are always treated as quaternions with
-	//# <i>x</i>,<i>y</i>,<i>z</i>&#x202F;=&#x202F;0.
-	//
-	//# \operator	Quaternion& operator =(const Vector3D& v);
-	//#				Assigns the of $v$ to the imaginary components <i>x</i>, <i>y</i>,
-	//#				and <i>z</i> of the quaternion. The real component <i>w</i> is set to 0.
-	//
-	//# \operator	Quaternion& operator =(float s);
-	//#				Sets the real component <i>w</i> of the quaternion to $s$, and sets the
-	//#				imaginary components <i>x</i>, <i>y</i>, and <i>z</i> to 0.
-	//
-	//# \operator	Quaternion& operator +=(const Quaternion& q);
-	//#				Adds the quaternion $q$.
-	//
-	//# \operator	Quaternion& operator +=(const Vector3D& v);
-	//#				Adds the vector $v$.
-	//
-	//# \operator	Quaternion& operator +=(float s);
-	//#				Adds the scalar $s$.
-	//
-	//# \operator	Quaternion& operator -=(const Quaternion& q);
-	//#				Subtracts the quaternion $q$.
-	//
-	//# \operator	Quaternion& operator -=(const Vector3D& v);
-	//#				Subtracts the vector $v$.
-	//
-	//# \operator	Quaternion& operator -=(float s);
-	//#				Subtracts the scalar $s$.
-	//
-	//# \operator	Quaternion& operator *=(const Quaternion& q);
-	//#				Multiplies by the quaternion $q$.
-	//
-	//# \operator	Quaternion& operator *=(const Vector3D& v);
-	//#				Multiplies by the vector $v$.
-	//
-	//# \operator	Quaternion& operator *=(float s);
-	//#				Multiplies by the scalar $s$.
-	//
-	//# \operator	Quaternion& operator /=(const Quaternion& q);
-	//#				Multiplies by the inverse of the quaternion $q$.
-	//
-	//# \operator	Quaternion& operator /=(const Vector3D& v);
-	//#				Multiplies by the inverse of the vector $v$.
-	//
-	//# \operator	Quaternion& operator /=(float s);
-	//#				Multiplies by the inverse of the scalar $s$.
-	//
-	//# \action		bool operator ==(const Quaternion& q1, const Quaternion& q2);
-	//#				Returns a boolean value indicating whether the two quaternions $q1$ and $q2$ are equal.
-	//
-	//# \action		bool operator ==(const Quaternion& q, const Vector3D& v);
-	//#				Returns a boolean value indicating whether the quaternion $q$ and the vector $v$ are equal.
-	//
-	//# \action		bool operator ==(const Vector3D& v, const Quaternion& q);
-	//#				Returns a boolean value indicating whether the vector $v$ and the quaternion $q$ are equal.
-	//
-	//# \action		bool operator ==(const Quaternion& q, float s);
-	//#				Returns a boolean value indicating whether the quaternion $q$ and the scalar $s$ are equal.
-	//
-	//# \action		bool operator ==(float s, const Quaternion& q);
-	//#				Returns a boolean value indicating whether the scalar $a$ and the quaternion $q$ are equal.
-	//
-	//# \action		bool operator !=(const Quaternion& q1, const Quaternion& q2);
-	//#				Returns a boolean value indicating whether the two quaternions $q1$ and $q2$ are not equal.
-	//
-	//# \action		bool operator !=(const Quaternion& q, const Vector3D& v);
-	//#				Returns a boolean value indicating whether the quaternion $q$ and the vector $v$ are not equal.
-	//
-	//# \action		bool operator !=(const Vector3D& v, const Quaternion& q);
-	//#				Returns a boolean value indicating whether the vector $v$ and the quaternion $q$ are not equal.
-	//
-	//# \action		bool operator !=(const Quaternion& q, float s);
-	//#				Returns a boolean value indicating whether the quaternion $q$ and the scalar $s$ are not equal.
-	//
-	//# \action		bool operator !=(float s, const Quaternion& q);
-	//#				Returns a boolean value indicating whether the scalar $s$ and the quaternion $q$ are not equal.
-	//
-	//# \action		Quaternion operator -(const Quaternion& q);
-	//#				Returns the negation of the quaternion $q$.
-	//
-	//# \action		Quaternion operator +(const Quaternion& q1, const Quaternion& q2);
-	//#				Returns the sum of the quaternions $q1$ and $q2$.
-	//
-	//# \action		Quaternion operator +(const Quaternion& q, const Vector3D& v);
-	//#				Returns the sum of the quaternion $q$ and the vector $v$.
-	//
-	//# \action		Quaternion operator +(const Vector3D& v, const Quaternion& q);
-	//#				Returns the sum of the vector $v$ and the quaternion $q$.
-	//
-	//# \action		Quaternion operator +(const Quaternion& q, float s);
-	//#				Returns the sum of the quaternion $q$ and the scalar $s$.
-	//
-	//# \action		Quaternion operator +(float s, const Quaternion& q);
-	//#				Returns the sum of the scalar $s$ and the quaternion $q$.
-	//
-	//# \action		Quaternion operator -(const Quaternion& q1, const Quaternion& q2);
-	//#				Returns the difference of the quaternions $q1$ and $q2$.
-	//
-	//# \action		Quaternion operator -(const Quaternion& q, const Vector3D& v);
-	//#				Returns the difference of the quaternion $q$ and the vector $v$.
-	//
-	//# \action		Quaternion operator -(const Vector3D& v, const Quaternion& q);
-	//#				Returns the difference of the vector $v$ and the quaternion $q$.
-	//
-	//# \action		Quaternion operator -(const Quaternion& q, float s);
-	//#				Returns the difference of the quaternion $q$ and the scalar $s$.
-	//
-	//# \action		Quaternion operator -(float s, const Quaternion& q);
-	//#				Returns the difference of the scalar $s$ and the quaternion $q$.
-	//
-	//# \action		Quaternion operator *(const Quaternion& q1, const Quaternion& q2);
-	//#				Returns the product of the quaternions $q1$ and $q2$.
-	//
-	//# \action		Quaternion operator *(const Quaternion& q, const Vector3D& v);
-	//#				Returns the product of the quaternion $q$ and the vector $v$.
-	//
-	//# \action		Quaternion operator *(const Vector3D& v, const Quaternion& q);
-	//#				Returns the product of the vector $v$ and the quaternion $q$.
-	//
-	//# \action		Quaternion operator *(const Quaternion& q, float s);
-	//#				Returns the product of the quaternion $q$ and the scalar $s$.
-	//
-	//# \action		Quaternion operator *(float s, const Quaternion& q);
-	//#				Returns the product of the scalar $s$ and the quaternion $q$.
-	//
-	//# \action		Quaternion operator /(const Quaternion& q1, const Quaternion& q2);
-	//#				Returns the quotient of the quaternions $q1$ and $q2$.
-	//
-	//# \action		Quaternion operator /(const Quaternion& q, const Vector3D& v);
-	//#				Returns the quotient of the quaternion $q$ and of the vector $v$.
-	//
-	//# \action		Quaternion operator /(const Vector3D& v, const Quaternion& q);
-	//#				Returns the quotient of the vector $v$ and the quaternion $q$.
-	//
-	//# \action		Quaternion operator /(const Quaternion& q, float s);
-	//#				Returns the quotient of the quaternion $q$ and the scalar $s$.
-	//
-	//# \action		Quaternion operator /(float s, const Quaternion& q);
-	//#				Returns the quotient of the scalar $s$ and the quaternion $q$.
-	//
-	//# \action		float Magnitude(const Quaternion& q);
-	//#				Returns the magnitude of a quaternion.
-	//
-	//# \action		float SquaredMag(const Quaternion& q);
-	//#				Returns the squared magnitude of a quaternion.
-	//
-	//# \action		Quaternion Reverse(const Quaternion& q);
-	//#				Returns the reverse of a quaternion.
-	//
-	//# \action		Quaternion Inverse(const Quaternion& q);
-	//#				Returns the inverse of a quaternion.
-	//
-	//# \action		Vector3D Transform(const Vector3D& v, const Quaternion& q);
-	//#				Transforms the vector $v$ with the quaternion $q$.
-	//
-	//# \also	$@Vector3D@$
-	//# \also	$@Matrix3D@$
-	//# \also	$@Motor3D@$
-
-
-	//# \function	Quaternion::Set		Sets all four components of a quaternion.
-	//
-	//# \proto	Quaternion& Set(float a, float b, float c, float s);
-	//# \proto	Quaternion& Set(const Vector3D& v, float s);
-	//
-	//# \param	a	The new <i>x</i> coordinate.
-	//# \param	b	The new <i>y</i> coordinate.
-	//# \param	c	The new <i>z</i> coordinate.
-	//# \param	s	The new <i>w</i> coordinate.
-	//# \param	v	The new <i>x</i>, <i>y</i>, and <i>z</i> coordinates.
-	//
-	//# \desc
-	//# The $Set$ function sets the <i>x</i>, <i>y</i>, <i>z</i>, and <i>w</i> coordinates of
-	//# a quaternion to the values given by the $a$, $b$, $c$, and $s$ parameters, respectively.
-	//# If the parameters $v$ and $s$ are supplied, then the <i>x</i>, <i>y</i>, and <i>z</i>
-	//# coordinates are set to those of the vector $v$, and the <i>w</i> coordinate is set to
-	//# the value given by $s$.
-	//#
-	//# The return value is a reference to the quaternion object.
-
-
-	//# \function	Quaternion::Normalize		Normalizes a quaternion.
-	//
-	//# \proto	Quatnerion& Normalize(void);
-	//
-	//# \desc
-	//# The $Normalize$ function multiplies a quaternion by the inverse of its magnitude,
-	//# normalizing it to unit length. Normalizing the zero quaternion produces undefined results.
-	//#
-	//# The return value is a reference to the quaternion object.
-
-
-	//# \function	Quaternion::MakeRotationX		Returns a quaternion that represents a rotation about the <i>x</i> axis.
-	//
-	//# \proto	static Quaternion MakeRotationX(float angle);
-	//
-	//# \param	angle	The angle of rotation, in radians.
-	//
-	//# \desc
-	//# The $MakeRotationX$ function returns a quaternion representing the rotation through the angle given
-	//# by the $angle$ parameter about the <i>x</i> axis. The resulting quaternion has unit length.
-	//
-	//# \also	$@Quaternion::MakeRotationY@$
-	//# \also	$@Quaternion::MakeRotationZ@$
-	//# \also	$@Quaternion::MakeRotation@$
-	//# \also	$@Quaternion::GetRotationMatrix@$
-
-
-	//# \function	Quaternion::MakeRotationY		Returns a quaternion that represents a rotation about the <i>y</i> axis.
-	//
-	//# \proto	static Quaternion MakeRotationY(float angle);
-	//
-	//# \param	angle	The angle of rotation, in radians.
-	//
-	//# \desc
-	//# The $MakeRotationY$ function returns a quaternion representing the rotation through the angle given
-	//# by the $angle$ parameter about the <i>y</i> axis. The resulting quaternion has unit length.
-	//
-	//# \also	$@Quaternion::MakeRotationX@$
-	//# \also	$@Quaternion::MakeRotationZ@$
-	//# \also	$@Quaternion::MakeRotation@$
-	//# \also	$@Quaternion::GetRotationMatrix@$
-
-
-	//# \function	Quaternion::MakeRotationZ		Returns a quaternion that represents a rotation about the <i>z</i> axis.
-	//
-	//# \proto	static Quaternion MakeRotationZ(float angle);
-	//
-	//# \param	angle	The angle of rotation, in radians.
-	//
-	//# \desc
-	//# The $MakeRotationZ$ function returns a quaternion representing the rotation through the angle given
-	//# by the $angle$ parameter about the <i>z</i> axis. The resulting quaternion has unit length.
-	//
-	//# \also	$@Quaternion::MakeRotationX@$
-	//# \also	$@Quaternion::MakeRotationY@$
-	//# \also	$@Quaternion::MakeRotation@$
-	//# \also	$@Quaternion::GetRotationMatrix@$
-
-
-	//# \function	Quaternion::MakeRotation		Returns a quaternion that represents a rotation about a given axis.
-	//
-	//# \proto	static Quaternion MakeRotation(float angle, const Bivector3D& axis);
-	//
-	//# \param	angle	The angle of rotation, in radians.
-	//# \param	axis	The axis about which to rotate. This bivector must have unit magnitude.
-	//
-	//# \desc
-	//# The $MakeRotation$ function returns a quaternion representing a rotation through the angle
-	//# given by the $angle$ parameter about the axis given by the $axis$ parameter. The resulting
-	//# quaternion has unit length.
-	//
-	//# \also	$@Quaternion::MakeRotationX@$
-	//# \also	$@Quaternion::MakeRotationY@$
-	//# \also	$@Quaternion::MakeRotationZ@$
-	//# \also	$@Quaternion::GetRotationMatrix@$
-
-
-	//# \function	Quaternion::GetRotationMatrix		Converts a quaternion to a 3&#x202F;&times;&#x202F;3 matrix.
-	//
-	//# \proto	Matrix3D GetRotationMatrix(void) const;
-	//
-	//# \desc
-	//# The $GetRotationMatrix$ function converts a unit quaternion to a $@Matrix3D@$ object that
-	//# represents the same rotation when it premultiplies a $@Vector3D@$ object.
-	//
-	//# \also	$@Quaternion::SetRotationMatrix@$
-	//# \also	$@Quaternion::MakeRotationX@$
-	//# \also	$@Quaternion::MakeRotationY@$
-	//# \also	$@Quaternion::MakeRotationZ@$
-	//# \also	$@Quaternion::MakeRotation@$
-
-
-	//# \function	Quaternion::SetRotationMatrix		Converts a 3&#x202F;&times;&#x202F;3 matrix to a quaternion.
-	//
-	//# \proto	Quaternion& SetRotationMatrix(const Matrix3D& M);
-	//
-	//# \param	M		The matrix to convert to a quaternion.
-	//
-	//# \desc
-	//# The $SetRotationMatrix$ function sets the components of a quaternion to values that
-	//# represent the same rotation as the one represented by the matrix specified by the $M$ parameter.
-	//#
-	//# This function expects the matrix $M$ to be orthogonal and have a determinant of +1.
-	//# If these conditions are not met, then the results are unlikely to be meaningful.
-	//
-	//# \also	$@Quaternion::GetRotationMatrix@$
-	//# \also	$@Quaternion::MakeRotationX@$
-	//# \also	$@Quaternion::MakeRotationY@$
-	//# \also	$@Quaternion::MakeRotationZ@$
-	//# \also	$@Quaternion::MakeRotation@$
-
-
-	//# \member		Quaternion
+	// ==============================================
+	//	Quaternion
+	// ==============================================
 
 	struct TypeQuaternion
 	{
@@ -356,22 +33,35 @@ namespace Terathon
 	};
 
 
+	/// @brief Encapsulates a quaternion.
+	///
+	/// The \c Quaternion class encapsulates a Hamiltonian quaternion having the form
+	/// <i>xi</i>&#x202F;+&#x202F;<i>yj</i>&#x202F;+&#x202F;<i>zk</i>&#x202F;+&#x202F;<i>w</i>.
+	///
+	/// @sa Motor3D
+
 	class Quaternion
 	{
 		public:
 
 			union
 			{
-				Component<TypeQuaternion, 4, 0>					x;			//## The <i>x</i> coordinate of the bivector part.
-				Component<TypeQuaternion, 4, 1>					y;			//## The <i>y</i> coordinate of the bivector part.
-				Component<TypeQuaternion, 4, 2>					z;			//## The <i>z</i> coordinate of the bivector part.
-				Component<TypeQuaternion, 4, 3>					w;			//## The <i>w</i> coordinate, which is the scalar part.
-				Subvec3D<TypeQuaternion, true, 4, 0, 1, 2>		xyz;		//## The <i>x</i>, <i>y</i>, and <i>z</i> coordinates together as a single bivector.
+				Component<TypeQuaternion, 4, 0>					x;			///< The <i>x</i> coordinate of the bivector part.
+				Component<TypeQuaternion, 4, 1>					y;			///< The <i>y</i> coordinate of the bivector part.
+				Component<TypeQuaternion, 4, 2>					z;			///< The <i>z</i> coordinate of the bivector part.
+				Component<TypeQuaternion, 4, 3>					w;			///< The <i>w</i> coordinate, which is the scalar part.
+				Subvec3D<TypeQuaternion, true, 4, 0, 1, 2>		xyz;		///< The <i>x</i>, <i>y</i>, and <i>z</i> coordinates together as a single bivector.
 			};
 
 			TERATHON_API static const ConstQuaternion identity;
 
+			/// @brief Default constructor that leaves the components uninitialized.
+
 			inline Quaternion() = default;
+
+			/// @brief Constructor that sets components explicitly.
+			/// @param a,b,c	The components of the bivector part.
+			/// @param s		The scalar part.
 
 			Quaternion(float a, float b, float c, float s)
 			{
@@ -379,11 +69,18 @@ namespace Terathon
 				w = s;
 			}
 
+			/// @brief Constructor that sets components explicitly.
+			/// @param v		The bivector part.
+			/// @param s		The scalar part.
+
 			Quaternion(const Bivector3D& v, float s)
 			{
 				xyz = v;
 				w = s;
 			}
+
+			/// @brief Constructor that sets only the bivector part. The scalar part is set to zero.
+			/// @param v		The bivector part.
 
 			explicit Quaternion(const Bivector3D& v)
 			{
@@ -391,11 +88,18 @@ namespace Terathon
 				w = 0.0F;
 			}
 
+			/// @brief Constructor that sets only the scalar part. The bivector part is set to zero.
+			/// @param s		The scalar part.
+
 			explicit Quaternion(float s)
 			{
 				w = s;
 				xyz.Set(0.0F, 0.0F, 0.0F);
 			}
+
+			/// @brief Sets all four components of a quaternion.
+			/// @param a,b,c	The components of the bivector part.
+			/// @param s		The scalar part.
 
 			Quaternion& Set(float a, float b, float c, float s)
 			{
@@ -521,25 +225,51 @@ namespace Terathon
 				return (*this);
 			}
 
+			/// @brief Normalizes a quaternion.
+			///
+			/// The \c Normalize function multiplies a quaternion by the inverse of its magnitude,
+			/// normalizing it to unit length. Normalizing the zero quaternion produces undefined results.
+
 			Quaternion& Normalize(void)
 			{
 				return (*this *= InverseSqrt(SquaredMag(xyz) + w * w));
 			}
+
+			/// @brief Returns the direction to which the <i>x</i> axis is transformed by a quaternion.
+			///
+			/// The \c GetDirectionX() function calculates the 3D vector that results from transforming the direction vector
+			/// (1,&nbsp;0,&nbsp;0) with the quaternion for which it is called.
 
 			Vector3D GetDirectionX(void) const
 			{
 				return (Vector3D(1.0F - 2.0F * (y * y + z * z), 2.0F * (x * y + w * z), 2.0F * (x * z - w * y)));
 			}
 
+			/// @brief Returns the direction to which the <i>y</i> axis is transformed by a quaternion.
+			///
+			/// The \c GetDirectionY() function calculates the 3D vector that results from transforming the direction vector
+			/// (0,&nbsp;1,&nbsp;0) with the quaternion for which it is called.
+
 			Vector3D GetDirectionY(void) const
 			{
 				return (Vector3D(2.0F * (x * y - w * z), 1.0F - 2.0F * (x * x + z * z), 2.0F * (y * z + w * x)));
 			}
 
+			/// @brief Returns the direction to which the <i>z</i> axis is transformed by a quaternion.
+			///
+			/// The \c GetDirectionZ() function calculates the 3D vector that results from transforming the direction vector
+			/// (0,&nbsp;0,&nbsp;1) with the quaternion for which it is called.
+
 			Vector3D GetDirectionZ(void) const
 			{
 				return (Vector3D(2.0F * (x * z + w * y), 2.0F * (y * z - w * x), 1.0F - 2.0F * (x * x + y * y)));
 			}
+
+			/// @brief Returns a quaternion that represents a rotation about the <i>x</i> axis.
+			/// @param angle	The angle of rotation, in radians.
+			///
+			/// The \c MakeRotationX() function returns a quaternion representing the rotation through the angle given
+			/// by the \c angle parameter about the <i>x</i> axis. The resulting quaternion has unit length.
 
 			static Quaternion MakeRotationX(float angle)
 			{
@@ -547,11 +277,23 @@ namespace Terathon
 				return (Quaternion(v.y, 0.0F, 0.0F, v.x));
 			}
 
+			/// @brief Returns a quaternion that represents a rotation about the <i>y</i> axis.
+			/// @param angle	The angle of rotation, in radians.
+			///
+			/// The \c MakeRotationY() function returns a quaternion representing the rotation through the angle given
+			/// by the \c angle parameter about the <i>y</i> axis. The resulting quaternion has unit length.
+
 			static Quaternion MakeRotationY(float angle)
 			{
 				Vector2D v = CosSin(angle * 0.5F);
 				return (Quaternion(0.0F, v.y, 0.0F, v.x));
 			}
+
+			/// @brief Returns a quaternion that represents a rotation about the <i>z</i> axis.
+			/// @param angle	The angle of rotation, in radians.
+			///
+			/// The \c MakeRotationZ() function returns a quaternion representing the rotation through the angle given
+			/// by the \c angle parameter about the <i>z</i> axis. The resulting quaternion has unit length.
 
 			static Quaternion MakeRotationZ(float angle)
 			{
@@ -559,23 +301,52 @@ namespace Terathon
 				return (Quaternion(0.0F, 0.0F, v.y, v.x));
 			}
 
+			/// @brief Returns a quaternion that represents a rotation about a given axis.
+			/// @param angle	The angle of rotation, in radians.
+			/// @param axis		The axis about which to rotate. This bivector must have unit magnitude.
+			///
+			/// The \c MakeRotation() function returns a quaternion representing a rotation through the angle
+			/// given by the \c angle parameter about the axis given by the \c axis parameter. The resulting
+			/// quaternion has unit length.
+
 			static Quaternion MakeRotation(float angle, const Bivector3D& axis)
 			{
 				Vector2D v = CosSin(angle * 0.5F);
 				return (Quaternion(axis * v.y, v.x));
 			}
 
+			/// @brief Converts a quaternion to a 3&#x202F;&times;&#x202F;3 matrix.
+			///
+			/// The \c GetRotationMatrix() function converts a unit quaternion to a Matrix3D object that
+			/// represents the same rotation when it premultiplies a Vector3D object.
+
 			TERATHON_API Matrix3D GetRotationMatrix(void) const;
+
+			/// @brief Converts a 3&#x202F;&times;&#x202F;3 matrix to a quaternion.
+			/// @tparam matrix	Can be Matrix3D or Transform3D.
+			/// @param M		The matrix to convert to a quaternion.
+			///
+			/// The \c SetRotationMatrix() function sets the components of a quaternion to values that
+			/// represent the same rotation as the one represented by the matrix specified by the \c M parameter.
+			///
+			/// This function expects the matrix \c M to be orthogonal and have a determinant of +1.
+			/// If these conditions are not met, then the results are unlikely to be meaningful.
 
 			template <class matrix>
 			TERATHON_API Quaternion& SetRotationMatrix(const matrix& M);
 	};
 
 
+	/// @brief Returns the negation of the quaternion \c q.
+	/// @related Quaternion
+
 	inline Quaternion operator -(const Quaternion& q)
 	{
 		return (Quaternion(-q.xyz, -q.w));
 	}
+
+	/// @brief Returns the sum of the quaternions \c q1 and \c q2.
+	/// @related Quaternion
 
 	inline Quaternion operator +(const Quaternion& q1, const Quaternion& q2)
 	{
@@ -601,6 +372,9 @@ namespace Terathon
 	{
 		return (Quaternion(q.xyz, s + q.w));
 	}
+
+	/// @brief Returns the difference of the quaternions \c q1 and \c q2.
+	/// @related Quaternion
 
 	inline Quaternion operator -(const Quaternion& q1, const Quaternion& q2)
 	{
@@ -643,6 +417,9 @@ namespace Terathon
 		return (Quaternion(q.xyz * s, q.w * s));
 	}
 
+	/// @brief Returns a boolean value indicating whether the two quaternions \c q1 and \c q2 are equal.
+	/// @related Quaternion
+
 	inline bool operator ==(const Quaternion& q1, const Quaternion& q2)
 	{
 		return ((q1.xyz == q2.xyz) && (q1.w == q2.w));
@@ -667,6 +444,9 @@ namespace Terathon
 	{
 		return ((q.w == s) && (q.x == 0.0F) && (q.y == 0.0F) && (q.z == 0.0F));
 	}
+
+	/// @brief Returns a boolean value indicating whether the two quaternions \c q1 and \c q2 are not equal.
+	/// @related Quaternion
 
 	inline bool operator !=(const Quaternion& q1, const Quaternion& q2)
 	{
@@ -693,25 +473,52 @@ namespace Terathon
 		return ((q.w != s) || (q.x != 0.0F) || (q.y != 0.0F) || (q.z != 0.0F));
 	}
 
+	// ==============================================
+	//	Magnitude
+	// ==============================================
+
+	/// @brief Returns the magnitude of a quaternion.
+	/// @relatedalso Quaternion
+
 	inline float Magnitude(const Quaternion& q)
 	{
 		return (Sqrt(SquaredMag(q.xyz) + q.w * q.w));
 	}
+
+	/// @brief Returns the inverse magnitude of a quaternion.
+	/// @relatedalso Quaternion
 
 	inline float InverseMag(const Quaternion& q)
 	{
 		return (InverseSqrt(SquaredMag(q.xyz) + q.w * q.w));
 	}
 
+	/// @brief Returns the squared magnitude of a quaternion.
+	/// @relatedalso Quaternion
+
 	inline float SquaredMag(const Quaternion& q)
 	{
 		return (SquaredMag(q.xyz) + q.w * q.w);
 	}
 
+	// ==============================================
+	//	Reverse
+	// ==============================================
+
+	/// @brief Returns the reverse of a quaternion, also known as its conjugate.
+	/// @relatedalso Quaternion
+
 	inline Quaternion Reverse(const Quaternion& q)
 	{
 		return (Quaternion(-q.xyz, q.w));
 	}
+
+	// ==============================================
+	//	Inverse
+	// ==============================================
+
+	/// @brief Returns the inverse of a quaternion.
+	/// @relatedalso Quaternion
 
 	inline Quaternion Inverse(const Quaternion& q)
 	{
@@ -733,25 +540,47 @@ namespace Terathon
 		return (s * Inverse(q));
 	}
 
+	// ==============================================
+	//	Dot product
+	// ==============================================
+
+	/// @brief Returns the dot product of the quaternions \c q1 and \c q2.
+	/// @related Quaternion
+
 	inline float Dot(const Quaternion& q1, const Quaternion& q2)
 	{
 		return (Dot(q1.xyz, q2.xyz) + q1.w * q2.w);
 	}
 
+	// ==============================================
+	//	Geometric product
+	// ==============================================
+
+	/// @brief Returns the geometric product of the quaternions \c q1 and \c q2.
+	/// @related Quaternion
 
 	TERATHON_API Quaternion operator *(const Quaternion& q1, const Quaternion& q2);
-	TERATHON_API Quaternion operator *(const Quaternion& q, const Bivector3D& v);
 
+	/// @brief Returns the geometric product of the quaternion \c q and bivector \c v.
+	/// @related Quaternion
+
+	TERATHON_API Quaternion operator *(const Quaternion& q, const Bivector3D& v);
 
 	inline Quaternion operator *(const Bivector3D& v, const Quaternion& q)
 	{
 		return (Quaternion(v) * q);
 	}
 
+	/// @brief Returns the geometric product of the quaternion \c q1 and the inverse of the quaternion \c q2.
+	/// @related Quaternion
+
 	inline Quaternion operator /(const Quaternion& q1, const Quaternion& q2)
 	{
 		return (q1 * Inverse(q2));
 	}
+
+	/// @brief Returns the geometric product of the quaternion \c q and the inverse of the bivector \c v.
+	/// @related Quaternion
 
 	inline Quaternion operator /(const Quaternion& q, const Bivector3D& v)
 	{
@@ -763,10 +592,28 @@ namespace Terathon
 		return (Quaternion(v) * Inverse(q));
 	}
 
+	// ==============================================
+	//	Square root
+	// ==============================================
+
+	/// @brief Returns the square root of a quaternion.
+	/// @relatedalso Quaternion
 
 	TERATHON_API Quaternion Sqrt(const Quaternion& q);
+
+	// ==============================================
+	//	Transformation
+	// ==============================================
+
+	/// @brief Transforms the 3D vector \c v with the quaternion \c q.
+	/// @relatedalso Quaternion
+
 	TERATHON_API Vector3D Transform(const Vector3D& v, const Quaternion& q);
 
+
+	// ==============================================
+	//	POD Structures
+	// ==============================================
 
 	struct ConstQuaternion
 	{

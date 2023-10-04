@@ -13,7 +13,8 @@
 using namespace Terathon;
 
 
-const ConstTransform4D Transform4D::identity = {{{1.0F, 0.0F, 0.0F, 0.0F}, {0.0F, 1.0F, 0.0F, 0.0F}, {0.0F, 0.0F, 1.0F, 0.0F}, {0.0F, 0.0F, 0.0F, 1.0F}}};
+const ConstMatrix4D Matrix4D::identity = {{{1.0F, 0.0F, 0.0F, 0.0F}, {0.0F, 1.0F, 0.0F, 0.0F}, {0.0F, 0.0F, 1.0F, 0.0F}, {0.0F, 0.0F, 0.0F, 1.0F}}};
+const ConstTransform3D Transform3D::identity = {{{1.0F, 0.0F, 0.0F, 0.0F}, {0.0F, 1.0F, 0.0F, 0.0F}, {0.0F, 0.0F, 1.0F, 0.0F}, {0.0F, 0.0F, 0.0F, 1.0F}}};
 
 
 Matrix4D::Matrix4D(float n00, float n01, float n02, float n03, float n10, float n11, float n12, float n13, float n20, float n21, float n22, float n23, float n30, float n31, float n32, float n33) : Mat4D<TypeMatrix4D>(n00, n01, n02, n03, n10, n11, n12, n13, n20, n21, n22, n23, n30, n31, n32, n33)
@@ -28,12 +29,12 @@ Matrix4D::Matrix4D(const Vector4D& a, const Vector4D& b, const Vector4D& c, cons
 	col3 = d;
 }
 
-Matrix4D::Matrix4D(const Bivector3D& a, float n03, const Bivector3D& b, float n13, const Bivector3D& c, float n23, const Bivector3D& d, float n33)
+Matrix4D::Matrix4D(const Bivector3D& r0, float n03, const Bivector3D& r1, float n13, const Bivector3D& r2, float n23, const Bivector3D& r3, float n33)
 {
-	row0.Set(a.x, a.y, a.z, n03);
-	row1.Set(b.x, b.y, b.z, n13);
-	row2.Set(c.x, c.y, c.z, n23);
-	row3.Set(d.x, d.y, d.z, n33);
+	row0.Set(r0.x, r0.y, r0.z, n03);
+	row1.Set(r1.x, r1.y, r1.z, n13);
+	row2.Set(r2.x, r2.y, r2.z, n23);
+	row3.Set(r3.x, r3.y, r3.z, n33);
 }
 
 Matrix4D& Matrix4D::Set(float n00, float n01, float n02, float n03, float n10, float n11, float n12, float n13, float n20, float n21, float n22, float n23, float n30, float n31, float n32, float n33)
@@ -136,85 +137,85 @@ Matrix4D& Matrix4D::SetIdentity(void)
 Matrix4D Terathon::operator *(const Matrix4D& m1, const Matrix3D& m2)
 {
 	return (Matrix4D(m1(0,0) * m2(0,0) + m1(0,1) * m2(1,0) + m1(0,2) * m2(2,0),
-					 m1(0,0) * m2(0,1) + m1(0,1) * m2(1,1) + m1(0,2) * m2(2,1),
-					 m1(0,0) * m2(0,2) + m1(0,1) * m2(1,2) + m1(0,2) * m2(2,2),
-					 m1(0,3),
-					 m1(1,0) * m2(0,0) + m1(1,1) * m2(1,0) + m1(1,2) * m2(2,0),
-					 m1(1,0) * m2(0,1) + m1(1,1) * m2(1,1) + m1(1,2) * m2(2,1),
-					 m1(1,0) * m2(0,2) + m1(1,1) * m2(1,2) + m1(1,2) * m2(2,2),
-					 m1(1,3),
-					 m1(2,0) * m2(0,0) + m1(2,1) * m2(1,0) + m1(2,2) * m2(2,0),
-					 m1(2,0) * m2(0,1) + m1(2,1) * m2(1,1) + m1(2,2) * m2(2,1),
-					 m1(2,0) * m2(0,2) + m1(2,1) * m2(1,2) + m1(2,2) * m2(2,2),
-					 m1(2,3),
-					 m1(3,0) * m2(0,0) + m1(3,1) * m2(1,0) + m1(3,2) * m2(2,0),
-					 m1(3,0) * m2(0,1) + m1(3,1) * m2(1,1) + m1(3,2) * m2(2,1),
-					 m1(3,0) * m2(0,2) + m1(3,1) * m2(1,2) + m1(3,2) * m2(2,2),
-					 m1(3,3)));
+	                 m1(0,0) * m2(0,1) + m1(0,1) * m2(1,1) + m1(0,2) * m2(2,1),
+	                 m1(0,0) * m2(0,2) + m1(0,1) * m2(1,2) + m1(0,2) * m2(2,2),
+	                 m1(0,3),
+	                 m1(1,0) * m2(0,0) + m1(1,1) * m2(1,0) + m1(1,2) * m2(2,0),
+	                 m1(1,0) * m2(0,1) + m1(1,1) * m2(1,1) + m1(1,2) * m2(2,1),
+	                 m1(1,0) * m2(0,2) + m1(1,1) * m2(1,2) + m1(1,2) * m2(2,2),
+	                 m1(1,3),
+	                 m1(2,0) * m2(0,0) + m1(2,1) * m2(1,0) + m1(2,2) * m2(2,0),
+	                 m1(2,0) * m2(0,1) + m1(2,1) * m2(1,1) + m1(2,2) * m2(2,1),
+	                 m1(2,0) * m2(0,2) + m1(2,1) * m2(1,2) + m1(2,2) * m2(2,2),
+	                 m1(2,3),
+	                 m1(3,0) * m2(0,0) + m1(3,1) * m2(1,0) + m1(3,2) * m2(2,0),
+	                 m1(3,0) * m2(0,1) + m1(3,1) * m2(1,1) + m1(3,2) * m2(2,1),
+	                 m1(3,0) * m2(0,2) + m1(3,1) * m2(1,2) + m1(3,2) * m2(2,2),
+	                 m1(3,3)));
 }
 
 Vector4D Terathon::operator *(const Matrix4D& m, const Vector3D& v)
 {
 	return (Vector4D(m(0,0) * v.x + m(0,1) * v.y + m(0,2) * v.z,
-					 m(1,0) * v.x + m(1,1) * v.y + m(1,2) * v.z,
-					 m(2,0) * v.x + m(2,1) * v.y + m(2,2) * v.z,
-					 m(3,0) * v.x + m(3,1) * v.y + m(3,2) * v.z));
+	                 m(1,0) * v.x + m(1,1) * v.y + m(1,2) * v.z,
+	                 m(2,0) * v.x + m(2,1) * v.y + m(2,2) * v.z,
+	                 m(3,0) * v.x + m(3,1) * v.y + m(3,2) * v.z));
 }
 
 Vector4D Terathon::operator *(const Vector3D& v, const Matrix4D& m)
 {
 	return (Vector4D(m(0,0) * v.x + m(1,0) * v.y + m(2,0) * v.z,
-					 m(0,1) * v.x + m(1,1) * v.y + m(2,1) * v.z,
-					 m(0,2) * v.x + m(1,2) * v.y + m(2,2) * v.z,
-					 m(0,3) * v.x + m(1,3) * v.y + m(2,3) * v.z));
+	                 m(0,1) * v.x + m(1,1) * v.y + m(2,1) * v.z,
+	                 m(0,2) * v.x + m(1,2) * v.y + m(2,2) * v.z,
+	                 m(0,3) * v.x + m(1,3) * v.y + m(2,3) * v.z));
 }
 
 Vector4D Terathon::operator *(const Matrix4D& m, const Point3D& p)
 {
 	return (Vector4D(m(0,0) * p.x + m(0,1) * p.y + m(0,2) * p.z + m(0,3),
-					 m(1,0) * p.x + m(1,1) * p.y + m(1,2) * p.z + m(1,3),
-					 m(2,0) * p.x + m(2,1) * p.y + m(2,2) * p.z + m(2,3),
-					 m(3,0) * p.x + m(3,1) * p.y + m(3,2) * p.z + m(3,3)));
+	                 m(1,0) * p.x + m(1,1) * p.y + m(1,2) * p.z + m(1,3),
+	                 m(2,0) * p.x + m(2,1) * p.y + m(2,2) * p.z + m(2,3),
+	                 m(3,0) * p.x + m(3,1) * p.y + m(3,2) * p.z + m(3,3)));
 }
 
 Vector4D Terathon::operator *(const Point3D& p, const Matrix4D& m)
 {
 	return (Vector4D(m(0,0) * p.x + m(1,0) * p.y + m(2,0) * p.z + m(3,0),
-					 m(0,1) * p.x + m(1,1) * p.y + m(2,1) * p.z + m(3,1),
-					 m(0,2) * p.x + m(1,2) * p.y + m(2,2) * p.z + m(3,2),
-					 m(0,3) * p.x + m(1,3) * p.y + m(2,3) * p.z + m(3,3)));
+	                 m(0,1) * p.x + m(1,1) * p.y + m(2,1) * p.z + m(3,1),
+	                 m(0,2) * p.x + m(1,2) * p.y + m(2,2) * p.z + m(3,2),
+	                 m(0,3) * p.x + m(1,3) * p.y + m(2,3) * p.z + m(3,3)));
 }
 
 Vector4D Terathon::operator *(const Matrix4D& m, const Vector2D& v)
 {
 	return (Vector4D(m(0,0) * v.x + m(0,1) * v.y,
-					 m(1,0) * v.x + m(1,1) * v.y,
-					 m(2,0) * v.x + m(2,1) * v.y,
-					 m(3,0) * v.x + m(3,1) * v.y));
+	                 m(1,0) * v.x + m(1,1) * v.y,
+	                 m(2,0) * v.x + m(2,1) * v.y,
+	                 m(3,0) * v.x + m(3,1) * v.y));
 }
 
 Vector4D Terathon::operator *(const Vector2D& v, const Matrix4D& m)
 {
 	return (Vector4D(m(0,0) * v.x + m(1,0) * v.y,
-					 m(0,1) * v.x + m(1,1) * v.y,
-					 m(0,2) * v.x + m(1,2) * v.y,
-					 m(0,3) * v.x + m(1,3) * v.y));
+	                 m(0,1) * v.x + m(1,1) * v.y,
+	                 m(0,2) * v.x + m(1,2) * v.y,
+	                 m(0,3) * v.x + m(1,3) * v.y));
 }
 
 Vector4D Terathon::operator *(const Matrix4D& m, const Point2D& p)
 {
 	return (Vector4D(m(0,0) * p.x + m(0,1) * p.y + m(0,3),
-					 m(1,0) * p.x + m(1,1) * p.y + m(1,3),
-					 m(2,0) * p.x + m(2,1) * p.y + m(2,3),
-					 m(3,0) * p.x + m(3,1) * p.y + m(3,3)));
+	                 m(1,0) * p.x + m(1,1) * p.y + m(1,3),
+	                 m(2,0) * p.x + m(2,1) * p.y + m(2,3),
+	                 m(3,0) * p.x + m(3,1) * p.y + m(3,3)));
 }
 
 Vector4D Terathon::operator *(const Point2D& p, const Matrix4D& m)
 {
 	return (Vector4D(m(0,0) * p.x + m(1,0) * p.y + m(3,0),
-					 m(0,1) * p.x + m(1,1) * p.y + m(3,1),
-					 m(0,2) * p.x + m(1,2) * p.y + m(3,2),
-					 m(0,3) * p.x + m(1,3) * p.y + m(3,3)));
+	                 m(0,1) * p.x + m(1,1) * p.y + m(3,1),
+	                 m(0,2) * p.x + m(1,2) * p.y + m(3,2),
+	                 m(0,3) * p.x + m(1,3) * p.y + m(3,3)));
 }
 
 float Terathon::Determinant(const Matrix4D& m)
@@ -243,7 +244,7 @@ Matrix4D Terathon::Inverse(const Matrix4D& m)
 
 	#ifdef TERATHON_SSE
 
-		Transform4D		result;
+		Transform3D		result;
 
 		vec_float a = VecLoad(&m(0,0));
 		vec_float b = VecLoad(&m(0,1));
@@ -313,9 +314,9 @@ Matrix4D Terathon::Inverse(const Matrix4D& m)
 		v *= invDet;
 
 		return (Matrix4D((b ^ v) + t * y, -(b ^ t),
-						 (v ^ a) - t * x,  (a ^ t),
-						 (d ^ u) + s * w, -(d ^ s),
-						 (u ^ c) - s * z,  (c ^ s)));
+		                 (v ^ a) - t * x,  (a ^ t),
+		                 (d ^ u) + s * w, -(d ^ s),
+		                 (u ^ c) - s * z,  (c ^ s)));
 
 	#endif
 }
@@ -338,13 +339,13 @@ Matrix4D Terathon::Adjugate(const Matrix4D& m)
 	Vector3D v = c * w - d * z;
 
 	return (Matrix4D((b ^ v) + t * y, -(b ^ t),
-					 (v ^ a) - t * x,  (a ^ t),
-					 (d ^ u) + s * w, -(d ^ s),
-					 (u ^ c) - s * z,  (c ^ s)));
+	                 (v ^ a) - t * x,  (a ^ t),
+	                 (d ^ u) + s * w, -(d ^ s),
+	                 (u ^ c) - s * z,  (c ^ s)));
 }
 
 
-Transform4D::Transform4D(float n00, float n01, float n02, float n03, float n10, float n11, float n12, float n13, float n20, float n21, float n22, float n23)
+Transform3D::Transform3D(float n00, float n01, float n02, float n03, float n10, float n11, float n12, float n13, float n20, float n21, float n22, float n23)
 {
 	m00 = n00;
 	m01 = n01;
@@ -362,7 +363,7 @@ Transform4D::Transform4D(float n00, float n01, float n02, float n03, float n10, 
 	row3.Set(0.0F, 0.0F, 0.0F, 1.0F);
 }
 
-Transform4D::Transform4D(const Vector3D& a, const Vector3D& b, const Vector3D& c, const Point3D& d)
+Transform3D::Transform3D(const Vector3D& a, const Vector3D& b, const Vector3D& c, const Point3D& p)
 {
 	m00 = a.x;
 	m10 = a.y;
@@ -373,14 +374,14 @@ Transform4D::Transform4D(const Vector3D& a, const Vector3D& b, const Vector3D& c
 	m02 = c.x;
 	m12 = c.y;
 	m22 = c.z;
-	m03 = d.x;
-	m13 = d.y;
-	m23 = d.z;
+	m03 = p.x;
+	m13 = p.y;
+	m23 = p.z;
 
 	row3.Set(0.0F, 0.0F, 0.0F, 1.0F);
 }
 
-Transform4D::Transform4D(const Bivector3D& r0, float n03, const Bivector3D& r1, float n13, const Bivector3D& r2, float n23)
+Transform3D::Transform3D(const Bivector3D& r0, float n03, const Bivector3D& r1, float n13, const Bivector3D& r2, float n23)
 {
 	row0.Set(r0.x, r0.y, r0.z, n03);
 	row1.Set(r1.x, r1.y, r1.z, n13);
@@ -388,7 +389,7 @@ Transform4D::Transform4D(const Bivector3D& r0, float n03, const Bivector3D& r1, 
 	row3.Set(0.0F, 0.0F, 0.0F, 1.0F);
 }
 
-Transform4D::Transform4D(const Matrix3D& m)
+Transform3D::Transform3D(const Matrix3D& m)
 {
 	m00 = m.m00;
 	m10 = m.m10;
@@ -404,7 +405,7 @@ Transform4D::Transform4D(const Matrix3D& m)
 	row3.Set(0.0F, 0.0F, 0.0F, 1.0F);
 }
 
-Transform4D::Transform4D(const Matrix3D& m, const Vector3D& v)
+Transform3D::Transform3D(const Matrix3D& m, const Vector3D& v)
 {
 	m00 = m.m00;
 	m10 = m.m10;
@@ -422,7 +423,7 @@ Transform4D::Transform4D(const Matrix3D& m, const Vector3D& v)
 	row3.Set(0.0F, 0.0F, 0.0F, 1.0F);
 }
 
-Transform4D& Transform4D::Set(const Matrix3D& m, const Vector3D& v)
+Transform3D& Transform3D::Set(const Matrix3D& m, const Vector3D& v)
 {
 	m00 = m.m00;
 	m10 = m.m10;
@@ -441,7 +442,7 @@ Transform4D& Transform4D::Set(const Matrix3D& m, const Vector3D& v)
 	return (*this);
 }
 
-Transform4D& Transform4D::Set(float n00, float n01, float n02, float n03, float n10, float n11, float n12, float n13, float n20, float n21, float n22, float n23)
+Transform3D& Transform3D::Set(float n00, float n01, float n02, float n03, float n10, float n11, float n12, float n13, float n20, float n21, float n22, float n23)
 {
 	m00 = n00;
 	m01 = n01;
@@ -460,7 +461,7 @@ Transform4D& Transform4D::Set(float n00, float n01, float n02, float n03, float 
 	return (*this);
 }
 
-Transform4D& Transform4D::Set(const Vector3D& a, const Vector3D& b, const Vector3D& c, const Point3D& p)
+Transform3D& Transform3D::Set(const Vector3D& a, const Vector3D& b, const Vector3D& c, const Point3D& p)
 {
 	m00 = a.x;
 	m10 = a.y;
@@ -479,7 +480,7 @@ Transform4D& Transform4D::Set(const Vector3D& a, const Vector3D& b, const Vector
 	return (*this);
 }
 
-Transform4D& Transform4D::operator *=(const Transform4D& m)
+Transform3D& Transform3D::operator *=(const Transform3D& m)
 {
 	float x = m00;
 	float y = m01;
@@ -508,7 +509,7 @@ Transform4D& Transform4D::operator *=(const Transform4D& m)
 	return (*this);
 }
 
-Transform4D& Transform4D::operator *=(const Matrix3D& m)
+Transform3D& Transform3D::operator *=(const Matrix3D& m)
 {
 	float x = m00;
 	float y = m01;
@@ -534,7 +535,7 @@ Transform4D& Transform4D::operator *=(const Matrix3D& m)
 	return (*this);
 }
 
-Transform4D& Transform4D::SetMatrix3D(const Vector3D& a, const Vector3D& b, const Vector3D& c)
+Transform3D& Transform3D::SetMatrix3D(const Vector3D& a, const Vector3D& b, const Vector3D& c)
 {
 	m00 = a.x;
 	m10 = a.y;
@@ -549,7 +550,7 @@ Transform4D& Transform4D::SetMatrix3D(const Vector3D& a, const Vector3D& b, cons
 	return (*this);
 }
 
-Transform4D& Transform4D::Orthogonalize(int32 column)
+Transform3D& Transform3D::Orthogonalize(int32 column)
 {
 	Vector3D& x = (*this)[column];
 	Vector3D& y = (*this)[(column < 2) ? column + 1 : 0];
@@ -562,7 +563,7 @@ Transform4D& Transform4D::Orthogonalize(int32 column)
 	return (*this);
 }
 
-void Transform4D::GetEulerAngles(float *x, float *y, float *z) const
+void Transform3D::GetEulerAngles(float *x, float *y, float *z) const
 {
 	float sy = m02;
 	if (sy < 1.0F)
@@ -588,7 +589,7 @@ void Transform4D::GetEulerAngles(float *x, float *y, float *z) const
 	}
 }
 
-Transform4D& Transform4D::SetEulerAngles(float x, float y, float z)
+Transform3D& Transform3D::SetEulerAngles(float x, float y, float z)
 {
 	Vector2D xrot = CosSin(x);
 	Vector2D yrot = CosSin(y);
@@ -609,34 +610,34 @@ Transform4D& Transform4D::SetEulerAngles(float x, float y, float z)
 	return (*this);
 }
 
-Transform4D Transform4D::MakeRotationX(float angle)
+Transform3D Transform3D::MakeRotationX(float angle)
 {
 	Vector2D v = CosSin(angle);
 
-	return (Transform4D(1.0F, 0.0F, 0.0F, 0.0F,
-						0.0F,  v.x, -v.y, 0.0F,
-						0.0F,  v.y,  v.x, 0.0F));
+	return (Transform3D(1.0F, 0.0F, 0.0F, 0.0F,
+	                    0.0F,  v.x, -v.y, 0.0F,
+	                    0.0F,  v.y,  v.x, 0.0F));
 }
 
-Transform4D Transform4D::MakeRotationY(float angle)
+Transform3D Transform3D::MakeRotationY(float angle)
 {
 	Vector2D v = CosSin(angle);
 
-	return (Transform4D( v.x, 0.0F,  v.y, 0.0F,
-						0.0F, 1.0F, 0.0F, 0.0F,
-						-v.y, 0.0F,  v.x, 0.0F));
+	return (Transform3D( v.x, 0.0F,  v.y, 0.0F,
+	                    0.0F, 1.0F, 0.0F, 0.0F,
+	                    -v.y, 0.0F,  v.x, 0.0F));
 }
 
-Transform4D Transform4D::MakeRotationZ(float angle)
+Transform3D Transform3D::MakeRotationZ(float angle)
 {
 	Vector2D v = CosSin(angle);
 
-	return (Transform4D( v.x, -v.y, 0.0F, 0.0F,
-						 v.y,  v.x, 0.0F, 0.0F,
-						0.0F, 0.0F, 1.0F, 0.0F));
+	return (Transform3D( v.x, -v.y, 0.0F, 0.0F,
+	                     v.y,  v.x, 0.0F, 0.0F,
+	                    0.0F, 0.0F, 1.0F, 0.0F));
 }
 
-Transform4D Transform4D::MakeRotation(float angle, const Bivector3D& axis)
+Transform3D Transform3D::MakeRotation(float angle, const Bivector3D& axis)
 {
 	Vector2D v = CosSin(angle);
 	const float& c = v.x;
@@ -650,12 +651,12 @@ Transform4D Transform4D::MakeRotation(float angle, const Bivector3D& axis)
 	float axaz = x * axis.z;
 	float ayaz = y * axis.z;
 
-	return (Transform4D(c + x * axis.x, axay - s * axis.z, axaz + s * axis.y, 0.0F,
-						axay + s * axis.z, c + y * axis.y, ayaz - s * axis.x, 0.0F,
-						axaz - s * axis.y, ayaz + s * axis.x, c + z * axis.z, 0.0F));
+	return (Transform3D(c + x * axis.x, axay - s * axis.z, axaz + s * axis.y, 0.0F,
+	                    axay + s * axis.z, c + y * axis.y, ayaz - s * axis.x, 0.0F,
+	                    axaz - s * axis.y, ayaz + s * axis.x, c + z * axis.z, 0.0F));
 }
 
-Transform4D Transform4D::MakeReflection(const Vector3D& a)
+Transform3D Transform3D::MakeReflection(const Vector3D& a)
 {
 	float x = a.x * -2.0F;
 	float y = a.y * -2.0F;
@@ -664,12 +665,12 @@ Transform4D Transform4D::MakeReflection(const Vector3D& a)
 	float axaz = x * a.z;
 	float ayaz = y * a.z;
 
-	return (Transform4D(x * a.x + 1.0F, axay, axaz, 0.0F,
-						axay, y * a.y + 1.0F, ayaz, 0.0F,
-						axaz, ayaz, z * a.z + 1.0F, 0.0F));
+	return (Transform3D(x * a.x + 1.0F, axay, axaz, 0.0F,
+	                    axay, y * a.y + 1.0F, ayaz, 0.0F,
+	                    axaz, ayaz, z * a.z + 1.0F, 0.0F));
 }
 
-Transform4D Transform4D::MakeInvolution(const Vector3D& a)
+Transform3D Transform3D::MakeInvolution(const Vector3D& a)
 {
 	float x = a.x * 2.0F;
 	float y = a.y * 2.0F;
@@ -678,12 +679,12 @@ Transform4D Transform4D::MakeInvolution(const Vector3D& a)
 	float axaz = x * a.z;
 	float ayaz = y * a.z;
 
-	return (Transform4D(x * a.x - 1.0F, axay, axaz, 0.0F,
-						axay, y * a.y - 1.0F, ayaz, 0.0F,
-						axaz, ayaz, z * a.z - 1.0F, 0.0F));
+	return (Transform3D(x * a.x - 1.0F, axay, axaz, 0.0F,
+	                    axay, y * a.y - 1.0F, ayaz, 0.0F,
+	                    axaz, ayaz, z * a.z - 1.0F, 0.0F));
 }
 
-Transform4D Transform4D::MakeReflection(const Plane3D& plane)
+Transform3D Transform3D::MakeReflection(const Plane3D& plane)
 {
 	float x = plane.x * -2.0F;
 	float y = plane.y * -2.0F;
@@ -692,37 +693,37 @@ Transform4D Transform4D::MakeReflection(const Plane3D& plane)
 	float nxnz = x * plane.z;
 	float nynz = y * plane.z;
 
-	return (Transform4D(x * plane.x + 1.0F, nxny, nxnz, x * plane.w,
-						nxny, y * plane.y + 1.0F, nynz, y * plane.w,
-						nxnz, nynz, z * plane.z + 1.0F, z * plane.w));
+	return (Transform3D(x * plane.x + 1.0F, nxny, nxnz, x * plane.w,
+	                    nxny, y * plane.y + 1.0F, nynz, y * plane.w,
+	                    nxnz, nynz, z * plane.z + 1.0F, z * plane.w));
 }
 
-Transform4D Transform4D::MakeScaleX(float sx)
+Transform3D Transform3D::MakeScale(float scale)
 {
-	return (Transform4D(sx, 0.0F, 0.0F, 0.0F, 0.0F, 1.0F, 0.0F, 0.0F, 0.0F, 0.0F, 1.0F, 0.0F));
+	return (Transform3D(scale, 0.0F, 0.0F, 0.0F, 0.0F, scale, 0.0F, 0.0F, 0.0F, 0.0F, scale, 0.0F));
 }
 
-Transform4D Transform4D::MakeScaleY(float sy)
+Transform3D Transform3D::MakeScale(float sx, float sy, float sz)
 {
-	return (Transform4D(1.0F, 0.0F, 0.0F, 0.0F, 0.0F, sy, 0.0F, 0.0F, 0.0F, 0.0F, 1.0F, 0.0F));
+	return (Transform3D(sx, 0.0F, 0.0F, 0.0F, 0.0F, sy, 0.0F, 0.0F, 0.0F, 0.0F, sz, 0.0F));
 }
 
-Transform4D Transform4D::MakeScaleZ(float sz)
+Transform3D Transform3D::MakeScaleX(float sx)
 {
-	return (Transform4D(1.0F, 0.0F, 0.0F, 0.0F, 0.0F, 1.0F, 0.0F, 0.0F, 0.0F, 0.0F, sz, 0.0F));
+	return (Transform3D(sx, 0.0F, 0.0F, 0.0F, 0.0F, 1.0F, 0.0F, 0.0F, 0.0F, 0.0F, 1.0F, 0.0F));
 }
 
-Transform4D Transform4D::MakeScale(float scale)
+Transform3D Transform3D::MakeScaleY(float sy)
 {
-	return (Transform4D(scale, 0.0F, 0.0F, 0.0F, 0.0F, scale, 0.0F, 0.0F, 0.0F, 0.0F, scale, 0.0F));
+	return (Transform3D(1.0F, 0.0F, 0.0F, 0.0F, 0.0F, sy, 0.0F, 0.0F, 0.0F, 0.0F, 1.0F, 0.0F));
 }
 
-Transform4D Transform4D::MakeScale(float sx, float sy, float sz)
+Transform3D Transform3D::MakeScaleZ(float sz)
 {
-	return (Transform4D(sx, 0.0F, 0.0F, 0.0F, 0.0F, sy, 0.0F, 0.0F, 0.0F, 0.0F, sz, 0.0F));
+	return (Transform3D(1.0F, 0.0F, 0.0F, 0.0F, 0.0F, 1.0F, 0.0F, 0.0F, 0.0F, 0.0F, sz, 0.0F));
 }
 
-Transform4D Transform4D::MakeScale(float scale, const Vector3D& a)
+Transform3D Transform3D::MakeScale(float scale, const Vector3D& a)
 {
 	scale -= 1.0F;
 	float x = a.x * scale;
@@ -732,34 +733,34 @@ Transform4D Transform4D::MakeScale(float scale, const Vector3D& a)
 	float axaz = x * a.z;
 	float ayaz = y * a.z;
 
-	return (Transform4D(x * a.x + 1.0F, axay, axaz, 0.0F,
-						axay, y * a.y + 1.0F, ayaz, 0.0F,
-						axaz, ayaz, z * a.z + 1.0F, 0.0F));
+	return (Transform3D(x * a.x + 1.0F, axay, axaz, 0.0F,
+	                    axay, y * a.y + 1.0F, ayaz, 0.0F,
+	                    axaz, ayaz, z * a.z + 1.0F, 0.0F));
 }
 
-Transform4D Transform4D::MakeSkew(float angle, const Vector3D& a, const Vector3D& b)
+Transform3D Transform3D::MakeSkew(float angle, const Vector3D& a, const Vector3D& b)
 {
 	float t = Tan(angle);
 	float x = a.x * t;
 	float y = a.y * t;
 	float z = a.z * t;
 
-	return (Transform4D(x * b.x + 1.0F, x * b.y, x * b.z, 0.0F,
-						y * b.x, y * b.y + 1.0F, y * b.z, 0.0F,
-						z * b.x, z * b.y, z * b.z + 1.0F, 0.0F));
+	return (Transform3D(x * b.x + 1.0F, x * b.y, x * b.z, 0.0F,
+	                    y * b.x, y * b.y + 1.0F, y * b.z, 0.0F,
+	                    z * b.x, z * b.y, z * b.z + 1.0F, 0.0F));
 }
 
-Transform4D Transform4D::MakeTranslation(const Vector3D& dv)
+Transform3D Transform3D::MakeTranslation(const Vector3D& dv)
 {
-	return (Transform4D(1.0F, 0.0F, 0.0F, dv.x, 0.0F, 1.0F, 0.0F, dv.y, 0.0F, 0.0F, 1.0F, dv.z));
+	return (Transform3D(1.0F, 0.0F, 0.0F, dv.x, 0.0F, 1.0F, 0.0F, dv.y, 0.0F, 0.0F, 1.0F, dv.z));
 }
 
 
-Transform4D Terathon::operator *(const Transform4D& m1, const Transform4D& m2)
+Transform3D Terathon::operator *(const Transform3D& m1, const Transform3D& m2)
 {
 	#ifndef TERATHON_NO_SIMD
 
-		Transform4D		result;
+		Transform3D		result;
 
 		vec_float a = VecLoad(&m1(0,0));
 		vec_float b = VecLoad(&m1(0,1));
@@ -773,23 +774,23 @@ Transform4D Terathon::operator *(const Transform4D& m1, const Transform4D& m2)
 
 	#else
 
-		return (Transform4D(m1(0,0) * m2(0,0) + m1(0,1) * m2(1,0) + m1(0,2) * m2(2,0),
-							m1(0,0) * m2(0,1) + m1(0,1) * m2(1,1) + m1(0,2) * m2(2,1),
-							m1(0,0) * m2(0,2) + m1(0,1) * m2(1,2) + m1(0,2) * m2(2,2),
-							m1(0,0) * m2(0,3) + m1(0,1) * m2(1,3) + m1(0,2) * m2(2,3) + m1(0,3),
-							m1(1,0) * m2(0,0) + m1(1,1) * m2(1,0) + m1(1,2) * m2(2,0),
-							m1(1,0) * m2(0,1) + m1(1,1) * m2(1,1) + m1(1,2) * m2(2,1),
-							m1(1,0) * m2(0,2) + m1(1,1) * m2(1,2) + m1(1,2) * m2(2,2),
-							m1(1,0) * m2(0,3) + m1(1,1) * m2(1,3) + m1(1,2) * m2(2,3) + m1(1,3),
-							m1(2,0) * m2(0,0) + m1(2,1) * m2(1,0) + m1(2,2) * m2(2,0),
-							m1(2,0) * m2(0,1) + m1(2,1) * m2(1,1) + m1(2,2) * m2(2,1),
-							m1(2,0) * m2(0,2) + m1(2,1) * m2(1,2) + m1(2,2) * m2(2,2),
-							m1(2,0) * m2(0,3) + m1(2,1) * m2(1,3) + m1(2,2) * m2(2,3) + m1(2,3)));
+		return (Transform3D(m1(0,0) * m2(0,0) + m1(0,1) * m2(1,0) + m1(0,2) * m2(2,0),
+		                    m1(0,0) * m2(0,1) + m1(0,1) * m2(1,1) + m1(0,2) * m2(2,1),
+		                    m1(0,0) * m2(0,2) + m1(0,1) * m2(1,2) + m1(0,2) * m2(2,2),
+		                    m1(0,0) * m2(0,3) + m1(0,1) * m2(1,3) + m1(0,2) * m2(2,3) + m1(0,3),
+		                    m1(1,0) * m2(0,0) + m1(1,1) * m2(1,0) + m1(1,2) * m2(2,0),
+		                    m1(1,0) * m2(0,1) + m1(1,1) * m2(1,1) + m1(1,2) * m2(2,1),
+		                    m1(1,0) * m2(0,2) + m1(1,1) * m2(1,2) + m1(1,2) * m2(2,2),
+		                    m1(1,0) * m2(0,3) + m1(1,1) * m2(1,3) + m1(1,2) * m2(2,3) + m1(1,3),
+		                    m1(2,0) * m2(0,0) + m1(2,1) * m2(1,0) + m1(2,2) * m2(2,0),
+		                    m1(2,0) * m2(0,1) + m1(2,1) * m2(1,1) + m1(2,2) * m2(2,1),
+		                    m1(2,0) * m2(0,2) + m1(2,1) * m2(1,2) + m1(2,2) * m2(2,2),
+		                    m1(2,0) * m2(0,3) + m1(2,1) * m2(1,3) + m1(2,2) * m2(2,3) + m1(2,3)));
 
 	#endif
 }
 
-Matrix4D Terathon::operator *(const Matrix4D& m1, const Transform4D& m2)
+Matrix4D Terathon::operator *(const Matrix4D& m1, const Transform3D& m2)
 {
 	#ifndef TERATHON_NO_SIMD
 
@@ -808,43 +809,43 @@ Matrix4D Terathon::operator *(const Matrix4D& m1, const Transform4D& m2)
 	#else
 
 		return (Matrix4D(m1(0,0) * m2(0,0) + m1(0,1) * m2(1,0) + m1(0,2) * m2(2,0),
-						 m1(0,0) * m2(0,1) + m1(0,1) * m2(1,1) + m1(0,2) * m2(2,1),
-						 m1(0,0) * m2(0,2) + m1(0,1) * m2(1,2) + m1(0,2) * m2(2,2),
-						 m1(0,0) * m2(0,3) + m1(0,1) * m2(1,3) + m1(0,2) * m2(2,3) + m1(0,3),
-						 m1(1,0) * m2(0,0) + m1(1,1) * m2(1,0) + m1(1,2) * m2(2,0),
-						 m1(1,0) * m2(0,1) + m1(1,1) * m2(1,1) + m1(1,2) * m2(2,1),
-						 m1(1,0) * m2(0,2) + m1(1,1) * m2(1,2) + m1(1,2) * m2(2,2),
-						 m1(1,0) * m2(0,3) + m1(1,1) * m2(1,3) + m1(1,2) * m2(2,3) + m1(1,3),
-						 m1(2,0) * m2(0,0) + m1(2,1) * m2(1,0) + m1(2,2) * m2(2,0),
-						 m1(2,0) * m2(0,1) + m1(2,1) * m2(1,1) + m1(2,2) * m2(2,1),
-						 m1(2,0) * m2(0,2) + m1(2,1) * m2(1,2) + m1(2,2) * m2(2,2),
-						 m1(2,0) * m2(0,3) + m1(2,1) * m2(1,3) + m1(2,2) * m2(2,3) + m1(2,3),
-						 m1(3,0) * m2(0,0) + m1(3,1) * m2(1,0) + m1(3,2) * m2(2,0),
-						 m1(3,0) * m2(0,1) + m1(3,1) * m2(1,1) + m1(3,2) * m2(2,1),
-						 m1(3,0) * m2(0,2) + m1(3,1) * m2(1,2) + m1(3,2) * m2(2,2),
-						 m1(3,0) * m2(0,3) + m1(3,1) * m2(1,3) + m1(3,2) * m2(2,3) + m1(3,3)));
+		                 m1(0,0) * m2(0,1) + m1(0,1) * m2(1,1) + m1(0,2) * m2(2,1),
+		                 m1(0,0) * m2(0,2) + m1(0,1) * m2(1,2) + m1(0,2) * m2(2,2),
+		                 m1(0,0) * m2(0,3) + m1(0,1) * m2(1,3) + m1(0,2) * m2(2,3) + m1(0,3),
+		                 m1(1,0) * m2(0,0) + m1(1,1) * m2(1,0) + m1(1,2) * m2(2,0),
+		                 m1(1,0) * m2(0,1) + m1(1,1) * m2(1,1) + m1(1,2) * m2(2,1),
+		                 m1(1,0) * m2(0,2) + m1(1,1) * m2(1,2) + m1(1,2) * m2(2,2),
+		                 m1(1,0) * m2(0,3) + m1(1,1) * m2(1,3) + m1(1,2) * m2(2,3) + m1(1,3),
+		                 m1(2,0) * m2(0,0) + m1(2,1) * m2(1,0) + m1(2,2) * m2(2,0),
+		                 m1(2,0) * m2(0,1) + m1(2,1) * m2(1,1) + m1(2,2) * m2(2,1),
+		                 m1(2,0) * m2(0,2) + m1(2,1) * m2(1,2) + m1(2,2) * m2(2,2),
+		                 m1(2,0) * m2(0,3) + m1(2,1) * m2(1,3) + m1(2,2) * m2(2,3) + m1(2,3),
+		                 m1(3,0) * m2(0,0) + m1(3,1) * m2(1,0) + m1(3,2) * m2(2,0),
+		                 m1(3,0) * m2(0,1) + m1(3,1) * m2(1,1) + m1(3,2) * m2(2,1),
+		                 m1(3,0) * m2(0,2) + m1(3,1) * m2(1,2) + m1(3,2) * m2(2,2),
+		                 m1(3,0) * m2(0,3) + m1(3,1) * m2(1,3) + m1(3,2) * m2(2,3) + m1(3,3)));
 
 	#endif
 }
 
-Matrix4D Terathon::operator *(const Transform4D& m1, const Matrix4D& m2)
+Matrix4D Terathon::operator *(const Transform3D& m1, const Matrix4D& m2)
 {
 	return (Matrix4D(m1(0,0) * m2(0,0) + m1(0,1) * m2(1,0) + m1(0,2) * m2(2,0) + m1(0,3) * m2(3,0),
-					 m1(0,0) * m2(0,1) + m1(0,1) * m2(1,1) + m1(0,2) * m2(2,1) + m1(0,3) * m2(3,1),
-					 m1(0,0) * m2(0,2) + m1(0,1) * m2(1,2) + m1(0,2) * m2(2,2) + m1(0,3) * m2(3,2),
-					 m1(0,0) * m2(0,3) + m1(0,1) * m2(1,3) + m1(0,2) * m2(2,3) + m1(0,3) * m2(3,3),
-					 m1(1,0) * m2(0,0) + m1(1,1) * m2(1,0) + m1(1,2) * m2(2,0) + m1(1,3) * m2(3,0),
-					 m1(1,0) * m2(0,1) + m1(1,1) * m2(1,1) + m1(1,2) * m2(2,1) + m1(1,3) * m2(3,1),
-					 m1(1,0) * m2(0,2) + m1(1,1) * m2(1,2) + m1(1,2) * m2(2,2) + m1(1,3) * m2(3,2),
-					 m1(1,0) * m2(0,3) + m1(1,1) * m2(1,3) + m1(1,2) * m2(2,3) + m1(1,3) * m2(3,3),
-					 m1(2,0) * m2(0,0) + m1(2,1) * m2(1,0) + m1(2,2) * m2(2,0) + m1(2,3) * m2(3,0),
-					 m1(2,0) * m2(0,1) + m1(2,1) * m2(1,1) + m1(2,2) * m2(2,1) + m1(2,3) * m2(3,1),
-					 m1(2,0) * m2(0,2) + m1(2,1) * m2(1,2) + m1(2,2) * m2(2,2) + m1(2,3) * m2(3,2),
-					 m1(2,0) * m2(0,3) + m1(2,1) * m2(1,3) + m1(2,2) * m2(2,3) + m1(2,3) * m2(3,3),
-					 m2(3,0), m2(3,1), m2(3,2), m2(3,3)));
+	                 m1(0,0) * m2(0,1) + m1(0,1) * m2(1,1) + m1(0,2) * m2(2,1) + m1(0,3) * m2(3,1),
+	                 m1(0,0) * m2(0,2) + m1(0,1) * m2(1,2) + m1(0,2) * m2(2,2) + m1(0,3) * m2(3,2),
+	                 m1(0,0) * m2(0,3) + m1(0,1) * m2(1,3) + m1(0,2) * m2(2,3) + m1(0,3) * m2(3,3),
+	                 m1(1,0) * m2(0,0) + m1(1,1) * m2(1,0) + m1(1,2) * m2(2,0) + m1(1,3) * m2(3,0),
+	                 m1(1,0) * m2(0,1) + m1(1,1) * m2(1,1) + m1(1,2) * m2(2,1) + m1(1,3) * m2(3,1),
+	                 m1(1,0) * m2(0,2) + m1(1,1) * m2(1,2) + m1(1,2) * m2(2,2) + m1(1,3) * m2(3,2),
+	                 m1(1,0) * m2(0,3) + m1(1,1) * m2(1,3) + m1(1,2) * m2(2,3) + m1(1,3) * m2(3,3),
+	                 m1(2,0) * m2(0,0) + m1(2,1) * m2(1,0) + m1(2,2) * m2(2,0) + m1(2,3) * m2(3,0),
+	                 m1(2,0) * m2(0,1) + m1(2,1) * m2(1,1) + m1(2,2) * m2(2,1) + m1(2,3) * m2(3,1),
+	                 m1(2,0) * m2(0,2) + m1(2,1) * m2(1,2) + m1(2,2) * m2(2,2) + m1(2,3) * m2(3,2),
+	                 m1(2,0) * m2(0,3) + m1(2,1) * m2(1,3) + m1(2,2) * m2(2,3) + m1(2,3) * m2(3,3),
+	                 m2(3,0), m2(3,1), m2(3,2), m2(3,3)));
 }
 
-Vector3D Terathon::operator *(const Transform4D& m, const Vector3D& v)
+Vector3D Terathon::operator *(const Transform3D& m, const Vector3D& v)
 {
 	#ifndef TERATHON_NO_SIMD
 
@@ -860,12 +861,12 @@ Vector3D Terathon::operator *(const Transform4D& m, const Vector3D& v)
 	#endif
 }
 
-Bivector3D Terathon::operator *(const Bivector3D& v, const Transform4D& m)
+Bivector3D Terathon::operator *(const Bivector3D& v, const Transform3D& m)
 {
 	return (v.xyz * m);
 }
 
-Point3D Terathon::operator *(const Transform4D& m, const Point3D& p)
+Point3D Terathon::operator *(const Transform3D& m, const Point3D& p)
 {
 	#ifndef TERATHON_NO_SIMD
 
@@ -877,52 +878,52 @@ Point3D Terathon::operator *(const Transform4D& m, const Point3D& p)
 	#else
 
 		return (Point3D(m(0,0) * p.x + m(0,1) * p.y + m(0,2) * p.z + m(0,3),
-						m(1,0) * p.x + m(1,1) * p.y + m(1,2) * p.z + m(1,3),
-						m(2,0) * p.x + m(2,1) * p.y + m(2,2) * p.z + m(2,3)));
+		                m(1,0) * p.x + m(1,1) * p.y + m(1,2) * p.z + m(1,3),
+		                m(2,0) * p.x + m(2,1) * p.y + m(2,2) * p.z + m(2,3)));
 
 	#endif
 }
 
-Vector2D Terathon::operator *(const Transform4D& m, const Vector2D& v)
+Vector2D Terathon::operator *(const Transform3D& m, const Vector2D& v)
 {
 	return (Vector2D(m(0,0) * v.x + m(0,1) * v.y,
-					 m(1,0) * v.x + m(1,1) * v.y));
+	                 m(1,0) * v.x + m(1,1) * v.y));
 }
 
-Point2D Terathon::operator *(const Transform4D& m, const Point2D& p)
+Point2D Terathon::operator *(const Transform3D& m, const Point2D& p)
 {
 	return (Point2D(m(0,0) * p.x + m(0,1) * p.y + m(0,3),
-					m(1,0) * p.x + m(1,1) * p.y + m(1,3)));
+	                m(1,0) * p.x + m(1,1) * p.y + m(1,3)));
 }
 
-Transform4D Terathon::Scale(const Transform4D& m, const Vector3D& v)
+Transform3D Terathon::Scale(const Transform3D& m, const Vector3D& v)
 {
-	return (Transform4D(m(0,0) * v.x, m(0,1) * v.x, m(0,2) * v.x, m(0,3) * v.x,
-						m(1,0) * v.y, m(1,1) * v.y, m(1,2) * v.y, m(1,3) * v.y,
-						m(2,0) * v.z, m(2,1) * v.z, m(2,2) * v.z, m(2,3) * v.z));
+	return (Transform3D(m(0,0) * v.x, m(0,1) * v.x, m(0,2) * v.x, m(0,3) * v.x,
+	                    m(1,0) * v.y, m(1,1) * v.y, m(1,2) * v.y, m(1,3) * v.y,
+	                    m(2,0) * v.z, m(2,1) * v.z, m(2,2) * v.z, m(2,3) * v.z));
 }
 
-Matrix3D Terathon::Transform(const Transform4D& m1, const Matrix3D& m2)
+Matrix3D Terathon::Transform(const Transform3D& m1, const Matrix3D& m2)
 {
 	return (Matrix3D(m1(0,0) * m2(0,0) + m1(0,1) * m2(1,0) + m1(0,2) * m2(2,0),
-					 m1(0,0) * m2(0,1) + m1(0,1) * m2(1,1) + m1(0,2) * m2(2,1),
-					 m1(0,0) * m2(0,2) + m1(0,1) * m2(1,2) + m1(0,2) * m2(2,2),
-					 m1(1,0) * m2(0,0) + m1(1,1) * m2(1,0) + m1(1,2) * m2(2,0),
-					 m1(1,0) * m2(0,1) + m1(1,1) * m2(1,1) + m1(1,2) * m2(2,1),
-					 m1(1,0) * m2(0,2) + m1(1,1) * m2(1,2) + m1(1,2) * m2(2,2),
-					 m1(2,0) * m2(0,0) + m1(2,1) * m2(1,0) + m1(2,2) * m2(2,0),
-					 m1(2,0) * m2(0,1) + m1(2,1) * m2(1,1) + m1(2,2) * m2(2,1),
-					 m1(2,0) * m2(0,2) + m1(2,1) * m2(1,2) + m1(2,2) * m2(2,2)));
+	                 m1(0,0) * m2(0,1) + m1(0,1) * m2(1,1) + m1(0,2) * m2(2,1),
+	                 m1(0,0) * m2(0,2) + m1(0,1) * m2(1,2) + m1(0,2) * m2(2,2),
+	                 m1(1,0) * m2(0,0) + m1(1,1) * m2(1,0) + m1(1,2) * m2(2,0),
+	                 m1(1,0) * m2(0,1) + m1(1,1) * m2(1,1) + m1(1,2) * m2(2,1),
+	                 m1(1,0) * m2(0,2) + m1(1,1) * m2(1,2) + m1(1,2) * m2(2,2),
+	                 m1(2,0) * m2(0,0) + m1(2,1) * m2(1,0) + m1(2,2) * m2(2,0),
+	                 m1(2,0) * m2(0,1) + m1(2,1) * m2(1,1) + m1(2,2) * m2(2,1),
+	                 m1(2,0) * m2(0,2) + m1(2,1) * m2(1,2) + m1(2,2) * m2(2,2)));
 }
 
 #ifndef TERATHON_NO_SIMD
 
-	vec_float Terathon::TransformVector3D(const Transform4D& m, vec_float v)
+	vec_float Terathon::TransformVector3D(const Transform3D& m, vec_float v)
 	{
 		return (VecTransformVector3D(VecLoad(&m(0,0)), VecLoad(&m(0,1)), VecLoad(&m(0,2)), v));
 	}
 
-	vec_float Terathon::TransformPoint3D(const Transform4D& m, vec_float p)
+	vec_float Terathon::TransformPoint3D(const Transform3D& m, vec_float p)
 	{
 		return (VecTransformPoint3D(VecLoad(&m(0,0)), VecLoad(&m(0,1)), VecLoad(&m(0,2)), VecLoad(&m(0,3)), p));
 	}
@@ -930,18 +931,18 @@ Matrix3D Terathon::Transform(const Transform4D& m1, const Matrix3D& m2)
 #endif
 
 
-float Terathon::Determinant(const Transform4D& m)
+float Terathon::Determinant(const Transform3D& m)
 {
 	return (m(0,0) * (m(1,1) * m(2,2) - m(1,2) * m(2,1)) - m(0,1) * (m(1,0) * m(2,2) - m(1,2) * m(2,0)) + m(0,2) * (m(1,0) * m(2,1) - m(1,1) * m(2,0)));
 }
 
-Transform4D Terathon::Inverse(const Transform4D& m)
+Transform3D Terathon::Inverse(const Transform3D& m)
 {
 	// See FGED1, Section 2.6.
 
 	#ifdef TERATHON_SSE
 
-		Transform4D		result;
+		Transform3D		result;
 
 		vec_float a = VecLoad(&m(0,0));
 		vec_float b = VecLoad(&m(0,1));
@@ -995,16 +996,16 @@ Transform4D Terathon::Inverse(const Transform4D& m)
 		t *= invDet;
 		Vector3D v = c * invDet;
 
-		return (Transform4D(b ^ v, -(b ^ t), v ^ a, a ^ t, s, -(d ^ s)));
+		return (Transform3D(b ^ v, -(b ^ t), v ^ a, a ^ t, s, -(d ^ s)));
 
 	#endif
 }
 
-Transform4D Terathon::Adjugate(const Transform4D& m)
+Transform3D Terathon::InverseUnitDet(const Transform3D& m)
 {
 	#ifdef TERATHON_SSE
 
-		Transform4D		result;
+		Transform3D		result;
 
 		vec_float a = VecLoad(&m(0,0));
 		vec_float b = VecLoad(&m(0,1));
@@ -1042,12 +1043,12 @@ Transform4D Terathon::Adjugate(const Transform4D& m)
 		Bivector3D s = a ^ b;
 		Bivector3D t = c ^ d;
 
-		return (Transform4D(b ^ c, -(b ^ t), c ^ a, a ^ t, s, -(d ^ s)));
+		return (Transform3D(b ^ c, -(b ^ t), c ^ a, a ^ t, s, -(d ^ s)));
 
 	#endif
 }
 
-Matrix3D Terathon::Adjugate3D(const Transform4D& m)
+Matrix3D Terathon::InverseUnitDet3D(const Transform3D& m)
 {
 	const Vector3D& a = m[0];
 	const Vector3D& b = m[1];
@@ -1060,7 +1061,7 @@ Matrix3D Terathon::Adjugate3D(const Transform4D& m)
 	return (Matrix3D(g0.x, g0.y, g0.z, g1.x, g1.y, g1.z, g2.x, g2.y, g2.z));
 }
 
-Vector3D Terathon::InverseTransform(const Transform4D& m, const Vector3D& v)
+Vector3D Terathon::InverseTransform(const Transform3D& m, const Vector3D& v)
 {
 	const Vector3D& a = m[0];
 	const Vector3D& b = m[1];
@@ -1072,7 +1073,7 @@ Vector3D Terathon::InverseTransform(const Transform4D& m, const Vector3D& v)
 	return (Vector3D((b ^ c ^ v) * invDet, (c ^ a ^ v) * invDet, (s ^ v) * invDet));
 }
 
-Point3D Terathon::InverseTransform(const Transform4D& m, const Point3D& p)
+Point3D Terathon::InverseTransform(const Transform3D& m, const Point3D& p)
 {
 	const Vector3D& a = m[0];
 	const Vector3D& b = m[1];
@@ -1086,7 +1087,7 @@ Point3D Terathon::InverseTransform(const Transform4D& m, const Point3D& p)
 	return (Point3D((b ^ c ^ q) * invDet, (c ^ a ^ q) * invDet, (s ^ q) * invDet));
 }
 
-Vector3D Terathon::AdjugateTransform(const Transform4D& m, const Vector3D& v)
+Vector3D Terathon::InverseUnitDetTransform(const Transform3D& m, const Vector3D& v)
 {
 	const Vector3D& a = m[0];
 	const Vector3D& b = m[1];
@@ -1095,7 +1096,7 @@ Vector3D Terathon::AdjugateTransform(const Transform4D& m, const Vector3D& v)
 	return (Vector3D(b ^ c ^ v, c ^ a ^ v, a ^ b ^ v));
 }
 
-Point3D Terathon::AdjugateTransform(const Transform4D& m, const Point3D& p)
+Point3D Terathon::InverseUnitDetTransform(const Transform3D& m, const Point3D& p)
 {
 	const Vector3D& a = m[0];
 	const Vector3D& b = m[1];

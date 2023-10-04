@@ -61,7 +61,7 @@ Point3D Motor3D::GetPosition(void) const
 	return (Point3D((A03 + B03) * 2.0F, (A13 + B13) * 2.0F, (A23 + B23) * 2.0F));
 }
 
-Transform4D Motor3D::GetTransformMatrix(void) const
+Transform3D Motor3D::GetTransformMatrix(void) const
 {
 	float vx2 = v.x * v.x;
 	float vy2 = v.y * v.y;
@@ -84,12 +84,12 @@ Transform4D Motor3D::GetTransformMatrix(void) const
 	float B13 = m.y * v.w - v.y * m.w;
 	float B23 = m.z * v.w - v.z * m.w;
 
-	return (Transform4D(       A00,         (A01 - B01) * 2.0F, (A02 + B20) * 2.0F, (A03 + B03) * 2.0F,
+	return (Transform3D(       A00,         (A01 - B01) * 2.0F, (A02 + B20) * 2.0F, (A03 + B03) * 2.0F,
 	                    (A01 + B01) * 2.0F,        A11,         (A12 - B12) * 2.0F, (A13 + B13) * 2.0F,
 	                    (A02 - B20) * 2.0F, (A12 + B12) * 2.0F,        A22,         (A23 + B23) * 2.0F));
 }
 
-Transform4D Motor3D::GetInverseTransformMatrix(void) const
+Transform3D Motor3D::GetInverseTransformMatrix(void) const
 {
 	float vx2 = v.x * v.x;
 	float vy2 = v.y * v.y;
@@ -112,12 +112,12 @@ Transform4D Motor3D::GetInverseTransformMatrix(void) const
 	float B13 = m.y * v.w - v.y * m.w;
 	float B23 = m.z * v.w - v.z * m.w;
 
-	return (Transform4D(       A00,         (A01 + B01) * 2.0F, (A02 - B20) * 2.0F, (A03 - B03) * 2.0F,
+	return (Transform3D(       A00,         (A01 + B01) * 2.0F, (A02 - B20) * 2.0F, (A03 - B03) * 2.0F,
 	                    (A01 - B01) * 2.0F,        A11,         (A12 + B12) * 2.0F, (A13 - B13) * 2.0F,
 	                    (A02 + B20) * 2.0F, (A12 - B12) * 2.0F,        A22,         (A23 - B23) * 2.0F));
 }
 
-void Motor3D::GetTransformMatrices(Transform4D *M, Transform4D *Minv) const
+void Motor3D::GetTransformMatrices(Transform3D *M, Transform3D *Minv) const
 {
 	float vx2 = v.x * v.x;
 	float vy2 = v.y * v.y;
@@ -149,7 +149,7 @@ void Motor3D::GetTransformMatrices(Transform4D *M, Transform4D *Minv) const
 	          (A02 + B20) * 2.0F, (A12 - B12) * 2.0F,        A22,         (A23 - B23) * 2.0F);
 }
 
-Motor3D& Motor3D::SetTransformMatrix(const Transform4D& M)
+Motor3D& Motor3D::SetTransformMatrix(const Transform3D& M)
 {
 	v.SetRotationMatrix(M);
 
@@ -210,11 +210,11 @@ Motor3D Terathon::Sqrt(const Motor3D& Q)
 	return (Motor3D(Q.v.x * b, Q.v.y * b, Q.v.z * b, Q.v.w * b + b, (Q.v.x * a + Q.m.x) * b, (Q.v.y * a + Q.m.y) * b, (Q.v.z * a + Q.m.z) * b, Q.m.w * (b * 0.5F)));
 }
 
-Vector4D Terathon::Transform(const Vector4D& p, const Motor3D& Q)
+FlatPoint3D Terathon::Transform(const FlatPoint3D& p, const Motor3D& Q)
 {
 	#ifdef TERATHON_SSE
 
-		Vector4D	result;
+		FlatPoint3D		result;
 
 		vec_float q = VecLoadUnaligned(&p.x);
 		vec_float v = VecLoadUnaligned(&Q.v.x);
@@ -232,7 +232,7 @@ Vector4D Terathon::Transform(const Vector4D& p, const Motor3D& Q)
 	#else
 
 		Bivector3D Qvp = (!Q.v.xyz ^ p.xyz);
-		return (Vector4D(p.xyz + ((Q.v.xyz ^ Qvp) + !Qvp * Q.v.w + (!Q.m.xyz * Q.v.w - !Q.v.xyz * Q.m.w + (Q.v.xyz ^ Q.m.xyz)) * p.w) * 2.0F, p.w));
+		return (FlatPoint3D(p.xyz + ((Q.v.xyz ^ Qvp) + !Qvp * Q.v.w + (!Q.m.xyz * Q.v.w - !Q.v.xyz * Q.m.w + (Q.v.xyz ^ Q.m.xyz)) * p.w) * 2.0F, p.w));
 
 	#endif
 }

@@ -15,7 +15,6 @@ using namespace Terathon;
 
 
 const ConstVector4D Vector4D::zero = {0.0F, 0.0F, 0.0F, 0.0F};
-const ConstVector4D Vector4D::origin = {0.0F, 0.0F, 0.0F, 1.0F};
 
 const ConstVector4D Vector4D::x_unit = {1.0F, 0.0F, 0.0F, 0.0F};
 const ConstVector4D Vector4D::y_unit = {0.0F, 1.0F, 0.0F, 0.0F};

@@ -11,10 +11,6 @@
 #define TSVector3D_h
 
 
-//# \component	Math Library
-//# \prefix		Math/
-
-
 #include "TSVector2D.h"
 
 
@@ -30,225 +26,9 @@ namespace Terathon
 	struct ConstVector3D;
 
 
-	//# \class	Vector3D	Encapsulates a 3D vector.
-	//
-	//# The $Vector3D$ class encapsulates a 3D vector.
-	//
-	//# \def	class Vector3D : public Vec3D<TypeVector3D>
-	//
-	//# \ctor	Vector3D();
-	//# \ctor	Vector3D(float a, float b, float c);
-	//# \ctor	template <typename type> explicit Vector3D(const Vec3D<type>& v);
-	//
-	//# \param	a	The value of the <i>x</i> coordinate.
-	//# \param	b	The value of the <i>y</i> coordinate.
-	//# \param	c	The value of the <i>z</i> coordinate.
-	//# \param	v	Another 3D vector, possibly with a different component type, that is converted to a $Vector3D$.
-	//
-	//# \desc
-	//# The $Vector3D$ class is used to store a three-dimensional direction vector
-	//# having floating-point components <i>x</i>, <i>y</i>, and <i>z</i>. A direction vector
-	//# stored in this class is assumed to have a <i>w</i> coordinate of 0 whenever it needs
-	//# to be converted to a four-dimensional representation. Three-dimensional points
-	//# (for which the <i>w</i> coordinate is 1) should be stored using the $@Point3D@$ class.
-	//#
-	//# The default constructor leaves the components of the vector undefined.
-	//# If the values $a$, $b$, and $c$ are supplied, then they are assigned to the
-	//# <i>x</i>, <i>y</i>, and <i>z</i> coordinates of the vector, respectively.
-	//
-	//# \operator	float& operator [](machine k);
-	//#				Returns a reference to the $k$-th scalar component of a vector.
-	//#				The value of $k$ must be 0, 1, or 2.
-	//
-	//# \operator	const float& operator [](machine k) const;
-	//#				Returns a constant reference to the $k$-th scalar component of a vector.
-	//#				The value of $k$ must be 0, 1, or 2.
-	//
-	//# \operator	Vector3D& operator +=(const Vector3D& v);
-	//#				Adds the vector $v$.
-	//
-	//# \operator	Vector3D& operator -=(const Vector3D& v);
-	//#				Subtracts the vector $v$.
-	//
-	//# \operator	Vector3D& operator *=(const Vector3D& v);
-	//#				Calculates the componentwise product with the vector $v$.
-	//
-	//# \operator	Vector3D& operator *=(float n);
-	//#				Multiplies by the scalar $n$.
-	//
-	//# \operator	Vector3D& operator /=(float n);
-	//#				Divides by the scalar $n$.
-	//
-	//# \action		bool operator ==(const Vector3D& v1, const Vector3D& v2) const;
-	//#				Returns a boolean value indicating whether the two vectors $v1$ and $v2$ are equal.
-	//
-	//# \action		bool operator !=(const Vector3D& v1, const Vector3D& v2) const;
-	//#				Returns a boolean value indicating whether the two vectors $v1$ and $v2$ are not equal.
-	//
-	//# \action		Vector3D operator -(const Vector3D& v);
-	//#				Returns the negation of the vector $v$.
-	//
-	//# \action		Vector3D operator +(const Vector3D& a, const Vector3D& b);
-	//#				Returns the sum of the vectors $a$ and $b$.
-	//
-	//# \action		Vector3D operator -(const Vector3D& a, const Vector3D& b);
-	//#				Returns the difference of the vectors $a$ and $b$.
-	//
-	//# \action		Vector3D operator *(const Vector3D& v, float n);
-	//#				Returns the product of the vector $v$ and the scalar $n$.
-	//
-	//# \action		Vector3D operator *(float n, const Vector3D& v);
-	//#				Returns the product of the vector $v$ and the scalar $n$.
-	//
-	//# \action		Vector3D operator /(const Vector3D& v, float n);
-	//#				Returns the product of the vector $v$ and the inverse of the scalar $n$.
-	//
-	//# \action		Vector3D operator *(const Vector3D& a, const Vector3D& b);
-	//#				Returns the componentwise product of the vectors $a$ and $b$
-	//
-	//# \action		float BulkNorm(const Vector3D& v);
-	//#				Returns the bulk norm of the vector $v$.
-	//
-	//# \action		float WeightNorm(const Vector3D& v);
-	//#				Returns the weight norm of the vector $v$.
-	//
-	//# \action		Point2D Unitize(const Vector3D& v);
-	//#				Returns the 2D point represented by the vector $v$ after unitization.
-	//
-	//# \action		float Magnitude(const Vector3D& v);
-	//#				Returns the magnitude of the vector $v$.
-	//
-	//# \action		float InverseMag(const Vector3D& v);
-	//#				Returns the inverse magnitude of the vector $v$.
-	//
-	//# \action		float SquaredMag(const Vector3D& v);
-	//#				Returns the squared magnitude of the vector $v$.
-	//
-	//# \action		float Dot(const Vector3D& a, const Vector3D& b);
-	//#				Returns the dot product between $a$ and $b$.
-	//
-	//# \action		Vector3D Cross(const Vector3D& a, const Vector3D& b);
-	//#				Returns the cross product between $a$ and $b$.
-	//
-	//# \action		Vector3D Project(const Vector3D& a, const Vector3D& b);
-	//#				Returns (<b>a</b>&#x202F;&sdot;&#x202F;<b>b</b>)<b>b</b>, which is the projection of $a$ onto $b$ under the assumption that the magnitude of $b$ is one.
-	//
-	//# \action		Vector3D Reject(const Vector3D& a, const Vector3D& b);
-	//#				Returns <b>a</b>&#x202F;&minus;&#x202F;(<b>a</b>&#x202F;&sdot;&#x202F;<b>b</b>)<b>b</b>, which is the rejection of $a$ from $b$ under the assumption that the magnitude of $b$ is one.
-	//
-	//# \privbase	Vec3D	Vectors use a generic base class to store their components.
-	//
-	//# \also	$@Point3D@$
-	//# \also	$@Vector4D@$
-
-
-	//# \function	Vector3D::Set		Sets all three components of a vector.
-	//
-	//# \proto	Vector3D& Set(float a, float b, float c);
-	//
-	//# \param	a	The new <i>x</i> coordinate.
-	//# \param	b	The new <i>y</i> coordinate.
-	//# \param	c	The new <i>z</i> coordinate.
-	//
-	//# \desc
-	//# The $Set$ function sets the <i>x</i>, <i>y</i>, and <i>z</i> coordinates of a vector to
-	//# the values given by the $a$, $b$, and $c$ parameters, respectively.
-	//#
-	//# The return value is a reference to the vector object.
-
-
-	//# \function	Vector3D::Normalize		Normalizes a 3D vector.
-	//
-	//# \proto	Vector3D& Normalize(void);
-	//
-	//# \desc
-	//# The $Normalize$ function multiplies a 3D vector by the inverse of its magnitude,
-	//# normalizing it to unit length. Normalizing the zero vector produces undefined results.
-	//#
-	//# The return value is a reference to the vector object.
-
-
-	//# \function	Vector3D::Unitize		Unitizes the weight of a 3D vector.
-	//
-	//# \proto	Vector3D& Unitize(void);
-	//
-	//# \desc
-	//# The $Unitize$ function multiplies a 3D vector by the inverse of its <i>z</i> coordinate,
-	//# transforming it into a homogeneous point having a unit weight. If the <i>z</i> coordinate is
-	//# zero, then the resulting <i>x</i> and <i>y</i> coordinates are undefined.
-	//# In all cases, the <i>z</i> coordinate is 1.0 when this function returns.
-	//#
-	//# The return value is a reference to the vector object.
-
-
-	//# \function	Vector3D::RotateAboutX		Rotates a vector about the <i>x</i> axis.
-	//
-	//# \proto	Vector3D& RotateAboutX(float angle);
-	//
-	//# \param	angle	The angle through which the vector is rotated, in radians.
-	//
-	//# \desc
-	//# The $RotateAboutX$ function rotates a vector about the <i>x</i> axis through the
-	//# angle given by the $angle$ parameter.
-	//#
-	//# The return value is a reference to the vector object.
-	//
-	//# \also	$@Vector3D::RotateAboutY@$
-	//# \also	$@Vector3D::RotateAboutZ@$
-	//# \also	$@Vector3D::RotateAboutAxis@$
-
-
-	//# \function	Vector3D::RotateAboutY		Rotates a vector about the <i>y</i> axis.
-	//
-	//# \proto	Vector3D& RotateAboutY(float angle);
-	//
-	//# \param	angle	The angle through which the vector is rotated, in radians.
-	//
-	//# \desc
-	//# The $RotateAboutY$ function rotates a vector about the <i>y</i> axis through the
-	//# angle given by the $angle$ parameter.
-	//#
-	//# The return value is a reference to the vector object.
-	//
-	//# \also	$@Vector3D::RotateAboutX@$
-	//# \also	$@Vector3D::RotateAboutZ@$
-	//# \also	$@Vector3D::RotateAboutAxis@$
-
-
-	//# \function	Vector3D::RotateAboutZ		Rotates a vector about the <i>z</i> axis.
-	//
-	//# \proto	Vector3D& RotateAboutZ(float angle);
-	//
-	//# \param	angle	The angle through which the vector is rotated, in radians.
-	//
-	//# \desc
-	//# The $RotateAboutZ$ function rotates a vector about the <i>z</i> axis through the
-	//# angle given by the $angle$ parameter.
-	//#
-	//# The return value is a reference to the vector object.
-	//
-	//# \also	$@Vector3D::RotateAboutX@$
-	//# \also	$@Vector3D::RotateAboutY@$
-	//# \also	$@Vector3D::RotateAboutAxis@$
-
-
-	//# \function	Vector3D::RotateAboutAxis		Rotates a vector about a given axis.
-	//
-	//# \proto	Vector3D& RotateAboutAxis(float angle, const Bivector3D& axis);
-	//
-	//# \param	angle	The angle through which the vector is rotated, in radians.
-	//# \param	axis	The axis about which the vector is rotated.
-	//
-	//# \desc
-	//# The $RotateAboutAxis$ function rotates a vector through the angle given by the
-	//# $angle$ parameter about the axis given by the $axis$ parameter.
-	//#
-	//# The return value is a reference to the vector object.
-	//
-	//# \also	$@Vector3D::RotateAboutX@$
-	//# \also	$@Vector3D::RotateAboutY@$
-	//# \also	$@Vector3D::RotateAboutZ@$
-
+	// ==============================================
+	//	Vector3D
+	// ==============================================
 
 	struct TypeVector3D
 	{
@@ -257,6 +37,17 @@ namespace Terathon
 		typedef Vector3D vector3D_type;
 	};
 
+
+	/// @brief Encapsulates a 3D vector.
+	///
+	/// The \c Vector3D class is used to store a three-dimensional direction vector having floating-point
+	/// components <i>x</i>, <i>y</i>, and <i>z</i>. A direction vector stored in this class is assumed to
+	/// have a <i>w</i> coordinate of 0 whenever it needs to be converted to a four-dimensional representation.
+	/// Three-dimensional points (for which the <i>w</i> coordinate is 1) should be stored using the \c Point3D class.
+	///
+	/// @sa Point3D
+	/// @sa Vector2D
+	/// @sa Vector4D
 
 	class Vector3D : public Vec3D<TypeVector3D>
 	{
@@ -272,7 +63,12 @@ namespace Terathon
 			TERATHON_API static const ConstVector3D minus_y_unit;
 			TERATHON_API static const ConstVector3D minus_z_unit;
 
+			/// @brief Default constructor that leaves the components uninitialized.
+
 			inline Vector3D() = default;
+
+			/// @brief Constructor that sets components explicitly.
+			/// @param a,b,c	The components of the vector.
 
 			Vector3D(float a, float b, float c) : Vec3D<TypeVector3D>(a, b, c) {}
 
@@ -290,6 +86,9 @@ namespace Terathon
 				xy = v.xy;
 				z = c;
 			}
+
+			/// @brief Sets all three components of a 3D vector.
+			/// @param a,b,c	The new components of the vector.
 
 			Vector3D& Set(float a, float b, float c)
 			{
@@ -434,27 +233,30 @@ namespace Terathon
 				return (*this);
 			}
 
+			/// @brief Rotates the vector about the <i>x</i> axis through the
+			/// angle, in radians, given by the \c angle parameter.
+
 			TERATHON_API Vector3D& RotateAboutX(float angle);
+
+			/// @brief Rotates the vector about the <i>y</i> axis through the
+			/// angle, in radians, given by the \c angle parameter.
+
 			TERATHON_API Vector3D& RotateAboutY(float angle);
+
+			/// @brief Rotates the vector about the <i>z</i> axis through the
+			/// angle, in radians, given by the \c angle parameter.
+
 			TERATHON_API Vector3D& RotateAboutZ(float angle);
+
+			/// @brief Rotates the vector about the axis given by the \c axis parameter
+			/// through the angle, in radians, given by the \c angle parameter.
+
 			TERATHON_API Vector3D& RotateAboutAxis(float angle, const Bivector3D& axis);
 	};
 
 
-	inline const Vector3D& Reverse(const Vector3D& v)
-	{
-		return (v);
-	}
-
-	inline Vector3D Antireverse(const Vector3D& v)
-	{
-		return (Vector3D(-v.x, -v.y, -v.z));
-	}
-
-	inline Vector3D operator ~(const Vector3D& v)
-	{
-		return (Antireverse(v));
-	}
+	/// @brief Returns the negation of the 3D vector \c v.
+	/// @related Vector3D
 
 	inline Vector3D operator -(const Vector3D& v)
 	{
@@ -493,21 +295,33 @@ namespace Terathon
 		return (Vector3D(a.x - b.data[index_x], a.y - b.data[index_y], a.z - b.data[index_z]));
 	}
 
+	/// @brief Returns the product of the 3D vector \c v and the scalar \c n.
+	/// @related Vector3D
+
 	inline Vector3D operator *(const Vector3D& v, float n)
 	{
 		return (Vector3D(v.x * n, v.y * n, v.z * n));
 	}
+
+	/// @brief Returns the product of the 3D vector \c v and the scalar \c n.
+	/// @related Vector3D
 
 	inline Vector3D operator *(float n, const Vector3D& v)
 	{
 		return (Vector3D(n * v.x, n * v.y, n * v.z));
 	}
 
+	/// @brief Returns the product of the 3D vector \c v and the inverse of the scalar \c n.
+	/// @related Vector3D
+
 	inline Vector3D operator /(const Vector3D& v, float n)
 	{
 		n = 1.0F / n;
 		return (Vector3D(v.x * n, v.y * n, v.z * n));
 	}
+
+	/// @brief Returns the componentwise product of the 3D vectors \c a and \c b.
+	/// @related Vector3D
 
 	inline Vector3D operator *(const Vector3D& a, const Vector3D& b)
 	{
@@ -526,149 +340,23 @@ namespace Terathon
 		return (a.data[index_x] * b.x + a.data[index_y] * b.y + a.data[index_z] * b.z);
 	}
 
-	inline float BulkNorm(const Vector3D& v)
-	{
-		return (Sqrt(v.x * v.x + v.y * v.y));
-	}
 
-	inline float WeightNorm(const Vector3D& v)
-	{
-		return (Fabs(v.z));
-	}
+	// ==============================================
+	//	Point3D
+	// ==============================================
 
-	inline Point2D Unitize(const Vector3D& v)
-	{
-		float n = 1.0F / v.z;
-		return (Point2D(v.x * n, v.y * n));
-	}
-
-	inline float Magnitude(const Vector3D& v)
-	{
-		return (Sqrt(v.x * v.x + v.y * v.y + v.z * v.z));
-	}
-
-	inline float InverseMag(const Vector3D& v)
-	{
-		return (InverseSqrt(v.x * v.x + v.y * v.y + v.z * v.z));
-	}
-
-	inline float SquaredMag(const Vector3D& v)
-	{
-		return (v.x * v.x + v.y * v.y + v.z * v.z);
-	}
-
-	inline Vector3D Normalize(const Vector3D& v)
-	{
-		return (v * InverseMag(v));
-	}
-
-	inline float Dot(const Vector3D& a, const Vector3D& b)
-	{
-		return (a.x * b.x + a.y * b.y + a.z * b.z);
-	}
-
-	inline Vector3D Cross(const Vector3D& a, const Vector3D& b)
-	{
-		return (Vector3D(a.y * b.z - a.z * b.y, a.z * b.x - a.x * b.z, a.x * b.y - a.y * b.x));
-	}
-
-	inline Vector3D Project(const Vector3D& a, const Vector3D& b)
-	{
-		return (b * Dot(a, b));
-	}
-
-	inline Vector3D Reject(const Vector3D& a, const Vector3D& b)
-	{
-		return (a - b * Dot(a, b));
-	}
-
-	inline Vector3D Floor(const Vector3D& v)
-	{
-		return (Vector3D(Floor(v.x), Floor(v.y), Floor(v.z)));
-	}
-
-	inline Vector3D Ceil(const Vector3D& v)
-	{
-		return (Vector3D(Ceil(v.x), Ceil(v.y), Ceil(v.z)));
-	}
-
-
-	//# \class	Point3D		Encapsulates a 3D point.
-	//
-	//# The $Point3D$ class encapsulates a 3D point.
-	//
-	//# \def	class Point3D : public Vector3D
-	//
-	//# \ctor	Point3D();
-	//# \ctor	Point3D(float a, float b, float c);
-	//
-	//# \param	a	The value of the <i>x</i> coordinate.
-	//# \param	b	The value of the <i>y</i> coordinate.
-	//# \param	c	The value of the <i>z</i> coordinate.
-	//
-	//# \desc
-	//# The $Point3D$ class is used to store a three-dimensional point having floating-point
-	//# coordinates <i>x</i>, <i>y</i>, and <i>z</i>. The difference between a point and a
-	//# vector is that a point is assumed to have a <i>w</i> coordinate of 1 whenever it
-	//# needs to be converted to a four-dimensional representation, whereas a vector is
-	//# assumed to have a <i>w</i> coordinate of 0. Such a conversion occurs when a vector or
-	//# point is assigned to a $@Vector4D@$ object or is multiplied by a $@Transform4D@$ object.
-	//#
-	//# The default constructor leaves the components of the vector undefined.
-	//# If the values $a$, $b$, and $c$ are supplied, then they are assigned to the
-	//# <i>x</i>, <i>y</i>, and <i>z</i> coordinates of the base vector object, respectively.
-	//#
-	//# The difference between two points produces a direction vector. A three-dimensional
-	//# direction vector is converted to a point by adding it to the identifier $Zero3D$.
-	//
-	//# \operator	Point3D& operator *=(float n);
-	//#				Multiplies by the scalar $n$.
-	//
-	//# \operator	Point3D& operator /=(float n);
-	//#				Divides by the scalar $n$.
-	//
-	//# \action		Point3D operator -(const Point3D& p);
-	//#				Returns the negation of the point $p$.
-	//
-	//# \action		Point3D operator +(const Point3D& p1, const Point3D& p2);
-	//#				Returns the sum of the points $p1$ and $p2$.
-	//
-	//# \action		Point3D operator +(const Point3D& p, const Vector3D& v);
-	//#				Returns the sum of the point $p$ and the vector $v$.
-	//
-	//# \action		Vector3D operator -(const Point3D& p1, const Point3D& p2);
-	//#				Returns the difference of the points $p1$ and $p2$.
-	//
-	//# \action		Point3D operator -(const Point3D& p, const Vector3D& v);
-	//#				Returns the difference of the point $p$ and the vector $v$.
-	//
-	//# \action		Point3D operator -(const Vector3D& v, const Point3D& p);
-	//#				Returns the difference of the vector $v$ and the point $p$.
-	//
-	//# \action		Point3D operator *(const Point3D& p, float t);
-	//#				Returns the product of the point $p$ and the scalar $t$.
-	//
-	//# \action		Point3D operator *(float t, const Point3D& p);
-	//#				Returns the product of the point $p$ and the scalar $t$.
-	//
-	//# \action		Point3D operator /(const Point3D& p, float t);
-	//#				Returns the product of the point $p$ and the inverse of the scalar $t$.
-	//
-	//# \action		Point3D operator *(const Point3D& p1, const Point3D& p2);
-	//#				Returns the componentwise product of the points $p1$ and $p2$.
-	//
-	//# \action		Point3D operator *(const Point3D& p, const Vector3D& v);
-	//#				Returns the componentwise product of the point $p$ and the vector $v$.
-	//
-	//# \action		Point3D operator *(const Vector3D& v, const Point3D& p);
-	//#				Returns the componentwise product of the vector $v$ and the point $p$.
-	//
-	//# \base	Vector3D	A $Point3D$ object behaves much like a $@Vector3D@$ object, but some
-	//#						properties are altered.
-	//
-	//# \also	$@Vector3D@$
-	//# \also	$@Vector4D@$
-
+	/// @brief Encapsulates a 3D point.
+	///
+	/// The \c Point3D class is used to store a three-dimensional point having floating-point
+	/// coordinates <i>x</i>, <i>y</i>, and <i>z</i>. The difference between a point and a vector
+	/// is that a point is assumed to have a <i>w</i> coordinate of 1 whenever it needs to be
+	/// converted to a four-dimensional representation, whereas a vector is assumed to have a
+	/// <i>w</i> coordinate of 0. Such a conversion occurs when a vector or point is assigned
+	/// to a \c Vector4D object or is multiplied by a \c Transform3D object.
+	///
+	/// @sa Vector2D
+	/// @sa Vector3D
+	/// @sa Vector4D
 
 	class Point3D : public Vector3D
 	{
@@ -676,9 +364,15 @@ namespace Terathon
 
 			TERATHON_API static const Origin3D origin;
 
+			/// @brief Default constructor that leaves the components uninitialized.
+
 			inline Point3D() = default;
 
+			/// @brief Constructor that sets components explicitly.
+			/// @param a,b,c	The components of the point.
+
 			Point3D(float a, float b, float c) : Vector3D(a, b, c) {}
+
 			Point3D(const Vector2D& v) : Vector3D(v) {}
 			Point3D(const Vector2D& v, float c) : Vector3D(v, c) {}
 			explicit Point3D(const Vector3D& p) : Vector3D(p) {}
@@ -748,6 +442,9 @@ namespace Terathon
 	};
 
 
+	/// @brief Returns the negation of the 3D point \c p.
+	/// @related Point3D
+
 	inline Point3D operator -(const Point3D& p)
 	{
 		return (Point3D(-p.x, -p.y, -p.z));
@@ -795,21 +492,33 @@ namespace Terathon
 		return (Point3D(v.x - p.x, v.y - p.y, v.z - p.z));
 	}
 
+	/// @brief Returns the product of the 3D point \c p and the scalar \c n.
+	/// @related Point3D
+
 	inline Point3D operator *(const Point3D& p, float n)
 	{
 		return (Point3D(p.x * n, p.y * n, p.z * n));
 	}
+
+	/// @brief Returns the product of the 3D point \c p and the scalar \c n.
+	/// @related Point3D
 
 	inline Point3D operator *(float n, const Point3D& p)
 	{
 		return (Point3D(n * p.x, n * p.y, n * p.z));
 	}
 
+	/// @brief Returns the product of the 3D point \c p and the inverse of the scalar \c n.
+	/// @related Point3D
+
 	inline Point3D operator /(const Point3D& p, float n)
 	{
 		n = 1.0F / n;
 		return (Point3D(p.x * n, p.y * n, p.z * n));
 	}
+
+	/// @brief Returns the componentwise product of the 3D points \c a and \c b.
+	/// @related Point3D
 
 	inline Point3D operator *(const Point3D& a, const Point3D& b)
 	{
@@ -826,10 +535,57 @@ namespace Terathon
 		return (Point3D(v.x * p.x, v.y * p.y, v.z * p.z));
 	}
 
-	template <typename type_struct, int count, int index_x, int index_y, int index_z, int index_w>
-	inline float operator ^(const Subvec4D<type_struct, true, count, index_x, index_y, index_z, index_w>& a, const Point3D& b)
+	// ==============================================
+	//	Magnitude
+	// ==============================================
+
+	/// @brief Returns the magnitude of the 3D vector \c v.
+	/// @relatedalso Vector3D
+
+	inline float Magnitude(const Vector3D& v)
 	{
-		return (a.data[index_x] * b.x + a.data[index_y] * b.y + a.data[index_z] * b.z + a.data[index_w]);
+		return (Sqrt(v.x * v.x + v.y * v.y + v.z * v.z));
+	}
+
+	/// @brief Returns the inverse magnitude of the 3D vector \c v.
+	/// @relatedalso Vector3D
+
+	inline float InverseMag(const Vector3D& v)
+	{
+		return (InverseSqrt(v.x * v.x + v.y * v.y + v.z * v.z));
+	}
+
+	/// @brief Returns the squared magnitude of the 3D vector \c v.
+	/// @relatedalso Vector3D
+
+	inline float SquaredMag(const Vector3D& v)
+	{
+		return (v.x * v.x + v.y * v.y + v.z * v.z);
+	}
+
+	/// @brief Calculates the normalized version of the 3D vector \c v.
+	///
+	/// Multiplies the 3D vector \c v by the inverse of its magnitude. The return value is a vector
+	/// having unit length that points in the same direction as \c v. If the magnitude of \c v is zero,
+	/// then the result is undefined.
+	///
+	/// @relatedalso Vector3D
+
+	inline Vector3D Normalize(const Vector3D& v)
+	{
+		return (v * InverseMag(v));
+	}
+
+	// ==============================================
+	//	Dot
+	// ==============================================
+
+	/// @brief Calculates the dot product of the 3D vectors \c a and \c b.
+	/// @relatedalso Vector3D
+
+	inline float Dot(const Vector3D& a, const Vector3D& b)
+	{
+		return (a.x * b.x + a.y * b.y + a.z * b.z);
 	}
 
 	inline float Dot(const Point3D& a, const Point3D& b)
@@ -847,6 +603,68 @@ namespace Terathon
 		return (v.x * p.x + v.y * p.y + v.z * p.z);
 	}
 
+	template <typename type_struct, int count, int index_x, int index_y, int index_z, int index_w>
+	inline float operator ^(const Subvec4D<type_struct, true, count, index_x, index_y, index_z, index_w>& a, const Point3D& b)
+	{
+		return (a.data[index_x] * b.x + a.data[index_y] * b.y + a.data[index_z] * b.z + a.data[index_w]);
+	}
+
+	// ==============================================
+	//	Cross
+	// ==============================================
+
+	/// @brief Calculates the cross product of the 3D vectors \c a and \c b.
+	/// @relatedalso Vector3D
+
+	inline Vector3D Cross(const Vector3D& a, const Vector3D& b)
+	{
+		return (Vector3D(a.y * b.z - a.z * b.y, a.z * b.x - a.x * b.z, a.x * b.y - a.y * b.x));
+	}
+
+	// ==============================================
+	//	Projection
+	// ==============================================
+
+	/// @brief Returns (<b>a</b>&#x202F;&sdot;&#x202F;<b>b</b>)<b>b</b>, which is the projection of \c a onto \c b under the assumption that the magnitude of \c b is one.
+	/// @relatedalso Vector3D
+
+	inline Vector3D Project(const Vector3D& a, const Vector3D& b)
+	{
+		return (b * Dot(a, b));
+	}
+
+	/// @brief Returns <b>a</b>&#x202F;&minus;&#x202F;(<b>a</b>&#x202F;&sdot;&#x202F;<b>b</b>)<b>b</b>, which is the rejection of \c a from \c b under the assumption that the magnitude of \c b is one.
+	/// @relatedalso Vector3D
+
+	inline Vector3D Reject(const Vector3D& a, const Vector3D& b)
+	{
+		return (a - b * Dot(a, b));
+	}
+
+	// ==============================================
+	//	Floor / ceiling
+	// ==============================================
+
+	/// @brief Returns the componentwise floor of the 3D vector \c v.
+	/// @related Vector3D
+
+	inline Vector3D Floor(const Vector3D& v)
+	{
+		return (Vector3D(Floor(v.x), Floor(v.y), Floor(v.z)));
+	}
+
+	/// @brief Returns the componentwise ceiling of the 3D vector \c v.
+	/// @related Vector3D
+
+	inline Vector3D Ceil(const Vector3D& v)
+	{
+		return (Vector3D(Ceil(v.x), Ceil(v.y), Ceil(v.z)));
+	}
+
+
+	// ==============================================
+	//	POD Structures
+	// ==============================================
 
 	#ifndef TERATHON_NO_SIMD
 

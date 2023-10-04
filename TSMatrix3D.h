@@ -11,249 +11,28 @@
 #define TSMatrix3D_h
 
 
-//# \component	Math Library
-//# \prefix		Math/
-
-
-#include "TSBivector3D.h"
 #include "TSMatrix2D.h"
+#include "TSBivector3D.h"
+#include "TSRigid2D.h"
 
 
 #define TERATHON_MATRIX3D 1
+#define TERATHON_TRANSFORM2D 1
 
 
 namespace Terathon
 {
 	class Matrix3D;
 	class Matrix4D;
-	class Transform4D;
+	class Transform2D;
+	class Transform3D;
 	struct ConstMatrix3D;
+	struct ConstTransform2D;
 
 
-	//# \class	Matrix3D	Encapsulates a 3&#x202F;&times;&#x202F;3 matrix.
-	//
-	//# The $Matrix3D$ class encapsulates a 3&#x202F;&times;&#x202F;3 matrix.
-	//
-	//# \def	class Matrix3D : public Mat3D<TypeMatrix3D>
-	//
-	//# \ctor	Matrix3D();
-	//# \ctor	Matrix3D(float n00, float n01, float n02, float n10, float n11, float n12, float n20, float n21, float n22);
-	//# \ctor	Matrix3D(const Vector3D& a, const Vector3D& b, const Vector3D& c);
-	//
-	//# \param	nij		The value of the entry residing in row <i>i</i> and column <i>j</i>.
-	//# \param	a		The values of the entries residing in first column.
-	//# \param	b		The values of the entries residing in second column.
-	//# \param	c		The values of the entries residing in third column.
-	//
-	//# \desc
-	//# The $Matrix3D$ class is used to store a 3&#x202F;&times;&#x202F;3 matrix. The entries of the matrix
-	//# are accessed using the $()$ operator with two indexes specifying the row and column of an entry.
-	//#
-	//# The default constructor leaves the entries of the matrix undefined. If the nine entries are
-	//# supplied, then the $n$<i>ij</i> parameter specifies the entry in the <i>i</i>-th row and
-	//# <i>j</i>-th column. If the matrix is constructed using the three vectors $a$, $b$, and
-	//# $c$, then these vectors initialize the three columns of the matrix.
-	//
-	//# \operator	float& operator ()(machine i, machine j);
-	//#				Returns a reference to the entry in the <i>i</i>-th row and <i>j</i>-th column.
-	//#				Both $i$ and $j$ must be 0, 1, or 2.
-	//
-	//# \operator	const float& operator ()(machine i, machine j) const;
-	//#				Returns a constant reference to the entry in the <i>i</i>-th row and <i>j</i>-th column.
-	//#				Both $i$ and $j$ must be 0, 1, or 2.
-	//
-	//# \operator	Vector3D& operator [](machine j);
-	//#				Returns a reference to the <i>j</i>-th column of a matrix. $j$ must be 0, 1, or 2.
-	//
-	//# \operator	const Vector3D& operator [](machine j) const;
-	//#				Returns a constant reference to the <i>j</i>-th column of a matrix. $j$ must be 0, 1, or 2.
-	//
-	//# \operator	Matrix3D& operator *=(const Matrix3D& m);
-	//#				Multiplies by the matrix $m$.
-	//
-	//# \operator	Matrix3D& operator *=(float s);
-	//#				Multiplies by the scalar $s$.
-	//
-	//# \operator	Matrix3D& operator /=(float s);
-	//#				Multiplies by the inverse of the scalar $s$.
-	//
-	//# \action		Matrix3D operator *(const Matrix3D& m1, const Matrix3D& m2);
-	//#				Returns the product of the matrices $m1$ and $m2$.
-	//
-	//# \action		Matrix3D operator *(const Matrix3D& m, float s);
-	//#				Returns the product of the matrix $m$ and the scalar $s$.
-	//
-	//# \action		Matrix3D operator /(const Matrix3D& m, float s);
-	//#				Returns the product of the matrix $m$ and the inverse of the scalar $s$.
-	//
-	//# \action		Vector3D operator *(const Matrix3D& m, const Vector3D& v);
-	//#				Returns the product of the matrix $m$ and the column vector $v$.
-	//
-	//# \action		Point3D operator *(const Matrix3D& m, const Point3D& p);
-	//#				Returns the product of the matrix $m$ and the column vector $p$.
-	//
-	//# \action		Vector3D operator *(const Vector3D& v, const Matrix3D& m);
-	//#				Returns the product of the row vector $v$ and the matrix $m$.
-	//
-	//# \action		Bivector3D operator *(const Bivector3D& v, const Matrix3D& m);
-	//#				Returns the product of the row bivector $v$ and the matrix $m$.
-	//
-	//# \action		float Determinant(const Matrix3D& m);
-	//#				Returns the determinant of the matrix $m$.
-	//
-	//# \action		Matrix3D Inverse(const Matrix3D& m);
-	//#				Returns the inverse of the matrix $m$. If $m$ is singular, then the result is undefined.
-	//
-	//# \action		Matrix3D Adjugate(const Matrix3D& m);
-	//#				Returns the adjugate of the matrix $m$.
-	//
-	//# \privbase	Mat3D	Matrices use a generic base class to store their components.
-	//
-	//# \also	$@Vector3D@$
-	//# \also	$@Matrix4D@$
-	//# \also	$@Transform4D@$
-
-
-	//# \function	Matrix3D::Set		Sets all nine entries of a matrix.
-	//
-	//# \proto	Matrix3D& Set(float n00, float n01, float n02, float n10, float n11, float n12, float n20, float n21, float n22);
-	//# \proto	Matrix3D& Set(const Vector3D& a, const Vector3D& b, const Vector3D& c);
-	//
-	//# \param	nij		The new value of the entry residing in row <i>i</i> and column <i>j</i>.
-	//# \param	a		The new values of the entries residing in first column.
-	//# \param	b		The new values of the entries residing in second column.
-	//# \param	c		The new values of the entries residing in third column.
-	//
-	//# \desc
-	//# The $Set$ function sets all nine entries of a matrix, either by specifying each entry individually
-	//# or by specifying each of the three columns as 3D vectors.
-	//#
-	//# The return value is a reference to the matrix object.
-	//
-	//# \also	$@Matrix3D::SetIdentity@$
-	//# \also	$@Matrix3D::MakeRotationX@$
-	//# \also	$@Matrix3D::MakeRotationY@$
-	//# \also	$@Matrix3D::MakeRotationZ@$
-	//# \also	$@Matrix3D::MakeRotation@$
-
-
-	//# \function	Matrix3D::SetIdentity		Sets a matrix to the 3&#x202F;&times;&#x202F;3 identity matrix.
-	//
-	//# \proto	Matrix3D& SetIdentity(void);
-	//
-	//# \desc
-	//# The $SetIdentity$ function replaces all entries of a matrix with the entries of the identity matrix.
-	//#
-	//# The return value is a reference to the matrix object.
-	//
-	//# \also	$@Matrix3D::Set@$
-	//# \also	$@Matrix3D::MakeRotationX@$
-	//# \also	$@Matrix3D::MakeRotationY@$
-	//# \also	$@Matrix3D::MakeRotationZ@$
-	//# \also	$@Matrix3D::MakeRotation@$
-
-
-	//# \function	Matrix3D::Orthogonalize		Orthogonalizes the columns of a matrix.
-	//
-	//# \proto	Matrix3D& Orthogonalize(column);
-	//
-	//# \param	column		The index of the column whose direction does not change. This must be 0, 1, or 2.
-	//
-	//# \desc
-	//# The $Orthogonalize$ function uses Gram-Schmidt orthogonalization to orthogonalize the columns
-	//# of a matrix. The column whose index is specified by the $column$ parameter is normalized to unit length.
-	//# The remaining two columns are orthogonalized and made unit length. Only the two columns not specified
-	//# by the $column$ parameter can change direction.
-
-
-	//# \function	Matrix3D::MakeRotationX		Returns a matrix that represents a rotation about the <i>x</i> axis.
-	//
-	//# \proto	static Matrix3D MakeRotationX(float angle);
-	//
-	//# \param	angle	The angle through which to rotate, in radians.
-	//
-	//# \desc
-	//# The $MakeRotationX$ function returns a matrix representing a rotation through the angle given
-	//# by the $angle$ parameter about the <i>x</i> axis.
-	//
-	//# \also	$@Matrix3D::MakeRotationY@$
-	//# \also	$@Matrix3D::MakeRotationZ@$
-	//# \also	$@Matrix3D::MakeRotation@$
-	//# \also	$@Matrix3D::SetIdentity@$
-	//# \also	$@Matrix3D::Set@$
-
-
-	//# \function	Matrix3D::MakeRotationY		Returns a matrix that represents a rotation about the <i>y</i> axis.
-	//
-	//# \proto	static Matrix3D MakeRotationY(float angle);
-	//
-	//# \param	angle	The angle through which to rotate, in radians.
-	//
-	//# \desc
-	//# The $MakeRotationY$ function returns a matrix representing a rotation through the angle given
-	//# by the $angle$ parameter about the <i>y</i> axis.
-	//
-	//# \also	$@Matrix3D::MakeRotationX@$
-	//# \also	$@Matrix3D::MakeRotationZ@$
-	//# \also	$@Matrix3D::MakeRotation@$
-	//# \also	$@Matrix3D::SetIdentity@$
-	//# \also	$@Matrix3D::Set@$
-
-
-	//# \function	Matrix3D::MakeRotationZ		Returns a matrix that represents a rotation about the <i>z</i> axis.
-	//
-	//# \proto	static Matrix3D MakeRotationZ(float angle);
-	//
-	//# \param	angle	The angle through which to rotate, in radians.
-	//
-	//# \desc
-	//# The $MakeRotationZ$ function returns a matrix representing a rotation through the angle given
-	//# by the $angle$ parameter about the <i>z</i> axis.
-	//
-	//# \also	$@Matrix3D::MakeRotationX@$
-	//# \also	$@Matrix3D::MakeRotationY@$
-	//# \also	$@Matrix3D::MakeRotation@$
-	//# \also	$@Matrix3D::SetIdentity@$
-	//# \also	$@Matrix3D::Set@$
-
-
-	//# \function	Matrix3D::MakeRotation		Returns a matrix that represents a rotation about a given axis.
-	//
-	//# \proto	static Matrix3D MakeRotation(float angle, const Bivector3D& axis);
-	//
-	//# \param	angle	The angle through which to rotate, in radians.
-	//# \param	axis	The axis about which to rotate. This bivector must have unit magnitude.
-	//
-	//# \desc
-	//# The $MakeRotation$ function returns a matrix representing a rotation through the angle
-	//# given by the $angle$ parameter about the axis given by the $axis$ parameter.
-	//
-	//# \also	$@Matrix3D::MakeRotationX@$
-	//# \also	$@Matrix3D::MakeRotationY@$
-	//# \also	$@Matrix3D::MakeRotationZ@$
-	//# \also	$@Matrix3D::SetIdentity@$
-	//# \also	$@Matrix3D::Set@$
-
-
-	//# \function	Matrix3D::MakeScale		Returns a matrix that represents a scale.
-	//
-	//# \proto	static Matrix3D MakeScale(float scale);
-	//# \proto	static Matrix3D MakeScale(float sx, float sy, float sz);
-	//
-	//# \param	scale	The scale along all three axes.
-	//# \param	sx		The scale along the <i>x</i> axis.
-	//# \param	sy		The scale along the <i>y</i> axis.
-	//# \param	sz		The scale along the <i>z</i> axis.
-	//
-	//# \desc
-	//# The $MakeScale$ function returns a matrix representing a scale.
-	//# If only the $scale$ parameter is specified, then the scale is uniform along all three axes.
-	//# If the $sx$, $sy$, and $sz$ parameters are specified, then they correspond to the scale along
-	//# the <i>x</i>, <i>y</i>, and <i>z</i> axis, respectively.
-	//
-	//# \also	$@Matrix3D::SetIdentity@$
-	//# \also	$@Matrix3D::Set@$
-
+	// ==============================================
+	//	Matrix2D
+	// ==============================================
 
 	struct TypeMatrix3D
 	{
@@ -261,9 +40,19 @@ namespace Terathon
 		typedef Matrix2D matrix2D_type;
 		typedef Matrix3D matrix3D_type;
 		typedef TypeVector3D column_type_struct;
-		typedef TypeBivector3D row_type_struct;
+		typedef TypeLine2D row_type_struct;
 	};
 
+
+	/// @brief Encapsulates a 3&#x202F;&times;&#x202F;3 matrix.
+	///
+	/// The \c Matrix3D class is used to store a 3&#x202F;&times;&#x202F;3 matrix. The entries of the matrix
+	/// are accessed using the () operator with two indexes specifying the row and column of an entry.
+	///
+	/// @sa Matrix2D
+	/// @sa Matrix4D
+	/// @sa Transform2D
+	/// @sa Transform3D
 
 	class Matrix3D : public Mat3D<TypeMatrix3D>
 	{
@@ -271,12 +60,28 @@ namespace Terathon
 
 			TERATHON_API static const ConstMatrix3D identity;
 
+			/// @brief Default constructor that leaves the entries uninitialized.
+
 			inline Matrix3D() = default;
 
+			/// @brief Constructor that sets entries explicitly.
+			/// @param n00,n01,n02,n10,n11,n12,n20,n21,n22		The entries of the matrix.
+
 			TERATHON_API Matrix3D(float n00, float n01, float n02, float n10, float n11, float n12, float n20, float n21, float n22);
+
+			/// @brief Constructor that sets columns explicitly.
+			/// @param a,b,c	The columns of the matrix.
+
 			TERATHON_API Matrix3D(const Vector3D& a, const Vector3D& b, const Vector3D& c);
 
+			/// @brief Sets all nine entries of a 3&#x202F;&times;&#x202F;3 matrix.
+			/// @param n00,n01,n02,n10,n11,n12,n20,n21,n22		The new entries of the matrix.
+
 			TERATHON_API Matrix3D& Set(float n00, float n01, float n02, float n10, float n11, float n12, float n20, float n21, float n22);
+
+			/// @brief Sets all three columns of a 3&#x202F;&times;&#x202F;3 matrix.
+			/// @param a,b,c	The new columns of the matrix.
+
 			TERATHON_API Matrix3D& Set(const Vector3D& a, const Vector3D& b, const Vector3D& c);
 
 			Matrix3D& operator =(const Matrix3D& m)
@@ -307,26 +112,56 @@ namespace Terathon
 			TERATHON_API Matrix3D& operator *=(float s);
 			TERATHON_API Matrix3D& operator /=(float s);
 
+			/// @brief Sets a matrix to the 3&#x202F;&times;&#x202F;3 identity matrix.
+
 			TERATHON_API Matrix3D& SetIdentity(void);
+
+			/// @brief Orthogonalizes the columns of a 3&#x202F;&times;&#x202F;3 matrix.
+			/// @param column	The index of the column whose direction does not change. This must be 0, 1, or 2.
+			///
+			/// The \c Orthogonalize() function uses Gram-Schmidt orthogonalization to orthogonalize the columns
+			/// of a matrix. The column whose index is specified by the \c column parameter is normalized to unit length.
+			/// The remaining two columns are orthogonalized and made unit length. Only the two columns not specified by
+			/// the \c column parameter can change direction.
+
 			TERATHON_API Matrix3D& Orthogonalize(int32 column);
 
 			TERATHON_API void GetEulerAngles(float *x, float *y, float *z) const;
 			TERATHON_API Matrix3D& SetEulerAngles(float x, float y, float z);
 
+			/// @brief Returns a 3&#x202F;&times;&#x202F;3 matrix that represents a rotation about the <i>x</i> axis.
+			/// @param angle	The angle through which to rotate, in radians.
+
 			TERATHON_API static Matrix3D MakeRotationX(float angle);
+
+			/// @brief Returns a 3&#x202F;&times;&#x202F;3 matrix that represents a rotation about the <i>y</i> axis.
+			/// @param angle	The angle through which to rotate, in radians.
+
 			TERATHON_API static Matrix3D MakeRotationY(float angle);
+
+			/// @brief Returns a 3&#x202F;&times;&#x202F;3 matrix that represents a rotation about the <i>z</i> axis.
+			/// @param angle	The angle through which to rotate, in radians.
+
 			TERATHON_API static Matrix3D MakeRotationZ(float angle);
+
+			/// @brief Returns a 3&#x202F;&times;&#x202F;3 matrix that represents a rotation about an arbitrary axis.
+			/// @param angle	The angle through which to rotate, in radians.
+			/// @param axis		The axis about which to rotate. This bivector must have unit magnitude.
+
 			TERATHON_API static Matrix3D MakeRotation(float angle, const Bivector3D& axis);
 
 			TERATHON_API static Matrix3D MakeReflection(const Vector3D& a);
 			TERATHON_API static Matrix3D MakeInvolution(const Vector3D& a);
 
-			TERATHON_API static Matrix3D MakeScaleX(float sx);
-			TERATHON_API static Matrix3D MakeScaleY(float sy);
-			TERATHON_API static Matrix3D MakeScaleZ(float sz);
+			/// @brief Returns a 3&#x202F;&times;&#x202F;3 matrix that represents a uniform scale.
+			/// @param scale	The scale along all three axes.
+
 			TERATHON_API static Matrix3D MakeScale(float scale);
 			TERATHON_API static Matrix3D MakeScale(float sx, float sy, float sz);
 			TERATHON_API static Matrix3D MakeScale(float scale, const Vector3D& a);
+			TERATHON_API static Matrix3D MakeScaleX(float sx);
+			TERATHON_API static Matrix3D MakeScaleY(float sy);
+			TERATHON_API static Matrix3D MakeScaleZ(float sz);
 
 			TERATHON_API static Matrix3D MakeSkew(float angle, const Vector3D& a, const Vector3D& b);
 	};
@@ -371,6 +206,9 @@ namespace Terathon
 		return (v.xyz * m.matrix);
 	}
 
+	/// @brief Returns the product of the matrices \c m1 and \c m2.
+	/// @relatedalso Matrix3D
+
 	inline Matrix3D operator *(const Matrix3D& m1, const Matrix3D& m2)
 	{
 		return (m1.matrix * m2.matrix);
@@ -397,6 +235,200 @@ namespace Terathon
 		return (m * s);
 	}
 
+
+	/// @brief Returns the determinant of the matrix \c m.
+	/// @relatedalso Matrix3D
+
+	TERATHON_API float Determinant(const Matrix3D& m);
+
+	/// @brief Returns the inverse of the matrix \c m. If \c m is singular, then the result is undefined.
+	/// @relatedalso Matrix3D
+
+	TERATHON_API Matrix3D Inverse(const Matrix3D& m);
+
+	/// @brief Returns the adjugate of the matrix \c m.
+	/// @relatedalso Matrix3D
+
+	TERATHON_API Matrix3D Adjugate(const Matrix3D& m);
+
+
+	// ==============================================
+	//	Transform2D
+	// ==============================================
+
+	/// @brief Encapsulates a 3&#x202F;&times;&#x202F;3 matrix whose third row is always (0,&#x202F;0,&#x202F;1).
+	///
+	/// The \c Transform2D class is used to store a 3&#x202F;&times;&#x202F;3 matrix whose third row is always (0,&#x202F;0,&#x202F;1).
+	/// Such a matrix represents an affine transformation in 2D space.
+	///
+	/// @sa Transform3D
+
+	class Transform2D : public Matrix3D
+	{
+		public:
+
+			TERATHON_API static const ConstTransform2D identity;
+
+			/// @brief Default constructor that leaves the entries uninitialized.
+
+			inline Transform2D() = default;
+
+			/// @brief Constructor that sets entries explicitly.
+			/// @param n00,n01,n02,n10,n11,n12,n20,n21,n22		The entries of first two rows of the matrix.
+
+			TERATHON_API Transform2D(float n00, float n01, float n02, float n10, float n11, float n12);
+
+			TERATHON_API Transform2D(const Vector2D& a, const Vector2D& b, const Point2D& p);
+			TERATHON_API Transform2D(const Vector2D& r0, float n02, const Vector2D& r1, float n12);
+			TERATHON_API Transform2D(const Matrix2D& m);
+			TERATHON_API Transform2D(const Matrix2D& m, const Vector2D& v);
+
+			TERATHON_API Transform2D& Set(float n00, float n01, float n02, float n10, float n11, float n12);
+			TERATHON_API Transform2D& Set(const Vector2D& a, const Vector2D& b, const Point2D& p);
+			TERATHON_API Transform2D& Set(const Matrix2D& m, const Vector2D& v);
+
+			Vector2D& operator [](machine j)
+			{
+				return (Matrix3D::operator [](j).xy);
+			}
+
+			const Vector2D& operator [](machine j) const
+			{
+				return (Matrix3D::operator [](j).xy);
+			}
+
+			const Point2D& GetTranslation(void) const
+			{
+				return (Point2D::origin + Matrix3D::operator [](2).xy);
+			}
+
+			Transform2D& SetTranslation(float x, float y)
+			{
+				m02 = x;
+				m12 = y;
+				return (*this);
+			}
+
+			Transform2D& SetTranslation(const Point2D& p)
+			{
+				m02 = p.x;
+				m12 = p.y;
+				return (*this);
+			}
+
+			TERATHON_API Transform2D& operator *=(const Transform2D& m);
+			TERATHON_API Transform2D& operator *=(const Matrix2D& m);
+
+			TERATHON_API Transform2D& SetMatrix2D(const Vector2D& a, const Vector2D& b);
+			TERATHON_API Transform2D& Orthogonalize(int32 column);
+
+			TERATHON_API static Transform2D MakeRotation(float angle);
+			TERATHON_API static Transform2D MakeScale(float sx, float sy);
+			TERATHON_API static Transform2D MakeTranslation(const Vector2D& dv);
+	};
+
+
+	template <typename type_struct, int count, int index_x, int index_y>
+	inline Vector2D operator *(const Transform2D& m, const Subvec2D<type_struct, count, index_x, index_y>& v)
+	{
+		return (m.matrix2D * v);
+	}
+
+	template <typename type_struct, int count, int index_x, int index_y>
+	inline Vector2D operator *(const Subvec2D<type_struct, count, index_x, index_y>& v, const Transform2D& m)
+	{
+		return (v * m.matrix2D);
+	}
+
+	template <typename type_struct, int count, int index_x, int index_y, int index_z>
+	Vector3D operator *(const Transform2D& m, const Subvec3D<type_struct, false, count, index_x, index_y, index_z>& v)
+	{
+		return (Vector3D(m(0,0) * v.data[index_x] + m(0,1) * v.data[index_y] + m(0,2) * v.data[index_z],
+		                 m(1,0) * v.data[index_x] + m(1,1) * v.data[index_y] + m(1,2) * v.data[index_z],
+		                 v.data[index_z]));
+	}
+
+	template <typename type_struct, int count, int index_x, int index_y, int index_z>
+	Antivector3D operator *(const Subvec3D<type_struct, true, count, index_x, index_y, index_z>& v, const Transform2D& m)
+	{
+		return (Antivector3D(m(0,0) * v.data[index_x] + m(1,0) * v.data[index_y],
+		                     m(0,1) * v.data[index_x] + m(1,1) * v.data[index_y],
+		                     m(0,2) * v.data[index_x] + m(1,2) * v.data[index_y] + v.data[index_z]));
+	}
+
+	inline Vector3D operator *(const Transform2D& m, const Vector3D& v)
+	{
+		return (m * v.xyz);
+	}
+
+	inline Antivector3D operator *(const Antivector3D& v, const Transform2D& m)
+	{
+		return (v.xyz * m);
+	}
+
+	template <typename type_struct, int count, int index_00, int index_01, int index_10, int index_11>
+	inline Transform2D operator *(const Transform2D& m1, const Submat2D<type_struct, count, index_00, index_01, index_10, index_11>& m2)
+	{
+		Transform2D		transform;
+
+		transform.matrix2D = m1.matrix2D * m2;
+		transform[2] = m1[2];
+
+		transform.m20 = transform.m21 = 0.0F;
+		transform.m22 = 1.0F;
+		return (transform);
+	}
+
+	template <typename type_struct, int count, int index_00, int index_01, int index_10, int index_11>
+	inline Transform2D operator *(const Submat2D<type_struct, count, index_00, index_01, index_10, index_11>& m1, const Transform2D& m2)
+	{
+		Transform2D		transform;
+
+		transform.matrix2D = m1 * m2.matrix2D;
+		transform[2] = m1 * m2[2];
+
+		transform.m20 = transform.m21 = 0.0F;
+		transform.m22 = 1.0F;
+		return (transform);
+	}
+
+	inline Transform2D operator *(const Transform2D& m1, const Matrix2D& m2)
+	{
+		return (m1 * m2.matrix);
+	}
+
+	inline Transform2D operator *(const Matrix2D& m1, const Transform2D& m2)
+	{
+		return (m1.matrix * m2);
+	}
+
+
+	TERATHON_API Transform2D operator *(const Transform2D& m1, const Transform2D& m2);
+	TERATHON_API Matrix3D operator *(const Matrix3D& m1, const Transform2D& m2);
+	TERATHON_API Matrix3D operator *(const Transform2D& m1, const Matrix3D& m2);
+	TERATHON_API Vector2D operator *(const Transform2D& m, const Vector2D& v);
+	TERATHON_API Vector2D operator *(const Vector2D& v, const Transform2D& m);
+	TERATHON_API Point2D operator *(const Transform2D& m, const Point2D& p);
+
+	/// @brief Returns the determinant of the transform \c m.
+	/// @relatedalso Transform2D
+
+	TERATHON_API float Determinant(const Transform2D& m);
+
+	/// @brief Returns the inverse of the transform \c m. If \c m is singular, then the result is undefined.
+	/// @relatedalso Transform2D
+
+	TERATHON_API Transform2D Inverse(const Transform2D& m);
+
+	/// @brief Returns the inverse of the transform \c m assuming that its determinant is one.
+	/// @relatedalso Transform2D
+
+	TERATHON_API Transform2D InverseUnitDet(const Transform2D& m);
+
+
+	// ==============================================
+	//	POD Structures
+	// ==============================================
 
 	struct ConstMatrix3D
 	{
@@ -429,9 +461,35 @@ namespace Terathon
 	};
 
 
-	TERATHON_API float Determinant(const Matrix3D& m);
-	TERATHON_API Matrix3D Inverse(const Matrix3D& m);
-	TERATHON_API Matrix3D Adjugate(const Matrix3D& m);
+	struct ConstTransform2D
+	{
+		float	n[3][3];
+
+		operator const Transform2D&(void) const
+		{
+			return (reinterpret_cast<const Transform2D&>(*this));
+		}
+
+		const Transform2D *operator &(void) const
+		{
+			return (reinterpret_cast<const Transform2D *>(this));
+		}
+
+		const Transform2D *operator ->(void) const
+		{
+			return (reinterpret_cast<const Transform2D *>(this));
+		}
+
+		float operator ()(int32 i, int32 j) const
+		{
+			return (reinterpret_cast<const Transform2D&>(*this)(i, j));
+		}
+
+		const Vector2D& operator [](machine j) const
+		{
+			return (reinterpret_cast<const Transform2D&>(*this)[j]);
+		}
+	};
 }
 
 

@@ -1516,20 +1516,20 @@ namespace Terathon
 		return (A.data[A_index_x] * B.data[B_index_x] + A.data[A_index_y] * B.data[B_index_y] + A.data[A_index_z] * B.data[B_index_z]);
 	}
 
-	template <typename A_type_struct, bool A_anti, int A_count, int A_index_x, int A_index_y, int A_index_z, int A_index_w, typename B_type_struct, int B_count, int B_index_x, int B_index_y, int B_index_z, int B_index_w>
-	inline float operator ^(const Subvec4D<A_type_struct, A_anti, A_count, A_index_x, A_index_y, A_index_z, A_index_w>& A, const Subvec4D<B_type_struct, !A_anti, B_count, B_index_x, B_index_y, B_index_z, B_index_w>& B)
+	template <typename A_type_struct, int A_count, int A_index_x, int A_index_y, int A_index_z, int A_index_w, typename B_type_struct, int B_count, int B_index_x, int B_index_y, int B_index_z, int B_index_w>
+	inline float operator ^(const Subvec4D<A_type_struct, false, A_count, A_index_x, A_index_y, A_index_z, A_index_w>& A, const Subvec4D<B_type_struct, true, B_count, B_index_x, B_index_y, B_index_z, B_index_w>& B)
 	{
 		return (A.data[A_index_x] * B.data[B_index_x] + A.data[A_index_y] * B.data[B_index_y] + A.data[A_index_z] * B.data[B_index_z] + A.data[A_index_w] * B.data[B_index_w]);
 	}
 
-	template <typename A_type_struct, bool A_anti, int A_count, int A_index_x, int A_index_y, int A_index_z, int A_index_w, typename B_type_struct, int B_count, int B_index_x, int B_index_y, int B_index_z>
-	inline float operator ^(const Subvec4D<A_type_struct, A_anti, A_count, A_index_x, A_index_y, A_index_z, A_index_w>& A, const Subvec3D<B_type_struct, !A_anti, B_count, B_index_x, B_index_y, B_index_z>& B)
+	template <typename A_type_struct, int A_count, int A_index_x, int A_index_y, int A_index_z, int A_index_w, typename B_type_struct, int B_count, int B_index_x, int B_index_y, int B_index_z>
+	inline float operator ^(const Subvec4D<A_type_struct, false, A_count, A_index_x, A_index_y, A_index_z, A_index_w>& A, const Subvec3D<B_type_struct, true, B_count, B_index_x, B_index_y, B_index_z>& B)
 	{
 		return (A.data[A_index_x] * B.data[B_index_x] + A.data[A_index_y] * B.data[B_index_y] + A.data[A_index_z] * B.data[B_index_z]);
 	}
 
-	template <typename A_type_struct, bool A_anti, int A_count, int A_index_x, int A_index_y, int A_index_z, typename B_type_struct, int B_count, int B_index_x, int B_index_y, int B_index_z, int B_index_w>
-	inline float operator ^(const Subvec3D<A_type_struct, A_anti, A_count, A_index_x, A_index_y, A_index_z>& A, const Subvec4D<B_type_struct, !A_anti, B_count, B_index_x, B_index_y, B_index_z, B_index_w>& B)
+	template <typename A_type_struct, int A_count, int A_index_x, int A_index_y, int A_index_z, typename B_type_struct, int B_count, int B_index_x, int B_index_y, int B_index_z, int B_index_w>
+	inline float operator ^(const Subvec3D<A_type_struct, false, A_count, A_index_x, A_index_y, A_index_z>& A, const Subvec4D<B_type_struct, true, B_count, B_index_x, B_index_y, B_index_z, B_index_w>& B)
 	{
 		return (A.data[A_index_x] * B.data[B_index_x] + A.data[A_index_y] * B.data[B_index_y] + A.data[A_index_z] * B.data[B_index_z]);
 	}
@@ -2622,7 +2622,7 @@ namespace Terathon
 
 	template <typename A_type_struct, int A_count, int A_index_00, int A_index_01, int A_index_10, int A_index_11,
 			  typename B_type_struct, int B_count, int B_index_00, int B_index_01, int B_index_10, int B_index_11>
-	typename A_type_struct::matrix2D_type operator *(const Submat2D<A_type_struct, A_count, A_index_00, A_index_01, A_index_10, A_index_11>& A,
+	TERATHON_API typename A_type_struct::matrix2D_type operator *(const Submat2D<A_type_struct, A_count, A_index_00, A_index_01, A_index_10, A_index_11>& A,
 													 const Submat2D<B_type_struct, B_count, B_index_00, B_index_01, B_index_10, B_index_11>& B);
 
 
@@ -2648,7 +2648,7 @@ namespace Terathon
 
 	template <typename A_type_struct, int A_count, int A_index_00, int A_index_01, int A_index_02, int A_index_10, int A_index_11, int A_index_12, int A_index_20, int A_index_21, int A_index_22,
 			  typename B_type_struct, int B_count, int B_index_00, int B_index_01, int B_index_02, int B_index_10, int B_index_11, int B_index_12, int B_index_20, int B_index_21, int B_index_22>
-	typename A_type_struct::matrix3D_type operator *(const Submat3D<A_type_struct, A_count, A_index_00, A_index_01, A_index_02, A_index_10, A_index_11, A_index_12, A_index_20, A_index_21, A_index_22>& A,
+	TERATHON_API typename A_type_struct::matrix3D_type operator *(const Submat3D<A_type_struct, A_count, A_index_00, A_index_01, A_index_02, A_index_10, A_index_11, A_index_12, A_index_20, A_index_21, A_index_22>& A,
 													 const Submat3D<B_type_struct, B_count, B_index_00, B_index_01, B_index_02, B_index_10, B_index_11, B_index_12, B_index_20, B_index_21, B_index_22>& B);
 
 
@@ -2676,7 +2676,7 @@ namespace Terathon
 
 	template <typename A_type_struct, int A_count, int A_index_00, int A_index_01, int A_index_02, int A_index_03, int A_index_10, int A_index_11, int A_index_12, int A_index_13, int A_index_20, int A_index_21, int A_index_22, int A_index_23, int A_index_30, int A_index_31, int A_index_32, int A_index_33,
 			  typename B_type_struct, int B_count, int B_index_00, int B_index_01, int B_index_02, int B_index_03, int B_index_10, int B_index_11, int B_index_12, int B_index_13, int B_index_20, int B_index_21, int B_index_22, int B_index_23, int B_index_30, int B_index_31, int B_index_32, int B_index_33>
-	typename A_type_struct::matrix4D_type operator *(const Submat4D<A_type_struct, A_count, A_index_00, A_index_01, A_index_02, A_index_03, A_index_10, A_index_11, A_index_12, A_index_13, A_index_20, A_index_21, A_index_22, A_index_23, A_index_30, A_index_31, A_index_32, A_index_33>& A,
+	TERATHON_API typename A_type_struct::matrix4D_type operator *(const Submat4D<A_type_struct, A_count, A_index_00, A_index_01, A_index_02, A_index_03, A_index_10, A_index_11, A_index_12, A_index_13, A_index_20, A_index_21, A_index_22, A_index_23, A_index_30, A_index_31, A_index_32, A_index_33>& A,
 													 const Submat4D<B_type_struct, B_count, B_index_00, B_index_01, B_index_02, B_index_03, B_index_10, B_index_11, B_index_12, B_index_13, B_index_20, B_index_21, B_index_22, B_index_23, B_index_30, B_index_31, B_index_32, B_index_33>& B);
 }
 
