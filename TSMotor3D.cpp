@@ -219,11 +219,12 @@ FlatPoint3D Terathon::Transform(const FlatPoint3D& p, const Motor3D& Q)
 		vec_float q = VecLoadUnaligned(&p.x);
 		vec_float v = VecLoadUnaligned(&Q.v.x);
 		vec_float m = VecLoadUnaligned(&Q.m.x);
+		vec_float qw = VecSmearW(q);
 		vec_float vw = VecSmearW(v);
 		vec_float mw = VecSmearW(m);
 
-		vec_float Qvp = VecCross3D(v, q);
-		vec_float a = VecCross3D(v, Qvp) + Qvp * vw + (m * vw - v * mw + VecCross3D(v, m)) * VecSmearW(q);
+		vec_float Qvp = VecCross3D(v, q) + m * qw;
+		vec_float a = VecCross3D(v, Qvp) + Qvp * vw - v * mw * qw;
 
 		VecStore3D(q + (a + a), &result.x);
 		result.w = p.w;
@@ -231,8 +232,8 @@ FlatPoint3D Terathon::Transform(const FlatPoint3D& p, const Motor3D& Q)
 
 	#else
 
-		Bivector3D Qvp = (!Q.v.xyz ^ p.xyz);
-		return (FlatPoint3D(p.xyz + ((Q.v.xyz ^ Qvp) + !Qvp * Q.v.w + (!Q.m.xyz * Q.v.w - !Q.v.xyz * Q.m.w + (Q.v.xyz ^ Q.m.xyz)) * p.w) * 2.0F, p.w));
+		Bivector3D Qvp = (!Q.v.xyz ^ p.xyz) + Q.m.xyz * p.w;
+		return (FlatPoint3D(p.xyz + ((Q.v.xyz ^ Qvp) + !Qvp * Q.v.w - !Q.v.xyz * Q.m.w * p.w) * 2.0F, p.w));
 
 	#endif
 }
@@ -249,16 +250,16 @@ Point3D Terathon::Transform(const Point3D& p, const Motor3D& Q)
 		vec_float vw = VecSmearW(v);
 		vec_float mw = VecSmearW(m);
 
-		vec_float Qvp = VecCross3D(v, q);
-		vec_float a = VecCross3D(v, Qvp) + (Qvp + m) * vw - v * mw + VecCross3D(v, m);
+		vec_float Qvp = VecCross3D(v, q) + m;
+		vec_float a = VecCross3D(v, Qvp) + Qvp * vw - v * mw;
 
 		VecStore3D(q + (a + a), &result.x);
 		return (result);
 
 	#else
 
-		Bivector3D Qvp = (!Q.v.xyz ^ p);
-		return (p + ((Q.v.xyz ^ Qvp) + (!Qvp + !Q.m.xyz) * Q.v.w - !Q.v.xyz * Q.m.w + (Q.v.xyz ^ Q.m.xyz)) * 2.0F);
+		Bivector3D Qvp = (!Q.v.xyz ^ p) + Q.m.xyz;
+		return (p + ((Q.v.xyz ^ Qvp) + !Qvp * Q.v.w - !Q.v.xyz * Q.m.w) * 2.0F);
 
 	#endif
 }
