@@ -203,14 +203,14 @@ Vector3D Terathon::Transform(const Vector3D& v, const Flector3D& F)
 
 FlatPoint3D Terathon::Transform(const FlatPoint3D& q, const Flector3D& F)
 {
-	Bivector3D Fgq = !F.g.xyz ^ q.xyz;
-	return (FlatPoint3D(((Fgq ^ F.g.xyz) - !Fgq * F.p.w + (F.p.xyz * F.p.w - !F.g.xyz * F.g.w + (F.g.xyz ^ !F.p.xyz)) * q.w) * 2.0F - q.xyz, q.w));
+	Bivector3D Fgq = (!F.g.xyz ^ q.xyz) - !F.p.xyz * q.w;
+	return (FlatPoint3D(((Fgq ^ F.g.xyz) - !Fgq * F.p.w - !F.g.xyz * (F.g.w * q.w)) * 2.0F - q.xyz, q.w));
 }
 
 Point3D Terathon::Transform(const Point3D& q, const Flector3D& F)
 {
-	Bivector3D Fgq = !F.g.xyz ^ q.xyz;
-	return (((Fgq ^ F.g.xyz) + (F.p.xyz - !Fgq) * F.p.w - !F.g.xyz * F.g.w + (F.g.xyz ^ !F.p.xyz)) * 2.0F - q);
+	Bivector3D Fgq = (!F.g.xyz ^ q.xyz) - !F.p.xyz;
+	return (((Fgq ^ F.g.xyz) - !Fgq * F.p.w - !F.g.xyz * F.g.w) * 2.0F - q);
 }
 
 Line3D Terathon::Transform(const Line3D& l, const Flector3D& F)

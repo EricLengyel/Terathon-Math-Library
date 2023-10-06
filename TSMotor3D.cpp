@@ -224,7 +224,7 @@ FlatPoint3D Terathon::Transform(const FlatPoint3D& p, const Motor3D& Q)
 		vec_float mw = VecSmearW(m);
 
 		vec_float Qvp = VecCross3D(v, q) + m * qw;
-		vec_float a = VecCross3D(v, Qvp) + Qvp * vw - v * mw * qw;
+		vec_float a = VecCross3D(v, Qvp) + Qvp * vw - v * (mw * qw);
 
 		VecStore3D(q + (a + a), &result.x);
 		result.w = p.w;
@@ -233,7 +233,7 @@ FlatPoint3D Terathon::Transform(const FlatPoint3D& p, const Motor3D& Q)
 	#else
 
 		Bivector3D Qvp = (!Q.v.xyz ^ p.xyz) + Q.m.xyz * p.w;
-		return (FlatPoint3D(p.xyz + ((Q.v.xyz ^ Qvp) + !Qvp * Q.v.w - !Q.v.xyz * Q.m.w * p.w) * 2.0F, p.w));
+		return (FlatPoint3D(p.xyz + ((Q.v.xyz ^ Qvp) + !Qvp * Q.v.w - !Q.v.xyz * (Q.m.w * p.w)) * 2.0F, p.w));
 
 	#endif
 }
