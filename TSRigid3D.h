@@ -610,59 +610,59 @@ namespace Terathon
 	inline auto operator !(const Plane3D& g) {return (LeftComplement(g));}
 
 	// ==============================================
-	//	Dual
+	//	BulkDual
 	// ==============================================
 
-	/// @brief Returns the dual of the 3D flat point \c p, which is the 3D horizon.
+	/// @brief Returns the bulk dual of the 3D flat point \c p, which is a 3D plane through the origin.
 	/// @relatedalso FlatPoint3D
 
-	inline Plane3D Dual(const FlatPoint3D& p)
-	{
-		return (Plane3D(0.0F, 0.0F, 0.0F, -p.w));
-	}
-
-	/// @brief Returns the dual of the 3D line \c l, which is a 3D line in the horizon.
-	/// @relatedalso Line3D
-
-	inline Line3D Dual(const Line3D& l)
-	{
-		return (Line3D(0.0F, 0.0F, 0.0F, -l.v.x, -l.v.y, -l.v.z));
-	}
-
-	/// @brief Returns the dual of the 3D plane \c g, which is a 3D flat point in the horizon.
-	/// @relatedalso Plane3D
-
-	inline FlatPoint3D Dual(const Plane3D& g)
-	{
-		return (FlatPoint3D(g.x, g.y, g.z, 0.0F));
-	}
-
-	// ==============================================
-	//	Antidual
-	// ==============================================
-
-	/// @brief Returns the antidual of the 3D flat point \c p, which is a 3D plane through the origin.
-	/// @relatedalso FlatPoint3D
-
-	inline Plane3D Antidual(const FlatPoint3D& p)
+	inline Plane3D BulkDual(const FlatPoint3D& p)
 	{
 		return (Plane3D(-p.x, -p.y, -p.z, 0.0F));
 	}
 
-	/// @brief Returns the antidual of the 3D line \c l, which is a 3D line through the origin.
+	/// @brief Returns the bulk dual of the 3D line \c l, which is a 3D line through the origin.
 	/// @relatedalso Line3D
 
-	inline Line3D Antidual(const Line3D& l)
+	inline Line3D BulkDual(const Line3D& l)
 	{
 		return (Line3D(-l.m.x, -l.m.y, -l.m.z, 0.0F, 0.0F, 0.0F));
 	}
 
-	/// @brief Returns the antidual of the 3D plane \c g, which is the 3D origin.
+	/// @brief Returns the bulk dual of the 3D plane \c g, which is the 3D origin.
 	/// @relatedalso Plane3D
 
-	inline FlatPoint3D Antidual(const Plane3D& g)
+	inline FlatPoint3D BulkDual(const Plane3D& g)
 	{
 		return (FlatPoint3D(0.0F, 0.0F, 0.0F, g.w));
+	}
+
+	// ==============================================
+	//	WeightDual
+	// ==============================================
+
+	/// @brief Returns the weight dual of the 3D flat point \c p, which is the 3D horizon.
+	/// @relatedalso FlatPoint3D
+
+	inline Plane3D WeightDual(const FlatPoint3D& p)
+	{
+		return (Plane3D(0.0F, 0.0F, 0.0F, -p.w));
+	}
+
+	/// @brief Returns the weight dual of the 3D line \c l, which is a 3D line in the horizon.
+	/// @relatedalso Line3D
+
+	inline Line3D WeightDual(const Line3D& l)
+	{
+		return (Line3D(0.0F, 0.0F, 0.0F, -l.v.x, -l.v.y, -l.v.z));
+	}
+
+	/// @brief Returns the weight dual of the 3D plane \c g, which is a 3D flat point in the horizon.
+	/// @relatedalso Plane3D
+
+	inline FlatPoint3D WeightDual(const Plane3D& g)
+	{
+		return (FlatPoint3D(g.x, g.y, g.z, 0.0F));
 	}
 
 	// ==============================================

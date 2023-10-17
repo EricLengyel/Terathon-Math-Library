@@ -482,43 +482,43 @@ namespace Terathon
 	inline auto operator !(const Line2D& g) {return (Complement(g));}
 
 	// ==============================================
-	//	Dual
+	//	BulkDual
 	// ==============================================
 
-	/// @brief Returns the dual of the 2D flat point \c p, which is the 2D horizon.
+	/// @brief Returns the bulk dual of the 2D flat point \c p, which is a 2D line through the origin.
 	/// @relatedalso FlatPoint2D
 
-	inline Line2D Dual(const FlatPoint2D& p)
-	{
-		return (Line2D(0.0F, 0.0F, -p.z));
-	}
-
-	/// @brief Returns the dual of the 2D line \c g, which is a 2D flat point in the horizon.
-	/// @relatedalso Line2D
-
-	inline FlatPoint2D Dual(const Line2D& g)
-	{
-		return (FlatPoint2D(-g.x, -g.y, 0.0F));
-	}
-
-	// ==============================================
-	//	Antidual
-	// ==============================================
-
-	/// @brief Returns the antidual of the 2D flat point \c p, which is a 2D line through the origin.
-	/// @relatedalso FlatPoint2D
-
-	inline Line2D Antidual(const FlatPoint2D& p)
+	inline Line2D BulkDual(const FlatPoint2D& p)
 	{
 		return (Line2D(-p.x, -p.y, 0.0F));
 	}
 
-	/// @brief Returns the antidual of the 2D line \c g, which is the 2D origin.
+	/// @brief Returns the bulk dual of the 2D line \c g, which is the 2D origin.
 	/// @relatedalso Line2D
 
-	inline FlatPoint2D Antidual(const Line2D& g)
+	inline FlatPoint2D BulkDual(const Line2D& g)
 	{
 		return (FlatPoint2D(0.0F, 0.0F, -g.z));
+	}
+
+	// ==============================================
+	//	WeightDual
+	// ==============================================
+
+	/// @brief Returns the weight dual of the 2D flat point \c p, which is the 2D horizon.
+	/// @relatedalso FlatPoint2D
+
+	inline Line2D WeightDual(const FlatPoint2D& p)
+	{
+		return (Line2D(0.0F, 0.0F, -p.z));
+	}
+
+	/// @brief Returns the weight dual of the 2D line \c g, which is a 2D flat point in the horizon.
+	/// @relatedalso Line2D
+
+	inline FlatPoint2D WeightDual(const Line2D& g)
+	{
+		return (FlatPoint2D(-g.x, -g.y, 0.0F));
 	}
 
 	// ==============================================

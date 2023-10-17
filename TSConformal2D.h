@@ -545,7 +545,7 @@ namespace Terathon
 
 	inline FlatPoint2D Anticarrier(const Circle2D& c)
 	{
-		return (FlatPoint2D(c.x, c.y, -c.w));
+		return (FlatPoint2D(-c.x, -c.y, c.w));
 	}
 
 	// ==============================================
@@ -557,7 +557,7 @@ namespace Terathon
 
 	inline RoundPoint2D Center(const RoundPoint2D& a)
 	{
-		return (RoundPoint2D(-a.x * a.z, -a.y * a.z, -a.z * a.z, -a.z * a.w));
+		return (RoundPoint2D(a.x * a.z, a.y * a.z, a.z * a.z, a.z * a.w));
 	}
 
 	/// @brief Returns the center of the 2D dipole \c d.
@@ -570,7 +570,7 @@ namespace Terathon
 
 	inline RoundPoint2D Center(const Circle2D& c)
 	{
-		return (RoundPoint2D(c.x * c.w, c.y * c.w, -c.w * c.w, c.z * c.w - c.x * c.x - c.y * c.y));
+		return (RoundPoint2D(-c.x * c.w, -c.y * c.w, c.w * c.w, c.x * c.x + c.y * c.y - c.z * c.w));
 	}
 
 	// ==============================================
@@ -595,7 +595,7 @@ namespace Terathon
 
 	inline FlatPoint2D FlatCenter(const Circle2D& c)
 	{
-		return (FlatPoint2D(c.x, c.y, -c.w));
+		return (FlatPoint2D(-c.x, -c.y, c.w));
 	}
 
 	// ==============================================

@@ -566,7 +566,7 @@ namespace Terathon
 
 	inline Sphere3D Dual(const RoundPoint3D& a)
 	{
-		return (Sphere3D(a.w, -a.x, -a.y, -a.z, a.u));
+		return (Sphere3D(-a.w, a.x, a.y, a.z, -a.u));
 	}
 
 	/// @brief Returns the dual of the 3D dipole \c d, which is a 3D circle.
@@ -574,7 +574,7 @@ namespace Terathon
 
 	inline Circle3D Dual(const Dipole3D& d)
 	{
-		return (Circle3D(d.v.x, d.v.y, d.v.z, -d.p.w, d.m.x, d.m.y, d.m.z, d.p.x, d.p.y, d.p.z));
+		return (Circle3D(-d.v.x, -d.v.y, -d.v.z, d.p.w, -d.m.x, -d.m.y, -d.m.z, -d.p.x, -d.p.y, -d.p.z));
 	}
 
 	/// @brief Returns the dual of the 3D circle \c c, which is a 3D dipole.
@@ -582,13 +582,49 @@ namespace Terathon
 
 	inline Dipole3D Dual(const Circle3D& c)
 	{
-		return (Dipole3D(-c.g.x, -c.g.y, -c.g.z, -c.v.x, -c.v.y, -c.v.z, -c.m.x, -c.m.y, -c.m.z, c.g.w));
+		return (Dipole3D(c.g.x, c.g.y, c.g.z, c.v.x, c.v.y, c.v.z, c.m.x, c.m.y, c.m.z, -c.g.w));
 	}
 
 	/// @brief Returns the dual of the 3D sphere \c s, which is a 3D round point.
 	/// @relatedalso Sphere3D
 
 	inline RoundPoint3D Dual(const Sphere3D& s)
+	{
+		return (RoundPoint3D(-s.x, -s.y, -s.z, s.u, s.w));
+	}
+
+	// ==============================================
+	//	Antidual
+	// ==============================================
+
+	/// @brief Returns the antidual of the 3D round point \c a, which is a 3D sphere.
+	/// @relatedalso RoundPoint3D
+
+	inline Sphere3D Antidual(const RoundPoint3D& a)
+	{
+		return (Sphere3D(a.w, -a.x, -a.y, -a.z, a.u));
+	}
+
+	/// @brief Returns the antidual of the 3D dipole \c d, which is a 3D circle.
+	/// @relatedalso Dipole3D
+
+	inline Circle3D Antidual(const Dipole3D& d)
+	{
+		return (Circle3D(d.v.x, d.v.y, d.v.z, -d.p.w, d.m.x, d.m.y, d.m.z, d.p.x, d.p.y, d.p.z));
+	}
+
+	/// @brief Returns the antidual of the 3D circle \c c, which is a 3D dipole.
+	/// @relatedalso Circle3D
+
+	inline Dipole3D Antidual(const Circle3D& c)
+	{
+		return (Dipole3D(-c.g.x, -c.g.y, -c.g.z, -c.v.x, -c.v.y, -c.v.z, -c.m.x, -c.m.y, -c.m.z, c.g.w));
+	}
+
+	/// @brief Returns the antidual of the 3D sphere \c s, which is a 3D round point.
+	/// @relatedalso Sphere3D
+
+	inline RoundPoint3D Antidual(const Sphere3D& s)
 	{
 		return (RoundPoint3D(s.x, s.y, s.z, -s.u, -s.w));
 	}

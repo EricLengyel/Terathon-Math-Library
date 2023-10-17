@@ -36,9 +36,9 @@ RoundPoint2D Terathon::Center(const Dipole2D& d)
 
 FlatPoint2D Terathon::FlatCenter(const Dipole2D& d)
 {
-	return (FlatPoint2D(d.g.x * d.g.z + d.g.y * d.p.z,
-	                    d.g.y * d.g.z - d.g.x * d.p.z,
-	                   -d.g.x * d.g.x - d.g.y * d.g.y));
+	return (FlatPoint2D(-d.g.x * d.g.z - d.g.y * d.p.z,
+	                     d.g.x * d.p.z - d.g.y * d.g.z,
+	                     d.g.x * d.g.x + d.g.y * d.g.y));
 }
 
 // ==============================================
@@ -47,10 +47,10 @@ FlatPoint2D Terathon::FlatCenter(const Dipole2D& d)
 
 Circle2D Terathon::Container(const Dipole2D& d)
 {
-	return (Circle2D(d.g.x * d.g.x + d.g.y * d.g.y,
-	                 d.g.x * d.g.z + d.g.y * d.p.z,
-	                 d.g.y * d.g.z - d.g.x * d.p.z,
-	                 d.g.z * d.g.z + d.g.x * d.p.y - d.g.y * d.p.x));
+	return (Circle2D(-d.g.x * d.g.x - d.g.y * d.g.y,
+	                 -d.g.x * d.g.z - d.g.y * d.p.z,
+	                  d.g.x * d.p.z - d.g.y * d.g.z,
+	                  d.g.y * d.p.x - d.g.x * d.p.y - d.g.z * d.g.z));
 }
 
 // ==============================================
@@ -59,9 +59,9 @@ Circle2D Terathon::Container(const Dipole2D& d)
 
 Dipole2D Terathon::Partner(const Dipole2D& d)
 {
-	float gzpz = -d.g.z * d.p.z;
-	float gxy2 = d.g.x * d.g.x + d.g.y * d.g.y;
-	float f = d.g.z * d.g.z - d.p.z * d.p.z + d.g.x * d.p.y - d.g.y * d.p.x;
+	float gzpz = d.g.z * d.p.z;
+	float gxy2 = -d.g.x * d.g.x - d.g.y * d.g.y;
+	float f = d.p.z * d.p.z - d.g.z * d.g.z + d.g.y * d.p.x - d.g.x * d.p.y;
 
 	return (Dipole2D(gxy2 * d.g.x,
 	                 gxy2 * d.g.y,
