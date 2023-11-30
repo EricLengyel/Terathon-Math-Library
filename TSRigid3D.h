@@ -278,11 +278,6 @@ namespace Terathon
 				m = moment;
 			}
 
-			Vector3D GetSupport(void) const
-			{
-				return (!v ^ m);
-			}
-
 			Line3D& operator =(const Line3D& l)
 			{
 				v = l.v;

@@ -522,6 +522,24 @@ namespace Terathon
 	}
 
 	// ==============================================
+	//	Support
+	// ==============================================
+
+	inline FlatPoint2D Support(const Line2D& g)
+	{
+		return (FlatPoint2D(-g.x * g.z, -g.y * g.z, g.x * g.x + g.y * g.y));
+	}
+
+	// ==============================================
+	//	Antisupport
+	// ==============================================
+
+	inline Line2D Antisupport(const FlatPoint2D& p)
+	{
+		return (Line2D(-p.x * p.z, -p.y * p.z, p.x * p.x + p.y * p.y));
+	}
+
+	// ==============================================
 	//	Reverse
 	// ==============================================
 
