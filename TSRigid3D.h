@@ -666,6 +666,39 @@ namespace Terathon
 	}
 
 	// ==============================================
+	//	Support
+	// ==============================================
+
+	inline FlatPoint3D Support(const Line3D& l)
+	{
+		return (FlatPoint3D(l.v.y * l.m.z - l.v.z * l.m.y, l.v.z * l.m.x - l.v.x * l.m.z, l.v.x * l.m.y - l.v.y * l.m.x, l.v.x * l.v.x + l.v.y * l.v.y + l.v.z * l.v.z));
+	}
+
+	inline FlatPoint3D Support(const Plane3D& g)
+	{
+		return (FlatPoint3D(-g.x * g.w, -g.y * g.w, -g.z * g.w, g.x * g.x + g.y * g.y + g.z * g.z));
+	}
+
+	// ==============================================
+	//	Antisupport
+	// ==============================================
+
+	inline Plane3D Antisupport(const FlatPoint3D& p)
+	{
+		return (Plane3D(-p.x * p.w, -p.y * p.w, -p.z * p.w, p.x * p.x + p.y * p.y + p.z * p.z));
+	}
+
+	inline Plane3D Antisupport(const Point3D& p)
+	{
+		return (Plane3D(-p.x, -p.y, -p.z, p.x * p.x + p.y * p.y + p.z * p.z));
+	}
+
+	inline Plane3D Antisupport(const Line3D& l)
+	{
+		return (Plane3D(l.v.z * l.m.y - l.v.y * l.m.z, l.v.x * l.m.z - l.v.z * l.m.x, l.v.y * l.m.x - l.v.x * l.m.y, l.m.x * l.m.x + l.m.y * l.m.y + l.m.z * l.m.z));
+	}
+
+	// ==============================================
 	//	Reverse
 	// ==============================================
 
