@@ -735,29 +735,29 @@ namespace Terathon
 	}
 
 	// ==============================================
-	//	Anticarrier
+	//	Cocarrier
 	// ==============================================
 
-	/// @brief Returns the anticarrier of the 3D dipole \c d, which is a 3D plane.
+	/// @brief Returns the cocarrier of the 3D dipole \c d, which is a 3D plane.
 	/// @relatedalso Dipole3D
 
-	inline Plane3D Anticarrier(const Dipole3D& d)
+	inline Plane3D Cocarrier(const Dipole3D& d)
 	{
 		return (Plane3D(d.v.x, d.v.y, d.v.z, -d.p.w));
 	}
 
-	/// @brief Returns the anticarrier of the 3D circle \c c, which is a 3D line.
+	/// @brief Returns the cocarrier of the 3D circle \c c, which is a 3D line.
 	/// @relatedalso Circle3D
 
-	inline Line3D Anticarrier(const Circle3D& c)
+	inline Line3D Cocarrier(const Circle3D& c)
 	{
 		return (Line3D(-c.v.x, -c.v.y, -c.v.z, -c.g.x, -c.g.y, -c.g.z));
 	}
 
-	/// @brief Returns the anticarrier of the 3D sphere \c s, which is a 3D flat point.
+	/// @brief Returns the cocarrier of the 3D sphere \c s, which is a 3D flat point.
 	/// @relatedalso Sphere3D
 
-	inline FlatPoint3D Anticarrier(const Sphere3D& s)
+	inline FlatPoint3D Cocarrier(const Sphere3D& s)
 	{
 		return (FlatPoint3D(s.x, s.y, s.z, -s.u));
 	}

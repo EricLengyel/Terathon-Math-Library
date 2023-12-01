@@ -529,21 +529,21 @@ namespace Terathon
 	}
 
 	// ==============================================
-	//	Anticarrier
+	//	Cocarrier
 	// ==============================================
 
-	/// @brief Returns the anticarrier of the 2D dipole \c d, which is a 2D line.
+	/// @brief Returns the cocarrier of the 2D dipole \c d, which is a 2D line.
 	/// @relatedalso Dipole3D
 
-	inline Line2D Anticarrier(const Dipole2D& d)
+	inline Line2D Cocarrier(const Dipole2D& d)
 	{
 		return (Line2D(-d.g.y, d.g.x, -d.p.z));
 	}
 
-	/// @brief Returns the anticarrier of the 2D circle \c c, which is a 2D flat point.
+	/// @brief Returns the cocarrier of the 2D circle \c c, which is a 2D flat point.
 	/// @relatedalso Circle2D
 
-	inline FlatPoint2D Anticarrier(const Circle2D& c)
+	inline FlatPoint2D Cocarrier(const Circle2D& c)
 	{
 		return (FlatPoint2D(-c.x, -c.y, c.w));
 	}
