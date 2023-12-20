@@ -1084,6 +1084,11 @@ namespace Terathon
 		return ((p.xyz ^ g.xyz) + g.w);
 	}
 
+	inline float Antiwedge(const Vector3D& v, const Plane3D& g)
+	{
+		return (v ^ g.xyz);
+	}
+
 	inline float Antiwedge(const Point2D& p, const Plane3D& g)
 	{
 		return (p.x * g.x + p.y * g.y + g.w);
