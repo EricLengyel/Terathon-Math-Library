@@ -13,7 +13,8 @@ This is a C++ math library containing classes for vectors, matrices, quaternions
 * **Matrix4D** – A 4×4 matrix.
 * **Transform2D** – A 3×3 matrix with fourth row always (0, 0, 1).
 * **Transform3D** – A 4×4 matrix with fourth row always (0, 0, 0, 1).
-* **Quaternion** – A conventional quaternion x**i** + y**j** + z**k** + w.
+* **Quaternion** – A conventional quaternion *x***i** + *y***j** + *z***k** + *w*.
+* **DualNum** – A dual number *s* + *tε*.
 
 2D rigid geometric algebra
 * **FlatPoint2D** – A 2D flat point *x* **e**<sub>1</sub> + *y* **e**<sub>2</sub> + *z* **e**<sub>3</sub>.
