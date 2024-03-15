@@ -1,6 +1,6 @@
 //
 // This file is part of the Terathon Math Library, by Eric Lengyel.
-// Copyright 1999-2023, Terathon Software LLC
+// Copyright 1999-2024, Terathon Software LLC
 //
 // This software is distributed under the MIT License.
 // Separate proprietary licenses are available from Terathon Software.
@@ -181,7 +181,7 @@ namespace Terathon
 
 			Vector3D		v;
 			Bivector3D		m;
-			Vector4D		p;
+			FlatPoint3D		p;
 
 			TERATHON_API static const ConstDipole3D zero;
 
@@ -206,7 +206,7 @@ namespace Terathon
 			/// @param moment		The moment of the carrier line.
 			/// @param point		The flat point component.
 
-			Dipole3D(const Vector3D& direction, const Bivector3D& moment, const Vector4D& point)
+			Dipole3D(const Vector3D& direction, const Bivector3D& moment, const FlatPoint3D& point)
 			{
 				v = direction;
 				m = moment;
@@ -238,7 +238,7 @@ namespace Terathon
 			/// @param moment		The moment of the carrier line.
 			/// @param point		The flat point component.
 
-			Dipole3D& Set(const Vector3D& direction, const Bivector3D& moment, const Vector4D& point)
+			Dipole3D& Set(const Vector3D& direction, const Bivector3D& moment, const FlatPoint3D& point)
 			{
 				v = direction;
 				m = moment;
@@ -246,7 +246,7 @@ namespace Terathon
 				return (*this);
 			}
 
-			void Set(const Vector3D& direction, const Bivector3D& moment, const Vector4D& point) volatile
+			void Set(const Vector3D& direction, const Bivector3D& moment, const FlatPoint3D& point) volatile
 			{
 				v = direction;
 				m = moment;
@@ -849,7 +849,7 @@ namespace Terathon
 
 	inline Sphere3D Container(const Sphere3D& s)
 	{
-		return (Sphere3D(-s.u * s.u, -s.x * s.u, -s.y * s.u, -s.z * s.u, -s.w * s.u));
+		return (Sphere3D(s.u * s.u, s.x * s.u, s.y * s.u, s.z * s.u, s.w * s.u));
 	}
 
 	// ==============================================

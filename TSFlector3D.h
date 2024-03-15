@@ -1,6 +1,6 @@
 //
 // This file is part of the Terathon Math Library, by Eric Lengyel.
-// Copyright 1999-2023, Terathon Software LLC
+// Copyright 1999-2024, Terathon Software LLC
 //
 // This software is distributed under the MIT License.
 // Separate proprietary licenses are available from Terathon Software.
@@ -364,6 +364,16 @@ namespace Terathon
 	/// @relatedalso Flector3D
 
 	TERATHON_API Flector3D operator *(const Motor3D& a, const Flector3D& b);
+
+	/// @brief Returns the geometric antiproduct of the 3D flector \c F and the quaternion \c r.
+	/// @relatedalso Flector3D
+
+	TERATHON_API Flector3D operator *(const Flector3D& F, const Quaternion& r);
+
+	/// @brief Returns the geometric antiproduct of the quaternion \c r and the 3D flector \c F.
+	/// @relatedalso Flector3D
+
+	TERATHON_API Flector3D operator *(const Quaternion& r, const Flector3D& F);
 
 	// ==============================================
 	//	Transformations

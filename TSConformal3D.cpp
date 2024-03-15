@@ -1,6 +1,6 @@
 //
 // This file is part of the Terathon Math Library, by Eric Lengyel.
-// Copyright 1999-2023, Terathon Software LLC
+// Copyright 1999-2024, Terathon Software LLC
 //
 // This software is distributed under the MIT License.
 // Separate proprietary licenses are available from Terathon Software.
@@ -67,11 +67,11 @@ FlatPoint3D Terathon::FlatCenter(const Circle3D& c)
 
 Sphere3D Terathon::Container(const Dipole3D& d)
 {
-	return (Sphere3D(-d.v.x * d.v.x - d.v.y * d.v.y - d.v.z * d.v.z,
-	                  d.v.y * d.m.z - d.v.z * d.m.y + d.v.x * d.p.w,
-	                  d.v.z * d.m.x - d.v.x * d.m.z + d.v.y * d.p.w,
-	                  d.v.x * d.m.y - d.v.y * d.m.x + d.v.z * d.p.w,
-	                 -d.m.x * d.m.x - d.m.y * d.m.y - d.m.z * d.m.z - d.v.x * d.p.x - d.v.y * d.p.y - d.v.z * d.p.z));
+	return (Sphere3D(d.v.x * d.v.x + d.v.y * d.v.y + d.v.z * d.v.z,
+	                 d.v.z * d.m.y - d.v.y * d.m.z - d.v.x * d.p.w,
+	                 d.v.x * d.m.z - d.v.z * d.m.x - d.v.y * d.p.w,
+	                 d.v.y * d.m.x - d.v.x * d.m.y - d.v.z * d.p.w,
+	                 d.m.x * d.m.x + d.m.y * d.m.y + d.m.z * d.m.z + d.v.x * d.p.x + d.v.y * d.p.y + d.v.z * d.p.z));
 }
 
 Sphere3D Terathon::Container(const Circle3D& c)

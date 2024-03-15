@@ -1,6 +1,6 @@
 //
 // This file is part of the Terathon Common Library, by Eric Lengyel.
-// Copyright 1999-2023, Terathon Software LLC
+// Copyright 1999-2024, Terathon Software LLC
 //
 // This software is distributed under the MIT License.
 // Separate proprietary licenses are available from Terathon Software.
@@ -291,6 +291,15 @@ namespace Terathon
 
 	#endif
 
+
+	inline void SimdInit(void)
+	{
+		#if defined(TERATHON_SSE)
+
+			_mm_setcsr(_mm_getcsr() | 0x8040);
+
+		#endif
+	}
 
 	inline vec_float VecFloatGetZero(void)
 	{

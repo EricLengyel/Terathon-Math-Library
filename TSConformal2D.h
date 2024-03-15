@@ -1,6 +1,6 @@
 //
 // This file is part of the Terathon Math Library, by Eric Lengyel.
-// Copyright 1999-2023, Terathon Software LLC
+// Copyright 1999-2024, Terathon Software LLC
 //
 // This software is distributed under the MIT License.
 // Separate proprietary licenses are available from Terathon Software.
@@ -172,7 +172,7 @@ namespace Terathon
 		public:
 
 			Line2D			g;
-			Vector3D		p;
+			FlatPoint2D		p;
 
 			TERATHON_API static const ConstDipole2D zero;
 
@@ -194,7 +194,7 @@ namespace Terathon
 			/// @param line			The carrier line.
 			/// @param point		The flat point component.
 
-			Dipole2D(const Line2D& line, const Vector3D& point)
+			Dipole2D(const Line2D& line, const FlatPoint2D& point)
 			{
 				g = line;
 				p = point;
@@ -221,14 +221,14 @@ namespace Terathon
 			/// @param line			The carrier line.
 			/// @param point		The flat point component.
 
-			Dipole2D& Set(const Line2D& line, const Vector3D& point)
+			Dipole2D& Set(const Line2D& line, const FlatPoint2D& point)
 			{
 				g = line;
 				p = point;
 				return (*this);
 			}
 
-			void Set(const Line2D& line, const Vector3D& point) volatile
+			void Set(const Line2D& line, const FlatPoint2D& point) volatile
 			{
 				g = line;
 				p = point;

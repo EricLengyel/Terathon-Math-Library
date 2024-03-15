@@ -1,6 +1,6 @@
 //
 // This file is part of the Terathon Math Library, by Eric Lengyel.
-// Copyright 1999-2023, Terathon Software LLC
+// Copyright 1999-2024, Terathon Software LLC
 //
 // This software is distributed under the MIT License.
 // Separate proprietary licenses are available from Terathon Software.
@@ -223,17 +223,17 @@ FlatPoint3D Terathon::Transform(const FlatPoint3D& p, const Motor3D& Q)
 		vec_float vw = VecSmearW(v);
 		vec_float mw = VecSmearW(m);
 
-		vec_float Qvp = VecCross3D(v, q) + m * qw;
-		vec_float a = VecCross3D(v, Qvp) + Qvp * vw - v * (mw * qw);
+		vec_float a = VecCross3D(v, q) + m * qw;
+		vec_float u = VecCross3D(v, a) + a * vw - v * (mw * qw);
 
-		VecStore3D(q + (a + a), &result.x);
+		VecStore3D(q + (u + u), &result.x);
 		result.w = p.w;
 		return (result);
 
 	#else
 
-		Bivector3D Qvp = (!Q.v.xyz ^ p.xyz) + Q.m.xyz * p.w;
-		return (FlatPoint3D(p.xyz + ((Q.v.xyz ^ Qvp) + !Qvp * Q.v.w - !Q.v.xyz * (Q.m.w * p.w)) * 2.0F, p.w));
+		Bivector3D a = (!Q.v.xyz ^ p.xyz) + Q.m.xyz * p.w;
+		return (FlatPoint3D(p.xyz + ((Q.v.xyz ^ a) + !a * Q.v.w - !Q.v.xyz * (Q.m.w * p.w)) * 2.0F, p.w));
 
 	#endif
 }
@@ -250,16 +250,16 @@ Point3D Terathon::Transform(const Point3D& p, const Motor3D& Q)
 		vec_float vw = VecSmearW(v);
 		vec_float mw = VecSmearW(m);
 
-		vec_float Qvp = VecCross3D(v, q) + m;
-		vec_float a = VecCross3D(v, Qvp) + Qvp * vw - v * mw;
+		vec_float a = VecCross3D(v, q) + m;
+		vec_float u = VecCross3D(v, a) + a * vw - v * mw;
 
-		VecStore3D(q + (a + a), &result.x);
+		VecStore3D(q + (u + u), &result.x);
 		return (result);
 
 	#else
 
-		Bivector3D Qvp = (!Q.v.xyz ^ p) + Q.m.xyz;
-		return (p + ((Q.v.xyz ^ Qvp) + !Qvp * Q.v.w - !Q.v.xyz * Q.m.w) * 2.0F);
+		Bivector3D a = (!Q.v.xyz ^ p) + Q.m.xyz;
+		return (p + ((Q.v.xyz ^ a) + !a * Q.v.w - !Q.v.xyz * Q.m.w) * 2.0F);
 
 	#endif
 }
@@ -268,21 +268,23 @@ Line3D Terathon::Transform(const Line3D& l, const Motor3D& Q)
 {
 	Line3D		result;
 
-	Bivector3D Qvlv = (!Q.v.xyz ^ l.v) * 2.0F;
-	result.v = l.v + ((Q.v.xyz ^ Qvlv) + !Qvlv * Q.v.w);
+	Bivector3D a = !Q.v.xyz ^ l.v;
+	result.v = l.v + ((Q.v.xyz ^ a) + !a * Q.v.w) * 2.0F;
 
-	Vector3D Qvlm = (Q.v.xyz ^ l.m) * 2.0F;
-	Vector3D Qmlv = (Q.m.xyz ^ !l.v) * 2.0F;
-	result.m = l.m + ((!Q.v.xyz ^ Qvlm) + (!Q.v.xyz ^ Qmlv) + !(Q.m.xyz ^ Qvlv) + !(Qvlm + Qmlv) * Q.v.w + Qvlv * Q.m.w);
+	Vector3D b = Q.v.xyz ^ l.m;
+	Vector3D c = Q.m.xyz ^ !l.v;
+	Vector3D d = b + c;
+	result.m = l.m + (a * Q.m.w + !d * Q.v.w + (!Q.v.xyz ^ d) + !(Q.m.xyz ^ a)) * 2.0F;
 
 	return (result);
 }
 
 Plane3D Terathon::Transform(const Plane3D& g, const Motor3D& Q)
 {
-	float gv = g.x * Q.v.x + g.y * Q.v.y + g.z * Q.v.z;
-	float gm = g.x * Q.m.x + g.y * Q.m.y + g.z * Q.m.z;
+	Vector3D b = (Q.m.xyz ^ g.xyz) + !g.xyz * Q.m.w;
+	float bv = b.x * Q.v.x + b.y * Q.v.y + b.z * Q.v.z;
+	float mg = Q.m.x * g.x + Q.m.y * g.y + Q.m.z * g.z;
 
-	Vector3D Qvg = (Q.v.xyz ^ g.xyz) * 2.0F;
-	return (Plane3D(g.xyz + ((!Q.v.xyz ^ Qvg) + !Qvg * Q.v.w), g.w + (gv * Q.m.w - gm * Q.v.w + (g.xyz ^ Q.v.xyz ^ Q.m.xyz)) * 2.0F));
+	Vector3D a = (Q.v.xyz ^ g.xyz) * 2.0F;
+	return (Plane3D(g.xyz + ((!Q.v.xyz ^ a) + !a * Q.v.w), g.w + (bv - mg * Q.v.w) * 2.0F));
 }

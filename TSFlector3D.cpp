@@ -1,6 +1,6 @@
 //
 // This file is part of the Terathon Math Library, by Eric Lengyel.
-// Copyright 1999-2023, Terathon Software LLC
+// Copyright 1999-2024, Terathon Software LLC
 //
 // This software is distributed under the MIT License.
 // Separate proprietary licenses are available from Terathon Software.
@@ -195,22 +195,46 @@ Flector3D Terathon::operator *(const Motor3D& a, const Flector3D& b)
 	                  b.g.w * a.v.w - b.g.x * a.m.x - b.g.y * a.m.y - b.g.z * a.m.z + b.p.w * a.m.w - b.p.x * a.v.x - b.p.y * a.v.y - b.p.z * a.v.z));
 }
 
+Flector3D Terathon::operator *(const Flector3D& F, const Quaternion& r)
+{
+	return (Flector3D(F.g.w * r.x + F.p.y * r.z - F.p.z * r.y + F.p.x * r.w,
+	                  F.g.w * r.y + F.p.z * r.x - F.p.x * r.z + F.p.y * r.w,
+	                  F.g.w * r.z + F.p.x * r.y - F.p.y * r.x + F.p.z * r.w,
+	                  F.p.w * r.w - F.g.x * r.x - F.g.y * r.y - F.g.z * r.z,
+	                  F.g.y * r.z - F.g.z * r.y + F.p.w * r.x + F.g.x * r.w,
+	                  F.g.z * r.x - F.g.x * r.z + F.p.w * r.y + F.g.y * r.w,
+	                  F.g.x * r.y - F.g.y * r.x + F.p.w * r.z + F.g.z * r.w,
+	                  F.g.w * r.w - F.p.x * r.x - F.p.y * r.y - F.p.z * r.z));
+}
+
+Flector3D Terathon::operator *(const Quaternion& r, const Flector3D& F)
+{
+	return (Flector3D(F.g.w * r.x + F.p.z * r.y - F.p.y * r.z + F.p.x * r.w,
+	                  F.g.w * r.y + F.p.x * r.z - F.p.z * r.x + F.p.y * r.w,
+	                  F.g.w * r.z + F.p.y * r.x - F.p.x * r.y + F.p.z * r.w,
+	                  F.p.w * r.w - F.g.x * r.x - F.g.y * r.y - F.g.z * r.z,
+	                  F.g.z * r.y - F.g.y * r.z + F.p.w * r.x + F.g.x * r.w,
+	                  F.g.x * r.z - F.g.z * r.x + F.p.w * r.y + F.g.y * r.w,
+	                  F.g.y * r.x - F.g.x * r.y + F.p.w * r.z + F.g.z * r.w,
+	                  F.g.w * r.w - F.p.x * r.x - F.p.y * r.y - F.p.z * r.z));
+}
+
 Vector3D Terathon::Transform(const Vector3D& v, const Flector3D& F)
 {
-	Bivector3D Fgv = (!F.g.xyz ^ v) * 2.0F;
-	return ((Fgv ^ F.g.xyz) - !Fgv * F.p.w - v);
+	Bivector3D a = (!F.g.xyz ^ v) * 2.0F;
+	return ((a ^ F.g.xyz) - !a * F.p.w - v);
 }
 
 FlatPoint3D Terathon::Transform(const FlatPoint3D& q, const Flector3D& F)
 {
-	Bivector3D Fgq = (!F.g.xyz ^ q.xyz) - !F.p.xyz * q.w;
-	return (FlatPoint3D(((Fgq ^ F.g.xyz) - !Fgq * F.p.w - !F.g.xyz * (F.g.w * q.w)) * 2.0F - q.xyz, q.w));
+	Bivector3D a = (!F.g.xyz ^ q.xyz) - !F.p.xyz * q.w;
+	return (FlatPoint3D(((a ^ F.g.xyz) - !a * F.p.w - !F.g.xyz * (F.g.w * q.w)) * 2.0F - q.xyz, q.w));
 }
 
 Point3D Terathon::Transform(const Point3D& q, const Flector3D& F)
 {
-	Bivector3D Fgq = (!F.g.xyz ^ q.xyz) - !F.p.xyz;
-	return (((Fgq ^ F.g.xyz) - !Fgq * F.p.w - !F.g.xyz * F.g.w) * 2.0F - q);
+	Bivector3D a = (!F.g.xyz ^ q.xyz) - !F.p.xyz;
+	return (((a ^ F.g.xyz) - !a * F.p.w - !F.g.xyz * F.g.w) * 2.0F - q);
 }
 
 Line3D Terathon::Transform(const Line3D& l, const Flector3D& F)
