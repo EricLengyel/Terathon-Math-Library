@@ -957,10 +957,46 @@ namespace Terathon
 	}
 
 	// ==============================================
+	//	SquaredBulkNorm
+	// ==============================================
+
+	/// @brief Returns the squared round bulk of the 3D round point \c a.
+	/// @relatedalso RoundPoint3D
+
+	inline float SquaredBulkNorm(const RoundPoint3D& a)
+	{
+		return (a.x * a.x + a.y * a.y + a.z * a.z);
+	}
+
+	/// @brief Returns the squared round bulk of the 3D dipole \c d.
+	/// @relatedalso Dipole3D
+
+	inline float SquaredBulkNorm(const Dipole3D& d)
+	{
+		return (d.m.x * d.m.x + d.m.y * d.m.y + d.m.z * d.m.z);
+	}
+
+	/// @brief Returns the squared round bulk of the 3D circle \c c.
+	/// @relatedalso Circle3D
+
+	inline float SquaredBulkNorm(const Circle3D& c)
+	{
+		return (c.g.w * c.g.w);
+	}
+
+	/// @brief Returns the squared round bulk of the 3D sphere \c s.
+	/// @relatedalso Sphere3D
+
+	inline float SquaredBulkNorm(const Sphere3D& s)
+	{
+		return (0.0F);
+	}
+
+	// ==============================================
 	//	SquaredWeightNorm
 	// ==============================================
 
-	/// @brief Returns the squared weight of the 3D round point \c a.
+	/// @brief Returns the squared round weight of the 3D round point \c a.
 	/// @relatedalso RoundPoint3D
 
 	inline float SquaredWeightNorm(const RoundPoint3D& a)
@@ -968,7 +1004,7 @@ namespace Terathon
 		return (a.w * a.w);
 	}
 
-	/// @brief Returns the squared weight of the 3D dipole \c d.
+	/// @brief Returns the squared round weight of the 3D dipole \c d.
 	/// @relatedalso Dipole3D
 
 	inline float SquaredWeightNorm(const Dipole3D& d)
@@ -976,7 +1012,7 @@ namespace Terathon
 		return (d.v.x * d.v.x + d.v.y * d.v.y + d.v.z * d.v.z);
 	}
 
-	/// @brief Returns the squared weight of the 3D circle \c c.
+	/// @brief Returns the squared round weight of the 3D circle \c c.
 	/// @relatedalso Circle3D
 
 	inline float SquaredWeightNorm(const Circle3D& c)
@@ -984,12 +1020,84 @@ namespace Terathon
 		return (c.g.x * c.g.x + c.g.y * c.g.y + c.g.z * c.g.z);
 	}
 
-	/// @brief Returns the squared weight of the 3D sphere \c s.
+	/// @brief Returns the squared round weight of the 3D sphere \c s.
 	/// @relatedalso Sphere3D
 
 	inline float SquaredWeightNorm(const Sphere3D& s)
 	{
 		return (s.u * s.u);
+	}
+
+	// ==============================================
+	//	SquaredFlatBulkNorm
+	// ==============================================
+
+	/// @brief Returns the squared flat bulk of the 3D round point \c a.
+	/// @relatedalso RoundPoint3D
+
+	inline float SquaredFlatBulkNorm(const RoundPoint3D& a)
+	{
+		return (a.u * a.u);
+	}
+
+	/// @brief Returns the squared flat bulk of the 3D dipole \c d.
+	/// @relatedalso Dipole3D
+
+	inline float SquaredFlatBulkNorm(const Dipole3D& d)
+	{
+		return (d.p.x * d.p.x + d.p.y * d.p.y + d.p.z * d.p.z);
+	}
+
+	/// @brief Returns the squared flat bulk of the 3D circle \c c.
+	/// @relatedalso Circle3D
+
+	inline float SquaredFlatBulkNorm(const Circle3D& c)
+	{
+		return (c.m.x * c.m.x + c.m.y * c.m.y + c.m.z * c.m.z);
+	}
+
+	/// @brief Returns the squared flat bulk of the 3D sphere \c s.
+	/// @relatedalso Sphere3D
+
+	inline float SquaredFlatBulkNorm(const Sphere3D& s)
+	{
+		return (s.w * s.w);
+	}
+
+	// ==============================================
+	//	SquaredFlatWeightNorm
+	// ==============================================
+
+	/// @brief Returns the squared flat weight of the 3D round point \c a.
+	/// @relatedalso RoundPoint3D
+
+	inline float SquaredFlatWeightNorm(const RoundPoint3D& a)
+	{
+		return (0.0F);
+	}
+
+	/// @brief Returns the squared flat weight of the 3D dipole \c d.
+	/// @relatedalso Dipole3D
+
+	inline float SquaredFlatWeightNorm(const Dipole3D& d)
+	{
+		return (d.p.w * d.p.w);
+	}
+
+	/// @brief Returns the squared flat weight of the 3D circle \c c.
+	/// @relatedalso Circle3D
+
+	inline float SquaredFlatWeightNorm(const Circle3D& c)
+	{
+		return (c.v.x * c.v.x + c.v.y * c.v.y + c.v.z * c.v.z);
+	}
+
+	/// @brief Returns the squared flat weight of the 3D sphere \c s.
+	/// @relatedalso Sphere3D
+
+	inline float SquaredFlatWeightNorm(const Sphere3D& s)
+	{
+		return (s.x * s.x + s.y * s.y + s.z * s.z);
 	}
 
 	// ==============================================
