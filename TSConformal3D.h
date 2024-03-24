@@ -110,6 +110,38 @@ namespace Terathon
 			{
 				return ((&x)[k]);
 			}
+
+			RoundPoint3D& operator *=(float n)
+			{
+				x *= n;
+				y *= n;
+				z *= n;
+				w *= n;
+				u *= n;
+				return (*this);
+			}
+
+			RoundPoint3D& operator /=(float n)
+			{
+				n = 1.0F / n;
+				x *= n;
+				y *= n;
+				z *= n;
+				w *= n;
+				u *= n;
+				return (*this);
+			}
+
+			RoundPoint3D& Unitize(void)
+			{
+				float n = 1.0F / w;
+				x *= n;
+				y *= n;
+				z *= n;
+				u *= n;
+				w = 1.0F;
+				return (*this);
+			}
 	};
 
 
@@ -251,6 +283,28 @@ namespace Terathon
 				v = direction;
 				m = moment;
 				p = point;
+			}
+
+			Dipole3D& operator *=(float n)
+			{
+				v *= n;
+				m *= n;
+				p *= n;
+				return (*this);
+			}
+
+			Dipole3D& operator /=(float n)
+			{
+				n = 1.0F / n;
+				v *= n;
+				m *= n;
+				p *= n;
+				return (*this);
+			}
+
+			Dipole3D& Unitize(void)
+			{
+				return (*this *= InverseMag(v));
 			}
 	};
 
@@ -394,6 +448,28 @@ namespace Terathon
 				v = direction;
 				m = moment;
 			}
+
+			Circle3D& operator *=(float n)
+			{
+				g *= n;
+				v *= n;
+				m *= n;
+				return (*this);
+			}
+
+			Circle3D& operator /=(float n)
+			{
+				n = 1.0F / n;
+				g *= n;
+				v *= n;
+				m *= n;
+				return (*this);
+			}
+
+			Circle3D& Unitize(void)
+			{
+				return (*this *= InverseSqrt(g.x * g.x + g.y * g.y + g.z * g.z));
+			}
 	};
 
 
@@ -503,6 +579,38 @@ namespace Terathon
 				y = sy;
 				z = sz;
 				w = sw;
+			}
+
+			Sphere3D& operator *=(float n)
+			{
+				u *= n;
+				x *= n;
+				y *= n;
+				z *= n;
+				w *= n;
+				return (*this);
+			}
+
+			Sphere3D& operator /=(float n)
+			{
+				n = 1.0F / n;
+				u *= n;
+				x *= n;
+				y *= n;
+				z *= n;
+				w *= n;
+				return (*this);
+			}
+
+			Sphere3D& Unitize(void)
+			{
+				float n = -1.0F / u;
+				x *= n;
+				y *= n;
+				z *= n;
+				w *= n;
+				u = -1.0F;
+				return (*this);
 			}
 	};
 
@@ -1098,6 +1206,61 @@ namespace Terathon
 	inline float SquaredFlatWeightNorm(const Sphere3D& s)
 	{
 		return (s.x * s.x + s.y * s.y + s.z * s.z);
+	}
+
+	// ==============================================
+	//	Unitize
+	// ==============================================
+
+	/// @brief Calculates the unitized equivalent of a 3D round point.
+	///
+	/// Multiplies the 3D round point \c a by the inverse magnitude of its weight, which is its <i>w</i> component.
+	/// The return value is a round point having a <i>w</i> coordinate of one.
+	///
+	/// @relatedalso RoundPoint3D
+
+	inline RoundPoint3D Unitize(const RoundPoint3D& a)
+	{
+		float n = 1.0F / a.w;
+		return (RoundPoint3D(a.x * n, a.y * n, a.z * n, 1.0F, a.u * n));
+	}
+
+	/// @brief Calculates the unitized equivalent of a 3D dipole.
+	///
+	/// Multiplies the 3D dipole \c d by the inverse magnitude of its weight, which is the 3D direction component of its carrier line.
+	/// The direction component of the carrier line of the returned dipole has unit length, and the magnitude of its moment component
+	/// is the perpendicular distance between the origin and the carrier line.
+	///
+	/// @relatedalso Dipole3D
+
+	inline Dipole3D Unitize(const Dipole3D& d)
+	{
+		return (d * InverseSqrt(d.v.x * d.v.x + d.v.y * d.v.y + d.v.z * d.v.z));
+	}
+
+	/// @brief Calculates the unitized equivalent of a 3D circle.
+	///
+	/// Multiplies the 3D circle \c c by the inverse magnitude of its weight, which is the 3D trivector given by its
+	/// <i>gx</i>, <i>gy</i>, and <i>gz</i> coordinates. The carrier plane of the returned circle has a unit-length normal.
+	///
+	/// @relatedalso Circle3D
+
+	inline Circle3D Unitize(const Circle3D& c)
+	{
+		return (c * InverseSqrt(c.g.x * c.g.x + c.g.y * c.g.y + c.g.z * c.g.z));
+	}
+
+	/// @brief Calculates the unitized equivalent of a 3D sphere.
+	///
+	/// Multiplies the 3D sphere \c s by the negated inverse magnitude of its weight, which is its <i>u</i> component.
+	/// The return value is a sphere having a <i>u</i> coordinate of negative one.
+	///
+	/// @relatedalso Sphere3D
+
+	inline Sphere3D Unitize(const Sphere3D& s)
+	{
+		float n = -1.0F / s.u;
+		return (Sphere3D(-1.0F, s.x * n, s.y * n, s.z * n, s.w * n));
 	}
 
 	// ==============================================

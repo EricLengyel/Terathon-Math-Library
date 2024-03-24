@@ -103,6 +103,35 @@ namespace Terathon
 			{
 				return ((&x)[k]);
 			}
+
+			RoundPoint2D& operator *=(float n)
+			{
+				x *= n;
+				y *= n;
+				z *= n;
+				w *= n;
+				return (*this);
+			}
+
+			RoundPoint2D& operator /=(float n)
+			{
+				n = 1.0F / n;
+				x *= n;
+				y *= n;
+				z *= n;
+				w *= n;
+				return (*this);
+			}
+
+			RoundPoint2D& Unitize(void)
+			{
+				float n = 1.0F / z;
+				x *= n;
+				y *= n;
+				w *= n;
+				z = 1.0F;
+				return (*this);
+			}
 	};
 
 
@@ -233,6 +262,26 @@ namespace Terathon
 				g = line;
 				p = point;
 			}
+
+			Dipole2D& operator *=(float n)
+			{
+				g *= n;
+				p *= n;
+				return (*this);
+			}
+
+			Dipole2D& operator /=(float n)
+			{
+				n = 1.0F / n;
+				g *= n;
+				p *= n;
+				return (*this);
+			}
+
+			Dipole2D& Unitize(void)
+			{
+				return (*this *= InverseSqrt(g.x * g.x + g.y * g.y));
+			}
 	};
 
 
@@ -338,6 +387,35 @@ namespace Terathon
 				x = cx;
 				y = cy;
 				z = cz;
+			}
+
+			Circle2D& operator *=(float n)
+			{
+				w *= n;
+				x *= n;
+				y *= n;
+				z *= n;
+				return (*this);
+			}
+
+			Circle2D& operator /=(float n)
+			{
+				n = 1.0F / n;
+				w *= n;
+				x *= n;
+				y *= n;
+				z *= n;
+				return (*this);
+			}
+
+			Circle2D& Unitize(void)
+			{
+				float n = -1.0F / w;
+				x *= n;
+				y *= n;
+				z *= n;
+				w = -1.0F;
+				return (*this);
 			}
 	};
 
@@ -707,10 +785,38 @@ namespace Terathon
 	}
 
 	// ==============================================
+	//	SquaredBulkNorm
+	// ==============================================
+
+	/// @brief Returns the squared round bulk of the 2D round point \c a.
+	/// @relatedalso RoundPoint2D
+
+	inline float SquaredBulkNorm(const RoundPoint2D& a)
+	{
+		return (a.x * a.x + a.y * a.y);
+	}
+
+	/// @brief Returns the squared round bulk of the 2D dipole \c d.
+	/// @relatedalso Dipole2D
+
+	inline float SquaredBulkNorm(const Dipole2D& d)
+	{
+		return (d.g.z * d.g.z);
+	}
+
+	/// @brief Returns the squared round bulk of the 2D circle \c c.
+	/// @relatedalso Circle2D
+
+	inline float SquaredBulkNorm(const Circle2D& c)
+	{
+		return (0.0F);
+	}
+
+	// ==============================================
 	//	SquaredWeightNorm
 	// ==============================================
 
-	/// @brief Returns the squared weight of the 2D round point \c a.
+	/// @brief Returns the squared round weight of the 2D round point \c a.
 	/// @relatedalso RoundPoint2D
 
 	inline float SquaredWeightNorm(const RoundPoint2D& a)
@@ -718,7 +824,7 @@ namespace Terathon
 		return (a.z * a.z);
 	}
 
-	/// @brief Returns the squared weight of the 2D dipole \c d.
+	/// @brief Returns the squared round weight of the 2D dipole \c d.
 	/// @relatedalso Dipole2D
 
 	inline float SquaredWeightNorm(const Dipole2D& d)
@@ -726,12 +832,110 @@ namespace Terathon
 		return (d.g.x * d.g.x + d.g.y * d.g.y);
 	}
 
-	/// @brief Returns the squared weight of the 2D circle \c c.
+	/// @brief Returns the squared round weight of the 2D circle \c c.
 	/// @relatedalso Circle2D
 
 	inline float SquaredWeightNorm(const Circle2D& c)
 	{
 		return (c.w * c.w);
+	}
+
+	// ==============================================
+	//	SquaredFlatBulkNorm
+	// ==============================================
+
+	/// @brief Returns the squared flat bulk of the 2D round point \c a.
+	/// @relatedalso RoundPoint2D
+
+	inline float SquaredFlatBulkNorm(const RoundPoint2D& a)
+	{
+		return (a.w * a.w);
+	}
+
+	/// @brief Returns the squared flat bulk of the 2D dipole \c d.
+	/// @relatedalso Dipole2D
+
+	inline float SquaredFlatBulkNorm(const Dipole2D& d)
+	{
+		return (d.p.x * d.p.x + d.p.y * d.p.y);
+	}
+
+	/// @brief Returns the squared flat bulk of the 2D circle \c c.
+	/// @relatedalso Circle2D
+
+	inline float SquaredFlatBulkNorm(const Circle2D& c)
+	{
+		return (c.z * c.z);
+	}
+
+	// ==============================================
+	//	SquaredFlatWeightNorm
+	// ==============================================
+
+	/// @brief Returns the squared flat weight of the 2D round point \c a.
+	/// @relatedalso RoundPoint2D
+
+	inline float SquaredFlatWeightNorm(const RoundPoint2D& a)
+	{
+		return (0.0F);
+	}
+
+	/// @brief Returns the squared flat weight of the 2D dipole \c d.
+	/// @relatedalso Dipole2D
+
+	inline float SquaredFlatWeightNorm(const Dipole2D& d)
+	{
+		return (d.p.z * d.p.z);
+	}
+
+	/// @brief Returns the squared flat weight of the 2D circle \c c.
+	/// @relatedalso Circle2D
+
+	inline float SquaredFlatWeightNorm(const Circle2D& c)
+	{
+		return (c.x * c.x + c.y * c.y);
+	}
+
+	// ==============================================
+	//	Unitize
+	// ==============================================
+
+	/// @brief Calculates the unitized equivalent of a 2D round point.
+	///
+	/// Multiplies the 2D round point \c a by the inverse magnitude of its weight, which is its <i>z</i> component.
+	/// The return value is a round point having a <i>z</i> coordinate of one.
+	///
+	/// @relatedalso RoundPoint2D
+
+	inline RoundPoint2D Unitize(const RoundPoint2D& a)
+	{
+		float n = 1.0F / a.z;
+		return (RoundPoint2D(a.x * n, a.y * n, 1.0F, a.w * n));
+	}
+
+	/// @brief Calculates the unitized equivalent of a 2D dipole.
+	///
+	/// Multiplies the 2D dipole \c d by the inverse magnitude of its weight, which is the 2D bivector given by its
+	/// <i>gx</i> and <i>gy</i> coordinates. The carrier line of the returned dipole has a unit-length normal.
+	///
+	/// @relatedalso Dipole2D
+
+	inline Dipole2D Unitize(const Dipole2D& d)
+	{
+		return (d * InverseSqrt(d.g.x * d.g.x + d.g.y * d.g.y));
+	}
+
+	/// @brief Calculates the unitized equivalent of a 2D circle.
+	///
+	/// Multiplies the 2D circle \c c by the negated inverse magnitude of its weight, which is its <i>w</i> component.
+	/// The return value is a circle having a <i>w</i> coordinate of negative one.
+	///
+	/// @relatedalso Circle2D
+
+	inline Circle2D Unitize(const Circle2D& c)
+	{
+		float n = -1.0F / c.w;
+		return (Circle2D(-1.0F, c.x * n, c.y * n, c.z * n));
 	}
 
 	// ==============================================
