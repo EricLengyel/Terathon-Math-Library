@@ -18,7 +18,7 @@ This is a C++ math library containing classes for vectors, matrices, quaternions
 
 2D rigid geometric algebra
 * **FlatPoint2D** – A 2D flat point *x* **e**<sub>1</sub> + *y* **e**<sub>2</sub> + *z* **e**<sub>3</sub>.
-* **Line2D** – A 2D line *g<sub>x</sub>* **e**<sub>23</sub> + *g<sub>y</sub>* **e**<sub>31</sub> + *g<sub>z</sub>* **e**<sub>12</sub>.
+* **Line2D** – A 2D line *x* **e**<sub>23</sub> + *y* **e**<sub>31</sub> + *z* **e**<sub>12</sub>.
 * **Motor2D** – A 2D motion operator *Q<sub>x</sub>* **e**<sub>1</sub> + *Q<sub>y</sub>* **e**<sub>2</sub> + *Q<sub>z</sub>* **e**<sub>3</sub> + *Q<sub>w</sub>* 𝟙.
 * **Flector2D** - A 2D reflection operator *F<sub>x</sub>* **e**<sub>23</sub> + *F<sub>y</sub>* **e**<sub>31</sub> + *F<sub>z</sub>* **e**<sub>12</sub> + *F<sub>w</sub>* **1**.
 
