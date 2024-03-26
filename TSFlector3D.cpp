@@ -8,7 +8,6 @@
 
 
 #include "TSFlector3D.h"
-#include "TSMotor3D.h"
 
 
 using namespace Terathon;

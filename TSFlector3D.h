@@ -19,6 +19,9 @@
 
 namespace Terathon
 {
+	struct ConstFlector3D;
+
+
 	// ==============================================
 	//	Flector3D
 	// ==============================================
@@ -290,8 +293,8 @@ namespace Terathon
 			/// The \c SetTransformMatrix() function sets the components of a flector to values that represent
 			/// the same rigid motion as the one represented by the matrix specified by the \c M parameter.
 			///
-			/// This function expects the matrix \c M to be orthogonal and have a determinant of &minus;1.
-			/// If these conditions are not met, then the results are unlikely to be meaningful.
+			/// This function expects the matrix \c M to have a determinant of &minus;1, and it expects the upper-left 3&#x202F;&times;&#x202F;3
+			/// portion of the matrix to be orthogonal. If these conditions are not met, then the results are unlikely to be meaningful.
 
 			TERATHON_API Flector3D& SetTransformMatrix(const Transform3D& M);
 	};
