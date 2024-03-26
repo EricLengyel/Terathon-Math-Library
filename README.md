@@ -19,13 +19,15 @@ This is a C++ math library containing classes for vectors, matrices, quaternions
 2D rigid geometric algebra
 * **FlatPoint2D** – A 2D flat point *x* **e**<sub>1</sub> + *y* **e**<sub>2</sub> + *z* **e**<sub>3</sub>.
 * **Line2D** – A 2D line *g<sub>x</sub>* **e**<sub>23</sub> + *g<sub>y</sub>* **e**<sub>31</sub> + *g<sub>z</sub>* **e**<sub>12</sub>.
+* **Motor2D** – A 2D motion operator *Q<sub>x</sub>* **e**<sub>1</sub> + *Q<sub>y</sub>* **e**<sub>2</sub> + *Q<sub>z</sub>* **e**<sub>3</sub> + *Q<sub>w</sub>* 𝟙.
+* **Flector2D** - A 2D reflection operator *F<sub>x</sub>* **e**<sub>23</sub> + *F<sub>y</sub>* **e**<sub>31</sub> + *F<sub>z</sub>* **e**<sub>12</sub> + *F<sub>w</sub>* **1**.
 
 3D rigid geometric algebra
 * **FlatPoint3D** – A 3D [flat point](https://rigidgeometricalgebra.org/wiki/index.php?title=Point) *x* **e**<sub>1</sub> + *y* **e**<sub>2</sub> + *z* **e**<sub>3</sub> + *w* **e**<sub>4</sub>.
 * **Line3D** – A 3D [line](https://rigidgeometricalgebra.org/wiki/index.php?title=Line) *v<sub>x</sub>* **e**<sub>41</sub> + *v<sub>y</sub>* **e**<sub>42</sub> + *v<sub>z</sub>* **e**<sub>43</sub> + *m<sub>x</sub>* **e**<sub>23</sub> + *m<sub>y</sub>* **e**<sub>31</sub> + *m<sub>z</sub>* **e**<sub>12</sub>.
 * **Plane3D** – A 3D [plane](https://rigidgeometricalgebra.org/wiki/index.php?title=Plane) *x* **e**<sub>234</sub> + *y* **e**<sub>314</sub> + *z* **e**<sub>124</sub> + *w* **e**<sub>321</sub>.
-* **Motor3D** – A 3D [motion operator](https://rigidgeometricalgebra.org/wiki/index.php?title=Motor) *r<sub>x</sub>* **e**<sub>41</sub> + *r<sub>y</sub>* **e**<sub>42</sub> + *r<sub>z</sub>* **e**<sub>43</sub> + *r<sub>w</sub>* 𝟙 + *u<sub>x</sub>* **e**<sub>23</sub> + *u<sub>y</sub>* **e**<sub>31</sub> + *u<sub>z</sub>* **e**<sub>12</sub> + *u<sub>w</sub>*.
-* **Flector3D** - A 3D [reflection operator](https://rigidgeometricalgebra.org/wiki/index.php?title=Flector) *s<sub>x</sub>* **e**<sub>1</sub> + *s<sub>y</sub>* **e**<sub>2</sub> + *s<sub>z</sub>* **e**<sub>3</sub> + *s<sub>w</sub>* **e**<sub>4</sub> + *h<sub>x</sub>* **e**<sub>234</sub> + *h<sub>y</sub>* **e**<sub>314</sub> + *h<sub>z</sub>* **e**<sub>124</sub> + *h<sub>w</sub>* **e**<sub>321</sub>.
+* **Motor3D** – A 3D [motion operator](https://rigidgeometricalgebra.org/wiki/index.php?title=Motor) *Q<sub>vx</sub>* **e**<sub>41</sub> + *Q<sub>vy</sub>* **e**<sub>42</sub> + *Q<sub>vz</sub>* **e**<sub>43</sub> + *Q<sub>vw</sub>* 𝟙 + *Q<sub>mx</sub>* **e**<sub>23</sub> + *Q<sub>my</sub>* **e**<sub>31</sub> + *Q<sub>mz</sub>* **e**<sub>12</sub> + *Q<sub>mw</sub>* **1**.
+* **Flector3D** - A 3D [reflection operator](https://rigidgeometricalgebra.org/wiki/index.php?title=Flector) *F<sub>px</sub>* **e**<sub>1</sub> + *F<sub>py</sub>* **e**<sub>2</sub> + *F<sub>pz</sub>* **e**<sub>3</sub> + *F<sub>pw</sub>* **e**<sub>4</sub> + *F<sub>gx</sub>* **e**<sub>423</sub> + *F<sub>gy</sub>* **e**<sub>431</sub> + *F<sub>gz</sub>* **e**<sub>412</sub> + *F<sub>gw</sub>* **e**<sub>321</sub>.
 
 2D conformal geometric algebra
 * **RoundPoint2D** – A 2D round point *x* **e**<sub>1</sub> + *y* **e**<sub>2</sub> + *z* **e**<sub>3</sub> + *w* **e**<sub>4</sub>.
