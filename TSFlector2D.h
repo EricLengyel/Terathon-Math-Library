@@ -289,7 +289,7 @@ namespace Terathon
 		return (Flector2D(F.x, F.y, F.z, -F.w));
 	}
 
-	inline auto operator ~(const Flector2D& F) {return (Antireverse(F));}
+	inline Flector2D operator ~(const Flector2D& F) {return (Antireverse(F));}
 
 	// ==============================================
 	//	Norms

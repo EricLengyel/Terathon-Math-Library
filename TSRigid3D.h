@@ -600,9 +600,9 @@ namespace Terathon
 		return (FlatPoint3D(-g.x, -g.y, -g.z, -g.w));
 	}
 
-	inline auto operator !(const Point3D& p) {return (LeftComplement(p));}
-	inline auto operator !(const Line3D& l) {return (LeftComplement(l));}
-	inline auto operator !(const Plane3D& g) {return (LeftComplement(g));}
+	inline Plane3D operator !(const Point3D& p) {return (RightComplement(p));}
+	inline Line3D operator !(const Line3D& l) {return (RightComplement(l));}
+	inline const FlatPoint3D& operator !(const Plane3D& g) {return (RightComplement(g));}
 
 	// ==============================================
 	//	BulkDual
@@ -749,9 +749,9 @@ namespace Terathon
 		return (g);
 	}
 
-	inline auto operator ~(const FlatPoint3D& p) {return (Antireverse(p));}
-	inline auto operator ~(const Line3D& l) {return (Antireverse(l));}
-	inline auto operator ~(const Plane3D& g) {return (Antireverse(g));}
+	inline FlatPoint3D operator ~(const FlatPoint3D& p) {return (Antireverse(p));}
+	inline Line3D operator ~(const Line3D& l) {return (Antireverse(l));}
+	inline const Plane3D& operator ~(const Plane3D& g) {return (Antireverse(g));}
 
 	// ==============================================
 	//	Attitude
@@ -1029,16 +1029,16 @@ namespace Terathon
 	inline Plane3D Wedge(const Point3D& p, const Line3D& l) {return (Wedge(l, p));}
 	inline Plane3D Wedge(const Vector3D& v, const Line3D& l) {return (Wedge(l, v));}
 
-	inline auto operator ^(const FlatPoint3D& p, const FlatPoint3D& q) {return (Wedge(p, q));}
-	inline auto operator ^(const Point3D& p, const Point3D& q) {return (Wedge(p, q));}
-	inline auto operator ^(const Point3D& p, const Vector3D& v) {return (Wedge(p, v));}
-	inline auto operator ^(const Line3D& l, const FlatPoint3D& p) {return (Wedge(l, p));}
-	inline auto operator ^(const Line3D& l, const Point3D& p) {return (Wedge(l, p));}
-	inline auto operator ^(const Line3D& l, const Vector3D& v) {return (Wedge(l, v));}
+	inline Line3D operator ^(const FlatPoint3D& p, const FlatPoint3D& q) {return (Wedge(p, q));}
+	inline Line3D operator ^(const Point3D& p, const Point3D& q) {return (Wedge(p, q));}
+	inline Line3D operator ^(const Point3D& p, const Vector3D& v) {return (Wedge(p, v));}
+	inline Plane3D operator ^(const Line3D& l, const FlatPoint3D& p) {return (Wedge(l, p));}
+	inline Plane3D operator ^(const Line3D& l, const Point3D& p) {return (Wedge(l, p));}
+	inline Plane3D operator ^(const Line3D& l, const Vector3D& v) {return (Wedge(l, v));}
 
-	inline auto operator ^(const FlatPoint3D& p, const Line3D& l) {return (Wedge(l, p));}
-	inline auto operator ^(const Point3D& p, const Line3D& l) {return (Wedge(l, p));}
-	inline auto operator ^(const Vector3D& v, const Line3D& l) {return (Wedge(l, v));}
+	inline Plane3D operator ^(const FlatPoint3D& p, const Line3D& l) {return (Wedge(l, p));}
+	inline Plane3D operator ^(const Point3D& p, const Line3D& l) {return (Wedge(l, p));}
+	inline Plane3D operator ^(const Vector3D& v, const Line3D& l) {return (Wedge(l, v));}
 
 	// ==============================================
 	//	Meet
@@ -1096,15 +1096,15 @@ namespace Terathon
 
 	inline FlatPoint3D Antiwedge(const Line3D& l, const Plane3D& g) {return (Antiwedge(g, l));}
 
-	inline auto operator ^(const Plane3D& g, const Plane3D& h) {return (Antiwedge(g, h));}
-	inline auto operator ^(const Plane3D& g, const Line3D& l) {return (Antiwedge(g, l));}
-	inline auto operator ^(const Line3D& k, const Line3D& l) {return (Antiwedge(k, l));}
-	inline auto operator ^(const FlatPoint3D& p, const Plane3D& g) {return (Antiwedge(p, g));}
-	inline auto operator ^(const Point3D& p, const Plane3D& g) {return (Antiwedge(p, g));}
-	inline auto operator ^(const Vector3D& v, const Plane3D& g) {return (Antiwedge(v, g));}
-	inline auto operator ^(const Point2D& p, const Plane3D& g) {return (Antiwedge(p, g));}
+	inline Line3D operator ^(const Plane3D& g, const Plane3D& h) {return (Antiwedge(g, h));}
+	inline FlatPoint3D operator ^(const Plane3D& g, const Line3D& l) {return (Antiwedge(g, l));}
+	inline float operator ^(const Line3D& k, const Line3D& l) {return (Antiwedge(k, l));}
+	inline float operator ^(const FlatPoint3D& p, const Plane3D& g) {return (Antiwedge(p, g));}
+	inline float operator ^(const Point3D& p, const Plane3D& g) {return (Antiwedge(p, g));}
+	inline float operator ^(const Vector3D& v, const Plane3D& g) {return (Antiwedge(v, g));}
+	inline float operator ^(const Point2D& p, const Plane3D& g) {return (Antiwedge(p, g));}
 
-	inline auto operator ^(const Line3D& l, const Plane3D& g) {return (Antiwedge(g, l));}
+	inline FlatPoint3D operator ^(const Line3D& l, const Plane3D& g) {return (Antiwedge(g, l));}
 
 	// ==============================================
 	//	Project

@@ -543,7 +543,7 @@ namespace Terathon
 		return (Vector2D(-v.y, v.x));
 	}
 
-	inline auto operator !(const Vector2D& v) {return (Complement(v));}
+	inline Vector2D operator !(const Vector2D& v) {return (Complement(v));}
 
 	// ==============================================
 	//	Wedge
@@ -557,7 +557,7 @@ namespace Terathon
 		return (a.x * b.y - a.y * b.x);
 	}
 
-	inline auto operator ^(const Vector2D& a, const Vector2D& b) {return (Antiwedge(a, b));}
+	inline float operator ^(const Vector2D& a, const Vector2D& b) {return (Antiwedge(a, b));}
 
 
 	// ==============================================

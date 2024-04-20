@@ -443,7 +443,7 @@ namespace Terathon
 		return (Motor3D(-Q.v.x, -Q.v.y, -Q.v.z, Q.v.w, -Q.m.x, -Q.m.y, -Q.m.z, Q.m.w));
 	}
 
-	inline auto operator ~(const Motor3D& Q) {return (Antireverse(Q));}
+	inline Motor3D operator ~(const Motor3D& Q) {return (Antireverse(Q));}
 
 	// ==============================================
 	//	Norms

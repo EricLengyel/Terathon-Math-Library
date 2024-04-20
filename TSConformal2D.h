@@ -554,9 +554,9 @@ namespace Terathon
 		return (c);
 	}
 
-	inline auto operator ~(const RoundPoint2D& a) {return (Antireverse(a));}
-	inline auto operator ~(const Dipole2D& d) {return (Antireverse(d));}
-	inline auto operator ~(const Circle2D& c) {return (Antireverse(c));}
+	inline RoundPoint2D operator ~(const RoundPoint2D& a) {return (Antireverse(a));}
+	inline Dipole2D operator ~(const Dipole2D& d) {return (Antireverse(d));}
+	inline const Circle2D& operator ~(const Circle2D& c) {return (Antireverse(c));}
 
 	// ==============================================
 	//	Attitude
@@ -966,14 +966,14 @@ namespace Terathon
 	inline Line2D Wedge(const RoundPoint2D& a, const Point2D& p) {return (Wedge(p, a));}
 	inline Circle2D Wedge(const RoundPoint2D& a, const Dipole2D& d) {return (Wedge(d, a));}
 
-	inline auto operator ^(const RoundPoint2D& a, const RoundPoint2D& b) {return (Wedge(a, b));}
-	inline auto operator ^(const FlatPoint2D& p, const RoundPoint2D& a) {return (Wedge(p, a));}
-	inline auto operator ^(const Point2D& p, const RoundPoint2D& a) {return (Wedge(p, a));}
-	inline auto operator ^(const Dipole2D& d, const RoundPoint2D& a) {return (Wedge(d, a));}
+	inline Dipole2D operator ^(const RoundPoint2D& a, const RoundPoint2D& b) {return (Wedge(a, b));}
+	inline Line2D operator ^(const FlatPoint2D& p, const RoundPoint2D& a) {return (Wedge(p, a));}
+	inline Line2D operator ^(const Point2D& p, const RoundPoint2D& a) {return (Wedge(p, a));}
+	inline Circle2D operator ^(const Dipole2D& d, const RoundPoint2D& a) {return (Wedge(d, a));}
 
-	inline auto operator ^(const RoundPoint2D& a, const FlatPoint2D& p) {return (Wedge(p, a));}
-	inline auto operator ^(const RoundPoint2D& a, const Point2D& p) {return (Wedge(p, a));}
-	inline auto operator ^(const RoundPoint2D& a, const Dipole2D& d) {return (Wedge(d, a));}
+	inline Line2D operator ^(const RoundPoint2D& a, const FlatPoint2D& p) {return (Wedge(p, a));}
+	inline Line2D operator ^(const RoundPoint2D& a, const Point2D& p) {return (Wedge(p, a));}
+	inline Circle2D operator ^(const RoundPoint2D& a, const Dipole2D& d) {return (Wedge(d, a));}
 
 	// ==============================================
 	//	Meet
@@ -1019,17 +1019,17 @@ namespace Terathon
 	inline RoundPoint2D Antiwedge(const FlatPoint2D& p, const Circle2D& c) {return (Antiwedge(c, p));}
 	inline RoundPoint2D Antiwedge(const Point2D& p, const Circle2D& c) {return (Antiwedge(c, p));}
 
-	inline auto operator ^(const Circle2D& c, const Circle2D& o) {return (Antiwedge(c, o));}
-	inline auto operator ^(const Circle2D& c, const Line2D& g) {return (Antiwedge(c, g));}
-	inline auto operator ^(const Line2D& g, const Circle2D& c) {return (Antiwedge(g, c));}
-	inline auto operator ^(const Circle2D& c, const Dipole2D& d) {return (Antiwedge(c, d));}
-	inline auto operator ^(const Circle2D& c, const FlatPoint2D& p) {return (Antiwedge(c, p));}
-	inline auto operator ^(const Circle2D& c, const Point2D& p) {return (Antiwedge(c, p));}
+	inline Dipole2D operator ^(const Circle2D& c, const Circle2D& o) {return (Antiwedge(c, o));}
+	inline Dipole2D operator ^(const Circle2D& c, const Line2D& g) {return (Antiwedge(c, g));}
+	inline Dipole2D operator ^(const Line2D& g, const Circle2D& c) {return (Antiwedge(g, c));}
+	inline RoundPoint2D operator ^(const Circle2D& c, const Dipole2D& d) {return (Antiwedge(c, d));}
+	inline RoundPoint2D operator ^(const Circle2D& c, const FlatPoint2D& p) {return (Antiwedge(c, p));}
+	inline RoundPoint2D operator ^(const Circle2D& c, const Point2D& p) {return (Antiwedge(c, p));}
 
-	inline auto operator ^(const Dipole2D& d, const Circle2D& c) {return (Antiwedge(c, d));}
-	inline auto operator ^(const Dipole2D& d, const Line2D& g) {return (Antiwedge(g, d));}
-	inline auto operator ^(const FlatPoint2D& p, const Circle2D& c) {return (Antiwedge(c, p));}
-	inline auto operator ^(const Point2D& p, const Circle2D& c) {return (Antiwedge(c, p));}
+	inline RoundPoint2D operator ^(const Dipole2D& d, const Circle2D& c) {return (Antiwedge(c, d));}
+	inline RoundPoint2D operator ^(const Dipole2D& d, const Line2D& g) {return (Antiwedge(g, d));}
+	inline RoundPoint2D operator ^(const FlatPoint2D& p, const Circle2D& c) {return (Antiwedge(c, p));}
+	inline RoundPoint2D operator ^(const Point2D& p, const Circle2D& c) {return (Antiwedge(c, p));}
 
 
 	// ==============================================

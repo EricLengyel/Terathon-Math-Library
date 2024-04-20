@@ -773,10 +773,10 @@ namespace Terathon
 		return (s);
 	}
 
-	inline auto operator ~(const RoundPoint3D& a) {return (Reverse(a));}
-	inline auto operator ~(const Dipole3D& d) {return (Reverse(d));}
-	inline auto operator ~(const Circle3D& c) {return (Reverse(c));}
-	inline auto operator ~(const Sphere3D& s) {return (Reverse(s));}
+	inline const RoundPoint3D& operator ~(const RoundPoint3D& a) {return (Reverse(a));}
+	inline Dipole3D operator ~(const Dipole3D& d) {return (Reverse(d));}
+	inline Circle3D operator ~(const Circle3D& c) {return (Reverse(c));}
+	inline const Sphere3D& operator ~(const Sphere3D& s) {return (Reverse(s));}
 
 	// ==============================================
 	//	Attitude
@@ -1328,23 +1328,23 @@ namespace Terathon
 	inline Plane3D Wedge(const FlatPoint3D& p, const Dipole3D& d) {return (Wedge(d, p));}
 	inline Plane3D Wedge(const Point3D& p, const Dipole3D& d) {return (Wedge(d, p));}
 
-	inline auto operator ^(const RoundPoint3D& a, const RoundPoint3D& b) {return (Wedge(a, b));}
-	inline auto operator ^(const FlatPoint3D& p, const RoundPoint3D& a) {return (Wedge(p, a));}
-	inline auto operator ^(const Point3D& p, const RoundPoint3D& a) {return (Wedge(p, a));}
-	inline auto operator ^(const Dipole3D& d, const RoundPoint3D& a) {return (Wedge(d, a));}
-	inline auto operator ^(const Line3D& l, const RoundPoint3D& a) {return (Wedge(l, a));}
-	inline auto operator ^(const RoundPoint3D& a, const Line3D& l) {return (Wedge(a, l));}
-	inline auto operator ^(const Dipole3D& d, const FlatPoint3D& p) {return (Wedge(d, p));}
-	inline auto operator ^(const Dipole3D& d, const Point3D& p) {return (Wedge(d, p));}
-	inline auto operator ^(const Circle3D& c, const RoundPoint3D& a) {return (Wedge(c, a));}
-	inline auto operator ^(const RoundPoint3D& a, const Circle3D& c) {return (Wedge(a, c));}
-	inline auto operator ^(const Dipole3D& d, const Dipole3D& f) {return (Wedge(d, f));}
+	inline Dipole3D operator ^(const RoundPoint3D& a, const RoundPoint3D& b) {return (Wedge(a, b));}
+	inline Line3D operator ^(const FlatPoint3D& p, const RoundPoint3D& a) {return (Wedge(p, a));}
+	inline Line3D operator ^(const Point3D& p, const RoundPoint3D& a) {return (Wedge(p, a));}
+	inline Circle3D operator ^(const Dipole3D& d, const RoundPoint3D& a) {return (Wedge(d, a));}
+	inline Plane3D operator ^(const Line3D& l, const RoundPoint3D& a) {return (Wedge(l, a));}
+	inline Plane3D operator ^(const RoundPoint3D& a, const Line3D& l) {return (Wedge(a, l));}
+	inline Plane3D operator ^(const Dipole3D& d, const FlatPoint3D& p) {return (Wedge(d, p));}
+	inline Plane3D operator ^(const Dipole3D& d, const Point3D& p) {return (Wedge(d, p));}
+	inline Sphere3D operator ^(const Circle3D& c, const RoundPoint3D& a) {return (Wedge(c, a));}
+	inline Sphere3D operator ^(const RoundPoint3D& a, const Circle3D& c) {return (Wedge(a, c));}
+	inline Sphere3D operator ^(const Dipole3D& d, const Dipole3D& f) {return (Wedge(d, f));}
 
-	inline auto operator ^(const RoundPoint3D& a, const FlatPoint3D& p) {return (Wedge(p, a));}
-	inline auto operator ^(const RoundPoint3D& a, const Point3D& p) {return (Wedge(p, a));}
-	inline auto operator ^(const RoundPoint3D& a, const Dipole3D& d) {return (Wedge(d, a));}
-	inline auto operator ^(const FlatPoint3D& p, const Dipole3D& d) {return (Wedge(d, p));}
-	inline auto operator ^(const Point3D& p, const Dipole3D& d) {return (Wedge(d, p));}
+	inline Line3D operator ^(const RoundPoint3D& a, const FlatPoint3D& p) {return (Wedge(p, a));}
+	inline Line3D operator ^(const RoundPoint3D& a, const Point3D& p) {return (Wedge(p, a));}
+	inline Circle3D operator ^(const RoundPoint3D& a, const Dipole3D& d) {return (Wedge(d, a));}
+	inline Plane3D operator ^(const FlatPoint3D& p, const Dipole3D& d) {return (Wedge(d, p));}
+	inline Plane3D operator ^(const Point3D& p, const Dipole3D& d) {return (Wedge(d, p));}
 
 	// ==============================================
 	//	Meet
@@ -1403,12 +1403,12 @@ namespace Terathon
 	/// @brief Calculates the meet of the 3D plane \c g and 3D dipole \c d to produce a 3D round point.
 	/// @relatedalso RoundPoint3D
 
-	TERATHON_API RoundPoint3D Antiwedge(const Plane3D& g, Dipole3D& d);
+	TERATHON_API RoundPoint3D Antiwedge(const Plane3D& g, const Dipole3D& d);
 
 	/// @brief Calculates the meet of the 3D dipole \c d and 3D plane \c g to produce a 3D round point.
 	/// @relatedalso RoundPoint3D
 
-	TERATHON_API RoundPoint3D Antiwedge(Dipole3D& d, const Plane3D& g);
+	TERATHON_API RoundPoint3D Antiwedge(const Dipole3D& d, const Plane3D& g);
 
 	/// @brief Calculates the meet of the 3D sphere \c s and 3D flat point \c p to produce a 3D round point.
 	/// @relatedalso RoundPoint3D
@@ -1435,27 +1435,27 @@ namespace Terathon
 	inline Dipole3D Antiwedge(const Circle3D& c, const Sphere3D& s) {return (Antiwedge(s, c));}
 	inline Dipole3D Antiwedge(const Line3D& l, const Sphere3D& s) {return (Antiwedge(s, l));}
 
-	inline auto operator ^(const Sphere3D& s, const Sphere3D& t) {return (Antiwedge(s, t));}
-	inline auto operator ^(const Sphere3D& s, const Plane3D& g) {return (Antiwedge(s, g));}
-	inline auto operator ^(const Plane3D& g, const Sphere3D& s) {return (Antiwedge(g, s));}
-	inline auto operator ^(const Sphere3D& s, const Circle3D& c) {return (Antiwedge(s, c));}
-	inline auto operator ^(const Plane3D& g, const Circle3D& c) {return (Antiwedge(g, c));}
-	inline auto operator ^(const Sphere3D& s, const Line3D& l) {return (Antiwedge(s, l));}
-	inline auto operator ^(const Circle3D& c, const Circle3D& o) {return (Antiwedge(c, o));}
-	inline auto operator ^(const Circle3D& c, const Line3D& l) {return (Antiwedge(c, l));}
-	inline auto operator ^(const Sphere3D& s, const Dipole3D& d) {return (Antiwedge(s, d));}
-	inline auto operator ^(const Dipole3D& d, const Sphere3D& s) {return (Antiwedge(d, s));}
-	inline auto operator ^(const Plane3D& g, Dipole3D& d) {return (Antiwedge(g, d));}
-	inline auto operator ^(Dipole3D& d, const Plane3D& g) {return (Antiwedge(d, g));}
-	inline auto operator ^(const Sphere3D& s, const FlatPoint3D& p) {return (Antiwedge(s, p));}
-	inline auto operator ^(const FlatPoint3D& p, const Sphere3D& s) {return (Antiwedge(p, s));}
-	inline auto operator ^(const Sphere3D& s, const Point3D& p) {return (Antiwedge(s, p));}
-	inline auto operator ^(const Point3D& p, const Sphere3D& s) {return (Antiwedge(p, s));}
+	inline Circle3D operator ^(const Sphere3D& s, const Sphere3D& t) {return (Antiwedge(s, t));}
+	inline Circle3D operator ^(const Sphere3D& s, const Plane3D& g) {return (Antiwedge(s, g));}
+	inline Circle3D operator ^(const Plane3D& g, const Sphere3D& s) {return (Antiwedge(g, s));}
+	inline Dipole3D operator ^(const Sphere3D& s, const Circle3D& c) {return (Antiwedge(s, c));}
+	inline Dipole3D operator ^(const Plane3D& g, const Circle3D& c) {return (Antiwedge(g, c));}
+	inline Dipole3D operator ^(const Sphere3D& s, const Line3D& l) {return (Antiwedge(s, l));}
+	inline RoundPoint3D operator ^(const Circle3D& c, const Circle3D& o) {return (Antiwedge(c, o));}
+	inline RoundPoint3D operator ^(const Circle3D& c, const Line3D& l) {return (Antiwedge(c, l));}
+	inline RoundPoint3D operator ^(const Sphere3D& s, const Dipole3D& d) {return (Antiwedge(s, d));}
+	inline RoundPoint3D operator ^(const Dipole3D& d, const Sphere3D& s) {return (Antiwedge(d, s));}
+	inline RoundPoint3D operator ^(const Plane3D& g, const Dipole3D& d) {return (Antiwedge(g, d));}
+	inline RoundPoint3D operator ^(const Dipole3D& d, const Plane3D& g) {return (Antiwedge(d, g));}
+	inline RoundPoint3D operator ^(const Sphere3D& s, const FlatPoint3D& p) {return (Antiwedge(s, p));}
+	inline RoundPoint3D operator ^(const FlatPoint3D& p, const Sphere3D& s) {return (Antiwedge(p, s));}
+	inline RoundPoint3D operator ^(const Sphere3D& s, const Point3D& p) {return (Antiwedge(s, p));}
+	inline RoundPoint3D operator ^(const Point3D& p, const Sphere3D& s) {return (Antiwedge(p, s));}
 
-	inline auto operator ^(const Circle3D& c, const Plane3D& g) {return (Antiwedge(g, c));}
-	inline auto operator ^(const Line3D& l, const Circle3D& c) {return (Antiwedge(c, l));}
-	inline auto operator ^(const Circle3D& c, const Sphere3D& s) {return (Antiwedge(s, c));}
-	inline auto operator ^(const Line3D& l, const Sphere3D& s) {return (Antiwedge(s, l));}
+	inline Dipole3D operator ^(const Circle3D& c, const Plane3D& g) {return (Antiwedge(g, c));}
+	inline RoundPoint3D operator ^(const Line3D& l, const Circle3D& c) {return (Antiwedge(c, l));}
+	inline Dipole3D operator ^(const Circle3D& c, const Sphere3D& s) {return (Antiwedge(s, c));}
+	inline Dipole3D operator ^(const Line3D& l, const Sphere3D& s) {return (Antiwedge(s, l));}
 
 
 	// ==============================================

@@ -204,104 +204,6 @@ namespace Terathon
 	}
 
 
-	//# \class	Line2D		Encapsulates a 2D line.
-	//
-	//# The $Line2D$ class encapsulates a 2D line.
-	//
-	//# \def	class Line2D : public Antivec3D<TypeLine2D>
-	//
-	//# \ctor	Line2D();
-	//# \ctor	Line2D(float a, float b, float c);
-	//# \ctor	Line2D(const Point2D& p, const Point2D& q);
-	//# \ctor	Line2D(const Point2D& p, const Vector2D& v);
-	//
-	//# \param	a		The value of the <b>e</b><sub>23</sub> coordinate.
-	//# \param	b		The value of the <b>e</b><sub>31</sub> coordinate.
-	//# \param	c		The value of the <b>e</b><sub>12</sub> coordinate.
-	//# \param	p,q		Two 2D points that lie on the line.
-	//# \param	v		A 2D direction vector.
-	//
-	//# \desc
-	//# The $Line2D$ class is used to store a two-dimensional line represented as a three-dimensional bivector
-	//# having three floating-point components <i>x</i>, <i>y</i>, and <i>z</i>.
-	//#
-	//# The default constructor leaves the components of the line undefined.
-	//# If the values $a$, $b$, and $c$ are supplied, then they are assigned to the
-	//# <i>x</i>, <i>y</i>, and <i>z</i> coordinates of the line, respectively.
-	//#
-	//# If points $p$ and $q$ are specified, then the line is initialized to the wedge product between homogeneous
-	//# extensions of $p$ and $q$ with <i>z</i> coordinates set to 1, giving a representation of the 2D line containing
-	//# both points. If the point $p$ and the direction $v$ are specified, then the line contains the point $p$ and runs
-	//# parallel to the direction $v$.
-	//
-	//# \operator	Line2D& operator *=(float n);
-	//#				Multiplies by the scalar $n$.
-	//
-	//# \operator	Line2D& operator /=(float n);
-	//#				Multiplies by the inverse of the scalar $n$.
-	//
-	//# \action		bool operator ==(const Line2D& a, const Line2D& b);
-	//#				Returns a boolean value indicating whether the two lines $a$ and $b$ are equal.
-	//
-	//# \action		bool operator !=(const Line2D& a, const Line2D& b);
-	//#				Returns a boolean value indicating whether the two lines $a$ and $b$ are not equal.
-	//
-	//# \action		Line2D operator !(const Point2D& p);
-	//#				Returns the complement of the point $p$.
-	//
-	//# \action		Vector3D operator !(const Line2D& g);
-	//#				Returns the complement of the line $g$.
-	//
-	//# \action		Line2D operator -(const Line2D& g);
-	//#				Returns the negation of the line $g$.
-	//
-	//# \action		Line2D operator *(const Line2D& g, float n);
-	//#				Returns the product of the line $g$ and the scalar $n$.
-	//
-	//# \action		Line2D operator *(float n, const Line2D& g);
-	//#				Returns the product of the line $g$ and the scalar $n$.
-	//
-	//# \action		Line2D operator /(const Line2D& g, float n);
-	//#				Returns the product of the line $g$ and the inverse of the scalar $n$.
-	//
-	//# \action		Line2D operator ^(const Point2D& p, const Point2D& q);
-	//#				Returns the wedge product of the 2D points $p$ and $q$. The <i>z</i> coordinates of $p$ and $q$ are assumed to be 1.
-	//
-	//# \action		Line2D operator ^(const Point2D& p, const Vector2D& v);
-	//#				Returns the wedge product of the 2D point $p$ and the 2D vector $v$. The <i>z</i> coordinate of $p$ is assumed to be 1.
-	//
-	//# \action		Vector3D operator ^(const Line2D& a, const Line2D& b);
-	//#				Returns the antiwedge product of the lines $a$ and $b$.
-	//
-	//# \privbase	Antivec3D	Antivectors use a generic base class to store their components.
-	//
-	//# \also	$@Vector3D@$
-	//# \also	$@Point2D@$
-
-
-	//# \function	Line2D::Set		Sets all three components of a line.
-	//
-	//# \proto	Line2D& Set(float a, float b, float c);
-	//# \proto	Line2D& Set(const Point2D& p, const Point2D& q);
-	//# \proto	Line2D& Set(const Point2D& p, const Vector2D& v);
-	//
-	//# \param	a		The value of the <b>e</b><sub>23</sub> coordinate.
-	//# \param	b		The value of the <b>e</b><sub>31</sub> coordinate.
-	//# \param	c		The value of the <b>e</b><sub>12</sub> coordinate.
-	//# \param	p,q		Two 2D points that lie on the line.
-	//# \param	v		A 2D direction vector.
-	//
-	//# \desc
-	//# The $Set$ function replaces all three components of a line with new values.
-	//#
-	//# If points $p$ and $q$ are specified, then the line is initialized to the wedge product between homogeneous
-	//# extensions of $p$ and $q$ with <i>z</i> coordinates set to 1, giving a representation of the 2D line containing
-	//# both points. If the point $p$ and the direction $v$ are specified, then the line contains the point $p$ and runs
-	//# parallel to the direction $v$.
-	//#
-	//# The return value is a reference to the line object.
-
-
 	// ==============================================
 	//	Line2D
 	// ==============================================
@@ -478,8 +380,8 @@ namespace Terathon
 		return (FlatPoint2D(-g.x, -g.y, -g.z));
 	}
 
-	inline auto operator !(const FlatPoint2D& p) {return (Complement(p));}
-	inline auto operator !(const Line2D& g) {return (Complement(g));}
+	inline Line2D operator !(const FlatPoint2D& p) {return (Complement(p));}
+	inline FlatPoint2D operator !(const Line2D& g) {return (Complement(g));}
 
 	// ==============================================
 	//	BulkDual
@@ -579,8 +481,8 @@ namespace Terathon
 		return (g);
 	}
 
-	inline auto operator ~(const FlatPoint2D& p) {return (Antireverse(p));}
-	inline auto operator ~(const Line2D& g) {return (g);}
+	inline FlatPoint2D operator ~(const FlatPoint2D& p) {return (Antireverse(p));}
+	inline const Line2D& operator ~(const Line2D& g) {return (g);}
 
 	// ==============================================
 	//	Attitude
@@ -760,9 +662,9 @@ namespace Terathon
 		return (Line2D(-v.y, v.x, p.x * v.y - p.y * v.x));
 	}
 
-	inline auto operator ^(const FlatPoint2D& p, const FlatPoint2D& q) {return (Wedge(p, q));}
-	inline auto operator ^(const Point2D& p, const Point2D& q) {return (Wedge(p, q));}
-	inline auto operator ^(const Point2D& p, const Vector2D& v) {return (Wedge(p, v));}
+	inline Line2D operator ^(const FlatPoint2D& p, const FlatPoint2D& q) {return (Wedge(p, q));}
+	inline Line2D operator ^(const Point2D& p, const Point2D& q) {return (Wedge(p, q));}
+	inline Line2D operator ^(const Point2D& p, const Vector2D& v) {return (Wedge(p, v));}
 
 	// ==============================================
 	//	Meet
@@ -786,8 +688,8 @@ namespace Terathon
 		return (-p.x * g.x - p.y * g.y - g.z);
 	}
 
-	inline auto operator ^(const Line2D& g, const Line2D& h) {return (Antiwedge(g, h));}
-	inline auto operator ^(const Point2D& p, const Line2D& g) {return (Antiwedge(p, g));}
+	inline FlatPoint2D operator ^(const Line2D& g, const Line2D& h) {return (Antiwedge(g, h));}
+	inline float operator ^(const Point2D& p, const Line2D& g) {return (Antiwedge(p, g));}
 	inline float operator ^(const Line2D& g, const Point2D& p) {return (Antiwedge(g, p));}
 
 	// ==============================================

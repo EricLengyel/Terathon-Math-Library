@@ -435,7 +435,7 @@ namespace Terathon
 		return (Flector3D(-F.p.x, -F.p.y, -F.p.z, -F.p.w, F.g.x, F.g.y, F.g.z, F.g.w));
 	}
 
-	inline auto operator ~(const Flector3D& F) {return (Antireverse(F));}
+	inline Flector3D operator ~(const Flector3D& F) {return (Antireverse(F));}
 
 	// ==============================================
 	//	Norms

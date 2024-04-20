@@ -355,7 +355,7 @@ RoundPoint3D Terathon::Antiwedge(const Dipole3D& d, const Sphere3D& s)
 	                     d.p.x * s.x + d.p.y * s.y + d.p.z * s.z + d.p.w * s.w));
 }
 
-RoundPoint3D Terathon::Antiwedge(const Plane3D& g, Dipole3D& d)
+RoundPoint3D Terathon::Antiwedge(const Plane3D& g, const Dipole3D& d)
 {
 	return (RoundPoint3D(g.y * d.m.z - g.z * d.m.y - g.w * d.v.x,
 	                     g.z * d.m.x - g.x * d.m.z - g.w * d.v.y,
@@ -364,7 +364,7 @@ RoundPoint3D Terathon::Antiwedge(const Plane3D& g, Dipole3D& d)
 	                    -g.x * d.p.x - g.y * d.p.y - g.z * d.p.z - g.w * d.p.w));
 }
 
-RoundPoint3D Terathon::Antiwedge(Dipole3D& d, const Plane3D& g)
+RoundPoint3D Terathon::Antiwedge(const Dipole3D& d, const Plane3D& g)
 {
 	return (RoundPoint3D(d.m.y * g.z - d.m.z * g.y + d.v.x * g.w,
 	                     d.m.z * g.x - d.m.x * g.z + d.v.y * g.w,

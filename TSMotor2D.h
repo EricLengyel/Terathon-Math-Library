@@ -333,7 +333,7 @@ namespace Terathon
 		return (Motor2D(-Q.x, -Q.y, -Q.z, Q.w));
 	}
 
-	inline auto operator ~(const Motor2D& Q) {return (Antireverse(Q));}
+	inline Motor2D operator ~(const Motor2D& Q) {return (Antireverse(Q));}
 
 	// ==============================================
 	//	Norms

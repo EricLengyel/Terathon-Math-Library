@@ -275,8 +275,8 @@ namespace Terathon
 		return (reinterpret_cast<const Vector3D&>(v));
 	}
 
-	inline auto operator !(const Vector3D& v) {return (Complement(v));}
-	inline auto operator !(const Bivector3D& v) {return (Complement(v));}
+	inline const Bivector3D& operator !(const Vector3D& v) {return (Complement(v));}
+	inline const Vector3D& operator !(const Bivector3D& v) {return (Complement(v));}
 
 	// ==============================================
 	//	Wedge
@@ -314,13 +314,13 @@ namespace Terathon
 		return (a.xyz ^ b);
 	}
 
-	inline auto operator ^(const Vector3D& a, const Vector3D& b) {return (Wedge(a, b));}
-	inline auto operator ^(const Bivector3D& a, const Bivector3D& b) {return (Antiwedge(a, b));}
-	inline auto operator ^(const Bivector3D& a, const Vector3D& b) {return (Antiwedge(a, b));}
-	inline auto operator ^(const Vector3D& a, const Bivector3D& b) {return (Antiwedge(a, b));}
+	inline Bivector3D operator ^(const Vector3D& a, const Vector3D& b) {return (Wedge(a, b));}
+	inline Vector3D operator ^(const Bivector3D& a, const Bivector3D& b) {return (Antiwedge(a, b));}
+	inline float operator ^(const Bivector3D& a, const Vector3D& b) {return (Antiwedge(a, b));}
+	inline float operator ^(const Vector3D& a, const Bivector3D& b) {return (Antiwedge(a, b));}
 
 	template <typename type_struct, int count, int index_x, int index_y, int index_z>
-	inline auto operator ^(const Bivector3D& a, const Subvec3D<type_struct, false, count, index_x, index_y, index_z>& b) {return (Antiwedge(a, b));}
+	inline float operator ^(const Bivector3D& a, const Subvec3D<type_struct, false, count, index_x, index_y, index_z>& b) {return (Antiwedge(a, b));}
 
 
 	// ==============================================
