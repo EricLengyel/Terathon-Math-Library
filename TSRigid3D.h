@@ -602,7 +602,7 @@ namespace Terathon
 
 	inline Plane3D operator !(const Point3D& p) {return (RightComplement(p));}
 	inline Line3D operator !(const Line3D& l) {return (RightComplement(l));}
-	inline const FlatPoint3D& operator !(const Plane3D& g) {return (RightComplement(g));}
+	inline FlatPoint3D operator !(const Plane3D& g) {return (RightComplement(g));}
 
 	// ==============================================
 	//	BulkDual
