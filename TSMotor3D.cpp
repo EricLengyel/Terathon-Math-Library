@@ -172,9 +172,9 @@ Motor3D Terathon::operator *(const Motor3D& a, const Motor3D& b)
 	                a.v.w * b.v.y + a.v.y * b.v.w + a.v.z * b.v.x - a.v.x * b.v.z,
 	                a.v.w * b.v.z + a.v.z * b.v.w + a.v.x * b.v.y - a.v.y * b.v.x,
 	                a.v.w * b.v.w - a.v.x * b.v.x - a.v.y * b.v.y - a.v.z * b.v.z,
-	                a.m.w * b.v.z + a.m.x * b.v.y - a.m.y * b.v.x + a.m.z * b.v.w + b.m.w * a.v.z - b.m.x * a.v.y + b.m.y * a.v.x + b.m.z * a.v.w,
 	                a.m.w * b.v.x + a.m.x * b.v.w + a.m.y * b.v.z - a.m.z * b.v.y + b.m.w * a.v.x + b.m.x * a.v.w - b.m.y * a.v.z + b.m.z * a.v.y,
 	                a.m.w * b.v.y - a.m.x * b.v.z + a.m.y * b.v.w + a.m.z * b.v.x + b.m.w * a.v.y + b.m.x * a.v.z + b.m.y * a.v.w - b.m.z * a.v.x,
+	                a.m.w * b.v.z + a.m.x * b.v.y - a.m.y * b.v.x + a.m.z * b.v.w + b.m.w * a.v.z - b.m.x * a.v.y + b.m.y * a.v.x + b.m.z * a.v.w,
 	                a.m.w * b.v.w - a.m.x * b.v.x - a.m.y * b.v.y - a.m.z * b.v.z + b.m.w * a.v.w - b.m.x * a.v.x - b.m.y * a.v.y - b.m.z * a.v.z));
 }
 
@@ -184,9 +184,9 @@ Motor3D Terathon::operator *(const Motor3D& Q, const Quaternion& r)
 	                Q.v.w * r.y - Q.v.x * r.z + Q.v.y * r.w + Q.v.z * r.x,
 	                Q.v.w * r.z + Q.v.x * r.y - Q.v.y * r.x + Q.v.z * r.w,
 	                Q.v.w * r.w - Q.v.x * r.x - Q.v.y * r.y - Q.v.z * r.z,
-	                Q.m.w * r.z + Q.m.x * r.y - Q.m.y * r.x + Q.m.z * r.w,
 	                Q.m.w * r.x + Q.m.x * r.w + Q.m.y * r.z - Q.m.z * r.y,
 	                Q.m.w * r.y - Q.m.x * r.z + Q.m.y * r.w + Q.m.z * r.x,
+	                Q.m.w * r.z + Q.m.x * r.y - Q.m.y * r.x + Q.m.z * r.w,
 	                Q.m.w * r.w - Q.m.x * r.x - Q.m.y * r.y - Q.m.z * r.z));
 }
 
@@ -196,9 +196,9 @@ Motor3D Terathon::operator *(const Quaternion& r, const Motor3D& Q)
 	                r.w * Q.v.y - r.x * Q.v.z + r.y * Q.v.w + r.z * Q.v.x,
 	                r.w * Q.v.z + r.x * Q.v.y - r.y * Q.v.x + r.z * Q.v.w,
 	                r.w * Q.v.w - r.x * Q.v.x - r.y * Q.v.y - r.z * Q.v.z,
-	                r.w * Q.m.z + r.x * Q.m.y - r.y * Q.m.x + r.z * Q.m.w,
 	                r.w * Q.m.x + r.x * Q.m.w + r.y * Q.m.z - r.z * Q.m.y,
 	                r.w * Q.m.y - r.x * Q.m.z + r.y * Q.m.w + r.z * Q.m.x,
+	                r.w * Q.m.z + r.x * Q.m.y - r.y * Q.m.x + r.z * Q.m.w,
 	                r.w * Q.m.w - r.x * Q.m.x - r.y * Q.m.y - r.z * Q.m.z));
 }
 
