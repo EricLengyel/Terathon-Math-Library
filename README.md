@@ -58,7 +58,7 @@ Rows, columns, and submatrices can be extracted from matrix objects using a simi
 * `m.matrix2D` – The upper-left 2×2 submatrix of `m`.
 * `m.transpose` – The transpose of `m`.
 
-All of the above are generally *free operations*, with no copying, when their results are consumed by an expression. For more information, see Eric Lengyel's 2018 GDC talk [Linear Algebra Upgraded](http://terathon.com/gdc18_lengyel.pdf).
+All of the above are generally *free operations*, with no copying, when their results are consumed by an expression. For more information, see Eric Lengyel's 2018 GDC talk [Linear Algebra Upgraded](https://terathon.com/gdc18_lengyel.pdf).
 
 ## Geometric Algebra
 
@@ -66,11 +66,11 @@ The `^` operator is overloaded for cases in which the wedge or antiwedge product
 
 The library does not provide operators that directly calculate the geometric product and antiproduct because they would tend to generate inefficient code and produce intermediate results having unnecessary types when something like the sandwich product **Q** ⟇ *p* ⟇ ~**Q** appears in an expression. Instead, there are `Transform()` functions that take some object *p* for the first parameter and the motor **Q** with which to transform it for the second parameter.
 
-See Eric Lengyel's [Projective Geometric Algebra website](http://projectivegeometricalgebra.org) for more information about operations among these types.
+See Eric Lengyel's [Projective Geometric Algebra website](https://projectivegeometricalgebra.org) for more information about operations among these types.
 
 ## API Documentation
 
-There is API documentation embedded in the header files. The formatted equivalent can be found in the [C4 Engine documentation](http://c4engine.com/docs/Math/index.html).
+There is API documentation embedded in the header files. The formatted equivalent can be found in the [C4 Engine documentation](https://c4engine.com/docs/Math/index.html).
 
 ## Licensing
 
