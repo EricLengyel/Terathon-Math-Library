@@ -72,6 +72,10 @@ See Eric Lengyel's [Projective Geometric Algebra website](https://projectivegeom
 
 There is API documentation embedded in the header files. The formatted equivalent can be found in the [C4 Engine documentation](https://c4engine.com/docs/Math/index.html).
 
+## Mathematica Packages
+
+Mathematica packages for rigid, conformal, and spacetime geometric algebras are available in the [Geometric Algebra](https://github.com/EricLengyel/Geometric-Algebra/) repository.
+
 ## Licensing
 
 Separate proprietary licenses are available from Terathon Software. Please [send an email](mailto:service@terathon.com) with details about your particular use case if you are interested.
