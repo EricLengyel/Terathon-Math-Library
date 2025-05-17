@@ -1,6 +1,6 @@
 //
 // This file is part of the Terathon Math Library, by Eric Lengyel.
-// Copyright 1999-2024, Terathon Software LLC
+// Copyright 1999-2025, Terathon Software LLC
 //
 // This software is distributed under the MIT License.
 // Separate proprietary licenses are available from Terathon Software.
@@ -36,15 +36,15 @@ namespace Terathon
 	};
 
 
-	/// @brief Encapsulates a 2&#x202F;&times;&#x202F;2 matrix.
+	/// \brief Encapsulates a 2&#x202F;&times;&#x202F;2 matrix.
 	///
-	/// The \c Matrix2D class is used to store a 2&#x202F;&times;&#x202F;2 matrix. The entries of the matrix
+	/// The $Matrix2D$ class is used to store a 2&#x202F;&times;&#x202F;2 matrix. The entries of the matrix
 	/// are accessed using the () operator with two indexes specifying the row and column of an entry.
 	///
-	/// @sa Matrix3D
-	/// @sa Matrix4D
-	/// @sa Transform2D
-	/// @sa Transform3D
+	/// \also Matrix3D
+	/// \also Matrix4D
+	/// \also Transform2D
+	/// \also Transform3D
 
 	class Matrix2D : public Mat2D<TypeMatrix2D>
 	{
@@ -52,27 +52,32 @@ namespace Terathon
 
 			TERATHON_API static const ConstMatrix2D identity;
 
-			/// @brief Default constructor that leaves the entries uninitialized.
+			/// \brief Default constructor that leaves the entries uninitialized.
 
 			inline Matrix2D() = default;
 
-			/// @brief Constructor that sets entries explicitly.
-			/// @param n00,n01,n10,n11		The entries of the matrix.
+			Matrix2D(const Matrix2D& m)
+			{
+				matrix = m.matrix;
+			}
+
+			/// \brief Constructor that sets entries explicitly.
+			/// \param n00,n01,n10,n11		The entries of the matrix.
 
 			TERATHON_API Matrix2D(float n00, float n01, float n10, float n11);
 
-			/// @brief Constructor that sets columns explicitly.
-			/// @param a,b		The columns of the matrix.
+			/// \brief Constructor that sets columns explicitly.
+			/// \param a,b		The columns of the matrix.
 
 			TERATHON_API Matrix2D(const Vector2D& a, const Vector2D& b);
 
-			/// @brief Sets all four entries of a 2&#x202F;&times;&#x202F;2 matrix.
-			/// @param n00,n01,n10,n11		The new entries of the matrix.
+			/// \brief Sets all four entries of a 2&#x202F;&times;&#x202F;2 matrix.
+			/// \param n00,n01,n10,n11		The new entries of the matrix.
 
 			TERATHON_API Matrix2D& Set(float n00, float n01, float n10, float n11);
 
-			/// @brief Sets both columns of a 2&#x202F;&times;&#x202F;2 matrix.
-			/// @param a,b		The new columns of the matrix.
+			/// \brief Sets both columns of a 2&#x202F;&times;&#x202F;2 matrix.
+			/// \param a,b		The new columns of the matrix.
 
 			TERATHON_API Matrix2D& Set(const Vector2D& a, const Vector2D& b);
 
@@ -104,27 +109,27 @@ namespace Terathon
 			TERATHON_API Matrix2D& operator *=(float s);
 			TERATHON_API Matrix2D& operator /=(float s);
 
-			/// @brief Sets a matrix to the 2&#x202F;&times;&#x202F;2 identity matrix.
+			/// \brief Sets a matrix to the 2&#x202F;&times;&#x202F;2 identity matrix.
 
 			TERATHON_API Matrix2D& SetIdentity(void);
 
-			/// @brief Orthogonalizes the columns of a 2&#x202F;&times;&#x202F;2 matrix.
-			/// @param column	The index of the column whose direction does not change. This must be 0 or 1.
+			/// \brief Orthogonalizes the columns of a 2&#x202F;&times;&#x202F;2 matrix.
+			/// \param column	The index of the column whose direction does not change. This must be 0 or 1.
 			///
-			/// The \c Orthogonalize() function uses Gram-Schmidt orthogonalization to orthogonalize the columns
-			/// of a matrix. The column whose index is specified by the \c column parameter is normalized to unit length.
+			/// The $Orthogonalize()$ function uses Gram-Schmidt orthogonalization to orthogonalize the columns
+			/// of a matrix. The column whose index is specified by the $column$ parameter is normalized to unit length.
 			/// The remaining column is orthogonalized and made unit length. Only the column not specified by the
-			/// \c column parameter can change direction.
+			/// $column$ parameter can change direction.
 
 			TERATHON_API Matrix2D& Orthogonalize(int32 column);
 
-			/// @brief Returns a 2&#x202F;&times;&#x202F;2 matrix that represents a rotation in the 2D plane.
-			/// @param angle	The angle through which to rotate, in radians.
+			/// \brief Returns a 2&#x202F;&times;&#x202F;2 matrix that represents a rotation in the 2D plane.
+			/// \param angle	The angle through which to rotate, in radians.
 
 			TERATHON_API static Matrix2D MakeRotation(float angle);
 
-			/// @brief Returns a 2&#x202F;&times;&#x202F;2 matrix that represents a uniform scale.
-			/// @param scale	The scale along both axes.
+			/// \brief Returns a 2&#x202F;&times;&#x202F;2 matrix that represents a uniform scale.
+			/// \param scale	The scale along both axes.
 
 			TERATHON_API static Matrix2D MakeScale(float scale);
 
@@ -158,32 +163,32 @@ namespace Terathon
 		return (v.xy * m);
 	}
 
-	/// @brief Returns the product of the matrix \c m and the column vector \c v.
-	/// @relatedalso Matrix2D
+	/// \brief Returns the product of the matrix $m$ and the column vector $v$.
+	/// \related Matrix2D
 
 	inline Vector2D operator *(const Matrix2D& m, const Vector2D& v)
 	{
 		return (m.matrix * v.xy);
 	}
 
-	/// @brief Returns the product of the matrix \c m and the column vector \c p.
-	/// @relatedalso Matrix2D
+	/// \brief Returns the product of the matrix $m$ and the column vector $p$.
+	/// \related Matrix2D
 
 	inline Point2D operator *(const Matrix2D& m, const Point2D& p)
 	{
 		return (Point2D::origin + m.matrix * p.xy);
 	}
 
-	/// @brief Returns the product of the row vector \c v and the matrix \c m.
-	/// @relatedalso Matrix2D
+	/// \brief Returns the product of the row vector $v$ and the matrix $m$.
+	/// \related Matrix2D
 
 	inline Vector2D operator *(const Vector2D& v, const Matrix2D& m)
 	{
 		return (v.xy * m.matrix);
 	}
 
-	/// @brief Returns the product of the matrices \c m1 and \c m2.
-	/// @relatedalso Matrix2D
+	/// \brief Returns the product of the matrices $m1$ and $m2$.
+	/// \related Matrix2D
 
 	inline Matrix2D operator *(const Matrix2D& m1, const Matrix2D& m2)
 	{
@@ -212,18 +217,18 @@ namespace Terathon
 	}
 
 
-	/// @brief Returns the determinant of the matrix \c m.
-	/// @relatedalso Matrix2D
+	/// \brief Returns the determinant of the matrix $m$.
+	/// \related Matrix2D
 
 	TERATHON_API float Determinant(const Matrix2D& m);
 
-	/// @brief Returns the inverse of the matrix \c m. If \c m is singular, then the result is undefined.
-	/// @relatedalso Matrix2D
+	/// \brief Returns the inverse of the matrix $m$. If $m$ is singular, then the result is undefined.
+	/// \related Matrix2D
 
 	TERATHON_API Matrix2D Inverse(const Matrix2D& m);
 
-	/// @brief Returns the adjugate of the matrix \c m.
-	/// @relatedalso Matrix2D
+	/// \brief Returns the adjugate of the matrix $m$.
+	/// \related Matrix2D
 
 	TERATHON_API Matrix2D Adjugate(const Matrix2D& m);
 

@@ -1,6 +1,6 @@
 //
 // This file is part of the Terathon Math Library, by Eric Lengyel.
-// Copyright 1999-2024, Terathon Software LLC
+// Copyright 1999-2025, Terathon Software LLC
 //
 // This software is distributed under the MIT License.
 // Separate proprietary licenses are available from Terathon Software.
@@ -36,13 +36,13 @@ namespace Terathon
 	};
 
 
-	/// @brief Encapsulates a 4D vector.
+	/// \brief Encapsulates a 4D vector.
 	///
-	/// The \c Vector4D class is used to store a four-dimensional direction vector having floating-point
+	/// The $Vector4D$ class is used to store a four-dimensional direction vector having floating-point
 	/// components <i>x</i>, <i>y</i>, <i>z</i>, and <i>w</i>.
 	///
-	/// @sa Vector2D
-	/// @sa Vector3D
+	/// \also Vector2D
+	/// \also Vector3D
 
 	class Vector4D : public Vec4D<TypeVector4D>
 	{
@@ -60,12 +60,17 @@ namespace Terathon
 			TERATHON_API static const ConstVector4D minus_z_unit;
 			TERATHON_API static const ConstVector4D minus_w_unit;
 
-			/// @brief Default constructor that leaves the components uninitialized.
+			/// \brief Default constructor that leaves the components uninitialized.
 
 			inline Vector4D() = default;
 
-			/// @brief Constructor that sets components explicitly.
-			/// @param a,b,c,d		The components of the vector.
+			Vector4D(const Vector4D& v)
+			{
+				xyzw = v.xyzw;
+			}
+
+			/// \brief Constructor that sets components explicitly.
+			/// \param a,b,c,d		The components of the vector.
 
 			Vector4D(float a, float b, float c, float d) : Vec4D<TypeVector4D>(a, b, c, d) {}
 
@@ -110,8 +115,8 @@ namespace Terathon
 				w = 1.0F;
 			}
 
-			/// @brief Sets all four components of a 4D vector.
-			/// @param a,b,c,d		The new components of the vector.
+			/// \brief Sets all four components of a 4D vector.
+			/// \param a,b,c,d		The new components of the vector.
 
 			Vector4D& Set(float a, float b, float c, float d)
 			{
@@ -303,30 +308,30 @@ namespace Terathon
 				return (static_cast<Vector4D&>(xyzw.Normalize()));
 			}
 
-			/// @brief Rotates the vector about the <i>x</i> axis through the angle, in radians,
-			/// given by the \c angle parameter. The <i>w</i> coordinate is not modified.
+			/// \brief Rotates the vector about the <i>x</i> axis through the angle, in radians,
+			/// given by the $angle$ parameter. The <i>w</i> coordinate is not modified.
 
 			TERATHON_API Vector4D& RotateAboutX(float angle);
 
-			/// @brief Rotates the vector about the <i>y</i> axis through the angle, in radians,
-			/// given by the \c angle parameter. The <i>w</i> coordinate is not modified.
+			/// \brief Rotates the vector about the <i>y</i> axis through the angle, in radians,
+			/// given by the $angle$ parameter. The <i>w</i> coordinate is not modified.
 
 			TERATHON_API Vector4D& RotateAboutY(float angle);
 
-			/// @brief Rotates the vector about the <i>z</i> axis through the angle, in radians,
-			/// given by the \c angle parameter. The <i>w</i> coordinate is not modified.
+			/// \brief Rotates the vector about the <i>z</i> axis through the angle, in radians,
+			/// given by the $angle$ parameter. The <i>w</i> coordinate is not modified.
 
 			TERATHON_API Vector4D& RotateAboutZ(float angle);
 
-			/// @brief Rotates the vector about the axis given by the \c axis parameter through the angle,
-			/// in radians, given by the \c angle parameter. The <i>w</i> coordinate is not modified.
+			/// \brief Rotates the vector about the axis given by the $axis$ parameter through the angle,
+			/// in radians, given by the $angle$ parameter. The <i>w</i> coordinate is not modified.
 
 			TERATHON_API Vector4D& RotateAboutAxis(float angle, const Bivector3D& axis);
 	};
 
 
-	/// @brief Returns the negation of the 4D vector \c v.
-	/// @related Vector4D
+	/// \brief Returns the negation of the 4D vector $v$.
+	/// \related Vector4D
 
 	inline Vector4D operator -(const Vector4D& v)
 	{
@@ -383,24 +388,24 @@ namespace Terathon
 		return (Vector4D(a.x - b.x, a.y - b.y, -b.z, -b.w));
 	}
 
-	/// @brief Returns the product of the 4D vector \c v and the scalar \c n.
-	/// @related Vector4D
+	/// \brief Returns the product of the 4D vector $v$ and the scalar $n$.
+	/// \related Vector4D
 
 	inline Vector4D operator *(const Vector4D& v, float n)
 	{
 		return (Vector4D(v.x * n, v.y * n, v.z * n, v.w * n));
 	}
 
-	/// @brief Returns the product of the 4D vector \c v and the scalar \c n.
-	/// @related Vector4D
+	/// \brief Returns the product of the 4D vector $v$ and the scalar $n$.
+	/// \related Vector4D
 
 	inline Vector4D operator *(float n, const Vector4D& v)
 	{
 		return (Vector4D(n * v.x, n * v.y, n * v.z, n * v.w));
 	}
 
-	/// @brief Returns the product of the 4D vector \c v and the inverse of the scalar \c n.
-	/// @related Vector4D
+	/// \brief Returns the product of the 4D vector $v$ and the inverse of the scalar $n$.
+	/// \related Vector4D
 
 	inline Vector4D operator /(const Vector4D& v, float n)
 	{
@@ -408,8 +413,8 @@ namespace Terathon
 		return (Vector4D(v.x * n, v.y * n, v.z * n, v.w * n));
 	}
 
-	/// @brief Returns the componentwise product of the 4D vectors \c a and \c b.
-	/// @related Vector4D
+	/// \brief Returns the componentwise product of the 4D vectors $a$ and $b$.
+	/// \related Vector4D
 
 	inline Vector4D operator *(const Vector4D& a, const Vector4D& b)
 	{
@@ -420,37 +425,37 @@ namespace Terathon
 	//	Magnitude
 	// ==============================================
 
-	/// @brief Returns the magnitude of the 4D vector \c v.
-	/// @relatedalso Vector4D
+	/// \brief Returns the magnitude of the 4D vector $v$.
+	/// \related Vector4D
 
 	inline float Magnitude(const Vector4D& v)
 	{
 		return (Sqrt(v.x * v.x + v.y * v.y + v.z * v.z + v.w * v.w));
 	}
 
-	/// @brief Returns the inverse magnitude of the 4D vector \c v.
-	/// @relatedalso Vector4D
+	/// \brief Returns the inverse magnitude of the 4D vector $v$.
+	/// \related Vector4D
 
 	inline float InverseMag(const Vector4D& v)
 	{
 		return (InverseSqrt(v.x * v.x + v.y * v.y + v.z * v.z + v.w * v.w));
 	}
 
-	/// @brief Returns the squared magnitude of the 4D vector \c v.
-	/// @relatedalso Vector4D
+	/// \brief Returns the squared magnitude of the 4D vector $v$.
+	/// \related Vector4D
 
 	inline float SquaredMag(const Vector4D& v)
 	{
 		return (v.x * v.x + v.y * v.y + v.z * v.z + v.w * v.w);
 	}
 
-	/// @brief Calculates the normalized version of the 4D vector \c v.
+	/// \brief Calculates the normalized version of the 4D vector $v$.
 	///
-	/// Multiplies the 4D vector \c v by the inverse of its magnitude. The return value is a vector
-	/// having unit length that points in the same direction as \c v. If the magnitude of \c v is zero,
+	/// Multiplies the 4D vector $v$ by the inverse of its magnitude. The return value is a vector
+	/// having unit length that points in the same direction as $v$. If the magnitude of $v$ is zero,
 	/// then the result is undefined.
 	///
-	/// @relatedalso Vector4D
+	/// \related Vector4D
 
 	inline Vector4D Normalize(const Vector4D& v)
 	{
@@ -461,8 +466,8 @@ namespace Terathon
 	//	Dot
 	// ==============================================
 
-	/// @brief Calculates the dot product of the 4D vectors \c a and \c b.
-	/// @relatedalso Vector3D
+	/// \brief Calculates the dot product of the 4D vectors $a$ and $b$.
+	/// \related Vector3D
 
 	inline float Dot(const Vector4D& a, const Vector4D& b)
 	{
@@ -513,16 +518,16 @@ namespace Terathon
 	//	Projection
 	// ==============================================
 
-	/// @brief Returns (<b>a</b>&#x202F;&sdot;&#x202F;<b>b</b>)<b>b</b>, which is the projection of \c a onto \c b under the assumption that the magnitude of \c b is one.
-	/// @relatedalso Vector4D
+	/// \brief Returns (<b>a</b>&#x202F;&sdot;&#x202F;<b>b</b>)<b>b</b>, which is the projection of $a$ onto $b$ under the assumption that the magnitude of $b$ is one.
+	/// \related Vector4D
 
 	inline Vector4D Project(const Vector4D& a, const Vector4D& b)
 	{
 		return (b * Dot(a, b));
 	}
 
-	/// @brief Returns <b>a</b>&#x202F;&minus;&#x202F;(<b>a</b>&#x202F;&sdot;&#x202F;<b>b</b>)<b>b</b>, which is the rejection of \c a from \c b under the assumption that the magnitude of \c b is one.
-	/// @relatedalso Vector4D
+	/// \brief Returns <b>a</b>&#x202F;&minus;&#x202F;(<b>a</b>&#x202F;&sdot;&#x202F;<b>b</b>)<b>b</b>, which is the rejection of $a$ from $b$ under the assumption that the magnitude of $b$ is one.
+	/// \related Vector4D
 
 	inline Vector4D Reject(const Vector4D& a, const Vector4D& b)
 	{
@@ -533,16 +538,16 @@ namespace Terathon
 	//	Floor / ceiling
 	// ==============================================
 
-	/// @brief Returns the componentwise floor of the 4D vector \c v.
-	/// @related Vector4D
+	/// \brief Returns the componentwise floor of the 4D vector $v$.
+	/// \related Vector4D
 
 	inline Vector4D Floor(const Vector4D& v)
 	{
 		return (Vector4D(Floor(v.x), Floor(v.y), Floor(v.z), Floor(v.w)));
 	}
 
-	/// @brief Returns the componentwise ceiling of the 4D vector \c v.
-	/// @related Vector4D
+	/// \brief Returns the componentwise ceiling of the 4D vector $v$.
+	/// \related Vector4D
 
 	inline Vector4D Ceil(const Vector4D& v)
 	{

@@ -1,6 +1,6 @@
 //
 // This file is part of the Terathon Math Library, by Eric Lengyel.
-// Copyright 1999-2024, Terathon Software LLC
+// Copyright 1999-2025, Terathon Software LLC
 //
 // This software is distributed under the MIT License.
 // Separate proprietary licenses are available from Terathon Software.
@@ -13,7 +13,7 @@
 using namespace Terathon;
 
 
-const ConstQuaternion Quaternion::identity = {0.0F, 0.0F, 0.0F, 1.0F};
+alignas(16) const ConstQuaternion Quaternion::identity = {0.0F, 0.0F, 0.0F, 1.0F};
 
 
 Quaternion& Quaternion::operator *=(const Quaternion& q)

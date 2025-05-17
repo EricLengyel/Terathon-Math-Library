@@ -1,6 +1,6 @@
 //
 // This file is part of the Terathon Math Library, by Eric Lengyel.
-// Copyright 1999-2024, Terathon Software LLC
+// Copyright 1999-2025, Terathon Software LLC
 //
 // This software is distributed under the MIT License.
 // Separate proprietary licenses are available from Terathon Software.
@@ -32,12 +32,12 @@ namespace Terathon
 	//	FlatPoint3D
 	// ==============================================
 
-	/// @brief Encapsulates a 3D <a href="https://rigidgeometricalgebra.org/wiki/index.php?title=Point">point</a> in rigid geometric algebra.
+	/// \brief Encapsulates a 3D <a href="https://rigidgeometricalgebra.org/wiki/index.php?title=Point">point</a> in rigid geometric algebra.
 	///
-	/// The \c FlatPoint3D class is used to store a three-dimensional flat point with a four-dimensional homogeneous vector representation in rigid geometric algebra.
+	/// The $FlatPoint3D$ class is used to store a three-dimensional flat point with a four-dimensional homogeneous vector representation in rigid geometric algebra.
 	///
-	/// @sa Line3D
-	/// @sa Plane3D
+	/// \also Line3D
+	/// \also Plane3D
 
 	class FlatPoint3D : public Vector4D
 	{
@@ -45,12 +45,12 @@ namespace Terathon
 
 			TERATHON_API static const ConstFlatPoint3D origin;
 
-			/// @brief Default constructor that leaves the components uninitialized.
+			/// \brief Default constructor that leaves the components uninitialized.
 
 			inline FlatPoint3D() = default;
 
-			/// @brief Constructor that sets components explicitly.
-			/// @param a,b,c,d		The components of the flat point.
+			/// \brief Constructor that sets components explicitly.
+			/// \param a,b,c,d		The components of the flat point.
 
 			FlatPoint3D(float a, float b, float c, float d) : Vector4D(a, b, c, d) {}
 
@@ -145,8 +145,8 @@ namespace Terathon
 	};
 
 
-	/// @brief Returns the negation of the 3D point \c p.
-	/// @related FlatPoint3D
+	/// \brief Returns the negation of the 3D point $p$.
+	/// \related FlatPoint3D
 
 	inline FlatPoint3D operator -(const FlatPoint3D& p)
 	{
@@ -173,24 +173,24 @@ namespace Terathon
 		return (FlatPoint3D(v.x - p.x, v.y - p.y, v.z - p.z, v.w - p.w));
 	}
 
-	/// @brief Returns the product of the 3D point \c p and the scalar \c n.
-	/// @related FlatPoint3D
+	/// \brief Returns the product of the 3D point $p$ and the scalar $n$.
+	/// \related FlatPoint3D
 
 	inline FlatPoint3D operator *(const FlatPoint3D& p, float n)
 	{
 		return (FlatPoint3D(p.x * n, p.y * n, p.z * n, p.w * n));
 	}
 
-	/// @brief Returns the product of the 3D point \c p and the scalar \c n.
-	/// @related FlatPoint3D
+	/// \brief Returns the product of the 3D point $p$ and the scalar $n$.
+	/// \related FlatPoint3D
 
 	inline FlatPoint3D operator *(float n, const FlatPoint3D& p)
 	{
 		return (FlatPoint3D(n * p.x, n * p.y, n * p.z, n * p.w));
 	}
 
-	/// @brief Returns the product of the 3D point \c p and the inverse of the scalar \c n.
-	/// @related FlatPoint3D
+	/// \brief Returns the product of the 3D point $p$ and the inverse of the scalar $n$.
+	/// \related FlatPoint3D
 
 	inline FlatPoint3D operator /(const FlatPoint3D& p, float n)
 	{
@@ -203,13 +203,13 @@ namespace Terathon
 	//	Line3D
 	// ==============================================
 
-	/// @brief Encapsulates a 3D <a href="https://rigidgeometricalgebra.org/wiki/index.php?title=Line">line</a> in rigid geometric algebra.
+	/// \brief Encapsulates a 3D <a href="https://rigidgeometricalgebra.org/wiki/index.php?title=Line">line</a> in rigid geometric algebra.
 	///
-	/// The \c Line3D class is used to store a three-dimensional line with a four-dimensional bivector representation in rigid geometric algebra.
-	/// The components of the line are stored as a Vector3D member named \c v and a Bivector3D member named \c m.
+	/// The $Line3D$ class is used to store a three-dimensional line with a four-dimensional bivector representation in rigid geometric algebra.
+	/// The components of the line are stored as a Vector3D member named $v$ and a Bivector3D member named $m$.
 	///
-	/// @sa FlatPoint3D
-	/// @sa Plane3D
+	/// \also FlatPoint3D
+	/// \also Plane3D
 
 	class Line3D
 	{
@@ -220,13 +220,19 @@ namespace Terathon
 
 			TERATHON_API static const ConstLine3D zero;
 
-			/// @brief Default constructor that leaves the components uninitialized.
+			/// \brief Default constructor that leaves the components uninitialized.
 
 			inline Line3D() = default;
 
-			/// @brief Constructor that sets components explicitly.
-			/// @param vx,vy,vz		The components of the direction corresponding to the <b>e</b><sub>41</sub>, <b>e</b><sub>42</sub>, and <b>e</b><sub>43</sub> basis elements.
-			/// @param mx,my,mz		The components of the moment corresponding to the <b>e</b><sub>23</sub>, <b>e</b><sub>31</sub>, and <b>e</b><sub>12</sub> basis elements.
+			Line3D(const Line3D& l)
+			{
+				v = l.v;
+				m = l.m;
+			}
+
+			/// \brief Constructor that sets components explicitly.
+			/// \param vx,vy,vz		The components of the direction corresponding to the <b>e</b><sub>41</sub>, <b>e</b><sub>42</sub>, and <b>e</b><sub>43</sub> basis elements.
+			/// \param mx,my,mz		The components of the moment corresponding to the <b>e</b><sub>23</sub>, <b>e</b><sub>31</sub>, and <b>e</b><sub>12</sub> basis elements.
 
 			Line3D(float vx, float vy, float vz, float mx, float my, float mz)
 			{
@@ -234,9 +240,9 @@ namespace Terathon
 				m.Set(mx, my, mz);
 			}
 
-			/// @brief Constructor that sets components explicitly.
-			/// @param direction	A 3D vector corresponding to the direction of the line.
-			/// @param moment		A 3D bivector corresponding to the moment of the line.
+			/// \brief Constructor that sets components explicitly.
+			/// \param direction	A 3D vector corresponding to the direction of the line.
+			/// \param moment		A 3D bivector corresponding to the moment of the line.
 
 			Line3D(const Vector3D& direction, const Bivector3D& moment)
 			{
@@ -244,9 +250,9 @@ namespace Terathon
 				m = moment;
 			}
 
-			/// @brief Sets all six components of a 3D line.
-			/// @param vx,vy,vz		The components of the direction corresponding to the <b>e</b><sub>41</sub>, <b>e</b><sub>42</sub>, and <b>e</b><sub>43</sub> basis elements.
-			/// @param mx,my,mz		The components of the moment corresponding to the <b>e</b><sub>23</sub>, <b>e</b><sub>31</sub>, and <b>e</b><sub>12</sub> basis elements.
+			/// \brief Sets all six components of a 3D line.
+			/// \param vx,vy,vz		The components of the direction corresponding to the <b>e</b><sub>41</sub>, <b>e</b><sub>42</sub>, and <b>e</b><sub>43</sub> basis elements.
+			/// \param mx,my,mz		The components of the moment corresponding to the <b>e</b><sub>23</sub>, <b>e</b><sub>31</sub>, and <b>e</b><sub>12</sub> basis elements.
 
 			Line3D& Set(float vx, float vy, float vz, float mx, float my, float mz)
 			{
@@ -261,9 +267,9 @@ namespace Terathon
 				m.Set(mx, my, mz);
 			}
 
-			/// @brief Sets all six components of a 3D line.
-			/// @param direction	A 3D vector corresponding to the direction of the line.
-			/// @param moment		A 3D bivector corresponding to the moment of the line.
+			/// \brief Sets all six components of a 3D line.
+			/// \param direction	A 3D vector corresponding to the direction of the line.
+			/// \param moment		A 3D bivector corresponding to the moment of the line.
 
 			Line3D& Set(const Vector3D& direction, const Bivector3D& moment)
 			{
@@ -313,32 +319,32 @@ namespace Terathon
 	};
 
 
-	/// @brief Returns the negation of the 3D line \c l.
-	/// @related Line3D
+	/// \brief Returns the negation of the 3D line $l$.
+	/// \related Line3D
 
 	inline Line3D operator -(const Line3D& l)
 	{
 		return (Line3D(-l.v.x, -l.v.y, -l.v.z, -l.m.x, -l.m.y, -l.m.z));
 	}
 
-	/// @brief Returns the product of the 3D line \c l and the scalar \c n.
-	/// @related Line3D
+	/// \brief Returns the product of the 3D line $l$ and the scalar $n$.
+	/// \related Line3D
 
 	inline Line3D operator *(const Line3D& l, float n)
 	{
 		return (Line3D(l.v.x * n, l.v.y * n, l.v.z * n, l.m.x * n, l.m.y * n, l.m.z * n));
 	}
 
-	/// @brief Returns the product of the 3D line \c l and the scalar \c n.
-	/// @related Line3D
+	/// \brief Returns the product of the 3D line $l$ and the scalar $n$.
+	/// \related Line3D
 
 	inline Line3D operator *(float n, const Line3D& l)
 	{
 		return (Line3D(n * l.v.x, n * l.v.y, n * l.v.z, n * l.m.x, n * l.m.y, n * l.m.z));
 	}
 
-	/// @brief Returns the product of the 3D line \c l and the inverse of the scalar \c n.
-	/// @related Line3D
+	/// \brief Returns the product of the 3D line $l$ and the inverse of the scalar $n$.
+	/// \related Line3D
 
 	inline Line3D operator /(const Line3D& l, float n)
 	{
@@ -346,16 +352,16 @@ namespace Terathon
 		return (Line3D(l.v.x * n, l.v.y * n, l.v.z * n, l.m.x * n, l.m.y * n, l.m.z * n));
 	}
 
-	/// @brief Returns a boolean value indicating whether the two 3D lines \c k and \c l are equal.
-	/// @related Line3D
+	/// \brief Returns a boolean value indicating whether the two 3D lines $k$ and $l$ are equal.
+	/// \related Line3D
 
 	inline bool operator ==(const Line3D& k, const Line3D& l)
 	{
 		return ((k.v == l.v) && (k.m == l.m));
 	}
 
-	/// @brief Returns a boolean value indicating whether the two 3D lines \c k and \c l are not equal.
-	/// @related Line3D
+	/// \brief Returns a boolean value indicating whether the two 3D lines $k$ and $l$ are not equal.
+	/// \related Line3D
 
 	inline bool operator !=(const Line3D& k, const Line3D& l)
 	{
@@ -376,12 +382,12 @@ namespace Terathon
 	};
 
 
-	/// @brief Encapsulates a 3D <a href="https://rigidgeometricalgebra.org/wiki/index.php?title=Plane">plane</a> in rigid geometric algebra.
+	/// \brief Encapsulates a 3D <a href="https://rigidgeometricalgebra.org/wiki/index.php?title=Plane">plane</a> in rigid geometric algebra.
 	///
-	/// The \c Plane3D class is used to store a three-dimensional plane with a four-dimensional trivector representation in rigid geometric algebra.
+	/// The $Plane3D$ class is used to store a three-dimensional plane with a four-dimensional trivector representation in rigid geometric algebra.
 	///
-	/// @sa FlatPoint3D
-	/// @sa Line3D
+	/// \also FlatPoint3D
+	/// \also Line3D
 
 	class Plane3D : public Antivec4D<TypePlane3D>
 	{
@@ -390,12 +396,17 @@ namespace Terathon
 			TERATHON_API static const ConstPlane3D zero;
 			TERATHON_API static const ConstPlane3D horizon;
 
-			/// @brief Default constructor that leaves the components uninitialized.
+			/// \brief Default constructor that leaves the components uninitialized.
 
 			inline Plane3D() = default;
 
-			/// @brief Constructor that sets components explicitly.
-			/// @param a,b,c,d		The components of the plane.
+			Plane3D(const Plane3D& g)
+			{
+				xyzw = g.xyzw;
+			}
+
+			/// \brief Constructor that sets components explicitly.
+			/// \param a,b,c,d		The components of the plane.
 
 			Plane3D(float a, float b, float c, float d) : Antivec4D<TypePlane3D>(a, b, c, d) {}
 
@@ -417,8 +428,8 @@ namespace Terathon
 				w = -(xyz ^ p1);
 			}
 
-			/// @brief Sets all four components of a 3D plane.
-			/// @param a,b,c,d		The new components of the plane.
+			/// \brief Sets all four components of a 3D plane.
+			/// \param a,b,c,d		The new components of the plane.
 
 			Plane3D& Set(float a, float b, float c, float d)
 			{
@@ -431,9 +442,9 @@ namespace Terathon
 				xyzw.Set(a, b, c, d);
 			}
 
-			/// @brief Sets all four components of a 3D plane.
-			/// @param n		The plane normal corresponding to the <b>e</b><sub>423</sub>, <b>e</b><sub>431</sub>, and <b>e</b><sub>412</sub> basis elements.
-			/// @param d		The plane distance corresponding to the <b>e</b><sub>321</sub> basis element.
+			/// \brief Sets all four components of a 3D plane.
+			/// \param n		The plane normal corresponding to the <b>e</b><sub>423</sub>, <b>e</b><sub>431</sub>, and <b>e</b><sub>412</sub> basis elements.
+			/// \param d		The plane distance corresponding to the <b>e</b><sub>321</sub> basis element.
 
 			Plane3D& Set(const Bivector3D& n, float d)
 			{
@@ -448,9 +459,9 @@ namespace Terathon
 				w = d;
 			}
 
-			/// @brief Sets all four components of a 3D plane.
-			/// @param n		The plane normal corresponding to the <b>e</b><sub>423</sub>, <b>e</b><sub>431</sub>, and <b>e</b><sub>412</sub> basis elements.
-			/// @param p		A point on the plane. The <i>w</i> coordinate corresponding to the <b>e</b><sub>321</sub> basis element is given by &minus;(<b>n</b>&#x202F;&and;&#x202F;<b>p</b>).
+			/// \brief Sets all four components of a 3D plane.
+			/// \param n		The plane normal corresponding to the <b>e</b><sub>423</sub>, <b>e</b><sub>431</sub>, and <b>e</b><sub>412</sub> basis elements.
+			/// \param p		A point on the plane. The <i>w</i> coordinate corresponding to the <b>e</b><sub>321</sub> basis element is given by &minus;(<b>n</b>&#x202F;&and;&#x202F;<b>p</b>).
 
 			Plane3D& Set(const Bivector3D& n, const Point3D& p)
 			{
@@ -515,32 +526,32 @@ namespace Terathon
 	};
 
 
-	/// @brief Returns the negation of the 3D plane \c g.
-	/// @related Plane3D
+	/// \brief Returns the negation of the 3D plane $g$.
+	/// \related Plane3D
 
 	inline Plane3D operator -(const Plane3D& g)
 	{
 		return (Plane3D(-g.x, -g.y, -g.z, -g.w));
 	}
 
-	/// @brief Returns the product of the 3D plane \c g and the scalar \c n.
-	/// @related Plane3D
+	/// \brief Returns the product of the 3D plane $g$ and the scalar $n$.
+	/// \related Plane3D
 
 	inline Plane3D operator *(const Plane3D& g, float n)
 	{
 		return (Plane3D(g.x * n, g.y * n, g.z * n, g.w * n));
 	}
 
-	/// @brief Returns the product of the 3D plane \c g and the scalar \c n.
-	/// @related Plane3D
+	/// \brief Returns the product of the 3D plane $g$ and the scalar $n$.
+	/// \related Plane3D
 
 	inline Plane3D operator *(float n, const Plane3D& g)
 	{
 		return (Plane3D(n * g.x, n * g.y, n * g.z, n * g.w));
 	}
 
-	/// @brief Returns the product of the 3D plane \c g and the inverse of the scalar \c n.
-	/// @related Plane3D
+	/// \brief Returns the product of the 3D plane $g$ and the inverse of the scalar $n$.
+	/// \related Plane3D
 
 	inline Plane3D operator /(const Plane3D& g, float n)
 	{
@@ -552,48 +563,48 @@ namespace Terathon
 	//	Complements
 	// ==============================================
 
-	/// @brief Returns the left complement of the 3D flat point \c p, which is a 3D plane.
-	/// @relatedalso FlatPoint3D
+	/// \brief Returns the left complement of the 3D flat point $p$, which is a 3D plane.
+	/// \related FlatPoint3D
 
 	inline Plane3D LeftComplement(const FlatPoint3D& p)
 	{
 		return (Plane3D(-p.x, -p.y, -p.z, -p.w));
 	}
 
-	/// @brief Returns the right complement of the 3D flat point \c p, which is a 3D plane.
-	/// @relatedalso FlatPoint3D
+	/// \brief Returns the right complement of the 3D flat point $p$, which is a 3D plane.
+	/// \related FlatPoint3D
 
 	inline const Plane3D& RightComplement(const FlatPoint3D& p)
 	{
 		return (reinterpret_cast<const Plane3D&>(p));
 	}
 
-	/// @brief Returns the left complement of the 3D line \c l, which is another 3D line.
-	/// @relatedalso Line3D
+	/// \brief Returns the left complement of the 3D line $l$, which is another 3D line.
+	/// \related Line3D
 
 	inline Line3D LeftComplement(const Line3D& l)
 	{
 		return (Line3D(-l.m.x, -l.m.y, -l.m.z, -l.v.x, -l.v.y, -l.v.z));
 	}
 
-	/// @brief Returns the right complement of the 3D line \c l, which is another 3D line.
-	/// @relatedalso Line3D
+	/// \brief Returns the right complement of the 3D line $l$, which is another 3D line.
+	/// \related Line3D
 
 	inline Line3D RightComplement(const Line3D& l)
 	{
 		return (Line3D(-l.m.x, -l.m.y, -l.m.z, -l.v.x, -l.v.y, -l.v.z));
 	}
 
-	/// @brief Returns the left complement of the 3D plane \c g, which is a 3D flat point.
-	/// @relatedalso Plane3D
+	/// \brief Returns the left complement of the 3D plane $g$, which is a 3D flat point.
+	/// \related Plane3D
 
 	inline const FlatPoint3D& LeftComplement(const Plane3D& g)
 	{
 		return (reinterpret_cast<const FlatPoint3D&>(g));
 	}
 
-	/// @brief Returns the right complement of the 3D plane \c g, which is a 3D flat point.
-	/// @relatedalso Plane3D
+	/// \brief Returns the right complement of the 3D plane $g$, which is a 3D flat point.
+	/// \related Plane3D
 
 	inline FlatPoint3D RightComplement(const Plane3D& g)
 	{
@@ -608,24 +619,24 @@ namespace Terathon
 	//	BulkDual
 	// ==============================================
 
-	/// @brief Returns the bulk dual of the 3D flat point \c p, which is a 3D plane through the origin.
-	/// @relatedalso FlatPoint3D
+	/// \brief Returns the bulk dual of the 3D flat point $p$, which is a 3D plane through the origin.
+	/// \related FlatPoint3D
 
 	inline Plane3D BulkDual(const FlatPoint3D& p)
 	{
 		return (Plane3D(-p.x, -p.y, -p.z, 0.0F));
 	}
 
-	/// @brief Returns the bulk dual of the 3D line \c l, which is a 3D line through the origin.
-	/// @relatedalso Line3D
+	/// \brief Returns the bulk dual of the 3D line $l$, which is a 3D line through the origin.
+	/// \related Line3D
 
 	inline Line3D BulkDual(const Line3D& l)
 	{
 		return (Line3D(-l.m.x, -l.m.y, -l.m.z, 0.0F, 0.0F, 0.0F));
 	}
 
-	/// @brief Returns the bulk dual of the 3D plane \c g, which is the 3D origin.
-	/// @relatedalso Plane3D
+	/// \brief Returns the bulk dual of the 3D plane $g$, which is the 3D origin.
+	/// \related Plane3D
 
 	inline FlatPoint3D BulkDual(const Plane3D& g)
 	{
@@ -636,24 +647,24 @@ namespace Terathon
 	//	WeightDual
 	// ==============================================
 
-	/// @brief Returns the weight dual of the 3D flat point \c p, which is the 3D horizon.
-	/// @relatedalso FlatPoint3D
+	/// \brief Returns the weight dual of the 3D flat point $p$, which is the 3D horizon.
+	/// \related FlatPoint3D
 
 	inline Plane3D WeightDual(const FlatPoint3D& p)
 	{
 		return (Plane3D(0.0F, 0.0F, 0.0F, -p.w));
 	}
 
-	/// @brief Returns the weight dual of the 3D line \c l, which is a 3D line in the horizon.
-	/// @relatedalso Line3D
+	/// \brief Returns the weight dual of the 3D line $l$, which is a 3D line in the horizon.
+	/// \related Line3D
 
 	inline Line3D WeightDual(const Line3D& l)
 	{
 		return (Line3D(0.0F, 0.0F, 0.0F, -l.v.x, -l.v.y, -l.v.z));
 	}
 
-	/// @brief Returns the weight dual of the 3D plane \c g, which is a 3D flat point in the horizon.
-	/// @relatedalso Plane3D
+	/// \brief Returns the weight dual of the 3D plane $g$, which is a 3D flat point in the horizon.
+	/// \related Plane3D
 
 	inline FlatPoint3D WeightDual(const Plane3D& g)
 	{
@@ -697,24 +708,24 @@ namespace Terathon
 	//	Reverse
 	// ==============================================
 
-	/// @brief Returns the reverse of the 3D flat point \c p.
-	/// @relatedalso FlatPoint3D
+	/// \brief Returns the reverse of the 3D flat point $p$.
+	/// \related FlatPoint3D
 
 	inline const FlatPoint3D& Reverse(const FlatPoint3D& p)
 	{
 		return (p);
 	}
 
-	/// @brief Returns the reverse of the 3D line \c l.
-	/// @relatedalso Line3D
+	/// \brief Returns the reverse of the 3D line $l$.
+	/// \related Line3D
 
 	inline Line3D Reverse(const Line3D& l)
 	{
 		return (Line3D(-l.v.x, -l.v.y, -l.v.z, -l.m.x, -l.m.y, -l.m.z));
 	}
 
-	/// @brief Returns the reverse of the 3D plane \c g.
-	/// @relatedalso Plane3D
+	/// \brief Returns the reverse of the 3D plane $g$.
+	/// \related Plane3D
 
 	inline Plane3D Reverse(const Plane3D& g)
 	{
@@ -725,24 +736,24 @@ namespace Terathon
 	//	Antireverse
 	// ==============================================
 
-	/// @brief Returns the antireverse of the 3D flat point \c p.
-	/// @relatedalso FlatPoint3D
+	/// \brief Returns the antireverse of the 3D flat point $p$.
+	/// \related FlatPoint3D
 
 	inline FlatPoint3D Antireverse(const FlatPoint3D& p)
 	{
 		return (FlatPoint3D(-p.x, -p.y, -p.z, -p.w));
 	}
 
-	/// @brief Returns the antireverse of the 3D line \c l.
-	/// @relatedalso Line3D
+	/// \brief Returns the antireverse of the 3D line $l$.
+	/// \related Line3D
 
 	inline Line3D Antireverse(const Line3D& l)
 	{
 		return (Line3D(-l.v.x, -l.v.y, -l.v.z, -l.m.x, -l.m.y, -l.m.z));
 	}
 
-	/// @brief Returns the antireverse of the 3D plane \c g.
-	/// @relatedalso Plane3D
+	/// \brief Returns the antireverse of the 3D plane $g$.
+	/// \related Plane3D
 
 	inline const Plane3D& Antireverse(const Plane3D& g)
 	{
@@ -757,24 +768,24 @@ namespace Terathon
 	//	Attitude
 	// ==============================================
 
-	/// @brief Returns the attitude of the 3D flat point \c p, which is a scalar.
-	/// @relatedalso FlatPoint3D
+	/// \brief Returns the attitude of the 3D flat point $p$, which is a scalar.
+	/// \related FlatPoint3D
 
 	inline float Attitude(const FlatPoint3D& p)
 	{
 		return (p.w);
 	}
 
-	/// @brief Returns the attitude of the 3D line \c l as a 3D vector.
-	/// @relatedalso Line3D
+	/// \brief Returns the attitude of the 3D line $l$ as a 3D vector.
+	/// \related Line3D
 
 	inline Vector3D Attitude(const Line3D& l)
 	{
 		return (Vector3D(l.v.x, l.v.y, l.v.z));
 	}
 
-	/// @brief Returns the attitude of the 3D plane \c g as a 3D bivector.
-	/// @relatedalso Plane3D
+	/// \brief Returns the attitude of the 3D plane $g$ as a 3D bivector.
+	/// \related Plane3D
 
 	inline Bivector3D Attitude(const Plane3D& g)
 	{
@@ -785,24 +796,24 @@ namespace Terathon
 	//	SquaredBulkNorm
 	// ==============================================
 
-	/// @brief Returns the squared bulk of the 3D flat point \c p.
-	/// @relatedalso FlatPoint3D
+	/// \brief Returns the squared bulk of the 3D flat point $p$.
+	/// \related FlatPoint3D
 
 	inline float SquaredBulkNorm(const FlatPoint3D& p)
 	{
 		return (p.x * p.x + p.y * p.y + p.z * p.z);
 	}
 
-	/// @brief Returns the squared bulk of the 3D line \c l.
-	/// @relatedalso Line3D
+	/// \brief Returns the squared bulk of the 3D line $l$.
+	/// \related Line3D
 
 	inline float SquaredBulkNorm(const Line3D& l)
 	{
 		return (l.m.x * l.m.x + l.m.y * l.m.y + l.m.z * l.m.z);
 	}
 
-	/// @brief Returns the squared bulk of the 3D plane \c g.
-	/// @relatedalso Plane3D
+	/// \brief Returns the squared bulk of the 3D plane $g$.
+	/// \related Plane3D
 
 	inline float SquaredBulkNorm(const Plane3D& g)
 	{
@@ -813,24 +824,24 @@ namespace Terathon
 	//	SquaredWeightNorm
 	// ==============================================
 
-	/// @brief Returns the squared weight of the 3D flat point \c p.
-	/// @relatedalso FlatPoint3D
+	/// \brief Returns the squared weight of the 3D flat point $p$.
+	/// \related FlatPoint3D
 
 	inline float SquaredWeightNorm(const FlatPoint3D& p)
 	{
 		return (p.w * p.w);
 	}
 
-	/// @brief Returns the squared weight of the 3D line \c l.
-	/// @relatedalso Line3D
+	/// \brief Returns the squared weight of the 3D line $l$.
+	/// \related Line3D
 
 	inline float SquaredWeightNorm(const Line3D& l)
 	{
 		return (l.v.x * l.v.x + l.v.y * l.v.y + l.v.z * l.v.z);
 	}
 
-	/// @brief Returns the squared weight of the 3D plane \c g.
-	/// @relatedalso Plane3D
+	/// \brief Returns the squared weight of the 3D plane $g$.
+	/// \related Plane3D
 
 	inline float SquaredWeightNorm(const Plane3D& g)
 	{
@@ -841,12 +852,12 @@ namespace Terathon
 	//	Unitize
 	// ==============================================
 
-	/// @brief Calculates the unitized equivalent of a 3D point.
+	/// \brief Calculates the unitized equivalent of a 3D point.
 	///
-	/// Multiplies the 3D point \c p by the inverse magnitude of its weight, which is its <i>w</i> component.
+	/// Multiplies the 3D point $p$ by the inverse magnitude of its weight, which is its <i>w</i> component.
 	/// The return value is a Euclidean point having an implicit <i>w</i> coordinate of one.
 	///
-	/// @relatedalso FlatPoint3D
+	/// \related FlatPoint3D
 
 	inline Point3D Unitize(const FlatPoint3D& p)
 	{
@@ -854,26 +865,26 @@ namespace Terathon
 		return (Point3D(p.x * n, p.y * n, p.z * n));
 	}
 
-	/// @brief Calculates the unitized equivalent of a 3D line.
+	/// \brief Calculates the unitized equivalent of a 3D line.
 	///
-	/// Multiplies the 3D line \c l by the inverse magnitude of its weight, which is the 3D direction component.
+	/// Multiplies the 3D line $l$ by the inverse magnitude of its weight, which is the 3D direction component.
 	/// The direction component of the returned line has unit length, and the magnitude of its moment component
 	/// is the perpendicular distance between the origin and the line.
 	///
-	/// @relatedalso Line3D
+	/// \related Line3D
 
 	inline Line3D Unitize(const Line3D& l)
 	{
 		return (l * InverseSqrt(l.v.x * l.v.x + l.v.y * l.v.y + l.v.z * l.v.z));
 	}
 
-	/// @brief Calculates the unitized equivalent of a 3D plane.
+	/// \brief Calculates the unitized equivalent of a 3D plane.
 	///
-	/// Multiplies the 3D plane \c g by the inverse magnitude of its weight, which is the 3D bivector given by
+	/// Multiplies the 3D plane $g$ by the inverse magnitude of its weight, which is the 3D bivector given by
 	/// its <i>x</i>, <i>y</i>, and <i>z</i> coordinates. The returned plane has a unit-length normal.
 	/// If the <i>x</i>, <i>y</i>, and <i>z</i> coordinates are all zero, then the result is undefined.
 	///
-	/// @relatedalso Plane3D
+	/// \related Plane3D
 
 	inline Plane3D Unitize(const Plane3D& g)
 	{
@@ -884,24 +895,24 @@ namespace Terathon
 	//	Dot
 	// ==============================================
 
-	/// @brief Returns the dot product between 3D flat points \c a and \c b.
-	/// @relatedalso FlatPoint3D
+	/// \brief Returns the dot product between 3D flat points $a$ and $b$.
+	/// \related FlatPoint3D
 
 	inline float Dot(const FlatPoint3D& a, const FlatPoint3D& b)
 	{
 		return (a.x * b.x + a.y * b.y + a.z * b.z);
 	}
 
-	/// @brief Returns the dot product between 3D lines \c k and \c l.
-	/// @relatedalso Line3D
+	/// \brief Returns the dot product between 3D lines $k$ and $l$.
+	/// \related Line3D
 
 	inline float Dot(const Line3D& k, const Line3D& l)
 	{
 		return (k.m.x * l.m.x + k.m.y * l.m.y + k.m.z * l.m.z);
 	}
 
-	/// @brief Returns the dot product between 3D planes \c g and \c h.
-	/// @relatedalso Plane3D
+	/// \brief Returns the dot product between 3D planes $g$ and $h$.
+	/// \related Plane3D
 
 	inline float Dot(const Plane3D& g, const Plane3D& h)
 	{
@@ -912,24 +923,24 @@ namespace Terathon
 	//	Antidot
 	// ==============================================
 
-	/// @brief Returns the antidot product between 3D flat points \c a and \c b.
-	/// @relatedalso FlatPoint3D
+	/// \brief Returns the antidot product between 3D flat points $a$ and $b$.
+	/// \related FlatPoint3D
 
 	inline float Antidot(const FlatPoint3D& a, const FlatPoint3D& b)
 	{
 		return (a.w * b.w);
 	}
 
-	/// @brief Returns the antidot product between 3D lines \c k and \c l.
-	/// @relatedalso Line3D
+	/// \brief Returns the antidot product between 3D lines $k$ and $l$.
+	/// \related Line3D
 
 	inline float Antidot(const Line3D& k, const Line3D& l)
 	{
 		return (k.v.x * l.v.x + k.v.y * l.v.y + k.v.z * l.v.z);
 	}
 
-	/// @brief Returns the dot product between 3D planes \c g and \c h.
-	/// @relatedalso Plane3D
+	/// \brief Returns the dot product between 3D planes $g$ and $h$.
+	/// \related Plane3D
 
 	inline float Antidot(const Plane3D& g, const Plane3D& h)
 	{
@@ -940,24 +951,24 @@ namespace Terathon
 	//	Translate
 	// ==============================================
 
-	/// @brief Translates the 3D flat point \c p by the vector \c t.
-	/// @relatedalso FlatPoint3D
+	/// \brief Translates the 3D flat point $p$ by the vector $t$.
+	/// \related FlatPoint3D
 
 	inline FlatPoint3D Translate(const FlatPoint3D& p, const Vector3D& t)
 	{
 		return (FlatPoint3D(p.xyz + t.xyz * p.w, p.w));
 	}
 
-	/// @brief Translates the 3D line \c l by the vector \c t.
-	/// @relatedalso Line3D
+	/// \brief Translates the 3D line $l$ by the vector $t$.
+	/// \related Line3D
 
 	inline Line3D Translate(const Line3D& l, const Vector3D& t)
 	{
 		return (Line3D(l.v, l.m + (t ^ l.v)));
 	}
 
-	/// @brief Translates the 3D plane \c g by the vector \c t.
-	/// @relatedalso Plane3D
+	/// \brief Translates the 3D plane $g$ by the vector $t$.
+	/// \related Plane3D
 
 	inline Plane3D Translate(const Plane3D& g, const Vector3D& t)
 	{
@@ -968,32 +979,32 @@ namespace Terathon
 	//	Join
 	// ==============================================
 
-	/// @brief Calculates the join of the 3D flat points \c p and \c q to produce a 3D line.
-	/// @relatedalso Line3D
+	/// \brief Calculates the join of the 3D flat points $p$ and $q$ to produce a 3D line.
+	/// \related Line3D
 
 	inline Line3D Wedge(const FlatPoint3D& p, const FlatPoint3D& q)
 	{
 		return (Line3D(p.w * q.x - p.x * q.w, p.w * q.y - p.y * q.w, p.w * q.z - p.z * q.w, p.y * q.z - p.z * q.y, p.z * q.x - p.x * q.z, p.x * q.y - p.y * q.x));
 	}
 
-	/// @brief Calculates the join of the 3D Euclidean points \c p and \c q to produce a 3D line.
-	/// @relatedalso Line3D
+	/// \brief Calculates the join of the 3D Euclidean points $p$ and $q$ to produce a 3D line.
+	/// \related Line3D
 
 	inline Line3D Wedge(const Point3D& p, const Point3D& q)
 	{
 		return (Line3D(q.x - p.x, q.y - p.y, q.z - p.z, p.y * q.z - p.z * q.y, p.z * q.x - p.x * q.z, p.x * q.y - p.y * q.x));
 	}
 
-	/// @brief Calculates the join of the 3D Euclidean point \c p and 3D direction vector \c v to produce a 3D line.
-	/// @relatedalso Line3D
+	/// \brief Calculates the join of the 3D Euclidean point $p$ and 3D direction vector $v$ to produce a 3D line.
+	/// \related Line3D
 
 	inline Line3D Wedge(const Point3D& p, const Vector3D& v)
 	{
 		return (Line3D(v.x, v.y, v.z, p.y * v.z - p.z * v.y, p.z * v.x - p.x * v.z, p.x * v.y - p.y * v.x));
 	}
 
-	/// @brief Calculates the join of the 3D line \c l and 3D flat point \c p to produce a 3D plane.
-	/// @relatedalso Plane3D
+	/// \brief Calculates the join of the 3D line $l$ and 3D flat point $p$ to produce a 3D plane.
+	/// \related Plane3D
 
 	inline Plane3D Wedge(const Line3D& l, const FlatPoint3D& p)
 	{
@@ -1003,8 +1014,8 @@ namespace Terathon
 		               -l.m.x * p.x - l.m.y * p.y - l.m.z * p.z));
 	}
 
-	/// @brief Calculates the join of the 3D line \c l and 3D Euclidean point \c p to produce a 3D plane.
-	/// @relatedalso Plane3D
+	/// \brief Calculates the join of the 3D line $l$ and 3D Euclidean point $p$ to produce a 3D plane.
+	/// \related Plane3D
 
 	inline Plane3D Wedge(const Line3D& l, const Point3D& p)
 	{
@@ -1014,8 +1025,8 @@ namespace Terathon
 		               -l.m.x * p.x - l.m.y * p.y - l.m.z * p.z));
 	}
 
-	/// @brief Calculates the join of the 3D line \c l and 3D direction vector \c v to produce a 3D plane.
-	/// @relatedalso Plane3D
+	/// \brief Calculates the join of the 3D line $l$ and 3D direction vector $v$ to produce a 3D plane.
+	/// \related Plane3D
 
 	inline Plane3D Wedge(const Line3D& l, const Vector3D& v)
 	{
@@ -1044,16 +1055,16 @@ namespace Terathon
 	//	Meet
 	// ==============================================
 
-	/// @brief Calculates the meet of the 3D planes \c g and \c h to produce a 3D line.
-	/// @relatedalso Line3D
+	/// \brief Calculates the meet of the 3D planes $g$ and $h$ to produce a 3D line.
+	/// \related Line3D
 
 	inline Line3D Antiwedge(const Plane3D& g, const Plane3D& h)
 	{
 		return (Line3D(g.z * h.y - g.y * h.z, g.x * h.z - g.z * h.x, g.y * h.x - g.x * h.y, g.x * h.w - g.w * h.x, g.y * h.w - g.w * h.y, g.z * h.w - g.w * h.z));
 	}
 
-	/// @brief Calculates the meet of the 3D plane \c g and 3D line \c l to produce a 3D flat point.
-	/// @relatedalso FlatPoint3D
+	/// \brief Calculates the meet of the 3D plane $g$ and 3D line $l$ to produce a 3D flat point.
+	/// \related FlatPoint3D
 
 	inline FlatPoint3D Antiwedge(const Plane3D& g, const Line3D& l)
 	{
@@ -1063,16 +1074,16 @@ namespace Terathon
 		                   -l.v.x * g.x - l.v.y * g.y - l.v.z * g.z));
 	}
 
-	/// @brief Calculates the meet of the 3D lines \c k and \c l to produce a scalar representing the crossing relationship.
-	/// @relatedalso Line3D
+	/// \brief Calculates the meet of the 3D lines $k$ and $l$ to produce a scalar representing the crossing relationship.
+	/// \related Line3D
 
 	inline float Antiwedge(const Line3D& k, const Line3D& l)
 	{
 		return (-(k.v ^ l.m) - (k.m ^ l.v));
 	}
 
-	/// @brief Calculates the meet of the 3D flat point \c p and 3D plane \c g to produce a scalar representing the weighted signed distance between them.
-	/// @relatedalso Plane3D
+	/// \brief Calculates the meet of the 3D flat point $p$ and 3D plane $g$ to produce a scalar representing the weighted signed distance between them.
+	/// \related Plane3D
 
 	inline float Antiwedge(const FlatPoint3D& p, const Plane3D& g)
 	{
@@ -1110,7 +1121,7 @@ namespace Terathon
 	//	Project
 	// ==============================================
 
-	/// @brief Returns the projection of the 3D point \c p onto the 3D line \c l under the assumption that the line is unitized.
+	/// \brief Returns the projection of the 3D point $p$ onto the 3D line $l$ under the assumption that the line is unitized.
 
 	inline Point3D Project(const Point3D& p, const Line3D& l)
 	{
@@ -1118,14 +1129,14 @@ namespace Terathon
 		return (Point3D(d * l.v.x + l.v.y * l.m.z - l.v.z * l.m.y, d * l.v.y + l.v.z * l.m.x - l.v.x * l.m.z, d * l.v.z + l.v.x * l.m.y - l.v.y * l.m.x));
 	}
 
-	/// @brief Returns the projection of the 3D point \c p onto the 3D plane \c g under the assumption that the plane is unitized.
+	/// \brief Returns the projection of the 3D point $p$ onto the 3D plane $g$ under the assumption that the plane is unitized.
 
 	inline Point3D Project(const Point3D& p, const Plane3D& g)
 	{
 		return (Point3D(p - !g.xyz * (p ^ g)));
 	}
 
-	/// @brief Returns the projection of the 3D line \c l onto the 3D plane \c g under the assumption that the plane is unitized.
+	/// \brief Returns the projection of the 3D line $l$ onto the 3D plane $g$ under the assumption that the plane is unitized.
 
 	inline Line3D Project(const Line3D& l, const Plane3D& g)
 	{
@@ -1136,21 +1147,21 @@ namespace Terathon
 	//	Antiproject
 	// ==============================================
 
-	/// @brief Returns the antiprojection of the 3D line \c l onto the 3D point \c p (where \c p is always unitized because it has an implicit <i>w</i> coordinate of 1).
+	/// \brief Returns the antiprojection of the 3D line $l$ onto the 3D point $p$ (where $p$ is always unitized because it has an implicit <i>w</i> coordinate of 1).
 
 	inline Line3D Antiproject(const Line3D& l, const Point3D& p)
 	{
 		return (p ^ l.v);
 	}
 
-	/// @brief Returns the antiprojection of the 3D plane \c g onto the 3D point \c p (where \c p is always unitized because it has an implicit <i>w</i> coordinate of 1).
+	/// \brief Returns the antiprojection of the 3D plane $g$ onto the 3D point $p$ (where $p$ is always unitized because it has an implicit <i>w</i> coordinate of 1).
 
 	inline Plane3D Antiproject(const Plane3D& g, const Point3D& p)
 	{
 		return (Plane3D(g.xyz, p));
 	}
 
-	/// @brief Returns the antiprojection of the 3D plane \c g onto the 3D line \c l under the assumption that the line is unitized.
+	/// \brief Returns the antiprojection of the 3D plane $g$ onto the 3D line $l$ under the assumption that the line is unitized.
 
 	inline Plane3D Antiproject(const Plane3D& g, const Line3D& l)
 	{

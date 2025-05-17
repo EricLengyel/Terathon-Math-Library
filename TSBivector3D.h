@@ -1,6 +1,6 @@
 //
 // This file is part of the Terathon Math Library, by Eric Lengyel.
-// Copyright 1999-2024, Terathon Software LLC
+// Copyright 1999-2025, Terathon Software LLC
 //
 // This software is distributed under the MIT License.
 // Separate proprietary licenses are available from Terathon Software.
@@ -35,12 +35,12 @@ namespace Terathon
 	};
 
 
-	/// @brief Encapsulates a 3D bivector.
+	/// \brief Encapsulates a 3D bivector.
 	///
-	/// The \c Bivector3D class is used to store a three-dimensional bivector having floating-point
+	/// The $Bivector3D$ class is used to store a three-dimensional bivector having floating-point
 	/// components <i>x</i>, <i>y</i>, and <i>z</i>.
 	///
-	/// @sa Vector3D
+	/// \also Vector3D
 
 	class Bivector3D : public Antivec3D<TypeBivector3D>
 	{
@@ -56,20 +56,25 @@ namespace Terathon
 			TERATHON_API static const ConstBivector3D minus_zx_unit;
 			TERATHON_API static const ConstBivector3D minus_xy_unit;
 
-			/// @brief Default constructor that leaves the components uninitialized.
+			/// \brief Default constructor that leaves the components uninitialized.
 
 			inline Bivector3D() = default;
 
-			/// @brief Constructor that sets components explicitly.
-			/// @param a,b,c	The components of the bivector.
+			Bivector3D(const Bivector3D& v)
+			{
+				xyz = v.xyz;
+			}
+
+			/// \brief Constructor that sets components explicitly.
+			/// \param a,b,c	The components of the bivector.
 
 			Bivector3D(float a, float b, float c) : Antivec3D<TypeBivector3D>(a, b, c) {}
 
 			template <typename type>
 			explicit Bivector3D(const Antivec3D<type>& v) : Antivec3D<TypeBivector3D>(float(v.x), float(v.y), float(v.z)) {}
 
-			/// @brief Sets all three components of a 3D bivector.
-			/// @param a,b,c	The new components of the bivector.
+			/// \brief Sets all three components of a 3D bivector.
+			/// \param a,b,c	The new components of the bivector.
 
 			Bivector3D& Set(float a, float b, float c)
 			{
@@ -151,8 +156,8 @@ namespace Terathon
 	};
 
 
-	/// @brief Returns the negation of the 3D bivector \c v.
-	/// @related Bivector3D
+	/// \brief Returns the negation of the 3D bivector $v$.
+	/// \related Bivector3D
 
 	inline Bivector3D operator -(const Bivector3D& v)
 	{
@@ -169,24 +174,24 @@ namespace Terathon
 		return (Bivector3D(a.x - b.x, a.y - b.y, a.z - b.z));
 	}
 
-	/// @brief Returns the product of the 3D bivector \c v and the scalar \c n.
-	/// @related Bivector3D
+	/// \brief Returns the product of the 3D bivector $v$ and the scalar $n$.
+	/// \related Bivector3D
 
 	inline Bivector3D operator *(const Bivector3D& v, float n)
 	{
 		return (Bivector3D(v.x * n, v.y * n, v.z * n));
 	}
 
-	/// @brief Returns the product of the 3D bivector \c v and the scalar \c n.
-	/// @related Bivector3D
+	/// \brief Returns the product of the 3D bivector $v$ and the scalar $n$.
+	/// \related Bivector3D
 
 	inline Bivector3D operator *(float n, const Bivector3D& v)
 	{
 		return (Bivector3D(n * v.x, n * v.y, n * v.z));
 	}
 
-	/// @brief Returns the product of the 3D bivector \c v and the inverse of the scalar \c n.
-	/// @related Bivector3D
+	/// \brief Returns the product of the 3D bivector $v$ and the inverse of the scalar $n$.
+	/// \related Bivector3D
 
 	inline Bivector3D operator /(const Bivector3D& v, float n)
 	{
@@ -194,8 +199,8 @@ namespace Terathon
 		return (Bivector3D(v.x * n, v.y * n, v.z * n));
 	}
 
-	/// @brief Returns the componentwise product of the 3D bivectors \c a and \c b.
-	/// @related Bivector3D
+	/// \brief Returns the componentwise product of the 3D bivectors $a$ and $b$.
+	/// \related Bivector3D
 
 	inline Bivector3D operator *(const Bivector3D& a, const Bivector3D& b)
 	{
@@ -206,37 +211,37 @@ namespace Terathon
 	//	Magnitude
 	// ==============================================
 
-	/// @brief Returns the magnitude of the 3D bivector \c v.
-	/// @relatedalso Bivector3D
+	/// \brief Returns the magnitude of the 3D bivector $v$.
+	/// \related Bivector3D
 
 	inline float Magnitude(const Bivector3D& v)
 	{
 		return (Sqrt(v.x * v.x + v.y * v.y + v.z * v.z));
 	}
 
-	/// @brief Returns the inverse magnitude of the 3D bivector \c v.
-	/// @relatedalso Bivector3D
+	/// \brief Returns the inverse magnitude of the 3D bivector $v$.
+	/// \related Bivector3D
 
 	inline float InverseMag(const Bivector3D& v)
 	{
 		return (InverseSqrt(v.x * v.x + v.y * v.y + v.z * v.z));
 	}
 
-	/// @brief Returns the squared magnitude of the 3D bivector \c v.
-	/// @relatedalso Bivector3D
+	/// \brief Returns the squared magnitude of the 3D bivector $v$.
+	/// \related Bivector3D
 
 	inline float SquaredMag(const Bivector3D& v)
 	{
 		return (v.x * v.x + v.y * v.y + v.z * v.z);
 	}
 
-	/// @brief Calculates the normalized version of the 3D bivector \c v.
+	/// \brief Calculates the normalized version of the 3D bivector $v$.
 	///
-	/// Multiplies the 3D bivector \c v by the inverse of its magnitude. The return value is a
-	/// bivector having unit area with the same attitude as \c v. If the magnitude of \c v is
+	/// Multiplies the 3D bivector $v$ by the inverse of its magnitude. The return value is a
+	/// bivector having unit area with the same attitude as $v$. If the magnitude of $v$ is
 	/// zero, then the result is undefined.
 	///
-	/// @relatedalso Bivector3D
+	/// \related Bivector3D
 
 	inline Bivector3D Normalize(const Bivector3D& v)
 	{
@@ -247,8 +252,8 @@ namespace Terathon
 	//	Dot
 	// ==============================================
 
-	/// @brief Calculates the dot product of the 3D bivectors \c a and \c b.
-	/// @relatedalso Bivector3D
+	/// \brief Calculates the dot product of the 3D bivectors $a$ and $b$.
+	/// \related Bivector3D
 
 	inline float Dot(const Bivector3D& a, const Bivector3D& b)
 	{
@@ -259,16 +264,16 @@ namespace Terathon
 	//	Complement
 	// ==============================================
 
-	/// @brief Returns the complement of the 3D vector \c v, which is a bivector, with respect to the volume element <b>e</b><sub>123</sub>.
-	/// @relatedalso Bivector3D
+	/// \brief Returns the complement of the 3D vector $v$, which is a bivector, with respect to the volume element <b>e</b><sub>123</sub>.
+	/// \related Bivector3D
 
 	inline const Bivector3D& Complement(const Vector3D& v)
 	{
 		return (reinterpret_cast<const Bivector3D&>(v));
 	}
 
-	/// @brief Returns the complement of the 3D bivector \c v, which is a vector, with respect to the volume element <b>e</b><sub>123</sub>.
-	/// @relatedalso Bivector3D
+	/// \brief Returns the complement of the 3D bivector $v$, which is a vector, with respect to the volume element <b>e</b><sub>123</sub>.
+	/// \related Bivector3D
 
 	inline const Vector3D& Complement(const Bivector3D& v)
 	{
@@ -282,16 +287,16 @@ namespace Terathon
 	//	Wedge
 	// ==============================================
 
-	/// @brief Calculates the wedge product of the vectors \c a and \c b to produce a 3D bivector.
-	/// @relatedalso Bivector3D
+	/// \brief Calculates the wedge product of the vectors $a$ and $b$ to produce a 3D bivector.
+	/// \related Bivector3D
 
 	inline Bivector3D Wedge(const Vector3D& a, const Vector3D& b)
 	{
 		return (Bivector3D(a.y * b.z - a.z * b.y, a.z * b.x - a.x * b.z, a.x * b.y - a.y * b.x));
 	}
 
-	/// @brief Calculates the antiwedge product of the bivectors \c a and \c b to produce a 3D vector.
-	/// @relatedalso Bivector3D
+	/// \brief Calculates the antiwedge product of the bivectors $a$ and $b$ to produce a 3D vector.
+	/// \related Bivector3D
 
 	inline Vector3D Antiwedge(const Bivector3D& a, const Bivector3D& b)
 	{

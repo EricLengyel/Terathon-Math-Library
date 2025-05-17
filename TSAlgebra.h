@@ -1,6 +1,6 @@
 //
 // This file is part of the Terathon Math Library, by Eric Lengyel.
-// Copyright 1999-2024, Terathon Software LLC
+// Copyright 1999-2025, Terathon Software LLC
 //
 // This software is distributed under the MIT License.
 // Separate proprietary licenses are available from Terathon Software.
@@ -11,8 +11,8 @@
 #define TSAlgebra_h
 
 
-//# \component	Math Library
-//# \prefix		Math/
+/// \component	Math Library
+/// \prefix		Math/
 
 
 #include "TSMath.h"
@@ -870,6 +870,11 @@ namespace Terathon
 
 			inline Vec2D() = default;
 
+			Vec2D(const Vec2D& v)
+			{
+				xy = v.xy;
+			}
+
 			Vec2D(const component_type& a, const component_type& b)
 			{
 				x = a;
@@ -1000,6 +1005,11 @@ namespace Terathon
 		protected:
 
 			inline Vec3D() = default;
+
+			Vec3D(const Vec3D& v)
+			{
+				xyz = v.xyz;
+			}
 
 			Vec3D(const component_type& a, const component_type& b, const component_type& c)
 			{
@@ -1435,6 +1445,11 @@ namespace Terathon
 		protected:
 
 			inline Vec4D() = default;
+
+			Vec4D(const Vec4D& v)
+			{
+				xyzw = v.xyzw;
+			}
 
 			Vec4D(const component_type& a, const component_type& b, const component_type& c, const component_type& d)
 			{
@@ -2309,6 +2324,11 @@ namespace Terathon
 
 			inline Mat2D() = default;
 
+			Mat2D(const Mat2D& m)
+			{
+				matrix = m.matrix;
+			}
+
 			Mat2D(const component_type& n00, const component_type& n01, const component_type& n10, const component_type& n11)
 			{
 				matrix.Set(n00, n01, n10, n11);
@@ -2410,6 +2430,11 @@ namespace Terathon
 		protected:
 
 			inline Mat3D() = default;
+
+			Mat3D(const Mat3D& m)
+			{
+				matrix = m.matrix;
+			}
 
 			Mat3D(const component_type& n00, const component_type& n01, const component_type& n02, const component_type& n10, const component_type& n11, const component_type& n12, const component_type& n20, const component_type& n21, const component_type& n22)
 			{
@@ -2523,6 +2548,11 @@ namespace Terathon
 		protected:
 
 			inline Mat4D() = default;
+
+			Mat4D(const Mat4D& m)
+			{
+				matrix = m.matrix;
+			}
 
 			Mat4D(const component_type& n00, const component_type& n01, const component_type& n02, const component_type& n03, const component_type& n10, const component_type& n11, const component_type& n12, const component_type& n13, const component_type& n20, const component_type& n21, const component_type& n22, const component_type& n23, const component_type& n30, const component_type& n31, const component_type& n32, const component_type& n33)
 			{

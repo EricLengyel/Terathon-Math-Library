@@ -1,6 +1,6 @@
 //
 // This file is part of the Terathon Math Library, by Eric Lengyel.
-// Copyright 1999-2024, Terathon Software LLC
+// Copyright 1999-2025, Terathon Software LLC
 //
 // This software is distributed under the MIT License.
 // Separate proprietary licenses are available from Terathon Software.
@@ -44,15 +44,15 @@ namespace Terathon
 	};
 
 
-	/// @brief Encapsulates a 3&#x202F;&times;&#x202F;3 matrix.
+	/// \brief Encapsulates a 3&#x202F;&times;&#x202F;3 matrix.
 	///
-	/// The \c Matrix3D class is used to store a 3&#x202F;&times;&#x202F;3 matrix. The entries of the matrix
+	/// The $Matrix3D$ class is used to store a 3&#x202F;&times;&#x202F;3 matrix. The entries of the matrix
 	/// are accessed using the () operator with two indexes specifying the row and column of an entry.
 	///
-	/// @sa Matrix2D
-	/// @sa Matrix4D
-	/// @sa Transform2D
-	/// @sa Transform3D
+	/// \also Matrix2D
+	/// \also Matrix4D
+	/// \also Transform2D
+	/// \also Transform3D
 
 	class Matrix3D : public Mat3D<TypeMatrix3D>
 	{
@@ -60,27 +60,32 @@ namespace Terathon
 
 			TERATHON_API static const ConstMatrix3D identity;
 
-			/// @brief Default constructor that leaves the entries uninitialized.
+			/// \brief Default constructor that leaves the entries uninitialized.
 
 			inline Matrix3D() = default;
 
-			/// @brief Constructor that sets entries explicitly.
-			/// @param n00,n01,n02,n10,n11,n12,n20,n21,n22		The entries of the matrix.
+			Matrix3D(const Matrix3D& m)
+			{
+				matrix = m.matrix;
+			}
+
+			/// \brief Constructor that sets entries explicitly.
+			/// \param n00,n01,n02,n10,n11,n12,n20,n21,n22		The entries of the matrix.
 
 			TERATHON_API Matrix3D(float n00, float n01, float n02, float n10, float n11, float n12, float n20, float n21, float n22);
 
-			/// @brief Constructor that sets columns explicitly.
-			/// @param a,b,c	The columns of the matrix.
+			/// \brief Constructor that sets columns explicitly.
+			/// \param a,b,c	The columns of the matrix.
 
 			TERATHON_API Matrix3D(const Vector3D& a, const Vector3D& b, const Vector3D& c);
 
-			/// @brief Sets all nine entries of a 3&#x202F;&times;&#x202F;3 matrix.
-			/// @param n00,n01,n02,n10,n11,n12,n20,n21,n22		The new entries of the matrix.
+			/// \brief Sets all nine entries of a 3&#x202F;&times;&#x202F;3 matrix.
+			/// \param n00,n01,n02,n10,n11,n12,n20,n21,n22		The new entries of the matrix.
 
 			TERATHON_API Matrix3D& Set(float n00, float n01, float n02, float n10, float n11, float n12, float n20, float n21, float n22);
 
-			/// @brief Sets all three columns of a 3&#x202F;&times;&#x202F;3 matrix.
-			/// @param a,b,c	The new columns of the matrix.
+			/// \brief Sets all three columns of a 3&#x202F;&times;&#x202F;3 matrix.
+			/// \param a,b,c	The new columns of the matrix.
 
 			TERATHON_API Matrix3D& Set(const Vector3D& a, const Vector3D& b, const Vector3D& c);
 
@@ -112,49 +117,49 @@ namespace Terathon
 			TERATHON_API Matrix3D& operator *=(float s);
 			TERATHON_API Matrix3D& operator /=(float s);
 
-			/// @brief Sets a matrix to the 3&#x202F;&times;&#x202F;3 identity matrix.
+			/// \brief Sets a matrix to the 3&#x202F;&times;&#x202F;3 identity matrix.
 
 			TERATHON_API Matrix3D& SetIdentity(void);
 
-			/// @brief Orthogonalizes the columns of a 3&#x202F;&times;&#x202F;3 matrix.
-			/// @param column	The index of the column whose direction does not change. This must be 0, 1, or 2.
+			/// \brief Orthogonalizes the columns of a 3&#x202F;&times;&#x202F;3 matrix.
+			/// \param column	The index of the column whose direction does not change. This must be 0, 1, or 2.
 			///
-			/// The \c Orthogonalize() function uses Gram-Schmidt orthogonalization to orthogonalize the columns
-			/// of a matrix. The column whose index is specified by the \c column parameter is normalized to unit length.
+			/// The $Orthogonalize()$ function uses Gram-Schmidt orthogonalization to orthogonalize the columns
+			/// of a matrix. The column whose index is specified by the $column$ parameter is normalized to unit length.
 			/// The remaining two columns are orthogonalized and made unit length. Only the two columns not specified by
-			/// the \c column parameter can change direction.
+			/// the $column$ parameter can change direction.
 
 			TERATHON_API Matrix3D& Orthogonalize(int32 column);
 
 			TERATHON_API void GetEulerAngles(float *x, float *y, float *z) const;
 			TERATHON_API Matrix3D& SetEulerAngles(float x, float y, float z);
 
-			/// @brief Returns a 3&#x202F;&times;&#x202F;3 matrix that represents a rotation about the <i>x</i> axis.
-			/// @param angle	The angle through which to rotate, in radians.
+			/// \brief Returns a 3&#x202F;&times;&#x202F;3 matrix that represents a rotation about the <i>x</i> axis.
+			/// \param angle	The angle through which to rotate, in radians.
 
 			TERATHON_API static Matrix3D MakeRotationX(float angle);
 
-			/// @brief Returns a 3&#x202F;&times;&#x202F;3 matrix that represents a rotation about the <i>y</i> axis.
-			/// @param angle	The angle through which to rotate, in radians.
+			/// \brief Returns a 3&#x202F;&times;&#x202F;3 matrix that represents a rotation about the <i>y</i> axis.
+			/// \param angle	The angle through which to rotate, in radians.
 
 			TERATHON_API static Matrix3D MakeRotationY(float angle);
 
-			/// @brief Returns a 3&#x202F;&times;&#x202F;3 matrix that represents a rotation about the <i>z</i> axis.
-			/// @param angle	The angle through which to rotate, in radians.
+			/// \brief Returns a 3&#x202F;&times;&#x202F;3 matrix that represents a rotation about the <i>z</i> axis.
+			/// \param angle	The angle through which to rotate, in radians.
 
 			TERATHON_API static Matrix3D MakeRotationZ(float angle);
 
-			/// @brief Returns a 3&#x202F;&times;&#x202F;3 matrix that represents a rotation about an arbitrary axis.
-			/// @param angle	The angle through which to rotate, in radians.
-			/// @param axis		The axis about which to rotate. This bivector must have unit magnitude.
+			/// \brief Returns a 3&#x202F;&times;&#x202F;3 matrix that represents a rotation about an arbitrary axis.
+			/// \param angle	The angle through which to rotate, in radians.
+			/// \param axis		The axis about which to rotate. This bivector must have unit magnitude.
 
 			TERATHON_API static Matrix3D MakeRotation(float angle, const Bivector3D& axis);
 
 			TERATHON_API static Matrix3D MakeReflection(const Vector3D& a);
 			TERATHON_API static Matrix3D MakeInvolution(const Vector3D& a);
 
-			/// @brief Returns a 3&#x202F;&times;&#x202F;3 matrix that represents a uniform scale.
-			/// @param scale	The scale along all three axes.
+			/// \brief Returns a 3&#x202F;&times;&#x202F;3 matrix that represents a uniform scale.
+			/// \param scale	The scale along all three axes.
 
 			TERATHON_API static Matrix3D MakeScale(float scale);
 			TERATHON_API static Matrix3D MakeScale(float sx, float sy, float sz);
@@ -206,8 +211,8 @@ namespace Terathon
 		return (v.xyz * m.matrix);
 	}
 
-	/// @brief Returns the product of the matrices \c m1 and \c m2.
-	/// @relatedalso Matrix3D
+	/// \brief Returns the product of the matrices $m1$ and $m2$.
+	/// \related Matrix3D
 
 	inline Matrix3D operator *(const Matrix3D& m1, const Matrix3D& m2)
 	{
@@ -236,18 +241,18 @@ namespace Terathon
 	}
 
 
-	/// @brief Returns the determinant of the matrix \c m.
-	/// @relatedalso Matrix3D
+	/// \brief Returns the determinant of the matrix $m$.
+	/// \related Matrix3D
 
 	TERATHON_API float Determinant(const Matrix3D& m);
 
-	/// @brief Returns the inverse of the matrix \c m. If \c m is singular, then the result is undefined.
-	/// @relatedalso Matrix3D
+	/// \brief Returns the inverse of the matrix $m$. If $m$ is singular, then the result is undefined.
+	/// \related Matrix3D
 
 	TERATHON_API Matrix3D Inverse(const Matrix3D& m);
 
-	/// @brief Returns the adjugate of the matrix \c m.
-	/// @relatedalso Matrix3D
+	/// \brief Returns the adjugate of the matrix $m$.
+	/// \related Matrix3D
 
 	TERATHON_API Matrix3D Adjugate(const Matrix3D& m);
 
@@ -256,12 +261,12 @@ namespace Terathon
 	//	Transform2D
 	// ==============================================
 
-	/// @brief Encapsulates a 3&#x202F;&times;&#x202F;3 matrix whose third row is always (0,&#x202F;0,&#x202F;1).
+	/// \brief Encapsulates a 3&#x202F;&times;&#x202F;3 matrix whose third row is always (0,&#x202F;0,&#x202F;1).
 	///
-	/// The \c Transform2D class is used to store a 3&#x202F;&times;&#x202F;3 matrix whose third row is always (0,&#x202F;0,&#x202F;1).
+	/// The $Transform2D$ class is used to store a 3&#x202F;&times;&#x202F;3 matrix whose third row is always (0,&#x202F;0,&#x202F;1).
 	/// Such a matrix represents an affine transformation in 2D space.
 	///
-	/// @sa Transform3D
+	/// \also Transform3D
 
 	class Transform2D : public Matrix3D
 	{
@@ -269,12 +274,12 @@ namespace Terathon
 
 			TERATHON_API static const ConstTransform2D identity;
 
-			/// @brief Default constructor that leaves the entries uninitialized.
+			/// \brief Default constructor that leaves the entries uninitialized.
 
 			inline Transform2D() = default;
 
-			/// @brief Constructor that sets entries explicitly.
-			/// @param n00,n01,n02,n10,n11,n12,n20,n21,n22		The entries of first two rows of the matrix.
+			/// \brief Constructor that sets entries explicitly.
+			/// \param n00,n01,n02,n10,n11,n12,n20,n21,n22		The entries of first two rows of the matrix.
 
 			TERATHON_API Transform2D(float n00, float n01, float n02, float n10, float n11, float n12);
 
@@ -410,18 +415,18 @@ namespace Terathon
 	TERATHON_API Vector2D operator *(const Vector2D& v, const Transform2D& m);
 	TERATHON_API Point2D operator *(const Transform2D& m, const Point2D& p);
 
-	/// @brief Returns the determinant of the transform \c m.
-	/// @relatedalso Transform2D
+	/// \brief Returns the determinant of the transform $m$.
+	/// \related Transform2D
 
 	TERATHON_API float Determinant(const Transform2D& m);
 
-	/// @brief Returns the inverse of the transform \c m. If \c m is singular, then the result is undefined.
-	/// @relatedalso Transform2D
+	/// \brief Returns the inverse of the transform $m$. If $m$ is singular, then the result is undefined.
+	/// \related Transform2D
 
 	TERATHON_API Transform2D Inverse(const Transform2D& m);
 
-	/// @brief Returns the inverse of the transform \c m assuming that its determinant is one.
-	/// @relatedalso Transform2D
+	/// \brief Returns the inverse of the transform $m$ assuming that its determinant is one.
+	/// \related Transform2D
 
 	TERATHON_API Transform2D InverseUnitDet(const Transform2D& m);
 

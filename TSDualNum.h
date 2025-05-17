@@ -1,6 +1,6 @@
 ﻿//
 // This file is part of the Terathon Math Library, by Eric Lengyel.
-// Copyright 1999-2024, Terathon Software LLC
+// Copyright 1999-2025, Terathon Software LLC
 //
 // This software is distributed under the MIT License.
 // Separate proprietary licenses are available from Terathon Software.
@@ -19,9 +19,9 @@
 
 namespace Terathon
 {
-	/// @brief Encapsulates a dual number.
+	/// \brief Encapsulates a dual number.
 	///
-	/// The \c DualNum class encapsulates a dual number having the form <i>s</i>&#x202F;+&#x202F;<i>t&espilon;</i>,
+	/// The $DualNum$ class encapsulates a dual number having the form <i>s</i>&#x202F;+&#x202F;<i>t&espilon;</i>,
 	/// where <i>t&espilon;</i><sup>2</sup>&#x202F;0.
 
 	class DualNum
@@ -30,13 +30,19 @@ namespace Terathon
 
 			float		s, t;
 
-			/// @brief Default constructor that leaves the components uninitialized.
+			/// \brief Default constructor that leaves the components uninitialized.
 
 			inline DualNum() = default;
 
-			/// @brief Constructor that sets components explicitly.
-			/// @param a	The real part.
-			/// @param b	The dual part.
+			DualNum(const DualNum& d)
+			{
+				s = d.s;
+				t = d.t;
+			}
+
+			/// \brief Constructor that sets components explicitly.
+			/// \param a	The real part.
+			/// \param b	The dual part.
 
 			DualNum(float a, float b)
 			{
@@ -44,9 +50,9 @@ namespace Terathon
 				t = b;
 			}
 
-			/// @brief Sets both components of a dual number.
-			/// @param a	The real part.
-			/// @param b	The dual part.
+			/// \brief Sets both components of a dual number.
+			/// \param a	The real part.
+			/// \param b	The dual part.
 
 			DualNum& Set(float a, float b)
 			{
@@ -145,8 +151,8 @@ namespace Terathon
 	};
 
 
-	/// @brief Returns the negation of the dual number \c d.
-	/// @related DualNum
+	/// \brief Returns the negation of the dual number $d$.
+	/// \related DualNum
 
 	inline DualNum operator -(const DualNum& d)
 	{
@@ -200,16 +206,16 @@ namespace Terathon
 		return (DualNum(d.s * b, d.t * b));
 	}
 
-	/// @brief Returns a boolean value indicating whether the two dual numbers \c d1 and \c d2 are equal.
-	/// @related DualNum
+	/// \brief Returns a boolean value indicating whether the two dual numbers $d1$ and $d2$ are equal.
+	/// \related DualNum
 
 	inline bool operator ==(const DualNum& d1, const DualNum& d2)
 	{
 		return ((d1.s == d2.s) && (d1.t == d2.t));
 	}
 
-	/// @brief Returns a boolean value indicating whether the two dual numbers \c d1 and \c d2 are not equal.
-	/// @related DualNum
+	/// \brief Returns a boolean value indicating whether the two dual numbers $d1$ and $d2$ are not equal.
+	/// \related DualNum
 
 	inline bool operator !=(const DualNum& d1, const DualNum& d2)
 	{

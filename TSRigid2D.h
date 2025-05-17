@@ -1,6 +1,6 @@
 //
 // This file is part of the Terathon Math Library, by Eric Lengyel.
-// Copyright 1999-2024, Terathon Software LLC
+// Copyright 1999-2025, Terathon Software LLC
 //
 // This software is distributed under the MIT License.
 // Separate proprietary licenses are available from Terathon Software.
@@ -29,11 +29,11 @@ namespace Terathon
 	//	FlatPoint2D
 	// ==============================================
 
-	/// @brief Encapsulates a 2D point in rigid geometric algebra.
+	/// \brief Encapsulates a 2D point in rigid geometric algebra.
 	///
-	/// The \c FlatPoint2D class is used to store a two-dimensional flat point with a three-dimensional homogeneous vector representation in rigid geometric algebra.
+	/// The $FlatPoint2D$ class is used to store a two-dimensional flat point with a three-dimensional homogeneous vector representation in rigid geometric algebra.
 	///
-	/// @sa Line2D
+	/// \also Line2D
 
 	class FlatPoint2D : public Vector3D
 	{
@@ -41,12 +41,12 @@ namespace Terathon
 
 			TERATHON_API static const ConstFlatPoint2D origin;
 
-			/// @brief Default constructor that leaves the components uninitialized.
+			/// \brief Default constructor that leaves the components uninitialized.
 
 			inline FlatPoint2D() = default;
 
-			/// @brief Constructor that sets components explicitly.
-			/// @param a,b,c		The components of the flat point.
+			/// \brief Constructor that sets components explicitly.
+			/// \param a,b,c		The components of the flat point.
 
 			FlatPoint2D(float a, float b, float c) : Vector3D(a, b, c) {}
 
@@ -140,8 +140,8 @@ namespace Terathon
 	};
 
 
-	/// @brief Returns the negation of the 2D point \c p.
-	/// @related FlatPoint2D
+	/// \brief Returns the negation of the 2D point $p$.
+	/// \related FlatPoint2D
 
 	inline FlatPoint2D operator -(const FlatPoint2D& p)
 	{
@@ -168,24 +168,24 @@ namespace Terathon
 		return (FlatPoint2D(v.x - p.x, v.y - p.y, v.z - p.z));
 	}
 
-	/// @brief Returns the product of the 2D point \c p and the scalar \c n.
-	/// @related FlatPoint2D
+	/// \brief Returns the product of the 2D point $p$ and the scalar $n$.
+	/// \related FlatPoint2D
 
 	inline FlatPoint2D operator *(const FlatPoint2D& p, float n)
 	{
 		return (FlatPoint2D(p.x * n, p.y * n, p.z * n));
 	}
 
-	/// @brief Returns the product of the 2D point \c p and the scalar \c n.
-	/// @related FlatPoint2D
+	/// \brief Returns the product of the 2D point $p$ and the scalar $n$.
+	/// \related FlatPoint2D
 
 	inline FlatPoint2D operator *(float n, const FlatPoint2D& p)
 	{
 		return (FlatPoint2D(n * p.x, n * p.y, n * p.z));
 	}
 
-	/// @brief Returns the product of the 2D point \c p and the inverse of the scalar \c n.
-	/// @related FlatPoint2D
+	/// \brief Returns the product of the 2D point $p$ and the inverse of the scalar $n$.
+	/// \related FlatPoint2D
 
 	inline FlatPoint2D operator /(const FlatPoint2D& p, float n)
 	{
@@ -216,11 +216,11 @@ namespace Terathon
 	};
 
 
-	/// @brief Encapsulates a 2D line in rigid geometric algebra.
+	/// \brief Encapsulates a 2D line in rigid geometric algebra.
 	///
-	/// The \c Line2D class is used to store a two-dimensional line with a three-dimensional bivector representation in rigid geometric algebra.
+	/// The $Line2D$ class is used to store a two-dimensional line with a three-dimensional bivector representation in rigid geometric algebra.
 	///
-	/// @sa FlatPoint2D
+	/// \also FlatPoint2D
 
 	class Line2D : public Antivec3D<TypeLine2D>
 	{
@@ -229,12 +229,17 @@ namespace Terathon
 			TERATHON_API static const ConstLine2D zero;
 			TERATHON_API static const ConstLine2D horizon;
 
-			/// @brief Default constructor that leaves the components uninitialized.
+			/// \brief Default constructor that leaves the components uninitialized.
 
 			inline Line2D() = default;
 
-			/// @brief Constructor that sets components explicitly.
-			/// @param a,b,c		The components of the line corresponding to the <b>e</b><sub>23</sub>, <b>e</b><sub>31</sub>, and <b>e</b><sub>12</sub> basis elements.
+			Line2D(const Line2D& v)
+			{
+				xyz = v.xyz;
+			}
+
+			/// \brief Constructor that sets components explicitly.
+			/// \param a,b,c	The components of the line corresponding to the <b>e</b><sub>23</sub>, <b>e</b><sub>31</sub>, and <b>e</b><sub>12</sub> basis elements.
 
 			Line2D(float a, float b, float c) : Antivec3D<TypeLine2D>(a, b, c) {}
 
@@ -248,8 +253,8 @@ namespace Terathon
 				xyz.Set(-v.y, v.x, p.x * v.y - p.y * v.x);
 			}
 
-			/// @brief Sets all three components of a 2D line.
-			/// @param a,b,c		The components of the line corresponding to the <b>e</b><sub>23</sub>, <b>e</b><sub>31</sub>, and <b>e</b><sub>12</sub> basis elements.
+			/// \brief Sets all three components of a 2D line.
+			/// \param a,b,c	The components of the line corresponding to the <b>e</b><sub>23</sub>, <b>e</b><sub>31</sub>, and <b>e</b><sub>12</sub> basis elements.
 
 			Line2D& Set(float a, float b, float c)
 			{
@@ -327,32 +332,32 @@ namespace Terathon
 	};
 
 
-	/// @brief Returns the negation of the 2D line \c g.
-	/// @related Line2D
+	/// \brief Returns the negation of the 2D line $g$.
+	/// \related Line2D
 
 	inline Line2D operator -(const Line2D& g)
 	{
 		return (Line2D(-g.x, -g.y, -g.z));
 	}
 
-	/// @brief Returns the product of the 2D line \c g and the scalar \c n.
-	/// @related Line2D
+	/// \brief Returns the product of the 2D line $g$ and the scalar $n$.
+	/// \related Line2D
 
 	inline Line2D operator *(const Line2D& g, float n)
 	{
 		return (Line2D(g.x * n, g.y * n, g.z * n));
 	}
 
-	/// @brief Returns the product of the 2D line \c g and the scalar \c n.
-	/// @related Line2D
+	/// \brief Returns the product of the 2D line $g$ and the scalar $n$.
+	/// \related Line2D
 
 	inline Line2D operator *(float n, const Line2D& g)
 	{
 		return (Line2D(n * g.x, n * g.y, n * g.z));
 	}
 
-	/// @brief Returns the product of the 2D line \c g and the inverse of the scalar \c n.
-	/// @related Line2D
+	/// \brief Returns the product of the 2D line $g$ and the inverse of the scalar $n$.
+	/// \related Line2D
 
 	inline Line2D operator /(const Line2D& g, float n)
 	{
@@ -364,16 +369,16 @@ namespace Terathon
 	//	Complement
 	// ==============================================
 
-	/// @brief Returns the complement of the 2D flat point \c p, which is a 2D line.
-	/// @relatedalso FlatPoint2D
+	/// \brief Returns the complement of the 2D flat point $p$, which is a 2D line.
+	/// \related FlatPoint2D
 
 	inline Line2D Complement(const FlatPoint2D& p)
 	{
 		return (Line2D(-p.x, -p.y, -p.z));
 	}
 
-	/// @brief Returns the complement of the 2D line \c g, which is a 2D flat point.
-	/// @relatedalso FlatPoint2D
+	/// \brief Returns the complement of the 2D line $g$, which is a 2D flat point.
+	/// \related FlatPoint2D
 
 	inline FlatPoint2D Complement(const Line2D& g)
 	{
@@ -387,16 +392,16 @@ namespace Terathon
 	//	BulkDual
 	// ==============================================
 
-	/// @brief Returns the bulk dual of the 2D flat point \c p, which is a 2D line through the origin.
-	/// @relatedalso FlatPoint2D
+	/// \brief Returns the bulk dual of the 2D flat point $p$, which is a 2D line through the origin.
+	/// \related FlatPoint2D
 
 	inline Line2D BulkDual(const FlatPoint2D& p)
 	{
 		return (Line2D(-p.x, -p.y, 0.0F));
 	}
 
-	/// @brief Returns the bulk dual of the 2D line \c g, which is the 2D origin.
-	/// @relatedalso Line2D
+	/// \brief Returns the bulk dual of the 2D line $g$, which is the 2D origin.
+	/// \related Line2D
 
 	inline FlatPoint2D BulkDual(const Line2D& g)
 	{
@@ -407,16 +412,16 @@ namespace Terathon
 	//	WeightDual
 	// ==============================================
 
-	/// @brief Returns the weight dual of the 2D flat point \c p, which is the 2D horizon.
-	/// @relatedalso FlatPoint2D
+	/// \brief Returns the weight dual of the 2D flat point $p$, which is the 2D horizon.
+	/// \related FlatPoint2D
 
 	inline Line2D WeightDual(const FlatPoint2D& p)
 	{
 		return (Line2D(0.0F, 0.0F, -p.z));
 	}
 
-	/// @brief Returns the weight dual of the 2D line \c g, which is a 2D flat point in the horizon.
-	/// @relatedalso Line2D
+	/// \brief Returns the weight dual of the 2D line $g$, which is a 2D flat point in the horizon.
+	/// \related Line2D
 
 	inline FlatPoint2D WeightDual(const Line2D& g)
 	{
@@ -445,16 +450,16 @@ namespace Terathon
 	//	Reverse
 	// ==============================================
 
-	/// @brief Returns the reverse of the 2D flat point \c p.
-	/// @relatedalso FlatPoint2D
+	/// \brief Returns the reverse of the 2D flat point $p$.
+	/// \related FlatPoint2D
 
 	inline const FlatPoint2D& Reverse(const FlatPoint2D& p)
 	{
 		return (p);
 	}
 
-	/// @brief Returns the reverse of the 2D line \c g.
-	/// @relatedalso Line2D
+	/// \brief Returns the reverse of the 2D line $g$.
+	/// \related Line2D
 
 	inline Line2D Reverse(const Line2D& g)
 	{
@@ -465,16 +470,16 @@ namespace Terathon
 	//	Antireverse
 	// ==============================================
 
-	/// @brief Returns the antireverse of the 2D flat point \c p.
-	/// @relatedalso FlatPoint2D
+	/// \brief Returns the antireverse of the 2D flat point $p$.
+	/// \related FlatPoint2D
 
 	inline FlatPoint2D Antireverse(const FlatPoint2D& p)
 	{
 		return (FlatPoint2D(-p.x, -p.y, -p.z));
 	}
 
-	/// @brief Returns the antireverse of the 2D line \c g.
-	/// @relatedalso Line2D
+	/// \brief Returns the antireverse of the 2D line $g$.
+	/// \related Line2D
 
 	inline const Line2D& Antireverse(const Line2D& g)
 	{
@@ -488,16 +493,16 @@ namespace Terathon
 	//	Attitude
 	// ==============================================
 
-	/// @brief Returns the attitude of the 2D flat point \c p, which is a scalar.
-	/// @relatedalso FlatPoint2D
+	/// \brief Returns the attitude of the 2D flat point $p$, which is a scalar.
+	/// \related FlatPoint2D
 
 	inline float Attitude(const FlatPoint2D& p)
 	{
 		return (p.z);
 	}
 
-	/// @brief Returns the attitude of the 2D line \c g as a 2D vector.
-	/// @relatedalso Line3D
+	/// \brief Returns the attitude of the 2D line $g$ as a 2D vector.
+	/// \related Line3D
 
 	inline Vector2D Attitude(const Line2D& g)
 	{
@@ -508,16 +513,16 @@ namespace Terathon
 	//	SquaredBulkNorm
 	// ==============================================
 
-	/// @brief Returns the squared bulk of the 2D flat point \c p.
-	/// @relatedalso FlatPoint2D
+	/// \brief Returns the squared bulk of the 2D flat point $p$.
+	/// \related FlatPoint2D
 
 	inline float SquaredBulkNorm(const FlatPoint2D& p)
 	{
 		return (p.x * p.x + p.y * p.y);
 	}
 
-	/// @brief Returns the squared bulk of the 2D line \c g.
-	/// @relatedalso Line2D
+	/// \brief Returns the squared bulk of the 2D line $g$.
+	/// \related Line2D
 
 	inline float SquaredBulkNorm(const Line2D& g)
 	{
@@ -528,16 +533,16 @@ namespace Terathon
 	//	SquaredWeightNorm
 	// ==============================================
 
-	/// @brief Returns the squared weight of the 2D flat point \c p.
-	/// @relatedalso FlatPoint2D
+	/// \brief Returns the squared weight of the 2D flat point $p$.
+	/// \related FlatPoint2D
 
 	inline float SquaredWeightNorm(const FlatPoint2D& p)
 	{
 		return (p.z * p.z);
 	}
 
-	/// @brief Returns the squared weight of the 2D line \c g.
-	/// @relatedalso Line2D
+	/// \brief Returns the squared weight of the 2D line $g$.
+	/// \related Line2D
 
 	inline float SquaredWeightNorm(const Line2D& g)
 	{
@@ -548,12 +553,12 @@ namespace Terathon
 	//	Unitize
 	// ==============================================
 
-	/// @brief Calculates the unitized equivalent of a 2D point.
+	/// \brief Calculates the unitized equivalent of a 2D point.
 	///
-	/// Multiplies the 2D point \c p by the inverse magnitude of its weight, which is its <i>z</i> component.
+	/// Multiplies the 2D point $p$ by the inverse magnitude of its weight, which is its <i>z</i> component.
 	/// The return value is a Euclidean point having an implicit <i>z</i> coordinate of one.
 	///
-	/// @relatedalso FlatPoint2D
+	/// \related FlatPoint2D
 
 	inline Point2D Unitize(const FlatPoint2D& p)
 	{
@@ -561,13 +566,13 @@ namespace Terathon
 		return (Point2D(p.x * n, p.y * n));
 	}
 
-	/// @brief Calculates the unitized equivalent of a 2D line.
+	/// \brief Calculates the unitized equivalent of a 2D line.
 	///
-	/// Multiplies the 2D line \c g by the inverse magnitude of its weight, which is the 2D bivector given by
+	/// Multiplies the 2D line $g$ by the inverse magnitude of its weight, which is the 2D bivector given by
 	/// its <i>x</i> and <i>y</i> coordinates. The returned line has a unit-length normal.
 	/// If the <i>x</i> and <i>z</i> coordinates are both zero, then the result is undefined.
 	///
-	/// @relatedalso Line2D
+	/// \related Line2D
 
 	inline Line2D Unitize(const Line2D& g)
 	{
@@ -578,16 +583,16 @@ namespace Terathon
 	//	Dot
 	// ==============================================
 
-	/// @brief Returns the dot product between 2D flat points \c a and \c b.
-	/// @relatedalso FlatPoint2D
+	/// \brief Returns the dot product between 2D flat points $a$ and $b$.
+	/// \related FlatPoint2D
 
 	inline float Dot(const FlatPoint2D& a, const FlatPoint2D& b)
 	{
 		return (a.x * b.x + a.y * b.y);
 	}
 
-	/// @brief Returns the dot product between 2D lines \c g and \c h.
-	/// @relatedalso Line2D
+	/// \brief Returns the dot product between 2D lines $g$ and $h$.
+	/// \related Line2D
 
 	inline float Dot(const Line2D& g, const Line2D& h)
 	{
@@ -598,16 +603,16 @@ namespace Terathon
 	//	Antidot
 	// ==============================================
 
-	/// @brief Returns the antidot product between 2D flat points \c a and \c b.
-	/// @relatedalso FlatPoint2D
+	/// \brief Returns the antidot product between 2D flat points $a$ and $b$.
+	/// \related FlatPoint2D
 
 	inline float Antidot(const FlatPoint2D& a, const FlatPoint2D& b)
 	{
 		return (a.z * b.z);
 	}
 
-	/// @brief Returns the antidot product between 2D lines \c g and \c h.
-	/// @relatedalso Line2D
+	/// \brief Returns the antidot product between 2D lines $g$ and $h$.
+	/// \related Line2D
 
 	inline float Antidot(const Line2D& g, const Line2D& h)
 	{
@@ -618,16 +623,16 @@ namespace Terathon
 	//	Translate
 	// ==============================================
 
-	/// @brief Translates the 2D flat point \c p by the vector \c t.
-	/// @relatedalso FlatPoint2D
+	/// \brief Translates the 2D flat point $p$ by the vector $t$.
+	/// \related FlatPoint2D
 
 	inline FlatPoint2D Translate(const FlatPoint2D& p, const Vector2D& t)
 	{
 		return (FlatPoint2D(p.xy + t.xy * p.z, p.z));
 	}
 
-	/// @brief Translates the 2D line \c g by the vector \c t.
-	/// @relatedalso Line2D
+	/// \brief Translates the 2D line $g$ by the vector $t$.
+	/// \related Line2D
 
 	inline Line2D Translate(const Line2D& g, const Vector2D& t)
 	{
@@ -638,24 +643,24 @@ namespace Terathon
 	//	Join
 	// ==============================================
 
-	/// @brief Calculates the join of the 2D flat points \c p and \c q to produce a 2D line.
-	/// @relatedalso Line2D
+	/// \brief Calculates the join of the 2D flat points $p$ and $q$ to produce a 2D line.
+	/// \related Line2D
 
 	inline Line2D Wedge(const FlatPoint2D& p, const FlatPoint2D& q)
 	{
 		return (Line2D(p.y * q.z - p.z * q.y, p.z * q.x - p.x * q.z, p.x * q.y - p.y * q.x));
 	}
 
-	/// @brief Calculates the join of the 2D Euclidean points \c p and \c q to produce a 2D line.
-	/// @relatedalso Line3D
+	/// \brief Calculates the join of the 2D Euclidean points $p$ and $q$ to produce a 2D line.
+	/// \related Line3D
 
 	inline Line2D Wedge(const Point2D& p, const Point2D& q)
 	{
 		return (Line2D(p.y - q.y, q.x - p.x, p.x * q.y - p.y * q.x));
 	}
 
-	/// @brief Calculates the join of the 2D Euclidean point \c p and 2D direction vector \c v to produce a 2D line.
-	/// @relatedalso Line3D
+	/// \brief Calculates the join of the 2D Euclidean point $p$ and 2D direction vector $v$ to produce a 2D line.
+	/// \related Line3D
 
 	inline Line2D Wedge(const Point2D& p, const Vector2D& v)
 	{
@@ -670,8 +675,8 @@ namespace Terathon
 	//	Meet
 	// ==============================================
 
-	/// @brief Calculates the meet of the 2D lines \c g and \c h to produce a 2D flat point.
-	/// @relatedalso FlatPoint2D
+	/// \brief Calculates the meet of the 2D lines $g$ and $h$ to produce a 2D flat point.
+	/// \related FlatPoint2D
 
 	inline FlatPoint2D Antiwedge(const Line2D& g, const Line2D& h)
 	{
@@ -696,7 +701,7 @@ namespace Terathon
 	//	Project
 	// ==============================================
 
-	/// @brief Returns the projection of the 2D point \c p onto the 2D line \c g under the assumption that the line is unitized.
+	/// \brief Returns the projection of the 2D point $p$ onto the 2D line $g$ under the assumption that the line is unitized.
 
 	inline Point2D Project(const Point2D& p, const Line2D& g)
 	{
@@ -707,7 +712,7 @@ namespace Terathon
 	//	Antiproject
 	// ==============================================
 
-	/// @brief Returns the antiprojection of the 2D line \c g onto the 2D point \c p (where \c p is always unitized because it has an implicit <i>z</i> coordinate of 1).
+	/// \brief Returns the antiprojection of the 2D line $g$ onto the 2D point $p$ (where $p$ is always unitized because it has an implicit <i>z</i> coordinate of 1).
 
 	inline Line2D Antiproject(const Line2D& g, const Point2D& p)
 	{

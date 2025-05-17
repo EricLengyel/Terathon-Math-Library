@@ -1,6 +1,6 @@
 //
 // This file is part of the Terathon Math Library, by Eric Lengyel.
-// Copyright 1999-2024, Terathon Software LLC
+// Copyright 1999-2025, Terathon Software LLC
 //
 // This software is distributed under the MIT License.
 // Separate proprietary licenses are available from Terathon Software.
@@ -41,15 +41,15 @@ namespace Terathon
 	};
 
 
-	/// @brief Encapsulates a 4&#x202F;&times;&#x202F;4 matrix.
+	/// \brief Encapsulates a 4&#x202F;&times;&#x202F;4 matrix.
 	///
-	/// The \c Matrix3D class is used to store a 4&#x202F;&times;&#x202F;4 matrix. The entries of the matrix
+	/// The $Matrix3D$ class is used to store a 4&#x202F;&times;&#x202F;4 matrix. The entries of the matrix
 	/// are accessed using the () operator with two indexes specifying the row and column of an entry.
 	///
-	/// @sa Matrix2D
-	/// @sa Matrix3D
-	/// @sa Transform2D
-	/// @sa Transform3D
+	/// \also Matrix2D
+	/// \also Matrix3D
+	/// \also Transform2D
+	/// \also Transform3D
 
 	class Matrix4D : public Mat4D<TypeMatrix4D>
 	{
@@ -57,29 +57,34 @@ namespace Terathon
 
 			TERATHON_API static const ConstMatrix4D identity;
 
-			/// @brief Default constructor that leaves the entries uninitialized.
+			/// \brief Default constructor that leaves the entries uninitialized.
 
 			inline Matrix4D() = default;
 
-			/// @brief Constructor that sets entries explicitly.
-			/// @param n00,n01,n02,n03,n10,n11,n12,n13,n20,n21,n22,n23,n30,n31,n32,n33		The entries of the matrix.
+			Matrix4D(const Matrix4D& m)
+			{
+				matrix = m.matrix;
+			}
+
+			/// \brief Constructor that sets entries explicitly.
+			/// \param n00,n01,n02,n03,n10,n11,n12,n13,n20,n21,n22,n23,n30,n31,n32,n33		The entries of the matrix.
 
 			TERATHON_API Matrix4D(float n00, float n01, float n02, float n03, float n10, float n11, float n12, float n13, float n20, float n21, float n22, float n23, float n30, float n31, float n32, float n33);
 
-			/// @brief Constructor that sets columns explicitly.
-			/// @param a,b,c,d		The columns of the matrix.
+			/// \brief Constructor that sets columns explicitly.
+			/// \param a,b,c,d		The columns of the matrix.
 
 			TERATHON_API Matrix4D(const Vector4D& a, const Vector4D& b, const Vector4D& c, const Vector4D& d);
 
 			TERATHON_API Matrix4D(const Bivector3D& r0, float n03, const Bivector3D& r1, float n13, const Bivector3D& r2, float n23, const Bivector3D& r3, float n33);
 
-			/// @brief Sets all 16 entries of a 4&#x202F;&times;&#x202F;4 matrix.
-			/// @param n00,n01,n02,n03,n10,n11,n12,n13,n20,n21,n22,n23,n30,n31,n32,n33		The new entries of the matrix.
+			/// \brief Sets all 16 entries of a 4&#x202F;&times;&#x202F;4 matrix.
+			/// \param n00,n01,n02,n03,n10,n11,n12,n13,n20,n21,n22,n23,n30,n31,n32,n33		The new entries of the matrix.
 
 			TERATHON_API Matrix4D& Set(float n00, float n01, float n02, float n03, float n10, float n11, float n12, float n13, float n20, float n21, float n22, float n23, float n30, float n31, float n32, float n33);
 
-			/// @brief Sets all three columns of a 4&#x202F;&times;&#x202F;4 matrix.
-			/// @param a,b,c,d		The new columns of the matrix.
+			/// \brief Sets all three columns of a 4&#x202F;&times;&#x202F;4 matrix.
+			/// \param a,b,c,d		The new columns of the matrix.
 
 			TERATHON_API Matrix4D& Set(const Vector4D& a, const Vector4D& b, const Vector4D& c, const Vector4D& d);
 
@@ -110,7 +115,7 @@ namespace Terathon
 			TERATHON_API Matrix4D& operator *=(const Matrix4D& m);
 			TERATHON_API Matrix4D& operator *=(const Matrix3D& m);
 
-			/// @brief Sets a matrix to the 4&#x202F;&times;&#x202F;4 identity matrix.
+			/// \brief Sets a matrix to the 4&#x202F;&times;&#x202F;4 identity matrix.
 
 			TERATHON_API Matrix4D& SetIdentity(void);
 	};
@@ -150,8 +155,8 @@ namespace Terathon
 		return (v.xyzw * m.matrix);
 	}
 
-	/// @brief Returns the product of the matrices \c m1 and \c m2.
-	/// @relatedalso Matrix4D
+	/// \brief Returns the product of the matrices $m1$ and $m2$.
+	/// \related Matrix4D
 
 	inline Matrix4D operator *(const Matrix4D& m1, const Matrix4D& m2)
 	{
@@ -181,18 +186,18 @@ namespace Terathon
 	TERATHON_API Vector4D operator *(const Matrix4D& m, const Point2D& p);
 	TERATHON_API Vector4D operator *(const Point2D& p, const Matrix4D& m);
 
-	/// @brief Returns the determinant of the matrix \c m.
-	/// @relatedalso Matrix4D
+	/// \brief Returns the determinant of the matrix $m$.
+	/// \related Matrix4D
 
 	TERATHON_API float Determinant(const Matrix4D& m);
 
-	/// @brief Returns the inverse of the matrix \c m. If \c m is singular, then the result is undefined.
-	/// @relatedalso Matrix4D
+	/// \brief Returns the inverse of the matrix $m$. If $m$ is singular, then the result is undefined.
+	/// \related Matrix4D
 
 	TERATHON_API Matrix4D Inverse(const Matrix4D& m);
 
-	/// @brief Returns the adjugate of the matrix \c m.
-	/// @relatedalso Matrix4D
+	/// \brief Returns the adjugate of the matrix $m$.
+	/// \related Matrix4D
 
 	TERATHON_API Matrix4D Adjugate(const Matrix4D& m);
 
@@ -201,12 +206,12 @@ namespace Terathon
 	//	Transform3D
 	// ==============================================
 
-	/// @brief Encapsulates a 4&#x202F;&times;&#x202F;4 matrix whose fourth row is always (0,&#x202F;0,&#x202F;0,&#x202F;1).
+	/// \brief Encapsulates a 4&#x202F;&times;&#x202F;4 matrix whose fourth row is always (0,&#x202F;0,&#x202F;0,&#x202F;1).
 	///
-	/// The \c Transform3D class is used to store a 4&#x202F;&times;&#x202F;4 matrix whose fourth row is always (0,&#x202F;0,&#x202F;0,&#x202F;1).
+	/// The $Transform3D$ class is used to store a 4&#x202F;&times;&#x202F;4 matrix whose fourth row is always (0,&#x202F;0,&#x202F;0,&#x202F;1).
 	/// Such a matrix represents an affine transformation in 3D space.
 	///
-	/// @sa Transform2D
+	/// \also Transform2D
 
 	class Transform3D : public Matrix4D
 	{
@@ -214,18 +219,18 @@ namespace Terathon
 
 			TERATHON_API static const ConstTransform3D identity;
 
-			/// @brief Default constructor that leaves the entries uninitialized.
+			/// \brief Default constructor that leaves the entries uninitialized.
 
 			inline Transform3D() = default;
 
-			/// @brief Constructor that sets entries explicitly.
-			/// @param n00,n01,n02,n03,n10,n11,n12,n13,n20,n21,n22,n23		The entries of first three rows of the transform.
+			/// \brief Constructor that sets entries explicitly.
+			/// \param n00,n01,n02,n03,n10,n11,n12,n13,n20,n21,n22,n23		The entries of first three rows of the transform.
 
 			TERATHON_API Transform3D(float n00, float n01, float n02, float n03, float n10, float n11, float n12, float n13, float n20, float n21, float n22, float n23);
 
-			/// @brief Constructor that sets columns explicitly.
-			/// @param a,b,c	The first three columns of the transform.
-			/// @param p		The fourth column of the transform.
+			/// \brief Constructor that sets columns explicitly.
+			/// \param a,b,c	The first three columns of the transform.
+			/// \param p		The fourth column of the transform.
 
 			TERATHON_API Transform3D(const Vector3D& a, const Vector3D& b, const Vector3D& c, const Point3D& p);
 
@@ -233,41 +238,41 @@ namespace Terathon
 			TERATHON_API Transform3D(const Matrix3D& m);
 			TERATHON_API Transform3D(const Matrix3D& m, const Vector3D& v);
 
-			/// @brief Sets all 12 entries of a 3D affine transformation.
-			/// @param n00,n01,n02,n03,n10,n11,n12,n13,n20,n21,n22,n23		The new entries of first three rows of the transform.
+			/// \brief Sets all 12 entries of a 3D affine transformation.
+			/// \param n00,n01,n02,n03,n10,n11,n12,n13,n20,n21,n22,n23		The new entries of first three rows of the transform.
 
 			TERATHON_API Transform3D& Set(float n00, float n01, float n02, float n03, float n10, float n11, float n12, float n13, float n20, float n21, float n22, float n23);
 
-			/// @brief Sets all four columns of a 3D affine transformation.
-			/// @param a,b,c	The first three columns of the transform.
-			/// @param p		The fourth column of the transform.
+			/// \brief Sets all four columns of a 3D affine transformation.
+			/// \param a,b,c	The first three columns of the transform.
+			/// \param p		The fourth column of the transform.
 
 			TERATHON_API Transform3D& Set(const Vector3D& a, const Vector3D& b, const Vector3D& c, const Point3D& p);
 
 			TERATHON_API Transform3D& Set(const Matrix3D& m, const Vector3D& v);
 
-			/// @brief Returns a reference to the <i>j</i>-th column of a transform. $j$ must be 0, 1, or 2.
+			/// \brief Returns a reference to the <i>j</i>-th column of a transform. $j$ must be 0, 1, or 2.
 
 			Vector3D& operator [](machine j)
 			{
 				return (Matrix4D::operator [](j).xyz);
 			}
 
-			/// @brief Returns a const reference to the <i>j</i>-th column of a transform. $j$ must be 0, 1, or 2.
+			/// \brief Returns a const reference to the <i>j</i>-th column of a transform. $j$ must be 0, 1, or 2.
 
 			const Vector3D& operator [](machine j) const
 			{
 				return (Matrix4D::operator [](j).xyz);
 			}
 
-			/// @brief Returns a const reference to the fourth column of a transform.
+			/// \brief Returns a const reference to the fourth column of a transform.
 
 			const Point3D& GetTranslation(void) const
 			{
 				return (Point3D::origin + Matrix4D::operator [](3).xyz);
 			}
 
-			/// @brief Sets the entries of the fourth column of a transform. The first three columns of the matrix are not modified.
+			/// \brief Sets the entries of the fourth column of a transform. The first three columns of the matrix are not modified.
 
 			Transform3D& SetTranslation(float x, float y, float z)
 			{
@@ -277,7 +282,7 @@ namespace Terathon
 				return (*this);
 			}
 
-			/// @brief Sets the fourth column of a transform to the point \c p. The first three columns of the transform are not modified.
+			/// \brief Sets the fourth column of a transform to the point $p$. The first three columns of the transform are not modified.
 
 			Transform3D& SetTranslation(const Point3D& p)
 			{
@@ -290,42 +295,42 @@ namespace Terathon
 			TERATHON_API Transform3D& operator *=(const Transform3D& m);
 			TERATHON_API Transform3D& operator *=(const Matrix3D& m);
 
-			/// @brief Sets the entries of the upper-left 3&#x202F;&times;&#x202F;3 portion of a transform. The fourth column of the transform is not modified.
-			/// @param a,b,c	The first three columns of the transform. 
+			/// \brief Sets the entries of the upper-left 3&#x202F;&times;&#x202F;3 portion of a transform. The fourth column of the transform is not modified.
+			/// \param a,b,c	The first three columns of the transform. 
 
 			TERATHON_API Transform3D& SetMatrix3D(const Vector3D& a, const Vector3D& b, const Vector3D& c);
 
-			/// @brief Orthogonalizes the first three columns of a transform.
-			/// @param column	The index of the column whose direction does not change. This must be 0, 1, or 2.
+			/// \brief Orthogonalizes the first three columns of a transform.
+			/// \param column	The index of the column whose direction does not change. This must be 0, 1, or 2.
 			///
-			/// The \c Orthogonalize() function uses Gram-Schmidt orthogonalization to orthogonalize the first three columns
-			/// of a transform. The column whose index is specified by the \c column parameter is normalized to unit length.
+			/// The $Orthogonalize()$ function uses Gram-Schmidt orthogonalization to orthogonalize the first three columns
+			/// of a transform. The column whose index is specified by the $column$ parameter is normalized to unit length.
 			/// The remaining two columns are orthogonalized and made unit length. Only the two columns not specified by
-			/// the \c column parameter can change direction. The fourth column of the transform is not modified.
+			/// the $column$ parameter can change direction. The fourth column of the transform is not modified.
 
 			TERATHON_API Transform3D& Orthogonalize(int32 column);
 
 			TERATHON_API void GetEulerAngles(float *x, float *y, float *z) const;
 			TERATHON_API Transform3D& SetEulerAngles(float x, float y, float z);
 
-			/// @brief Returns a 4&#x202F;&times;&#x202F;4 transform that represents a rotation about the <i>x</i> axis.
-			/// @param angle	The angle through which to rotate, in radians.
+			/// \brief Returns a 4&#x202F;&times;&#x202F;4 transform that represents a rotation about the <i>x</i> axis.
+			/// \param angle	The angle through which to rotate, in radians.
 
 			TERATHON_API static Transform3D MakeRotationX(float angle);
 
-			/// @brief Returns a 4&#x202F;&times;&#x202F;4 transform that represents a rotation about the <i>y</i> axis.
-			/// @param angle	The angle through which to rotate, in radians.
+			/// \brief Returns a 4&#x202F;&times;&#x202F;4 transform that represents a rotation about the <i>y</i> axis.
+			/// \param angle	The angle through which to rotate, in radians.
 
 			TERATHON_API static Transform3D MakeRotationY(float angle);
 
-			/// @brief Returns a 4&#x202F;&times;&#x202F;4 transform that represents a rotation about the <i>z</i> axis.
-			/// @param angle	The angle through which to rotate, in radians.
+			/// \brief Returns a 4&#x202F;&times;&#x202F;4 transform that represents a rotation about the <i>z</i> axis.
+			/// \param angle	The angle through which to rotate, in radians.
 
 			TERATHON_API static Transform3D MakeRotationZ(float angle);
 
-			/// @brief Returns a 4&#x202F;&times;&#x202F;4 transform that represents a rotation about an arbitrary axis.
-			/// @param angle	The angle through which to rotate, in radians.
-			/// @param axis		The axis about which to rotate. This bivector must have unit magnitude.
+			/// \brief Returns a 4&#x202F;&times;&#x202F;4 transform that represents a rotation about an arbitrary axis.
+			/// \param angle	The angle through which to rotate, in radians.
+			/// \param axis		The axis about which to rotate. This bivector must have unit magnitude.
 
 			TERATHON_API static Transform3D MakeRotation(float angle, const Bivector3D& axis);
 
@@ -333,8 +338,8 @@ namespace Terathon
 			TERATHON_API static Transform3D MakeInvolution(const Vector3D& a);
 			TERATHON_API static Transform3D MakeReflection(const Plane3D& plane);
 
-			/// @brief Returns a 4&#x202F;&times;&#x202F;4 transform that represents a uniform scale.
-			/// @param scale	The scale along all three axes.
+			/// \brief Returns a 4&#x202F;&times;&#x202F;4 transform that represents a uniform scale.
+			/// \param scale	The scale along all three axes.
 
 			TERATHON_API static Transform3D MakeScale(float scale);
 
@@ -427,8 +432,8 @@ namespace Terathon
 	}
 
 
-	/// @brief Returns the product of the transforms \c m1 and \c m2.
-	/// @relatedalso Transform3D
+	/// \brief Returns the product of the transforms $m1$ and $m2$.
+	/// \related Transform3D
 
 	TERATHON_API Transform3D operator *(const Transform3D& m1, const Transform3D& m2);
 
@@ -450,18 +455,18 @@ namespace Terathon
 
 	#endif
 
-	/// @brief Returns the determinant of the transform \c m.
-	/// @relatedalso Transform3D
+	/// \brief Returns the determinant of the transform $m$.
+	/// \related Transform3D
 
 	TERATHON_API float Determinant(const Transform3D& m);
 
-	/// @brief Returns the inverse of the transform \c m. If \c m is singular, then the result is undefined.
-	/// @relatedalso Transform3D
+	/// \brief Returns the inverse of the transform $m$. If $m$ is singular, then the result is undefined.
+	/// \related Transform3D
 
 	TERATHON_API Transform3D Inverse(const Transform3D& m);
 
-	/// @brief Returns the inverse of the transform \c m assuming that its determinant is one.
-	/// @relatedalso Transform3D
+	/// \brief Returns the inverse of the transform $m$ assuming that its determinant is one.
+	/// \related Transform3D
 
 	TERATHON_API Transform3D InverseUnitDet(const Transform3D& m);
 

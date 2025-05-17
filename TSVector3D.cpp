@@ -1,6 +1,6 @@
 //
 // This file is part of the Terathon Math Library, by Eric Lengyel.
-// Copyright 1999-2024, Terathon Software LLC
+// Copyright 1999-2025, Terathon Software LLC
 //
 // This software is distributed under the MIT License.
 // Separate proprietary licenses are available from Terathon Software.
@@ -13,17 +13,17 @@
 using namespace Terathon;
 
 
-const ConstVector3D Vector3D::zero = {0.0F, 0.0F, 0.0F};
-const ConstPoint3D Origin3D::origin = {0.0F, 0.0F, 0.0F};
-const Origin3D Point3D::origin = {};
+alignas(16) const ConstVector3D Vector3D::zero = {0.0F, 0.0F, 0.0F};
+alignas(16) const ConstPoint3D Origin3D::origin = {0.0F, 0.0F, 0.0F};
+alignas(16) const Origin3D Point3D::origin = {};
 
-const ConstVector3D Vector3D::x_unit = {1.0F, 0.0F, 0.0F};
-const ConstVector3D Vector3D::y_unit = {0.0F, 1.0F, 0.0F};
-const ConstVector3D Vector3D::z_unit = {0.0F, 0.0F, 1.0F};
+alignas(16) const ConstVector3D Vector3D::x_unit = {1.0F, 0.0F, 0.0F};
+alignas(16) const ConstVector3D Vector3D::y_unit = {0.0F, 1.0F, 0.0F};
+alignas(16) const ConstVector3D Vector3D::z_unit = {0.0F, 0.0F, 1.0F};
 
-const ConstVector3D Vector3D::minus_x_unit = {-1.0F, 0.0F, 0.0F};
-const ConstVector3D Vector3D::minus_y_unit = {0.0F, -1.0F, 0.0F};
-const ConstVector3D Vector3D::minus_z_unit = {0.0F, 0.0F, -1.0F};
+alignas(16) const ConstVector3D Vector3D::minus_x_unit = {-1.0F, 0.0F, 0.0F};
+alignas(16) const ConstVector3D Vector3D::minus_y_unit = {0.0F, -1.0F, 0.0F};
+alignas(16) const ConstVector3D Vector3D::minus_z_unit = {0.0F, 0.0F, -1.0F};
 
 
 Vector3D& Vector3D::RotateAboutX(float angle)

@@ -1,6 +1,6 @@
 //
 // This file is part of the Terathon Math Library, by Eric Lengyel.
-// Copyright 1999-2024, Terathon Software LLC
+// Copyright 1999-2025, Terathon Software LLC
 //
 // This software is distributed under the MIT License.
 // Separate proprietary licenses are available from Terathon Software.
@@ -32,13 +32,13 @@ namespace Terathon
 	//	RoundPoint3D
 	// ==============================================
 
-	/// @brief Encapsulates a 3D <a href="https://conformalgeometricalgebra.org/wiki/index.php?title=Round_point">round point</a> in conformal geometric algebra.
+	/// \brief Encapsulates a 3D <a href="https://conformalgeometricalgebra.org/wiki/index.php?title=Round_point">round point</a> in conformal geometric algebra.
 	///
-	/// The \c RoundPoint3D class is used to store a three-dimensional round point with a five-dimensional vector representation in conformal geometric algebra.
+	/// The $RoundPoint3D$ class is used to store a three-dimensional round point with a five-dimensional vector representation in conformal geometric algebra.
 	///
-	/// @sa Dipole3D
-	/// @sa Circle3D
-	/// @sa Sphere3D
+	/// \also Dipole3D
+	/// \also Circle3D
+	/// \also Sphere3D
 
 	class RoundPoint3D
 	{
@@ -48,12 +48,12 @@ namespace Terathon
 
 			TERATHON_API static const ConstRoundPoint3D zero;
 
-			/// @brief Default constructor that leaves the components uninitialized.
+			/// \brief Default constructor that leaves the components uninitialized.
 
 			inline RoundPoint3D() = default;
 
-			/// @brief Constructor that sets components explicitly.
-			/// @param ax,ay,az,aw,au	The components of the round point.
+			/// \brief Constructor that sets components explicitly.
+			/// \param ax,ay,az,aw,au	The components of the round point.
 
 			RoundPoint3D(float ax, float ay, float az, float aw, float au)
 			{
@@ -64,8 +64,8 @@ namespace Terathon
 				u = au;
 			}
 
-			/// @brief Constructor that converts a Euclidean point to a round point.
-			/// @param p	The Euclidean point to convert. The \e w component of the round point is set to 1.0, and the \e u component is set to (<i>x</i><sup>2</sup> + <i>y</i><sup>2</sup> + <i>z</i><sup>2</sup>) / 2.
+			/// \brief Constructor that converts a Euclidean point to a round point.
+			/// \param p	The Euclidean point to convert. The <i>w</i> component of the round point is set to 1.0, and the <i>u</i> component is set to (<i>x</i><sup>2</sup> + <i>y</i><sup>2</sup> + <i>z</i><sup>2</sup>) / 2.
 
 			RoundPoint3D(const Point3D& p)
 			{
@@ -76,8 +76,8 @@ namespace Terathon
 				u = (p.x * p.x + p.y * p.y + p.z * p.z) * 0.5F;
 			}
 
-			/// @brief Sets all five components of a 3D round point.
-			/// @param ax,ay,az,aw,au	The new components of the round point.
+			/// \brief Sets all five components of a 3D round point.
+			/// \param ax,ay,az,aw,au	The new components of the round point.
 
 			RoundPoint3D& Set(float ax, float ay, float az, float aw, float au)
 			{
@@ -98,8 +98,8 @@ namespace Terathon
 				u = au;
 			}
 
-			/// @brief Returns a reference to a scalar component of a 3D round point.
-			/// @param k	The index of the component. Must be 0, 1, 2, 3, or 4.
+			/// \brief Returns a reference to a scalar component of a 3D round point.
+			/// \param k	The index of the component. Must be 0, 1, 2, 3, or 4.
 
 			float& operator [](machine k)
 			{
@@ -145,32 +145,32 @@ namespace Terathon
 	};
 
 
-	/// @brief Returns the negation of the 3D round point \c a.
-	/// @related RoundPoint3D
+	/// \brief Returns the negation of the 3D round point $a$.
+	/// \related RoundPoint3D
 
 	inline RoundPoint3D operator -(const RoundPoint3D& a)
 	{
 		return (RoundPoint3D(-a.x, -a.y, -a.z, -a.w, -a.u));
 	}
 
-	/// @brief Returns the product of the 3D round point \c a and the scalar \c n.
-	/// @related RoundPoint3D
+	/// \brief Returns the product of the 3D round point $a$ and the scalar $n$.
+	/// \related RoundPoint3D
 
 	inline RoundPoint3D operator *(const RoundPoint3D& a, float n)
 	{
 		return (RoundPoint3D(a.x * n, a.y * n, a.z * n, a.w * n, a.u * n));
 	}
 
-	/// @brief Returns the product of the 3D round point \c a and the scalar \c n.
-	/// @related RoundPoint3D
+	/// \brief Returns the product of the 3D round point $a$ and the scalar $n$.
+	/// \related RoundPoint3D
 
 	inline RoundPoint3D operator *(float n, const RoundPoint3D& a)
 	{
 		return (RoundPoint3D(n * a.x, n * a.y, n * a.z, n * a.w, n * a.u));
 	}
 
-	/// @brief Returns the product of the 3D round point \c a and the inverse of the scalar \c n.
-	/// @related RoundPoint3D
+	/// \brief Returns the product of the 3D round point $a$ and the inverse of the scalar $n$.
+	/// \related RoundPoint3D
 
 	inline RoundPoint3D operator /(const RoundPoint3D& a, float n)
 	{
@@ -178,16 +178,16 @@ namespace Terathon
 		return (RoundPoint3D(a.x * n, a.y * n, a.z * n, a.w * n, a.u * n));
 	}
 
-	/// @brief Returns a boolean value indicating whether the two 3D round points \c a and \c b are equal.
-	/// @related RoundPoint3D
+	/// \brief Returns a boolean value indicating whether the two 3D round points $a$ and $b$ are equal.
+	/// \related RoundPoint3D
 
 	inline bool operator ==(const RoundPoint3D& a, const RoundPoint3D& b)
 	{
 		return ((a.x == b.x) && (a.y == b.y) && (a.z == b.z) && (a.w == b.w) && (a.u == b.u));
 	}
 
-	/// @brief Returns a boolean value indicating whether the two 3D round points \c a and \c b are not equal.
-	/// @related RoundPoint3D
+	/// \brief Returns a boolean value indicating whether the two 3D round points $a$ and $b$ are not equal.
+	/// \related RoundPoint3D
 
 	inline bool operator !=(const RoundPoint3D& a, const RoundPoint3D& b)
 	{
@@ -199,13 +199,13 @@ namespace Terathon
 	//	Dipole3D
 	// ==============================================
 
-	/// @brief Encapsulates a 3D <a href="https://conformalgeometricalgebra.org/wiki/index.php?title=Dipole">dipole</a> in conformal geometric algebra.
+	/// \brief Encapsulates a 3D <a href="https://conformalgeometricalgebra.org/wiki/index.php?title=Dipole">dipole</a> in conformal geometric algebra.
 	///
-	/// The \c Dipole3D class is used to store a three-dimensional dipole with a five-dimensional bivector representation in conformal geometric algebra.
+	/// The $Dipole3D$ class is used to store a three-dimensional dipole with a five-dimensional bivector representation in conformal geometric algebra.
 	///
-	/// @sa RoundPoint3D
-	/// @sa Circle3D
-	/// @sa Sphere3D
+	/// \also RoundPoint3D
+	/// \also Circle3D
+	/// \also Sphere3D
 
 	class Dipole3D
 	{
@@ -217,14 +217,14 @@ namespace Terathon
 
 			TERATHON_API static const ConstDipole3D zero;
 
-			/// @brief Default constructor that leaves the components uninitialized.
+			/// \brief Default constructor that leaves the components uninitialized.
 
 			inline Dipole3D() = default;
 
-			/// @brief Constructor that sets components explicitly.
-			/// @param vx,vy,vz		The components of the dipole corresponding to the <b>e</b><sub>41</sub>, <b>e</b><sub>42</sub>, and <b>e</b><sub>43</sub> basis elements.
-			/// @param mx,my,mz		The components of the dipole corresponding to the <b>e</b><sub>23</sub>, <b>e</b><sub>31</sub>, and <b>e</b><sub>12</sub> basis elements.
-			/// @param px,py,pz,pw	The components of the dipole corresponding to the <b>e</b><sub>15</sub>, <b>e</b><sub>25</sub>, <b>e</b><sub>35</sub>, and <b>e</b><sub>45</sub> basis elements.
+			/// \brief Constructor that sets components explicitly.
+			/// \param vx,vy,vz		The components of the dipole corresponding to the <b>e</b><sub>41</sub>, <b>e</b><sub>42</sub>, and <b>e</b><sub>43</sub> basis elements.
+			/// \param mx,my,mz		The components of the dipole corresponding to the <b>e</b><sub>23</sub>, <b>e</b><sub>31</sub>, and <b>e</b><sub>12</sub> basis elements.
+			/// \param px,py,pz,pw	The components of the dipole corresponding to the <b>e</b><sub>15</sub>, <b>e</b><sub>25</sub>, <b>e</b><sub>35</sub>, and <b>e</b><sub>45</sub> basis elements.
 
 			Dipole3D(float vx, float vy, float vz, float mx, float my, float mz, float px, float py, float pz, float pw)
 			{
@@ -233,10 +233,10 @@ namespace Terathon
 				p.Set(px, py, pz, pw);
 			}
 
-			/// @brief Constructor that sets components explicitly.
-			/// @param direction	The direction of the carrier line.
-			/// @param moment		The moment of the carrier line.
-			/// @param point		The flat point component.
+			/// \brief Constructor that sets components explicitly.
+			/// \param direction	The direction of the carrier line.
+			/// \param moment		The moment of the carrier line.
+			/// \param point		The flat point component.
 
 			Dipole3D(const Vector3D& direction, const Bivector3D& moment, const FlatPoint3D& point)
 			{
@@ -245,10 +245,10 @@ namespace Terathon
 				p = point;
 			}
 
-			/// @brief Sets all ten components of a 3D dipole.
-			/// @param vx,vy,vz		The components of the dipole corresponding to the <b>e</b><sub>41</sub>, <b>e</b><sub>42</sub>, and <b>e</b><sub>43</sub> basis elements.
-			/// @param mx,my,mz		The components of the dipole corresponding to the <b>e</b><sub>23</sub>, <b>e</b><sub>31</sub>, and <b>e</b><sub>12</sub> basis elements.
-			/// @param px,py,pz,pw	The components of the dipole corresponding to the <b>e</b><sub>15</sub>, <b>e</b><sub>25</sub>, <b>e</b><sub>35</sub>, and <b>e</b><sub>45</sub> basis elements.
+			/// \brief Sets all ten components of a 3D dipole.
+			/// \param vx,vy,vz		The components of the dipole corresponding to the <b>e</b><sub>41</sub>, <b>e</b><sub>42</sub>, and <b>e</b><sub>43</sub> basis elements.
+			/// \param mx,my,mz		The components of the dipole corresponding to the <b>e</b><sub>23</sub>, <b>e</b><sub>31</sub>, and <b>e</b><sub>12</sub> basis elements.
+			/// \param px,py,pz,pw	The components of the dipole corresponding to the <b>e</b><sub>15</sub>, <b>e</b><sub>25</sub>, <b>e</b><sub>35</sub>, and <b>e</b><sub>45</sub> basis elements.
 
 			Dipole3D& Set(float vx, float vy, float vz, float mx, float my, float mz, float px, float py, float pz, float pw)
 			{
@@ -265,10 +265,10 @@ namespace Terathon
 				p.Set(px, py, pz, pw);
 			}
 
-			/// @brief Sets all ten components of a 3D dipole.
-			/// @param direction	The direction of the carrier line.
-			/// @param moment		The moment of the carrier line.
-			/// @param point		The flat point component.
+			/// \brief Sets all ten components of a 3D dipole.
+			/// \param direction	The direction of the carrier line.
+			/// \param moment		The moment of the carrier line.
+			/// \param point		The flat point component.
 
 			Dipole3D& Set(const Vector3D& direction, const Bivector3D& moment, const FlatPoint3D& point)
 			{
@@ -309,32 +309,32 @@ namespace Terathon
 	};
 
 
-	/// @brief Returns the negation of the 3D dipole \c d.
-	/// @related Dipole3D
+	/// \brief Returns the negation of the 3D dipole $d$.
+	/// \related Dipole3D
 
 	inline Dipole3D operator -(const Dipole3D& d)
 	{
 		return (Dipole3D(-d.v.x, -d.v.y, -d.v.z, -d.m.x, -d.m.y, -d.m.z, -d.p.x, -d.p.y, -d.p.z, -d.p.w));
 	}
 
-	/// @brief Returns the product of the 3D dipole \c d and the scalar \c n.
-	/// @related Dipole3D
+	/// \brief Returns the product of the 3D dipole $d$ and the scalar $n$.
+	/// \related Dipole3D
 
 	inline Dipole3D operator *(const Dipole3D& d, float n)
 	{
 		return (Dipole3D(d.v.x * n, d.v.y * n, d.v.z * n, d.m.x * n, d.m.y * n, d.m.z * n, d.p.x * n, d.p.y * n, d.p.z * n, d.p.w * n));
 	}
 
-	/// @brief Returns the product of the 3D dipole \c d and the scalar \c n.
-	/// @related Dipole3D
+	/// \brief Returns the product of the 3D dipole $d$ and the scalar $n$.
+	/// \related Dipole3D
 
 	inline Dipole3D operator *(float n, const Dipole3D& d)
 	{
 		return (Dipole3D(n * d.v.x, n * d.v.y, n * d.v.z, n * d.m.x, n * d.m.y, n * d.m.z, n * d.p.x, n * d.p.y, n * d.p.z, n * d.p.w));
 	}
 
-	/// @brief Returns the product of the 3D dipole \c d and the inverse of the scalar \c n.
-	/// @related Dipole3D
+	/// \brief Returns the product of the 3D dipole $d$ and the inverse of the scalar $n$.
+	/// \related Dipole3D
 
 	inline Dipole3D operator /(const Dipole3D& d, float n)
 	{
@@ -342,16 +342,16 @@ namespace Terathon
 		return (Dipole3D(d.v.x * n, d.v.y * n, d.v.z * n, d.m.x * n, d.m.y * n, d.m.z * n, d.p.x * n, d.p.y * n, d.p.z * n, d.p.w * n));
 	}
 
-	/// @brief Returns a boolean value indicating whether the two 3D dipoles \c d and \c f are equal.
-	/// @related Dipole3D
+	/// \brief Returns a boolean value indicating whether the two 3D dipoles $d$ and $f$ are equal.
+	/// \related Dipole3D
 
 	inline bool operator ==(const Dipole3D& d, const Dipole3D& f)
 	{
 		return ((d.v == f.v) && (d.m == f.m) && (d.p == f.p));
 	}
 
-	/// @brief Returns a boolean value indicating whether the two 3D dipoles \c d and \c f are not equal.
-	/// @related Dipole3D
+	/// \brief Returns a boolean value indicating whether the two 3D dipoles $d$ and $f$ are not equal.
+	/// \related Dipole3D
 
 	inline bool operator !=(const Dipole3D& d, const Dipole3D& f)
 	{
@@ -363,13 +363,13 @@ namespace Terathon
 	//	Circle3D
 	// ==============================================
 
-	/// @brief Encapsulates a 3D <a href="https://conformalgeometricalgebra.org/wiki/index.php?title=Circle">circle</a> in conformal geometric algebra.
+	/// \brief Encapsulates a 3D <a href="https://conformalgeometricalgebra.org/wiki/index.php?title=Circle">circle</a> in conformal geometric algebra.
 	///
-	/// The \c Circle3D class is used to store a three-dimensional circle with a five-dimensional trivector representation in conformal geometric algebra.
+	/// The $Circle3D$ class is used to store a three-dimensional circle with a five-dimensional trivector representation in conformal geometric algebra.
 	///
-	/// @sa RoundPoint3D
-	/// @sa Dipole3D
-	/// @sa Sphere3D
+	/// \also RoundPoint3D
+	/// \also Dipole3D
+	/// \also Sphere3D
 
 	class Circle3D
 	{
@@ -381,14 +381,14 @@ namespace Terathon
 
 			TERATHON_API static const ConstCircle3D zero;
 
-			/// @brief Default constructor that leaves the components uninitialized.
+			/// \brief Default constructor that leaves the components uninitialized.
 
 			inline Circle3D() = default;
 
-			/// @brief Constructor that sets components explicitly.
-			/// @param gx,gy,gz,gw	The components of the circle corresponding to the <b>e</b><sub>423</sub>, <b>e</b><sub>431</sub>, <b>e</b><sub>412</sub>, and <b>e</b><sub>321</sub> basis elements.
-			/// @param vx,vy,vz		The components of the circle corresponding to the <b>e</b><sub>415</sub>, <b>e</b><sub>425</sub>, and <b>e</b><sub>435</sub> basis elements.
-			/// @param mx,my,mz		The components of the circle corresponding to the <b>e</b><sub>235</sub>, <b>e</b><sub>315</sub>, and <b>e</b><sub>125</sub> basis elements.
+			/// \brief Constructor that sets components explicitly.
+			/// \param gx,gy,gz,gw	The components of the circle corresponding to the <b>e</b><sub>423</sub>, <b>e</b><sub>431</sub>, <b>e</b><sub>412</sub>, and <b>e</b><sub>321</sub> basis elements.
+			/// \param vx,vy,vz		The components of the circle corresponding to the <b>e</b><sub>415</sub>, <b>e</b><sub>425</sub>, and <b>e</b><sub>435</sub> basis elements.
+			/// \param mx,my,mz		The components of the circle corresponding to the <b>e</b><sub>235</sub>, <b>e</b><sub>315</sub>, and <b>e</b><sub>125</sub> basis elements.
 
 			Circle3D(float gx, float gy, float gz, float gw, float vx, float vy, float vz, float mx, float my, float mz)
 			{
@@ -397,10 +397,10 @@ namespace Terathon
 				m.Set(mx, my, mz);
 			}
 
-			/// @brief Constructor that sets components explicitly.
-			/// @param plane		The carrier plane.
-			/// @param direction	The direction of the flat line component.
-			/// @param moment		The moment of the flat line component.
+			/// \brief Constructor that sets components explicitly.
+			/// \param plane		The carrier plane.
+			/// \param direction	The direction of the flat line component.
+			/// \param moment		The moment of the flat line component.
 
 			Circle3D(const Plane3D& plane, const Vector3D& direction, const Bivector3D& moment)
 			{
@@ -409,10 +409,10 @@ namespace Terathon
 				m = moment;
 			}
 
-			/// @brief Sets all ten components of a 3D circle.
-			/// @param gx,gy,gz,gw	The components of the circle corresponding to the <b>e</b><sub>423</sub>, <b>e</b><sub>431</sub>, <b>e</b><sub>412</sub>, and <b>e</b><sub>321</sub> basis elements.
-			/// @param vx,vy,vz		The components of the circle corresponding to the <b>e</b><sub>415</sub>, <b>e</b><sub>425</sub>, and <b>e</b><sub>435</sub> basis elements.
-			/// @param mx,my,mz		The components of the circle corresponding to the <b>e</b><sub>235</sub>, <b>e</b><sub>315</sub>, and <b>e</b><sub>125</sub> basis elements.
+			/// \brief Sets all ten components of a 3D circle.
+			/// \param gx,gy,gz,gw	The components of the circle corresponding to the <b>e</b><sub>423</sub>, <b>e</b><sub>431</sub>, <b>e</b><sub>412</sub>, and <b>e</b><sub>321</sub> basis elements.
+			/// \param vx,vy,vz		The components of the circle corresponding to the <b>e</b><sub>415</sub>, <b>e</b><sub>425</sub>, and <b>e</b><sub>435</sub> basis elements.
+			/// \param mx,my,mz		The components of the circle corresponding to the <b>e</b><sub>235</sub>, <b>e</b><sub>315</sub>, and <b>e</b><sub>125</sub> basis elements.
 
 			Circle3D& Set(float gx, float gy, float gz, float gw, float vx, float vy, float vz, float mx, float my, float mz)
 			{
@@ -429,10 +429,10 @@ namespace Terathon
 				m.Set(mx, my, mz);
 			}
 
-			/// @brief Sets all ten components of a 3D circle.
-			/// @param plane		The carrier plane.
-			/// @param direction	The direction of the flat line component.
-			/// @param moment		The moment of the flat line component.
+			/// \brief Sets all ten components of a 3D circle.
+			/// \param plane		The carrier plane.
+			/// \param direction	The direction of the flat line component.
+			/// \param moment		The moment of the flat line component.
 
 			Circle3D& Set(const Plane3D& plane, const Vector3D& direction, const Bivector3D& moment)
 			{
@@ -473,32 +473,32 @@ namespace Terathon
 	};
 
 
-	/// @brief Returns the negation of the 3D circle \c c.
-	/// @related Circle3D
+	/// \brief Returns the negation of the 3D circle $c$.
+	/// \related Circle3D
 
 	inline Circle3D operator -(const Circle3D& c)
 	{
 		return (Circle3D(-c.g.x, -c.g.y, -c.g.z, -c.g.w, -c.v.x, -c.v.y, -c.v.z, -c.m.x, -c.m.y, -c.m.z));
 	}
 
-	/// @brief Returns the product of the 3D circle \c c and the scalar \c n.
-	/// @related Circle3D
+	/// \brief Returns the product of the 3D circle $c$ and the scalar $n$.
+	/// \related Circle3D
 
 	inline Circle3D operator *(const Circle3D& c, float n)
 	{
 		return (Circle3D(c.g.x * n, c.g.y * n, c.g.z * n, c.g.w * n, c.v.x * n, c.v.y * n, c.v.z * n, c.m.x * n, c.m.y * n, c.m.z * n));
 	}
 
-	/// @brief Returns the product of the 3D circle \c c and the scalar \c n.
-	/// @related Circle3D
+	/// \brief Returns the product of the 3D circle $c$ and the scalar $n$.
+	/// \related Circle3D
 
 	inline Circle3D operator *(float n, const Circle3D& c)
 	{
 		return (Circle3D(n * c.g.x, n * c.g.y, n * c.g.z, n * c.g.w, n * c.v.x, n * c.v.y, n * c.v.z, n * c.m.x, n * c.m.y, n * c.m.z));
 	}
 
-	/// @brief Returns the product of the 3D circle \c c and the inverse of the scalar \c n.
-	/// @related Circle3D
+	/// \brief Returns the product of the 3D circle $c$ and the inverse of the scalar $n$.
+	/// \related Circle3D
 
 	inline Circle3D operator /(const Circle3D& c, float n)
 	{
@@ -506,16 +506,16 @@ namespace Terathon
 		return (Circle3D(c.g.x * n, c.g.y * n, c.g.z * n, c.g.w * n, c.v.x * n, c.v.y * n, c.v.z * n, c.m.x * n, c.m.y * n, c.m.z * n));
 	}
 
-	/// @brief Returns a boolean value indicating whether the two 3D circles \c c and \c o are equal.
-	/// @related Circle3D
+	/// \brief Returns a boolean value indicating whether the two 3D circles $c$ and $o$ are equal.
+	/// \related Circle3D
 
 	inline bool operator ==(const Circle3D& c, const Circle3D& o)
 	{
 		return ((c.g == o.g) && (c.v == o.v) && (c.m == o.m));
 	}
 
-	/// @brief Returns a boolean value indicating whether the two 3D circles \c c and \c o are not equal.
-	/// @related Circle3D
+	/// \brief Returns a boolean value indicating whether the two 3D circles $c$ and $o$ are not equal.
+	/// \related Circle3D
 
 	inline bool operator !=(const Circle3D& c, const Circle3D& o)
 	{
@@ -527,13 +527,13 @@ namespace Terathon
 	//	Sphere3D
 	// ==============================================
 
-	/// @brief Encapsulates a 3D <a href="https://conformalgeometricalgebra.org/wiki/index.php?title=Sphere">sphere</a> in conformal geometric algebra.
+	/// \brief Encapsulates a 3D <a href="https://conformalgeometricalgebra.org/wiki/index.php?title=Sphere">sphere</a> in conformal geometric algebra.
 	///
-	/// The \c Sphere3D class is used to store a three-dimensional sphere with a five-dimensional quadrivector representation in conformal geometric algebra.
+	/// The $Sphere3D$ class is used to store a three-dimensional sphere with a five-dimensional quadrivector representation in conformal geometric algebra.
 	///
-	/// @sa RoundPoint3D
-	/// @sa Dipole3D
-	/// @sa Circle3D
+	/// \also RoundPoint3D
+	/// \also Dipole3D
+	/// \also Circle3D
 
 	class Sphere3D
 	{
@@ -543,12 +543,12 @@ namespace Terathon
 
 			TERATHON_API static const ConstSphere3D zero;
 
-			/// @brief Default constructor that leaves the components uninitialized.
+			/// \brief Default constructor that leaves the components uninitialized.
 
 			inline Sphere3D() = default;
 
-			/// @brief Constructor that sets components explicitly.
-			/// @param su,sx,sy,sz,sw	The components of the sphere.
+			/// \brief Constructor that sets components explicitly.
+			/// \param su,sx,sy,sz,sw	The components of the sphere.
 
 			Sphere3D(float su, float sx, float sy, float sz, float sw)
 			{
@@ -559,8 +559,8 @@ namespace Terathon
 				w = sw;
 			}
 
-			/// @brief Sets all five components of a 3D sphere.
-			/// @param su,sx,sy,sz,sw	The new components of the sphere.
+			/// \brief Sets all five components of a 3D sphere.
+			/// \param su,sx,sy,sz,sw	The new components of the sphere.
 
 			Sphere3D& Set(float su, float sx, float sy, float sz, float sw)
 			{
@@ -615,32 +615,32 @@ namespace Terathon
 	};
 
 
-	/// @brief Returns the negation of the 3D sphere \c s.
-	/// @related Sphere3D
+	/// \brief Returns the negation of the 3D sphere $s$.
+	/// \related Sphere3D
 
 	inline Sphere3D operator -(const Sphere3D& s)
 	{
 		return (Sphere3D(-s.u, -s.x, -s.y, -s.z, -s.w));
 	}
 
-	/// @brief Returns the product of the 3D sphere \c s and the scalar \c n.
-	/// @related Sphere3D
+	/// \brief Returns the product of the 3D sphere $s$ and the scalar $n$.
+	/// \related Sphere3D
 
 	inline Sphere3D operator *(const Sphere3D& s, float n)
 	{
 		return (Sphere3D(s.u * n, s.x * n, s.y * n, s.z * n, s.w * n));
 	}
 
-	/// @brief Returns the product of the 3D sphere \c s and the scalar \c n.
-	/// @related Sphere3D
+	/// \brief Returns the product of the 3D sphere $s$ and the scalar $n$.
+	/// \related Sphere3D
 
 	inline Sphere3D operator *(float n, const Sphere3D& s)
 	{
 		return (Sphere3D(n * s.u, n * s.x, n * s.y, n * s.z, n * s.w));
 	}
 
-	/// @brief Returns the product of the 3D sphere \c s and the inverse of the scalar \c n.
-	/// @related Sphere3D
+	/// \brief Returns the product of the 3D sphere $s$ and the inverse of the scalar $n$.
+	/// \related Sphere3D
 
 	inline Sphere3D operator /(const Sphere3D& s, float n)
 	{
@@ -648,16 +648,16 @@ namespace Terathon
 		return (Sphere3D(s.u * n, s.x * n, s.y * n, s.z * n, s.w * n));
 	}
 
-	/// @brief Returns a boolean value indicating whether the two 3D spheres \c s and \c t are equal.
-	/// @related Sphere3D
+	/// \brief Returns a boolean value indicating whether the two 3D spheres $s$ and $t$ are equal.
+	/// \related Sphere3D
 
 	inline bool operator ==(const Sphere3D& s, const Sphere3D& t)
 	{
 		return ((s.u == t.u) && (s.x == t.x) && (s.y == t.y) && (s.z == t.z) && (s.w == t.w));
 	}
 
-	/// @brief Returns a boolean value indicating whether the two 3D spheres \c s and \c t are not equal.
-	/// @related Sphere3D
+	/// \brief Returns a boolean value indicating whether the two 3D spheres $s$ and $t$ are not equal.
+	/// \related Sphere3D
 
 	inline bool operator !=(const Sphere3D& s, const Sphere3D& t)
 	{
@@ -669,32 +669,32 @@ namespace Terathon
 	//	Dual
 	// ==============================================
 
-	/// @brief Returns the dual of the 3D round point \c a, which is a 3D sphere.
-	/// @relatedalso RoundPoint3D
+	/// \brief Returns the dual of the 3D round point $a$, which is a 3D sphere.
+	/// \related RoundPoint3D
 
 	inline Sphere3D Dual(const RoundPoint3D& a)
 	{
 		return (Sphere3D(-a.w, a.x, a.y, a.z, -a.u));
 	}
 
-	/// @brief Returns the dual of the 3D dipole \c d, which is a 3D circle.
-	/// @relatedalso Dipole3D
+	/// \brief Returns the dual of the 3D dipole $d$, which is a 3D circle.
+	/// \related Dipole3D
 
 	inline Circle3D Dual(const Dipole3D& d)
 	{
 		return (Circle3D(-d.v.x, -d.v.y, -d.v.z, d.p.w, -d.m.x, -d.m.y, -d.m.z, -d.p.x, -d.p.y, -d.p.z));
 	}
 
-	/// @brief Returns the dual of the 3D circle \c c, which is a 3D dipole.
-	/// @relatedalso Circle3D
+	/// \brief Returns the dual of the 3D circle $c$, which is a 3D dipole.
+	/// \related Circle3D
 
 	inline Dipole3D Dual(const Circle3D& c)
 	{
 		return (Dipole3D(c.g.x, c.g.y, c.g.z, c.v.x, c.v.y, c.v.z, c.m.x, c.m.y, c.m.z, -c.g.w));
 	}
 
-	/// @brief Returns the dual of the 3D sphere \c s, which is a 3D round point.
-	/// @relatedalso Sphere3D
+	/// \brief Returns the dual of the 3D sphere $s$, which is a 3D round point.
+	/// \related Sphere3D
 
 	inline RoundPoint3D Dual(const Sphere3D& s)
 	{
@@ -705,32 +705,32 @@ namespace Terathon
 	//	Antidual
 	// ==============================================
 
-	/// @brief Returns the antidual of the 3D round point \c a, which is a 3D sphere.
-	/// @relatedalso RoundPoint3D
+	/// \brief Returns the antidual of the 3D round point $a$, which is a 3D sphere.
+	/// \related RoundPoint3D
 
 	inline Sphere3D Antidual(const RoundPoint3D& a)
 	{
 		return (Sphere3D(a.w, -a.x, -a.y, -a.z, a.u));
 	}
 
-	/// @brief Returns the antidual of the 3D dipole \c d, which is a 3D circle.
-	/// @relatedalso Dipole3D
+	/// \brief Returns the antidual of the 3D dipole $d$, which is a 3D circle.
+	/// \related Dipole3D
 
 	inline Circle3D Antidual(const Dipole3D& d)
 	{
 		return (Circle3D(d.v.x, d.v.y, d.v.z, -d.p.w, d.m.x, d.m.y, d.m.z, d.p.x, d.p.y, d.p.z));
 	}
 
-	/// @brief Returns the antidual of the 3D circle \c c, which is a 3D dipole.
-	/// @relatedalso Circle3D
+	/// \brief Returns the antidual of the 3D circle $c$, which is a 3D dipole.
+	/// \related Circle3D
 
 	inline Dipole3D Antidual(const Circle3D& c)
 	{
 		return (Dipole3D(-c.g.x, -c.g.y, -c.g.z, -c.v.x, -c.v.y, -c.v.z, -c.m.x, -c.m.y, -c.m.z, c.g.w));
 	}
 
-	/// @brief Returns the antidual of the 3D sphere \c s, which is a 3D round point.
-	/// @relatedalso Sphere3D
+	/// \brief Returns the antidual of the 3D sphere $s$, which is a 3D round point.
+	/// \related Sphere3D
 
 	inline RoundPoint3D Antidual(const Sphere3D& s)
 	{
@@ -741,32 +741,32 @@ namespace Terathon
 	//	Reverse
 	// ==============================================
 
-	/// @brief Returns the reverse of the 3D round point \c a.
-	/// @relatedalso RoundPoint3D
+	/// \brief Returns the reverse of the 3D round point $a$.
+	/// \related RoundPoint3D
 
 	inline const RoundPoint3D& Reverse(const RoundPoint3D& a)
 	{
 		return (a);
 	}
 
-	/// @brief Returns the reverse of the 3D dipole \c d.
-	/// @relatedalso Dipole3D
+	/// \brief Returns the reverse of the 3D dipole $d$.
+	/// \related Dipole3D
 
 	inline Dipole3D Reverse(const Dipole3D& d)
 	{
 		return (Dipole3D(-d.v.x, -d.v.y, -d.v.z, -d.m.x, -d.m.y, -d.m.z, -d.p.x, -d.p.y, -d.p.z, -d.p.w));
 	}
 
-	/// @brief Returns the reverse of the 3D circle \c c.
-	/// @relatedalso Circle3D
+	/// \brief Returns the reverse of the 3D circle $c$.
+	/// \related Circle3D
 
 	inline Circle3D Reverse(const Circle3D& c)
 	{
 		return (Circle3D(-c.g.x, -c.g.y, -c.g.z, -c.g.w, -c.v.x, -c.v.y, -c.v.z, -c.m.x, -c.m.y, -c.m.z));
 	}
 
-	/// @brief Returns the reverse of the 3D sphere \c s.
-	/// @relatedalso Sphere3D
+	/// \brief Returns the reverse of the 3D sphere $s$.
+	/// \related Sphere3D
 
 	inline const Sphere3D& Reverse(const Sphere3D& s)
 	{
@@ -782,32 +782,32 @@ namespace Terathon
 	//	Attitude
 	// ==============================================
 
-	/// @brief Returns the attitude of the 3D round point \c a, which is a scalar.
-	/// @relatedalso RoundPoint3D
+	/// \brief Returns the attitude of the 3D round point $a$, which is a scalar.
+	/// \related RoundPoint3D
 
 	inline float Attitude(const RoundPoint3D& a)
 	{
 		return (a.w);
 	}
 
-	/// @brief Returns the attitude of the 3D dipole \c d, which is a 3D round point.
-	/// @relatedalso Dipole3D
+	/// \brief Returns the attitude of the 3D dipole $d$, which is a 3D round point.
+	/// \related Dipole3D
 
 	inline RoundPoint3D Attitude(const Dipole3D& d)
 	{
 		return (RoundPoint3D(d.v.x, d.v.y, d.v.z, 0.0F, d.p.w));
 	}
 
-	/// @brief Returns the attitude of the 3D circle \c c, which is a 3D dipole.
-	/// @relatedalso Circle3D
+	/// \brief Returns the attitude of the 3D circle $c$, which is a 3D dipole.
+	/// \related Circle3D
 
 	inline Dipole3D Attitude(const Circle3D& c)
 	{
 		return (Dipole3D(0.0F, 0.0F, 0.0F, c.g.x, c.g.y, c.g.z, c.v.x, c.v.y, c.v.z, 0.0F));
 	}
 
-	/// @brief Returns the attitude of the 3D sphere \c s, which is a 3D circle.
-	/// @relatedalso Sphere3D
+	/// \brief Returns the attitude of the 3D sphere $s$, which is a 3D circle.
+	/// \related Sphere3D
 
 	inline Circle3D Attitude(const Sphere3D& s)
 	{
@@ -818,24 +818,24 @@ namespace Terathon
 	//	Carrier
 	// ==============================================
 
-	/// @brief Returns the carrier of the 3D round point \c a, which is a 3D flat point.
-	/// @relatedalso RoundPoint3D
+	/// \brief Returns the carrier of the 3D round point $a$, which is a 3D flat point.
+	/// \related RoundPoint3D
 
 	inline FlatPoint3D Carrier(const RoundPoint3D& a)
 	{
 		return (FlatPoint3D(a.x, a.y, a.z, a.w));
 	}
 
-	/// @brief Returns the carrier of the 3D dipole \c d, which is a 3D line.
-	/// @relatedalso Dipole3D
+	/// \brief Returns the carrier of the 3D dipole $d$, which is a 3D line.
+	/// \related Dipole3D
 
 	inline Line3D Carrier(const Dipole3D& d)
 	{
 		return (Line3D(d.v, d.m));
 	}
 
-	/// @brief Returns the carrier of the 3D circle \c c, which is a 3D plane.
-	/// @relatedalso Circle3D
+	/// \brief Returns the carrier of the 3D circle $c$, which is a 3D plane.
+	/// \related Circle3D
 
 	inline Plane3D Carrier(const Circle3D& c)
 	{
@@ -846,24 +846,24 @@ namespace Terathon
 	//	Cocarrier
 	// ==============================================
 
-	/// @brief Returns the cocarrier of the 3D dipole \c d, which is a 3D plane.
-	/// @relatedalso Dipole3D
+	/// \brief Returns the cocarrier of the 3D dipole $d$, which is a 3D plane.
+	/// \related Dipole3D
 
 	inline Plane3D Cocarrier(const Dipole3D& d)
 	{
 		return (Plane3D(d.v.x, d.v.y, d.v.z, -d.p.w));
 	}
 
-	/// @brief Returns the cocarrier of the 3D circle \c c, which is a 3D line.
-	/// @relatedalso Circle3D
+	/// \brief Returns the cocarrier of the 3D circle $c$, which is a 3D line.
+	/// \related Circle3D
 
 	inline Line3D Cocarrier(const Circle3D& c)
 	{
 		return (Line3D(-c.v.x, -c.v.y, -c.v.z, -c.g.x, -c.g.y, -c.g.z));
 	}
 
-	/// @brief Returns the cocarrier of the 3D sphere \c s, which is a 3D flat point.
-	/// @relatedalso Sphere3D
+	/// \brief Returns the cocarrier of the 3D sphere $s$, which is a 3D flat point.
+	/// \related Sphere3D
 
 	inline FlatPoint3D Cocarrier(const Sphere3D& s)
 	{
@@ -874,26 +874,26 @@ namespace Terathon
 	//	Center
 	// ==============================================
 
-	/// @brief Returns the center of the 3D round point \c a.
-	/// @relatedalso RoundPoint3D
+	/// \brief Returns the center of the 3D round point $a$.
+	/// \related RoundPoint3D
 
 	inline RoundPoint3D Center(const RoundPoint3D& a)
 	{
 		return (RoundPoint3D(a.x * a.w, a.y * a.w, a.z * a.w, a.w * a.w, a.w * a.u));
 	}
 
-	/// @brief Returns the center of the 3D dipole \c d.
-	/// @relatedalso Dipole3D
+	/// \brief Returns the center of the 3D dipole $d$.
+	/// \related Dipole3D
 
 	TERATHON_API RoundPoint3D Center(const Dipole3D& d);
 
-	/// @brief Returns the center of the 3D circle \c c.
-	/// @relatedalso Circle3D
+	/// \brief Returns the center of the 3D circle $c$.
+	/// \related Circle3D
 
 	TERATHON_API RoundPoint3D Center(const Circle3D& c);
 
-	/// @brief Returns the center of the 3D sphere \c s.
-	/// @relatedalso Sphere3D
+	/// \brief Returns the center of the 3D sphere $s$.
+	/// \related Sphere3D
 
 	inline RoundPoint3D Center(const Sphere3D& s)
 	{
@@ -904,26 +904,26 @@ namespace Terathon
 	//	FlatCenter
 	// ==============================================
 
-	/// @brief Returns the flat center of the 3D round point \c a.
-	/// @relatedalso RoundPoint3D
+	/// \brief Returns the flat center of the 3D round point $a$.
+	/// \related RoundPoint3D
 
 	inline FlatPoint3D FlatCenter(const RoundPoint3D& a)
 	{
 		return (FlatPoint3D(a.x, a.y, a.z, a.w));
 	}
 
-	/// @brief Returns the flat center of the 3D dipole \c d.
-	/// @relatedalso Dipole3D
+	/// \brief Returns the flat center of the 3D dipole $d$.
+	/// \related Dipole3D
 
 	TERATHON_API FlatPoint3D FlatCenter(const Dipole3D& d);
 
-	/// @brief Returns the flat center of the 3D circle \c c.
-	/// @relatedalso Circle3D
+	/// \brief Returns the flat center of the 3D circle $c$.
+	/// \related Circle3D
 
 	TERATHON_API FlatPoint3D FlatCenter(const Circle3D& c);
 
-	/// @brief Returns the flat center of the 3D sphere \c s.
-	/// @relatedalso Sphere3D
+	/// \brief Returns the flat center of the 3D sphere $s$.
+	/// \related Sphere3D
 
 	inline FlatPoint3D FlatCenter(const Sphere3D& s)
 	{
@@ -934,26 +934,26 @@ namespace Terathon
 	//	Container
 	// ==============================================
 
-	/// @brief Returns the container of the 3D round point \c a.
-	/// @relatedalso RoundPoint3D
+	/// \brief Returns the container of the 3D round point $a$.
+	/// \related RoundPoint3D
 
 	inline Sphere3D Container(const RoundPoint3D& a)
 	{
 		return (Sphere3D(-a.w * a.w, a.x * a.w, a.y * a.w, a.z * a.w, a.w * a.u - a.x * a.x - a.y * a.y - a.z * a.z));
 	}
 
-	/// @brief Returns the container of the 3D dipole \c d.
-	/// @relatedalso Dipole3D
+	/// \brief Returns the container of the 3D dipole $d$.
+	/// \related Dipole3D
 
 	TERATHON_API Sphere3D Container(const Dipole3D& d);
 
-	/// @brief Returns the container of the 3D circle \c c.
-	/// @relatedalso Circle3D
+	/// \brief Returns the container of the 3D circle $c$.
+	/// \related Circle3D
 
 	TERATHON_API Sphere3D Container(const Circle3D& c);
 
-	/// @brief Returns the container of the 3D sphere \c s.
-	/// @relatedalso Sphere3D
+	/// \brief Returns the container of the 3D sphere $s$.
+	/// \related Sphere3D
 
 	inline Sphere3D Container(const Sphere3D& s)
 	{
@@ -964,8 +964,8 @@ namespace Terathon
 	//	Partner
 	// ==============================================
 
-	/// @brief Returns the partner of the 3D round point \c a.
-	/// @relatedalso RoundPoint3D
+	/// \brief Returns the partner of the 3D round point $a$.
+	/// \related RoundPoint3D
 
 	inline RoundPoint3D Partner(const RoundPoint3D& a)
 	{
@@ -973,18 +973,18 @@ namespace Terathon
 		return (RoundPoint3D(a.x * w2, a.y * w2, a.z * w2, a.w * w2, (a.x * a.x + a.y * a.y + a.z * a.z - a.w * a.u) * a.w));
 	}
 
-	/// @brief Returns the partner of the 3D dipole \c d.
-	/// @relatedalso Dipole3D
+	/// \brief Returns the partner of the 3D dipole $d$.
+	/// \related Dipole3D
 
 	TERATHON_API Dipole3D Partner(const Dipole3D& d);
 
-	/// @brief Returns the partner of the 3D circle \c c.
-	/// @relatedalso Circle3D
+	/// \brief Returns the partner of the 3D circle $c$.
+	/// \related Circle3D
 
 	TERATHON_API Circle3D Partner(const Circle3D& c);
 
-	/// @brief Returns the partner of the 3D sphere \c s.
-	/// @relatedalso Sphere3D
+	/// \brief Returns the partner of the 3D sphere $s$.
+	/// \related Sphere3D
 
 	inline Sphere3D Partner(const Sphere3D& s)
 	{
@@ -996,32 +996,32 @@ namespace Terathon
 	//	SquaredRadiusNorm
 	// ==============================================
 
-	/// @brief Returns the squared radius of the 3D round point \c a.
-	/// @relatedalso RoundPoint3D
+	/// \brief Returns the squared radius of the 3D round point $a$.
+	/// \related RoundPoint3D
 
 	inline float SquaredRadiusNorm(const RoundPoint3D& a)
 	{
 		return (a.w * a.u * 2.0F - a.x * a.x - a.y * a.y - a.z * a.z);
 	}
 
-	/// @brief Returns the squared radius of the 3D dipole \c d.
-	/// @relatedalso Dipole3D
+	/// \brief Returns the squared radius of the 3D dipole $d$.
+	/// \related Dipole3D
 
 	inline float SquaredRadiusNorm(const Dipole3D& d)
 	{
 		return (d.p.w * d.p.w - d.m.x * d.m.x - d.m.y * d.m.y - d.m.z * d.m.z - (d.p.x * d.v.x + d.p.y * d.v.y + d.p.z * d.v.z) * 2.0F);
 	}
 
-	/// @brief Returns the squared radius of the 3D circle \c c.
-	/// @relatedalso Circle3D
+	/// \brief Returns the squared radius of the 3D circle $c$.
+	/// \related Circle3D
 
 	inline float SquaredRadiusNorm(const Circle3D& c)
 	{
 		return (c.v.x * c.v.x + c.v.y * c.v.y + c.v.z * c.v.z + (c.g.x * c.m.x + c.g.y * c.m.y + c.g.z * c.m.z) * 2.0F - c.g.w * c.g.w);
 	}
 
-	/// @brief Returns the squared radius of the 3D sphere \c s.
-	/// @relatedalso Sphere3D
+	/// \brief Returns the squared radius of the 3D sphere $s$.
+	/// \related Sphere3D
 
 	inline float SquaredRadiusNorm(const Sphere3D& s)
 	{
@@ -1032,32 +1032,32 @@ namespace Terathon
 	//	SquaredCenterNorm
 	// ==============================================
 
-	/// @brief Returns the squared distance from the origin to the center of the 3D round point \c a.
-	/// @relatedalso RoundPoint3D
+	/// \brief Returns the squared distance from the origin to the center of the 3D round point $a$.
+	/// \related RoundPoint3D
 
 	inline float SquaredCenterNorm(const RoundPoint3D& a)
 	{
 		return (a.x * a.x + a.y * a.y + a.z * a.z);
 	}
 
-	/// @brief Returns the squared distance from the origin to the center of the 3D dipole \c d.
-	/// @relatedalso Dipole3D
+	/// \brief Returns the squared distance from the origin to the center of the 3D dipole $d$.
+	/// \related Dipole3D
 
 	inline float SquaredCenterNorm(const Dipole3D& d)
 	{
 		return (d.m.x * d.m.x + d.m.y * d.m.y + d.m.z * d.m.z + d.p.w * d.p.w);
 	}
 
-	/// @brief Returns the squared distance from the origin to the center of the 3D circle \c c.
-	/// @relatedalso Circle3D
+	/// \brief Returns the squared distance from the origin to the center of the 3D circle $c$.
+	/// \related Circle3D
 
 	inline float SquaredCenterNorm(const Circle3D& c)
 	{
 		return (c.g.w * c.g.w + c.v.x * c.v.x + c.v.y * c.v.y + c.v.z * c.v.z);
 	}
 
-	/// @brief Returns the squared distance from the origin to the center of the 3D sphere \c s.
-	/// @relatedalso Sphere3D
+	/// \brief Returns the squared distance from the origin to the center of the 3D sphere $s$.
+	/// \related Sphere3D
 
 	inline float SquaredCenterNorm(const Sphere3D& s)
 	{
@@ -1068,32 +1068,32 @@ namespace Terathon
 	//	SquaredBulkNorm
 	// ==============================================
 
-	/// @brief Returns the squared round bulk of the 3D round point \c a.
-	/// @relatedalso RoundPoint3D
+	/// \brief Returns the squared round bulk of the 3D round point $a$.
+	/// \related RoundPoint3D
 
 	inline float SquaredBulkNorm(const RoundPoint3D& a)
 	{
 		return (a.x * a.x + a.y * a.y + a.z * a.z);
 	}
 
-	/// @brief Returns the squared round bulk of the 3D dipole \c d.
-	/// @relatedalso Dipole3D
+	/// \brief Returns the squared round bulk of the 3D dipole $d$.
+	/// \related Dipole3D
 
 	inline float SquaredBulkNorm(const Dipole3D& d)
 	{
 		return (d.m.x * d.m.x + d.m.y * d.m.y + d.m.z * d.m.z);
 	}
 
-	/// @brief Returns the squared round bulk of the 3D circle \c c.
-	/// @relatedalso Circle3D
+	/// \brief Returns the squared round bulk of the 3D circle $c$.
+	/// \related Circle3D
 
 	inline float SquaredBulkNorm(const Circle3D& c)
 	{
 		return (c.g.w * c.g.w);
 	}
 
-	/// @brief Returns the squared round bulk of the 3D sphere \c s.
-	/// @relatedalso Sphere3D
+	/// \brief Returns the squared round bulk of the 3D sphere $s$.
+	/// \related Sphere3D
 
 	inline float SquaredBulkNorm(const Sphere3D& s)
 	{
@@ -1104,32 +1104,32 @@ namespace Terathon
 	//	SquaredWeightNorm
 	// ==============================================
 
-	/// @brief Returns the squared round weight of the 3D round point \c a.
-	/// @relatedalso RoundPoint3D
+	/// \brief Returns the squared round weight of the 3D round point $a$.
+	/// \related RoundPoint3D
 
 	inline float SquaredWeightNorm(const RoundPoint3D& a)
 	{
 		return (a.w * a.w);
 	}
 
-	/// @brief Returns the squared round weight of the 3D dipole \c d.
-	/// @relatedalso Dipole3D
+	/// \brief Returns the squared round weight of the 3D dipole $d$.
+	/// \related Dipole3D
 
 	inline float SquaredWeightNorm(const Dipole3D& d)
 	{
 		return (d.v.x * d.v.x + d.v.y * d.v.y + d.v.z * d.v.z);
 	}
 
-	/// @brief Returns the squared round weight of the 3D circle \c c.
-	/// @relatedalso Circle3D
+	/// \brief Returns the squared round weight of the 3D circle $c$.
+	/// \related Circle3D
 
 	inline float SquaredWeightNorm(const Circle3D& c)
 	{
 		return (c.g.x * c.g.x + c.g.y * c.g.y + c.g.z * c.g.z);
 	}
 
-	/// @brief Returns the squared round weight of the 3D sphere \c s.
-	/// @relatedalso Sphere3D
+	/// \brief Returns the squared round weight of the 3D sphere $s$.
+	/// \related Sphere3D
 
 	inline float SquaredWeightNorm(const Sphere3D& s)
 	{
@@ -1140,32 +1140,32 @@ namespace Terathon
 	//	SquaredFlatBulkNorm
 	// ==============================================
 
-	/// @brief Returns the squared flat bulk of the 3D round point \c a.
-	/// @relatedalso RoundPoint3D
+	/// \brief Returns the squared flat bulk of the 3D round point $a$.
+	/// \related RoundPoint3D
 
 	inline float SquaredFlatBulkNorm(const RoundPoint3D& a)
 	{
 		return (a.u * a.u);
 	}
 
-	/// @brief Returns the squared flat bulk of the 3D dipole \c d.
-	/// @relatedalso Dipole3D
+	/// \brief Returns the squared flat bulk of the 3D dipole $d$.
+	/// \related Dipole3D
 
 	inline float SquaredFlatBulkNorm(const Dipole3D& d)
 	{
 		return (d.p.x * d.p.x + d.p.y * d.p.y + d.p.z * d.p.z);
 	}
 
-	/// @brief Returns the squared flat bulk of the 3D circle \c c.
-	/// @relatedalso Circle3D
+	/// \brief Returns the squared flat bulk of the 3D circle $c$.
+	/// \related Circle3D
 
 	inline float SquaredFlatBulkNorm(const Circle3D& c)
 	{
 		return (c.m.x * c.m.x + c.m.y * c.m.y + c.m.z * c.m.z);
 	}
 
-	/// @brief Returns the squared flat bulk of the 3D sphere \c s.
-	/// @relatedalso Sphere3D
+	/// \brief Returns the squared flat bulk of the 3D sphere $s$.
+	/// \related Sphere3D
 
 	inline float SquaredFlatBulkNorm(const Sphere3D& s)
 	{
@@ -1176,32 +1176,32 @@ namespace Terathon
 	//	SquaredFlatWeightNorm
 	// ==============================================
 
-	/// @brief Returns the squared flat weight of the 3D round point \c a.
-	/// @relatedalso RoundPoint3D
+	/// \brief Returns the squared flat weight of the 3D round point $a$.
+	/// \related RoundPoint3D
 
 	inline float SquaredFlatWeightNorm(const RoundPoint3D& a)
 	{
 		return (0.0F);
 	}
 
-	/// @brief Returns the squared flat weight of the 3D dipole \c d.
-	/// @relatedalso Dipole3D
+	/// \brief Returns the squared flat weight of the 3D dipole $d$.
+	/// \related Dipole3D
 
 	inline float SquaredFlatWeightNorm(const Dipole3D& d)
 	{
 		return (d.p.w * d.p.w);
 	}
 
-	/// @brief Returns the squared flat weight of the 3D circle \c c.
-	/// @relatedalso Circle3D
+	/// \brief Returns the squared flat weight of the 3D circle $c$.
+	/// \related Circle3D
 
 	inline float SquaredFlatWeightNorm(const Circle3D& c)
 	{
 		return (c.v.x * c.v.x + c.v.y * c.v.y + c.v.z * c.v.z);
 	}
 
-	/// @brief Returns the squared flat weight of the 3D sphere \c s.
-	/// @relatedalso Sphere3D
+	/// \brief Returns the squared flat weight of the 3D sphere $s$.
+	/// \related Sphere3D
 
 	inline float SquaredFlatWeightNorm(const Sphere3D& s)
 	{
@@ -1212,12 +1212,12 @@ namespace Terathon
 	//	Unitize
 	// ==============================================
 
-	/// @brief Calculates the unitized equivalent of a 3D round point.
+	/// \brief Calculates the unitized equivalent of a 3D round point.
 	///
-	/// Multiplies the 3D round point \c a by the inverse magnitude of its weight, which is its <i>w</i> component.
+	/// Multiplies the 3D round point $a$ by the inverse magnitude of its weight, which is its <i>w</i> component.
 	/// The return value is a round point having a <i>w</i> coordinate of one.
 	///
-	/// @relatedalso RoundPoint3D
+	/// \related RoundPoint3D
 
 	inline RoundPoint3D Unitize(const RoundPoint3D& a)
 	{
@@ -1225,37 +1225,37 @@ namespace Terathon
 		return (RoundPoint3D(a.x * n, a.y * n, a.z * n, 1.0F, a.u * n));
 	}
 
-	/// @brief Calculates the unitized equivalent of a 3D dipole.
+	/// \brief Calculates the unitized equivalent of a 3D dipole.
 	///
-	/// Multiplies the 3D dipole \c d by the inverse magnitude of its weight, which is the 3D direction component of its carrier line.
+	/// Multiplies the 3D dipole $d$ by the inverse magnitude of its weight, which is the 3D direction component of its carrier line.
 	/// The direction component of the carrier line of the returned dipole has unit length, and the magnitude of its moment component
 	/// is the perpendicular distance between the origin and the carrier line.
 	///
-	/// @relatedalso Dipole3D
+	/// \related Dipole3D
 
 	inline Dipole3D Unitize(const Dipole3D& d)
 	{
 		return (d * InverseSqrt(d.v.x * d.v.x + d.v.y * d.v.y + d.v.z * d.v.z));
 	}
 
-	/// @brief Calculates the unitized equivalent of a 3D circle.
+	/// \brief Calculates the unitized equivalent of a 3D circle.
 	///
-	/// Multiplies the 3D circle \c c by the inverse magnitude of its weight, which is the 3D trivector given by its
+	/// Multiplies the 3D circle $c$ by the inverse magnitude of its weight, which is the 3D trivector given by its
 	/// <i>gx</i>, <i>gy</i>, and <i>gz</i> coordinates. The carrier plane of the returned circle has a unit-length normal.
 	///
-	/// @relatedalso Circle3D
+	/// \related Circle3D
 
 	inline Circle3D Unitize(const Circle3D& c)
 	{
 		return (c * InverseSqrt(c.g.x * c.g.x + c.g.y * c.g.y + c.g.z * c.g.z));
 	}
 
-	/// @brief Calculates the unitized equivalent of a 3D sphere.
+	/// \brief Calculates the unitized equivalent of a 3D sphere.
 	///
-	/// Multiplies the 3D sphere \c s by the negated inverse magnitude of its weight, which is its <i>u</i> component.
+	/// Multiplies the 3D sphere $s$ by the negated inverse magnitude of its weight, which is its <i>u</i> component.
 	/// The return value is a sphere having a <i>u</i> coordinate of negative one.
 	///
-	/// @relatedalso Sphere3D
+	/// \related Sphere3D
 
 	inline Sphere3D Unitize(const Sphere3D& s)
 	{
@@ -1267,58 +1267,58 @@ namespace Terathon
 	//	Join
 	// ==============================================
 
-	/// @brief Calculates the join of the 3D round points \c a and \c b to produce a 3D dipole.
-	/// @relatedalso RoundPoint3D
+	/// \brief Calculates the join of the 3D round points $a$ and $b$ to produce a 3D dipole.
+	/// \related RoundPoint3D
 
 	TERATHON_API Dipole3D Wedge(const RoundPoint3D& a, const RoundPoint3D& b);
 
-	/// @brief Calculates the join of the 3D flat point \c p and 3D round point \c a to produce a 3D line.
-	/// @relatedalso Line3D
+	/// \brief Calculates the join of the 3D flat point $p$ and 3D round point $a$ to produce a 3D line.
+	/// \related Line3D
 
 	TERATHON_API Line3D Wedge(const FlatPoint3D& p, const RoundPoint3D& a);
 
-	/// @brief Calculates the join of the 3D Euclidean point \c p and 3D round point \c a to produce a 3D line.
-	/// @relatedalso Line3D
+	/// \brief Calculates the join of the 3D Euclidean point $p$ and 3D round point $a$ to produce a 3D line.
+	/// \related Line3D
 
 	TERATHON_API Line3D Wedge(const Point3D& p, const RoundPoint3D& a);
 
-	/// @brief Calculates the join of the 3D dipole \c d and 3D round point \c a to produce a 3D circle.
-	/// @relatedalso Circle3D
+	/// \brief Calculates the join of the 3D dipole $d$ and 3D round point $a$ to produce a 3D circle.
+	/// \related Circle3D
 
 	TERATHON_API Circle3D Wedge(const Dipole3D& d, const RoundPoint3D& a);
 
-	/// @brief Calculates the join of the 3D line \c l and 3D round point \c a to produce a 3D plane.
-	/// @relatedalso Plane3D
+	/// \brief Calculates the join of the 3D line $l$ and 3D round point $a$ to produce a 3D plane.
+	/// \related Plane3D
 
 	TERATHON_API Plane3D Wedge(const Line3D& l, const RoundPoint3D& a);
 
-	/// @brief Calculates the join of the 3D round point \c a and the line \c l to produce a 3D plane.
-	/// @relatedalso Plane3D
+	/// \brief Calculates the join of the 3D round point $a$ and the line $l$ to produce a 3D plane.
+	/// \related Plane3D
 
 	TERATHON_API Plane3D Wedge(const RoundPoint3D& a, const Line3D& l);
 
-	/// @brief Calculates the join of the 3D dipole \c d and 3D flat point \c p to produce a 3D plane.
-	/// @relatedalso Plane3D
+	/// \brief Calculates the join of the 3D dipole $d$ and 3D flat point $p$ to produce a 3D plane.
+	/// \related Plane3D
 
 	TERATHON_API Plane3D Wedge(const Dipole3D& d, const FlatPoint3D& p);
 
-	/// @brief Calculates the join of the 3D circle \c d and 3D Euclidean point \c p to produce a 3D plane.
-	/// @relatedalso Plane3D
+	/// \brief Calculates the join of the 3D circle $d$ and 3D Euclidean point $p$ to produce a 3D plane.
+	/// \related Plane3D
 
 	TERATHON_API Plane3D Wedge(const Dipole3D& d, const Point3D& p);
 
-	/// @brief Calculates the join of the 3D circle \c c and 3D round point \c a to produce a 3D sphere.
-	/// @relatedalso Sphere3D
+	/// \brief Calculates the join of the 3D circle $c$ and 3D round point $a$ to produce a 3D sphere.
+	/// \related Sphere3D
 
 	TERATHON_API Sphere3D Wedge(const Circle3D& c, const RoundPoint3D& a);
 
-	/// @brief Calculates the join of the 3D round point \c a and 3D circle \c c to produce a 3D sphere.
-	/// @relatedalso Sphere3D
+	/// \brief Calculates the join of the 3D round point $a$ and 3D circle $c$ to produce a 3D sphere.
+	/// \related Sphere3D
 
 	TERATHON_API Sphere3D Wedge(const RoundPoint3D& a, const Circle3D& c);
 
-	/// @brief Calculates the join of the 3D dipoles \c d and \c f to produce a 3D sphere.
-	/// @relatedalso Sphere3D
+	/// \brief Calculates the join of the 3D dipoles $d$ and $f$ to produce a 3D sphere.
+	/// \related Sphere3D
 
 	TERATHON_API Sphere3D Wedge(const Dipole3D& d, const Dipole3D& f);
 
@@ -1350,83 +1350,83 @@ namespace Terathon
 	//	Meet
 	// ==============================================
 
-	/// @brief Calculates the meet of the 3D spheres \c s and \c t to produce a 3D circle.
-	/// @relatedalso Circle3D
+	/// \brief Calculates the meet of the 3D spheres $s$ and $t$ to produce a 3D circle.
+	/// \related Circle3D
 
 	TERATHON_API Circle3D Antiwedge(const Sphere3D& s, const Sphere3D& t);
 
-	/// @brief Calculates the meet of the 3D sphere \c s and 3D plane \c g to produce a 3D circle.
-	/// @relatedalso Circle3D
+	/// \brief Calculates the meet of the 3D sphere $s$ and 3D plane $g$ to produce a 3D circle.
+	/// \related Circle3D
 
 	TERATHON_API Circle3D Antiwedge(const Sphere3D& s, const Plane3D& g);
 
-	/// @brief Calculates the meet of the 3D plane \c g and 3D sphere \c s to produce a 3D circle.
-	/// @relatedalso Circle3D
+	/// \brief Calculates the meet of the 3D plane $g$ and 3D sphere $s$ to produce a 3D circle.
+	/// \related Circle3D
 
 	TERATHON_API Circle3D Antiwedge(const Plane3D& g, const Sphere3D& s);
 
-	/// @brief Calculates the meet of the 3D sphere \c s and 3D circle \c c to produce a 3D dipole.
-	/// @relatedalso Dipole3D
+	/// \brief Calculates the meet of the 3D sphere $s$ and 3D circle $c$ to produce a 3D dipole.
+	/// \related Dipole3D
 
 	TERATHON_API Dipole3D Antiwedge(const Sphere3D& s, const Circle3D& c);
 
-	/// @brief Calculates the meet of the 3D plane \c g and 3D circle \c c to produce a 3D dipole.
-	/// @relatedalso Dipole3D
+	/// \brief Calculates the meet of the 3D plane $g$ and 3D circle $c$ to produce a 3D dipole.
+	/// \related Dipole3D
 
 	TERATHON_API Dipole3D Antiwedge(const Plane3D& g, const Circle3D& c);
 
-	/// @brief Calculates the meet of the 3D sphere \c s and 3D line \c l to produce a 3D dipole.
-	/// @relatedalso Dipole3D
+	/// \brief Calculates the meet of the 3D sphere $s$ and 3D line $l$ to produce a 3D dipole.
+	/// \related Dipole3D
 
 	TERATHON_API Dipole3D Antiwedge(const Sphere3D& s, const Line3D& l);
 
-	/// @brief Calculates the meet of the 3D circles \c c and \c o to produce a 3D round point.
-	/// @relatedalso RoundPoint3D
+	/// \brief Calculates the meet of the 3D circles $c$ and $o$ to produce a 3D round point.
+	/// \related RoundPoint3D
 
 	TERATHON_API RoundPoint3D Antiwedge(const Circle3D& c, const Circle3D& o);
 
-	/// @brief Calculates the meet of the 3D circle \c c and 3D line \c l to produce a 3D round point.
-	/// @relatedalso RoundPoint3D
+	/// \brief Calculates the meet of the 3D circle $c$ and 3D line $l$ to produce a 3D round point.
+	/// \related RoundPoint3D
 
 	TERATHON_API RoundPoint3D Antiwedge(const Circle3D& c, const Line3D& l);
 
-	/// @brief Calculates the meet of the 3D sphere \c s and 3D dipole \c d to produce a 3D round point.
-	/// @relatedalso RoundPoint3D
+	/// \brief Calculates the meet of the 3D sphere $s$ and 3D dipole $d$ to produce a 3D round point.
+	/// \related RoundPoint3D
 
 	TERATHON_API RoundPoint3D Antiwedge(const Sphere3D& s, const Dipole3D& d);
 
-	/// @brief Calculates the meet of the 3D dipole \c d and 3D sphere \c s to produce a 3D round point.
-	/// @relatedalso RoundPoint3D
+	/// \brief Calculates the meet of the 3D dipole $d$ and 3D sphere $s$ to produce a 3D round point.
+	/// \related RoundPoint3D
 
 	TERATHON_API RoundPoint3D Antiwedge(const Dipole3D& d, const Sphere3D& s);
 
-	/// @brief Calculates the meet of the 3D plane \c g and 3D dipole \c d to produce a 3D round point.
-	/// @relatedalso RoundPoint3D
+	/// \brief Calculates the meet of the 3D plane $g$ and 3D dipole $d$ to produce a 3D round point.
+	/// \related RoundPoint3D
 
 	TERATHON_API RoundPoint3D Antiwedge(const Plane3D& g, const Dipole3D& d);
 
-	/// @brief Calculates the meet of the 3D dipole \c d and 3D plane \c g to produce a 3D round point.
-	/// @relatedalso RoundPoint3D
+	/// \brief Calculates the meet of the 3D dipole $d$ and 3D plane $g$ to produce a 3D round point.
+	/// \related RoundPoint3D
 
 	TERATHON_API RoundPoint3D Antiwedge(const Dipole3D& d, const Plane3D& g);
 
-	/// @brief Calculates the meet of the 3D sphere \c s and 3D flat point \c p to produce a 3D round point.
-	/// @relatedalso RoundPoint3D
+	/// \brief Calculates the meet of the 3D sphere $s$ and 3D flat point $p$ to produce a 3D round point.
+	/// \related RoundPoint3D
 
 	TERATHON_API RoundPoint3D Antiwedge(const Sphere3D& s, const FlatPoint3D& p);
 
-	/// @brief Calculates the meet of the 3D flat point \c p and 3D sphere \c s to produce a 3D round point.
-	/// @relatedalso RoundPoint3D
+	/// \brief Calculates the meet of the 3D flat point $p$ and 3D sphere $s$ to produce a 3D round point.
+	/// \related RoundPoint3D
 
 	TERATHON_API RoundPoint3D Antiwedge(const FlatPoint3D& p, const Sphere3D& s);
 
-	/// @brief Calculates the meet of the 3D sphere \c s and 3D Euclidean \c p to produce a 3D round point.
-	/// @relatedalso RoundPoint3D
+	/// \brief Calculates the meet of the 3D sphere $s$ and 3D Euclidean $p$ to produce a 3D round point.
+	/// \related RoundPoint3D
 
 	TERATHON_API RoundPoint3D Antiwedge(const Sphere3D& s, const Point3D& p);
 
-	/// @brief Calculates the meet of the 3D Euclidean \c p and 3D sphere \c s to produce a 3D round point.
-	/// @relatedalso RoundPoint3D
+	/// \brief Calculates the meet of the 3D Euclidean $p$ and 3D sphere $s$ to produce a 3D round point.
+	/// \related RoundPoint3D
 
 	TERATHON_API RoundPoint3D Antiwedge(const Point3D& p, const Sphere3D& s);
 

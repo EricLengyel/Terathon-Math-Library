@@ -1,6 +1,6 @@
 //
 // This file is part of the Terathon Math Library, by Eric Lengyel.
-// Copyright 1999-2024, Terathon Software LLC
+// Copyright 1999-2025, Terathon Software LLC
 //
 // This software is distributed under the MIT License.
 // Separate proprietary licenses are available from Terathon Software.
@@ -13,10 +13,10 @@
 using namespace Terathon;
 
 
-const ConstRoundPoint3D RoundPoint3D::zero = {0.0F, 0.0F, 0.0F, 0.0F, 0.0F};
-const ConstDipole3D Dipole3D::zero = {0.0F, 0.0F, 0.0F, 0.0F, 0.0F, 0.0F, 0.0F, 0.0F, 0.0F, 0.0F};
-const ConstCircle3D Circle3D::zero = {0.0F, 0.0F, 0.0F, 0.0F, 0.0F, 0.0F, 0.0F, 0.0F, 0.0F, 0.0F};
-const ConstSphere3D Sphere3D::zero = {0.0F, 0.0F, 0.0F, 0.0F, 0.0F};
+alignas(32) const ConstRoundPoint3D RoundPoint3D::zero = {0.0F, 0.0F, 0.0F, 0.0F, 0.0F};
+alignas(64) const ConstDipole3D Dipole3D::zero = {0.0F, 0.0F, 0.0F, 0.0F, 0.0F, 0.0F, 0.0F, 0.0F, 0.0F, 0.0F};
+alignas(64) const ConstCircle3D Circle3D::zero = {0.0F, 0.0F, 0.0F, 0.0F, 0.0F, 0.0F, 0.0F, 0.0F, 0.0F, 0.0F};
+alignas(32) const ConstSphere3D Sphere3D::zero = {0.0F, 0.0F, 0.0F, 0.0F, 0.0F};
 
 
 // ==============================================
