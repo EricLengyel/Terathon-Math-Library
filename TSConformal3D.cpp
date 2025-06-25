@@ -47,9 +47,9 @@ RoundPoint3D Terathon::Center(const Circle3D& c)
 
 FlatPoint3D Terathon::FlatCenter(const Dipole3D& d)
 {
-	return (FlatPoint3D(d.v.y * d.m.z - d.v.z * d.m.y + d.p.x * d.p.w,
-	                    d.v.z * d.m.x - d.v.x * d.m.z + d.p.y * d.p.w,
-	                    d.v.x * d.m.y - d.v.y * d.m.x + d.p.z * d.p.w,
+	return (FlatPoint3D(d.v.y * d.m.z - d.v.z * d.m.y + d.v.x * d.p.w,
+	                    d.v.z * d.m.x - d.v.x * d.m.z + d.v.y * d.p.w,
+	                    d.v.x * d.m.y - d.v.y * d.m.x + d.v.z * d.p.w,
 	                    d.v.x * d.v.x + d.v.y * d.v.y + d.v.z * d.v.z));
 }
 
