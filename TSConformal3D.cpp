@@ -25,9 +25,9 @@ alignas(32) const ConstSphere3D Sphere3D::zero = {0.0F, 0.0F, 0.0F, 0.0F, 0.0F};
 
 RoundPoint3D Terathon::Center(const Dipole3D& d)
 {
-	return (RoundPoint3D(d.v.y * d.m.z - d.v.z * d.m.y + d.p.x * d.p.w,
-	                     d.v.z * d.m.x - d.v.x * d.m.z + d.p.y * d.p.w,
-	                     d.v.x * d.m.y - d.v.y * d.m.x + d.p.z * d.p.w,
+	return (RoundPoint3D(d.v.y * d.m.z - d.v.z * d.m.y + d.v.x * d.p.w,
+	                     d.v.z * d.m.x - d.v.x * d.m.z + d.v.y * d.p.w,
+	                     d.v.x * d.m.y - d.v.y * d.m.x + d.v.z * d.p.w,
 	                     d.v.x * d.v.x + d.v.y * d.v.y + d.v.z * d.v.z,
 	                     d.p.w * d.p.w - d.v.x * d.p.x - d.v.y * d.p.y - d.v.z * d.p.z));
 }
