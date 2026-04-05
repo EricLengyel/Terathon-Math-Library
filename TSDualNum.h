@@ -1,6 +1,6 @@
 ﻿//
 // This file is part of the Terathon Math Library, by Eric Lengyel.
-// Copyright 1999-2025, Terathon Software LLC
+// Copyright 1999-2026, Terathon Software LLC
 //
 // This software is distributed under the MIT License.
 // Separate proprietary licenses are available from Terathon Software.
@@ -296,7 +296,7 @@ namespace Terathon
 
 	DualNum AntiInverseSqrt(const DualNum& d)
 	{
-		float b = InverseSqrt(d.s);
+		float b = InverseSqrt(d.t);
 		return (DualNum(-d.s * (b * b) * (b * 0.5F), b));
 	}
 
@@ -354,13 +354,13 @@ namespace Terathon
 	{
 		float	x, y;
 
-		CosSin(d.s, &x, &y);
+		CosSin(d.t, &x, &y);
 		return (DualNum(-d.s * y, x));
 	}
 
 	DualNum AntiTan(const DualNum& d)
 	{
-		float b = Tan(d.s);
+		float b = Tan(d.t);
 		return (DualNum(d.s * (b * b + 1.0F), b));
 	}
 }
