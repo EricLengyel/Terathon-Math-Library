@@ -1,6 +1,6 @@
 //
 // This file is part of the Terathon Math Library, by Eric Lengyel.
-// Copyright 1999-2025, Terathon Software LLC
+// Copyright 1999-2026, Terathon Software LLC
 //
 // This software is distributed under the MIT License.
 // Separate proprietary licenses are available from Terathon Software.
@@ -220,10 +220,10 @@ Vector4D Terathon::operator *(const Point2D& p, const Matrix4D& m)
 
 float Terathon::Determinant(const Matrix4D& m)
 {
-	const Vector3D& a = reinterpret_cast<const Vector3D&>(m[0]);
-	const Vector3D& b = reinterpret_cast<const Vector3D&>(m[1]);
-	const Vector3D& c = reinterpret_cast<const Vector3D&>(m[2]);
-	const Vector3D& d = reinterpret_cast<const Vector3D&>(m[3]);
+	const Vector3D& a = m[0].xyz;
+	const Vector3D& b = m[1].xyz;
+	const Vector3D& c = m[2].xyz;
+	const Vector3D& d = m[3].xyz;
 
 	const float& x = m(3,0);
 	const float& y = m(3,1);
@@ -291,10 +291,10 @@ Matrix4D Terathon::Inverse(const Matrix4D& m)
 
 	#else
 
-		const Vector3D& a = reinterpret_cast<const Vector3D&>(m[0]);
-		const Vector3D& b = reinterpret_cast<const Vector3D&>(m[1]);
-		const Vector3D& c = reinterpret_cast<const Vector3D&>(m[2]);
-		const Vector3D& d = reinterpret_cast<const Vector3D&>(m[3]);
+		const Vector3D& a = m[0].xyz;
+		const Vector3D& b = m[1].xyz;
+		const Vector3D& c = m[2].xyz;
+		const Vector3D& d = m[3].xyz;
 
 		const float& x = m(3,0);
 		const float& y = m(3,1);
@@ -323,10 +323,10 @@ Matrix4D Terathon::Inverse(const Matrix4D& m)
 
 Matrix4D Terathon::Adjugate(const Matrix4D& m)
 {
-	const Vector3D& a = reinterpret_cast<const Vector3D&>(m[0]);
-	const Vector3D& b = reinterpret_cast<const Vector3D&>(m[1]);
-	const Vector3D& c = reinterpret_cast<const Vector3D&>(m[2]);
-	const Vector3D& d = reinterpret_cast<const Vector3D&>(m[3]);
+	const Vector3D& a = m[0].xyz;
+	const Vector3D& b = m[1].xyz;
+	const Vector3D& c = m[2].xyz;
+	const Vector3D& d = m[3].xyz;
 
 	const float& x = m(3,0);
 	const float& y = m(3,1);
