@@ -1,6 +1,6 @@
 //
 // This file is part of the Terathon Math Library, by Eric Lengyel.
-// Copyright 1999-2025, Terathon Software LLC
+// Copyright 1999-2026, Terathon Software LLC
 //
 // This software is distributed under the MIT License.
 // Separate proprietary licenses are available from Terathon Software.
@@ -410,6 +410,42 @@ namespace Terathon
 		}
 	};
 
+	template <typename type_struct>
+	struct ConverterVector3D<type_struct, 3, 4, 5>
+	{
+		typedef typename type_struct::component_type component_type;
+		typedef typename type_struct::vector3D_type& vector3D_type;
+		typedef const typename type_struct::vector3D_type& const_vector3D_type;
+
+		static vector3D_type Convert(component_type *data)
+		{
+			return (reinterpret_cast<vector3D_type>(data[3]));
+		}
+
+		static const_vector3D_type Convert(const component_type *data)
+		{
+			return (reinterpret_cast<const_vector3D_type>(data[3]));
+		}
+	};
+
+	template <typename type_struct>
+	struct ConverterVector3D<type_struct, 6, 7, 8>
+	{
+		typedef typename type_struct::component_type component_type;
+		typedef typename type_struct::vector3D_type& vector3D_type;
+		typedef const typename type_struct::vector3D_type& const_vector3D_type;
+
+		static vector3D_type Convert(component_type *data)
+		{
+			return (reinterpret_cast<vector3D_type>(data[6]));
+		}
+
+		static const_vector3D_type Convert(const component_type *data)
+		{
+			return (reinterpret_cast<const_vector3D_type>(data[6]));
+		}
+	};
+
 
 	template <typename type_struct, bool anti, int count, int index_x, int index_y, int index_z>
 	class Subvec3D
@@ -632,6 +668,60 @@ namespace Terathon
 		static const_vector4D_type Convert(const component_type *data)
 		{
 			return (reinterpret_cast<const_vector4D_type>(data[0]));
+		}
+	};
+
+	template <typename type_struct>
+	struct ConverterVector4D<type_struct, 4, 5, 6, 7>
+	{
+		typedef typename type_struct::component_type component_type;
+		typedef typename type_struct::vector4D_type& vector4D_type;
+		typedef const typename type_struct::vector4D_type& const_vector4D_type;
+
+		static vector4D_type Convert(component_type *data)
+		{
+			return (reinterpret_cast<vector4D_type>(data[4]));
+		}
+
+		static const_vector4D_type Convert(const component_type *data)
+		{
+			return (reinterpret_cast<const_vector4D_type>(data[4]));
+		}
+	};
+
+	template <typename type_struct>
+	struct ConverterVector4D<type_struct, 8, 9, 10, 11>
+	{
+		typedef typename type_struct::component_type component_type;
+		typedef typename type_struct::vector4D_type& vector4D_type;
+		typedef const typename type_struct::vector4D_type& const_vector4D_type;
+
+		static vector4D_type Convert(component_type *data)
+		{
+			return (reinterpret_cast<vector4D_type>(data[8]));
+		}
+
+		static const_vector4D_type Convert(const component_type *data)
+		{
+			return (reinterpret_cast<const_vector4D_type>(data[8]));
+		}
+	};
+
+	template <typename type_struct>
+	struct ConverterVector4D<type_struct, 12, 13, 14, 15>
+	{
+		typedef typename type_struct::component_type component_type;
+		typedef typename type_struct::vector4D_type& vector4D_type;
+		typedef const typename type_struct::vector4D_type& const_vector4D_type;
+
+		static vector4D_type Convert(component_type *data)
+		{
+			return (reinterpret_cast<vector4D_type>(data[12]));
+		}
+
+		static const_vector4D_type Convert(const component_type *data)
+		{
+			return (reinterpret_cast<const_vector4D_type>(data[12]));
 		}
 	};
 
